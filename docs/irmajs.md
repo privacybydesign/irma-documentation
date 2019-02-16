@@ -14,7 +14,7 @@ Compile the library:
 
     npm build
 
-This writes `irma.js` to the `dist` folder, which you can include in your website in a `<script>` tag
+This writes `irma.js` to the `dist` folder, which you can include in your website in a `<script>` tag.
 
 ## Browser example
 
@@ -30,7 +30,7 @@ const request = {
 };
 
 irma.startSession(urlToServer, request)
-    .then(qr => irma.handleSession(qr, {server: server, method: 'popup', language: 'en'}))
+    .then(qr => irma.handleSession(qr, {server: urlToServer, method: 'popup', language: 'en'}))
     .then(result => console.log('Done', result));
 ```
 

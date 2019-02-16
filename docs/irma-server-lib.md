@@ -2,7 +2,7 @@
 title: irma server library
 ---
 
-[![GoDoc](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver?status.svg)](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver)
+<a href="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver" class="godoc"><img src="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver?status.svg" alt="GoDoc"></a>
 
 `irmaserver` is a Go library providing a HTTP server that handles IRMA session with the IRMA app, and functions for starting and managing IRMA sessions.
 
