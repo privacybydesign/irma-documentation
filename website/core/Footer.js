@@ -35,17 +35,16 @@ class Footer extends React.Component {
               <img
                 src={this.props.config.baseUrl + this.props.config.footerIcon}
                 alt={this.props.config.title}
-                width="66"
-                height="58"
+                height="52"
               />
             )}
           </a>
           <div>
             <h5>Docs</h5>
-            <a href={this.docUrl('getting-started.html', this.props.language)}>
+            <a href={this.docUrl('getting-started', this.props.language)}>
               Getting Started
             </a>
-            <a href={this.docUrl('overview.html', this.props.language)}>
+            <a href={this.docUrl('overview', this.props.language)}>
               Technical overview
             </a>
           </div>
