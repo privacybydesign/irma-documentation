@@ -20,7 +20,7 @@ This writes `irma.js` to the `dist` folder, which you can include in your websit
 
 If you have included `irma.js` (e.g. `<script src="irma.js" defer></script>`) you can start an IRMA disclosure session as follows:
 
-```javascript
+```js
 const request = {
     'type': 'disclosing',
     'content': [{
@@ -30,7 +30,7 @@ const request = {
 };
 
 irma.startSession(urlToServer, request)
-    .then(qr => irma.handleSession(server, qr, {method: 'popup', language: 'en'}))
+    .then(qr => irma.handleSession(qr, {server: server, method: 'popup', language: 'en'}))
     .then(result => console.log('Done', result));
 ```
 
