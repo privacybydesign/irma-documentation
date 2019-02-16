@@ -8,7 +8,7 @@ This document presents a technical overview of the IRMA project.
 
 ### Participants
 
-* *IRMA app*: (mobile) application that receives attributes, and can disclose them. Also called *client* as it acts as the client in the IRMA protocol. (In earlier documentation the term *token* is sometimes also used.)
+* *IRMA app*: (mobile) application that receives attributes, and can disclose them. Also called *client* as it acts as the client in the IRMA protocol.
 * *Service provider*: a party wanting to verify someone's attributes (in order to provide some service).
 * *Identity provider*: a party wanting to issue attributes to someone.
 * *Issuer*: uses an Idemix private key in order to issue credentials to a client, when instructed to by an identity provider
@@ -72,55 +72,59 @@ In order to lessen linkability issues (see the [security properties](#irma-secur
 
 #### The secret key attribute
 
-The first attribute of any IRMA credential is always a 256-bit integer which is called the user's *secret key*. The user's IRMA app randomly chooses and stores this integer when it is run for the first time. Whenever it receives a new credential, the app ensures that this number is used as the first attribute, so that all credentials that the app manages share this integer as their first attribute. Contrary to the metadata attribute this attribute is never disclosed; it is even kept hidden from the issuer during issuance. When the user discloses attributes that come from multiple credentials, the proof of knowledge that the IRMA app calculates and sends to the verifier prove multiple facts:
+The first attribute of any IRMA credential is always a 256-bit integer which is called the user's *secret key*. The user's IRMA app randomly chooses and stores this integer when it is run for the first time. Whenever it receives a new credential, the app ensures that this number is used as the first attribute, so that all credentials that the app manages share this integer as their first attribute. Contrary to the metadata attribute this attribute is never disclosed; it is even kept hidden from the issuer during issuance. When the user discloses attributes that come from multiple credentials, the proof of knowledge that the IRMA app calculates and sends to the verifier proves multiple facts:
 
-* The app knows a valid issuer signature over all credentials from which attributes are currently being disclosed,
+* The app knows a valid issuer signature over each credential from which attributes are currently being disclosed,
 * The first attribute from all of these credentials coincide.
 
 From this the verifier can conclude that the credentials from which attributes are being disclosed belong to one and the same person; that is, it defends against users pooling their credentials.
 
-## Issuers
+## Schemes
 
-Each IRMA issuer has an Idemix private key, which it must keep secret as it is used when issuing credentials, and a corresponding public key which anyone who wants to receive or verify credentials from this issuer must know. An issuer may issue multiple credential types.
+Within the IRMA ecosystem, every party (the issuers, verifiers and users) must be aware of the credential types including the names of all attributes, and the issuers and their public keys. All such information is contained in IRMA *schemes*. It is the task of the *scheme manager* to determine and distribute this information to all parties.
 
-## Scheme managers
-
-Within the IRMA ecosystem, every party (the issuers, verifiers and users) must be aware of the credential types including the names of all attributes, and the issuers and their public keys. It is the task of the *scheme manager* to determine and distribute this information to all parties.
-
-The [Privacy by Design Foundation](https://privacybydesign.foundation/), which develops IRMA and issues a basic set of attributes, operates such a scheme manager (namely, the default one that is hardcoded into the IRMA app). In more detail, the main task of the scheme manager is to maintain a directory structure [such as this one](https://github.com/privacybydesign/pbdf-schememanager), which contains:
+The [Privacy by Design Foundation](https://privacybydesign.foundation/), which develops IRMA and issues a basic set of attributes, operates such a scheme (namely, the default one that is hardcoded into the IRMA app). In more detail, the main task of the scheme manager is to maintain a directory structure [such as this one](https://github.com/privacybydesign/pbdf-schememanager), which contains:
  
 * All information about all issuers that fall under this scheme including their logos,
 * The Idemix public keys of said issuers,
 * All credential types that these issuers may issue, including their logos.
 
-This entire directory structure is signed using an (ECDSA) private-public keypair that the scheme manager has for this purpose. For more information about the layout that this directory tree must have, see this [demo scheme manager](https://github.com/privacybydesign/irma-demo-schememanager).
+This entire directory structure is signed using an (ECDSA) private-public keypair that the scheme manager has for this purpose. For more information about the layout that this directory tree must have, see this [demo scheme](https://github.com/privacybydesign/irma-demo-schememanager).
 
 A copy of this directory structure is hardcoded into the IRMA app. Another copy is hosted online ([example](http://privacybydesign.foundation/schememanager/pbdf/description.xml)). When the IRMA app encounters an issuer, credential type or public key during an IRMA session that it has not seen before, it downloads it from this website (also verifying the tree's ECDSA signature).
 
 All of this information is thus signed by as well as distributed by the scheme manager. This means that the scheme manager has exclusive and total control over which issuers may join his domain, and what credential types and attributes this issuer may issue. Additionally, the scheme manager spreads the issuer public keys.
 
-As mentioned above, the Privacy by Design Foundation operates the scheme manager which is hardcoded by default in the IRMA app. However, anyone can create their own IRMA scheme manager. At minimum the following must be done:
+As mentioned above, the Privacy by Design Foundation operates the scheme which is hardcoded by default in the IRMA app. However, anyone can create their own IRMA scheme. At minimum the following must be done:
 
 * Create a directory structure like the one linked to above (you can use the `scheme` subcommand of the [`irma` tool](irma) to generate an ECDSA public-private keypair and sign the directory tree);
 * Define at least one issuer and generate its Idemix public-private keypair (again using `irma`), putting the public key in the directory structure;
 * Define at least one credential type that this issuer will issue;
 * Compile a version of the IRMA app with this directory tree hardcoded in it;
-* Host an [`irma server`](irma-server) that will issue and verify your credential type (as this API server will issue credentials it must have a copy of the scheme manager directory tree that includes the Idemix private keys);
+* Host an [`irma server`](irma-server) that will issue and verify your credential type (as this  server will issue credentials it must have a copy of the scheme directory tree, and the Idemix private key);
 * Create a website using [irmajs](irmajs) that will issue and verify instances of your credential type.
+
+## Issuers
+
+Each IRMA issuer has an Idemix private key, which it must keep secret as it is used when issuing credentials, and a corresponding public key which is distributed to attribute verifiers and IRMA apps in the IRMA scheme. An issuer may issue multiple credential types (and a scheme may contain many issuers).
+
+As explained above, issuers cannot independently create credential types and start issuing them to IRMA app users: the credential type must first be included in an IRMA scheme by the scheme manager. In case of the default scheme `pbdf` of the IRMA app, this is the [Privacy by Design Foundation]((https://privacybydesign.foundation/issuance/)).
+
+When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, the Privacy by Design Foundation documents this [here](https://privacybydesign.foundation/issuance/).
 
 ## IRMA PIN codes using the keyshare server
 
-When a user's device containing her IRMA app along with her attributes is lost or stolen, the finder of the phone can potentially abuse the owner's attributes. In order to protect against this, scheme managers may decide to employ an *IRMA keyshare server*. In this case, whenever a credential type that fall under the scheme manager is used, the user must enter her PIN code before the IRMA session can proceed. The correctness of this PIN code is verified by the keyshare server. When an incorrect PIN code is entered three times in a row, the keyshare server blocks IRMA sessions by refusing to cooperate, for an amount of time that exponentially increases with the amount of consecutive incorrect PIN codes entered. Additionally, users can remotely block their own IRMA app from performing future IRMA sessions on the keyshare server's website, in case their phone is lost or stolen.
+When a user's device containing her IRMA app along with her attributes is lost or stolen, the finder of the phone can potentially abuse the owner's attributes. In order to protect against this, scheme managers may decide to employ an *IRMA keyshare server*. In this case, whenever a credential type that falls under the scheme is used, the user must enter her PIN code before the IRMA session can proceed. The correctness of this PIN code is verified by the keyshare server. When an incorrect PIN code is entered three times in a row, the keyshare server blocks IRMA sessions by refusing to cooperate, for an amount of time that exponentially increases with the amount of consecutive incorrect PIN codes entered. Additionally, users can remotely block their own IRMA app from performing future IRMA sessions on the keyshare server's website, in case their phone is lost or stolen.
 
-The keyshare server's most important function is twofold. It provides a stronger binding of the attributes to their owner, by forcing the correctness of the IRMA PIN code: as long as the user can be trusted to not reveil her PIN code to anyone, the party that receives the attributes can be sure that the person who is disclosing them right now is the same person as the one to which they were issued in the past. Additionally, it provides a way of blocking future IRMA sessions; currently, this feature is only exposed to the users themselves. The price of these advantages is that there is now a single entity that has to cooperate in each IRMA session. This means that whenever the keyshare server is not online, no user can issue or disclose any of the attributes falling under the authority of the relevant scheme manager. It is thus very important that this component is carefully protected and monitored. Additionally, the keyshare server learns and records a limited amount of data whenever the user performs an IRMA session (how limited this data is is discussed below).
+The keyshare server's most important function is twofold. It provides a stronger binding of the attributes to their owner, by forcing the correctness of the IRMA PIN code: as long as the user can be trusted to not reveil her PIN code to anyone, the party that receives the attributes can be sure that the person who is disclosing them right now is the same person as the one to which they were issued in the past. Additionally, it provides a way of blocking future IRMA sessions; currently, this feature is only exposed to the users themselves. The price of these advantages is that there is now a single entity that has to cooperate in each IRMA session. This means that whenever the keyshare server is not online, no user can issue or disclose any of the attributes falling under the authority of the relevant scheme. It is thus very important that this component is carefully protected and monitored. Additionally, the keyshare server learns and records a limited amount of data whenever the user performs an IRMA session (how limited this data is is discussed below).
 
-At the Privacy by Design Foundation we believe that the advantages of using a keyshare server far outweigh the disadvantages, so the Foundation's scheme manager uses a keyshare server. Like all other software, this server is open source.
+At the Privacy by Design Foundation we believe that the advantages of using a keyshare server far outweigh the disadvantages, so the Foundation's scheme uses a keyshare server. Like all other software, this server is open source.
 
-At a high level keyshare servers work as follows. The user's secret key is split across the user's IRMA app and the keyshare server: both of them hold a part of the secret key. The actual secret key that is effectively used in each credential from this scheme manager is the sum of these two secret keys. When the user does not enter the correct PIN code the keyshare server will refuse to use its part of the secret key in the IRMA protocol, making it impossible for the session to complete.
+At a high level keyshare servers work as follows. The user's secret key is split across the user's IRMA app and the keyshare server: both of them hold a part of the secret key. The actual secret key that is effectively used in each credential from this scheme is the sum of these two secret keys. When the user does not enter the correct PIN code the keyshare server will refuse to use its part of the secret key in the IRMA protocol, making it impossible for the session to complete.
 
-In more detail: whenever a scheme manager is installed in the IRMA app that uses a keyshare server (or when the IRMA app starts for the first time and encounters a hardcoded scheme mamanger that uses a keyshare server), the user *registers* at the keyshare server, by entering her email address and choosing a PIN code. The IRMA app chooses and stores a random salt of 8 bytes, calculates `SHA256(salt || PIN)`, and sends this along with the user's email address to the keyshare server.
+In more detail: whenever a scheme is installed in the IRMA app that uses a keyshare server (or when the IRMA app starts for the first time and encounters a hardcoded scheme mamanger that uses a keyshare server), the user *registers* at the keyshare server, by entering her email address and choosing a PIN code. The IRMA app chooses and stores a random salt of 8 bytes, calculates `SHA256(salt || PIN)`, and sends this along with the user's email address to the keyshare server.
 
-At that moment, the keyshare server chooses and stores a *keyshare* for this user: a 32-bit integer just like the user's secret key. Whenever the users performs an IRMA session using attributes from this scheme manager, the following happens:
+At that moment, the keyshare server chooses and stores a *keyshare* for this user: a 32-bit integer just like the user's secret key. Whenever the users performs an IRMA session using attributes from this scheme, the following happens:
 
 * The IRMA app sends the email address along with `SHA256(salt || PIN)` to the keyshare server. If this hash is not equal to the hash with which the user registered, the keyshare server aborts the session.
 * Assuming the user entered the correct PIN code, the keyshare server generates a proof of knowledge for its part of the user's secret key and sends this to the IRMA app.
@@ -140,9 +144,9 @@ Additionally, the keyshare server comes with a small website on which users can,
 
 As the keyshare server's contribution to the proof of knowledge of the secret key is passed to the verifier through the IRMA app instead of directly from the keyshare server to the verifier, the keyshare server does not know to whom attributes are being disclosed. In fact, the only thing it learns is which issuer (and which Idemix public keys) are involved; it does not get to see which attributes are being disclosed nor their values, nor which attributes are kept hidden, nor how many attributes from how many credentials. The transaction log that the user sees in the keyshare server's website is correspondingly bare.
 
-Summarizing, the keyshare server increases the binding between the attributes and the user through the PIN code and through the option of revocation in case of loss or theft, at the cost of a decrease in the decentral nature of IRMA and in some of the privacy guarantees. In order to keep the privacy cost as low as possible, using various cryptographical means we have tried to keep the amount of information that the keyshare server learns about the participants as small as possible. Although we are still looking at ways to make the keyshare server still more privacy-friendly, at the Privacy by Design Foundation we believe that this tradeoff is already worth it. Thus, the `pbdf` scheme manager indeed uses a keyshare server (towards users we call it "MyIRMA"; its website is [here](https://privacybydesign.foundation/myirma/)).
+Summarizing, the keyshare server increases the binding between the attributes and the user through the PIN code and through the option of revocation in case of loss or theft, at the cost of a decrease in the decentral nature of IRMA and in some of the privacy guarantees. In order to keep the privacy cost as low as possible, using various cryptographical means we have tried to keep the amount of information that the keyshare server learns about the participants as small as possible. Although we are still looking at ways to make the keyshare server still more privacy-friendly, at the Privacy by Design Foundation we believe that this tradeoff is already worth it. Thus, the `pbdf` scheme indeed uses a keyshare server (towards users we call it "MyIRMA"; its website is [here](https://privacybydesign.foundation/myirma/)).
 
-Each scheme manager can decide for itself whether or not to use a keyshare server. Currently, however, due to a limitation in the IRMA protocol only one keyshare server can be involved simultaneously in IRMA sessions. This will be solved in future new versions of the IRMA app and the IRMA API server.
+Each scheme manager can decide for itself whether or not to use a keyshare server in its scheme. Currently, however, due to a limitation in the IRMA protocol only one keyshare server can be involved simultaneously in IRMA sessions. This will be solved in future new versions of the IRMA app and the IRMA API server.
 
 Full details on the protocol spoken between the IRMA client and an [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server) can be found in its [documentation](/protocols/keyshare-protocol).
 
