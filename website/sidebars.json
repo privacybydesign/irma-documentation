@@ -1,0 +1,21 @@
+{
+  "docs": {
+    "Intro": [
+      "getting-started",
+      "what-is-irma"
+    ],
+    "Software components": [
+      "irma-cli",
+      "irma-server",
+      "irma-server-lib",
+      "irmajs"
+    ],
+    "API": [
+
+    ],
+    "Documentation": [
+      "overview",
+      "keyshare-protocol"
+    ]
+  }
+}
