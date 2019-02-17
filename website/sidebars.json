@@ -12,6 +12,7 @@
     ],
     "API reference": [
       "api-go",
+      "api-irmajs",
       "api-session-requests"
     ],
     "Documentation": [
