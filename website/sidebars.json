@@ -10,8 +10,9 @@
       "irma-server-lib",
       "irmajs"
     ],
-    "API": [
-      "api-go"
+    "API reference": [
+      "api-go",
+      "api-session-requests"
     ],
     "Documentation": [
       "overview",

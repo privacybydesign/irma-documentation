@@ -1,5 +1,5 @@
 ---
-title: Go API documentation
+title: Go libraries
 ---
 
 The API documentation of the following Go libraries can be found on [GoDoc](http://godoc.org/):
