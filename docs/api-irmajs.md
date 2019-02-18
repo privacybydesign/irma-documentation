@@ -85,14 +85,14 @@ Start an IRMA session at an IRMA server. This function supports all authenticati
  Parameters:
  * `server`: URL to IRMA server at which to start the session.
  * `request`: Session request, either a JWT or an [(extended) session request](api-session-requests) (see below)
- * `method`: authentication method (supported: `undefined`, `none`, `token`, `hmac`, `rsa`)
+ * `method`: authentication method (supported: `undefined`, `none`, `token`, `hmac`, `publickey`)
  * `key`: API token or JWT key
- * `name`: name of the requestor (only for `hmac` and `rsa` mode)
+ * `name`: name of the requestor (only for `hmac` and `publickey` mode)
 
 The authentication method is determined by the `request` and `method` parameters as follows.
 * If `request` is a `string` then it is posted as a [session request JWT](api-session-requests#jwts-signed-session-requests) to the IRMA server.
 * Otherwise it should be an `object` contaning an [(extended) session request](api-session-requests). How it is handled depends on `method`:
   * `none`: it is POSTED as JSON to the IRMA server (which must be configured to accept unauthorized session requests).
   * `token`: it is POSTED as JSON to the IRMA server along with an API token from the `key` parameter in a HTTP header.
-  * `rsa`: it is first signed into a JWT with the specified RSA private `key`, using `name` as the requestor name, and then POSTed to the IRMA server.
+  * `publickey`: it is first signed into a JWT with the specified RSA private `key`, using `name` as the requestor name, and then POSTed to the IRMA server.
   * `hmac`: it is first signed into a JWT with the specified symmetric HMAC `key`, using `name` as the requestor name, and then POSTed to the IRMA server.
