@@ -42,7 +42,7 @@ const SessionStatus = {
 ```js
 irma.handleSession(qr, [options])
 ```
-Handle an IRMA session after it has been created at an IRMA server, given the QR contents obtained from the IRMA server to be sent to the IRMA app. This function can 
+Handle an IRMA session after it has been created at an IRMA server, given the QR contents obtained from the IRMA server (e.g. using [`startSession()`](#startsession)) to be sent to the IRMA app. This function can
 1. draw an IRMA QR, 
 2. wait for the phone to connect, 
 3. wait for the session to complete, 
@@ -80,7 +80,7 @@ If the session is not successful, an exception is thrown. If the session is canc
 irma.startSession(server, request[, method, key[, name]])
 ```
 
-Start an IRMA session at an IRMA server. This function supports all authentication methods of the `POST /session` endpoint of the `irma server`.
+Start an IRMA session at an IRMA server. This function supports all authentication methods of the `POST /session` endpoint of the `irma server`. It returns a promise with the response from the IRMA server (the session QR contents) (which can be handled by [`handleSession()`](#handlesession)).
 
  Parameters:
  * `server`: URL to IRMA server at which to start the session.
@@ -94,5 +94,5 @@ The authentication method is determined by the `request` and `method` parameters
 * Otherwise it should be an `object` contaning an [(extended) session request](api-session-requests). How it is handled depends on `method`:
   * `none`: it is POSTED as JSON to the IRMA server (which must be configured to accept unauthorized session requests).
   * `token`: it is POSTED as JSON to the IRMA server along with an API token from the `key` parameter in a HTTP header.
-  * `publickey`: it is first signed into a JWT with the specified RSA private `key`, using `name` as the requestor name, and then POSTed to the IRMA server.
+  * `publickey`: it is first signed into a JWT with the specified RSA private `key` in PEM, using `name` as the requestor name, and then POSTed to the IRMA server.
   * `hmac`: it is first signed into a JWT with the specified symmetric HMAC `key`, using `name` as the requestor name, and then POSTed to the IRMA server.

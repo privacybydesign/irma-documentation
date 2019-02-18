@@ -24,13 +24,13 @@ If you have included `irma.js` (e.g. `<script src="irma.js" defer></script>`) yo
 const request = {
     'type': 'disclosing',
     'content': [{
-        'label': 'Over 21',
+        'label': 'Over 18',
         'attributes': [ 'irma-demo.MijnOverheid.ageLower.over18' ]
     }]
 };
 
 irma.startSession(urlToServer, request)
-    .then(qr => irma.handleSession(qr, {server: urlToServer, method: 'popup', language: 'en'}))
+    .then(qr => irma.handleSession(qr, {server: urlToServer}))
     .then(result => console.log('Done', result));
 ```
 
