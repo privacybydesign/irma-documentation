@@ -52,17 +52,19 @@ Returns a promise that can resolve at any of these phases, depending on the opti
 
 | Option | Default | Effect |
 |---|---|---|
-| `method` | `'popup'` | Supported methods: `'popup'` and `'canvas'` (only browser), `'console'` (only node), `'url'` (both) |
+| `method` | `'popup'` | Supported methods: `'popup'`, `'canvas'`, `'mobile'` (only browser), `'console'` (only node), `'url'` (both) |
 | `element` | `'irmaqr'` | HTML `id` of the canvas to draw to if `method === 'canvas'` |
 | `language` | `'en'` | Popup language when `method === 'popup'` |
 | `showConnectedIcon` |  `true` | When method is `'popup'` or `'canvas'`, replace QR with a phone icon when phone connects |
 | `returnStatus` |  `SessionStatus.Done` | When the session reaches this status control is returned to the caller |
 | `server` | `''` | Server URL to fetch the session result from after the session is done. Implies `returnStatus === SessionStatus.Done`. |
 | `resultJwt` |  `false` | Retrieve signed session result from the irma server |
+| `disableMobile` | `false` | Disable automatic navigation to IRMA app on mobile |
 
 The following `method`s are supported:
 * `popup`: Draw a popup overlay with the QR and a cancel button in it.
 * `canvas`: Draw the QR into the HTML `canvas` specified by the `element` option.
+* `mobile`: For mobile browsers, open the IRMA app directly instead of drawing a QR. Note that this mode is default when running `irmajs` in a mobile browser, even if you specify another method. You can disable this behaviour and use your own `method` by setting `disableMobile` to true.
 * `console`: Draw the QR into the console.
 * `url`: Return the QR as a data URL (for in an `img` HTML tag). Implies `returnStatus = SessionStatus.Initialized`.
 
