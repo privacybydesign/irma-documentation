@@ -70,11 +70,11 @@ If the server is reachable from the internet, you should consider enabling authe
 ### Configuration files
 A configuration file can be provided using the `config` option (for example: `irma server --config ./irmaserver.json`). When not specified, the server looks for a configuration file called `irmaserver.json` or `irmaserver.toml` or `irmaserver.yaml` in (1) the current path; (2) `/etc/irmaserver/`; (3) `$HOME/irmaserver`, in that order. A configuration file is not required; if none is found at any of these locations the server takes its configuration from just command line flags and environmental variables.
 
-### Keys and certificates
-For each configuration option that refers to some kind of key or certificate (for example `jwt_privkey`), there is a corresponding option with the `_file` suffix (for example `jwt_privkey_file`). Keys can be specified either by setting former to a (PEM) string, or setting the the latter to a file containing the (PEM) string.
-
 ### Production mode
 When running the server in production, enable the `production` option. This enables stricter defaults on the configuration options for safety and prints warnings on possibly unsafe configurations.
+
+### Keys and certificates
+For each configuration option that refers to some kind of key or certificate (for example `jwt_privkey`), there is a corresponding option with the `_file` suffix (for example `jwt_privkey_file`). Keys can be specified either by setting former to a (PEM) string, or setting the the latter to a file containing the (PEM) string.
 
 ### HTTP server endpoints
 The HTTP endpoints that this server offers is split into two parts:
@@ -143,9 +143,15 @@ If a `jwt_privkey` (or `jwt_privkey_file`) is given, then the following endpoint
 * `GET /session/{sessiontoken}/getproof`: returns a JWT similar to the one from `result-jwt`, but with the same structure as the IRMA API server session result JWTs.
 * `GET /publickey`: returns the public key with which the JWTs output by this server can be verified.
 
-This can be useful if the session result travels along an unsafe or untrusted route from the IRMA server to the requestor. In such cases the JWT can be verified to ensure that the session result is untampered with.
+This can be useful if the session result travels along an unsafe or untrusted route from the IRMA server to the requestor. As long as the `irma server` is trusted and its public key is known, the JWT can be verified to ensure that the session result was untampered with since it left the `irma server`.
 
 ### TLS
+
+The IRMA protocol relies on TLS for encryption of hte attributes as they travel along the internet. If your server is connected to the internet and it handles actual attributes (personal data from people), then you ***must*** ensure that the attributes are protected in transit with TLS.
+
+You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` options (or the `_file` equivalents), specifying a PEM certificate (chain) and PEM private key. If you use [separate requestor and app endpoints](#http-server-endpoints), additionally use `client_tls_cert` and `client_tls_privkey`.
+
+Alternatively, if your IRMA server is connected to the internet through a reverse proxy then your reverse proxy probably handles TLS for you.
 
 ### Email
 
@@ -153,8 +159,8 @@ Users of the server are encouraged to provide an email address with the `email` 
 
 ## See also
 
-This executable wraps the Go library [`requestorserver`](../requestorserver) which wraps the Go library [`irmaserver`](../irmaserver).
+This executable wraps the Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) which wraps the Go library [`irmaserver`](irma-server-lib).
 
-The [client](../../irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).
+The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).
 
-This server replaces the Java [irma_api_server](https://github.com/privacybydesign/irma_api_server). 
+This server is an alternative to, and will eventually replace, the Java [irma_api_server](https://github.com/privacybydesign/irma_api_server). 
