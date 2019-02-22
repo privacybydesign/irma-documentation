@@ -4,7 +4,7 @@
       "getting-started",
       "what-is-irma"
     ],
-    "Software components": [
+    "Guides": [
       "irma-cli",
       "irma-server",
       "irma-server-lib",
