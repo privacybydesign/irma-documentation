@@ -22,7 +22,7 @@ This document describes the goals and details of the IRMA keyshare protocol.
 
 The [IRMA mobile app](https://github.com/privacybydesign/irma_mobile) allows users to obtain and disclose [IRMA attributes](overview#cryptographic-entities), as well as attach them to signed statements. Before such an IRMA session proceeds, the IRMA app may ask the user to enter her IRMA PIN code so that the [requestor](overview#participants) can be sure that it is indeed the attribute owner initiating the session (as opposed to, e.g., a thief of the user's phone). The verification of the correctness of the IRMA PIN code, and preventing the session from happening when it is not, is the responsibility of the [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server). In order to do this, it interacts with the IRMA app and possibly the IRMA API server in a protocol that we call the *keyshare protocol*. This protocol is documented here.
 
-Each [IRMA scheme](schemes) decides whether or not it employs an IRMA keyshare server. If it does, then this keyshare server is involved in any IRMA session that involves attributes that fall under the scheme manager's responsibility. Currently however, due to limitations in the current version of the keyshare protocol that will be explained below, at most one keyshare server can be involved simultaneously in IRMA sessions.
+Each [IRMA scheme](schemes) decides whether or not it employs an IRMA keyshare server. If it does, then this keyshare server is involved in any IRMA session that involves attributes that fall under the scheme manager's responsibility.
 
 Upon app installation, the IRMA user *registers* to the keyshare servers of the installed scheme managers. At this point the user chooses her IRMA PIN code. Afterwards, whenever the user performs an IRMA session, the user must first enter her IRMA PIN code. Only if the PIN is correct will the keyshare server allow the session to proceed.
 
@@ -67,8 +67,6 @@ The actual zero-knowledge proof protocol implemented in IRMA allows for simultan
 
 Now let $m = m_u + m_k$ with $m_u$ only known to the user, $m_k$ only known to the keyshare server, and $m$ known to neither. Then we can modify the protocol above in such a way that the user and keyshare server *jointly* prove knowledge of the number $m$, as follows.
 
-<a name="keyshare-commitments"></a>
-
 * After step 2.2, the user asks the keyshare server to generate its own random $w_k$ and compute $W_k = R^{w_k}$. The keyshare server keeps $w_k$ hidden but sends $W_k$ to the user.
 * The user computes the challenge as $c = H(P, WW_k, \eta)$, and then sends $c$ to the keyshare server.
 * The keyshare server computes $s_k = cm_k + w_k$ and sends this number to the user.
@@ -103,11 +101,13 @@ Finally, when performing disclosures we employ the Paillier partially homomorphi
 
 When registering, the IRMA app POSTs a message like the one below to the to `/api/v1/client/register` at the keyshare server:
 
-    {
-        "email": "example@example.com",
-        "language": "en"
-        "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n",
-    }
+```json
+{
+    "email": "example@example.com",
+    "language": "en",
+    "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n",
+}
+```
 
 The email address is optional and may be absent. The `language` indicates the user's preferred language, used for a confirmation mail if the email address is present. Lastly, the `pin` field is computed as `Base64(SHA256(nonce, pin))\n` (the trailing newline is there for legacy purposes and will be removed in the future).
 
@@ -119,12 +119,12 @@ Below, the API endpoints of the keyshare server are described in the order they 
 
 *   `POST /api/v1/user/isAuthorized`: The client posts the keyshare server's JWT from a previous IRMA session, who responds with
 
-    ~~~json
-        {
-            "status": status, 
-            "candidates": [ "pin" ]
-        }
-    ~~~
+    ```json
+    {
+        "status": status, 
+        "candidates": [ "pin" ]
+    }
+    ```
     where status is either `"authorized"` or `"expired"`. (The `candidates` array lists the supported methods for authentication, which is currently only using PIN codes.) If the status is "authorized" then the keyshare protocol itself starts using `/api/v1/prove/getCommitments` described below. Else the user must enter her PIN, after which
 
 *   `POST /api/v1/user/verify/pin`: After computing the PIN again as `Base64(SHA256(nonce, pin))\n`, a message like the following is sent to the keyshare server:
@@ -149,35 +149,25 @@ Below, the API endpoints of the keyshare server are described in the order they 
 
 ### The keyshare protocol
 
-At the start of the keyshare protocol, the client needs to inform the keyshare server which IRMA public keys are involved, in the sense that they are necessary to verify the attributes that are being disclosed. An issuer may have multiple public keys, indexed by integers starting at 0. As issuers are generally defined in IRMA by strings such as `"irma-demo.IRMATube"`, one way to completely identify a public key - i.e., a public key identifier - would then be, for example, `"irma-demo.IRMATube-1"`, pointing at the second public key of the `IRMATube` issuer. Unfortunately, when engineering the keyshare protocol a serializer for such public key identifiers was forgotten. Consequentially, in the list of public key identifier that the client sends to the keyshare server during the keyshare protocol, the public key identifier pointing to the second public key of the `IRMATube` issuer is unfortunately serialized to the following:
-
-```json
-{ "issuer": { "identifier": "irma-demo.IRMATube" }, "counter": 1 }
-```
+At the start of the keyshare protocol, the client needs to inform the keyshare server which IRMA public keys are involved, in the sense that they are necessary to verify the attributes that are being disclosed. An issuer may have multiple public keys, indexed by integers starting at 0, so the string `"irma-demo.IRMATube-1"` refers to the second public key of the `IRMATube` issuer.
 
 The keyshare server's API endpoints are the following.
 
-*   `POST /api/v1/prove/getCommitments`: The client sends a list of public key identifiers such as the following to the keyshare server (along with the authentication JWT described above in a HTTP header). If the user is authenticated and the public keys are known to the keyshare server, the keyshare server reacts with a commitment to its part of the secret key, for each of the specified public keys, as <a href="#keyshare-commitments">explained earlier</a>. Due to the absent serializer as explained above, this message currently has the following form.
+*   `POST /api/v1/prove/getCommitments`: The client sends a list of public key identifiers (e.g. `["irma-demo.IRMATube-1"]`) to the keyshare server (along with the authentication JWT described above in a HTTP header). If the user is authenticated and the public keys are known to the keyshare server, the keyshare server reacts with a commitment to its part of the secret key, for each of the specified public keys:
 
     ```json
     {
-        "c": [
-            [
-                { "issuer": { "identifier": "irma-demo.IRMATube" }, "counter": 1 },
-                {
-                    "P": 121212,
-                    "Pcommit": 909090,
-                }
-            ]
-        ]
+        "c": {
+            "irma-demo.IRMATube-1": {
+                "P": 121212,
+                "Pcommit": 909090,
+            }
+        }
     }
     ```
     Here `P ` $ = R^{m_k}\mod n$ and `Pcommit ` $=W_k$ is the commitment mentioned above, `Pcommit ` $= W_k = R^{w_k} \mod n$, with $R$ and $n$ coming from the second public key of the `irma-demo.IRMATube` issuer.
-
- This will be fixed in a future version of the protocol to a simple map having public key identifiers (e.g. `"irma-demo.IRMATube-1"`) as keys.
-
-
 *  `POST /api/v1/prove/getResponse`: after calculating the challenge, the client posts it to the keyshare server, who replies with a signed JWT with the following as content:
+
     ```json
     {
         "iss": "name_of_keyshare_server",
@@ -194,6 +184,6 @@ The keyshare server's API endpoints are the following.
 
 This ends the involvement of the keyshare server in the IRMA session. In case of attribute disclosures or attribute-based signatures, the client next merges the keyshare server's contributions `Pcommit` and `s_response` into its proof of knowledge of the secret key. In case of issuance this is skipped; instead the entire JWT from the final endpoint is sent to the issuer alongside the client's own proof of knowledge of its part of the secret key.
 
-The structure of the message in which the client sends the keyshare server's signed response to the issuance session currently unfortunately supports at most one keyshare server simultaneously. This means that it is impossible for two (or more) issuers falling under two distinct scheme managers that  use distinct keyshare servers to both issue credential simultaneously to a client (i.e., within one IMRA session). Although this is an unlikely scenario, this will still be fixed in a future version of the protocol, along with the structure of the commitments message shown above. Although all other issuance or disclosure sessions involving multiple keyshare server simultaneously are theoretically already possible, currently no IRMA client yet supports being registered to more than one keyshare server at once.
+The structure of the message in which the client sends the keyshare server's signed response to the issuance session currently unfortunately supports at most one keyshare server simultaneously. This means that it is impossible for two (or more) issuers falling under two distinct scheme managers that  use distinct keyshare servers to both issue credential simultaneously to a client (i.e., within one IRMA session). Although this is an unlikely scenario, this will still be fixed in a future version of the protocol. Although all other issuance or disclosure sessions involving multiple keyshare server simultaneously are theoretically already possible, currently no IRMA client yet supports being registered to more than one keyshare server at once.
 
 In addition to these API endpoints, the keyshare server exposes a number of other endpoints that are used by the [MyIRMA webclient](https://github.com/privacybydesign/irma_keyshare_webclient), which allows the IRMA user to manage her registration at the keyshare server. These endpoints are not documented here.
