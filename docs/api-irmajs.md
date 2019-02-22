@@ -14,7 +14,7 @@ import irma from '@privacybydesign/irma';
 var irma = require('@privacybydesign/irma');
 ```
 
-Its primary functions are [`startSession()`](#startsession), which can start an IRMA session by sending a (unsigned or JWT) [session request](api-session-requests) to an IRMA server, and `handleSession()`, which given the output of `startSession()` (that is, the QR contents) handles the remainder of an IRMA session.
+Its primary functions are [`startSession()`](#startsession), which can start an IRMA session by sending a (unsigned or JWT) [session request](api-session-requests) to an IRMA server, and [`handleSession()`](#handlesession), which given the output of `startSession()` handles the remainder of an IRMA session.
 
 ## API reference
 
@@ -76,6 +76,10 @@ What the promise returned by this function receives depends on the options as fo
    * Otherwise, a session result JWT as returned by the [`GET /session/{token}/result-jwt`](api-irma-server#get-session-token-result-jwt) endpoint of the `irma server`.
 
 If the session is not successful, an exception is thrown. If the session is cancelled or times out, the message will be `SessionStatus.Cancelled` or `SessionStatus.Timeout`.
+
+> The session is cancelled and receives status `SessionStatus.Cancelled` not only when the IRMA app user refuses, but also when the session is aborted due to an error. In each of these cases an exception is thrown. Check its error argument.
+
+> If the session is cancelled due to the user aborting, it is (by design) not possible to distinguish between (1) the user had the requested attributes but refused to disclose them, and (2) the session was aborted by the user's IRMA app because (s)he did not have the required attributes.
 
 ---
 

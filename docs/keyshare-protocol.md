@@ -190,7 +190,7 @@ The keyshare server's API endpoints are the following.
         "iat": 1523914056
     }
     ```
-    `s_response` is the response integer $s_k$ in the Schorr zero-knowledge proof.
+    `s_response` is the response integer $s_k$ in the Schnorr zero-knowledge proof.
 
 This ends the involvement of the keyshare server in the IRMA session. In case of attribute disclosures or attribute-based signatures, the client next merges the keyshare server's contributions `Pcommit` and `s_response` into its proof of knowledge of the secret key. In case of issuance this is skipped; instead the entire JWT from the final endpoint is sent to the issuer alongside the client's own proof of knowledge of its part of the secret key.
 

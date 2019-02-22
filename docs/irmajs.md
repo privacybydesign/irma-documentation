@@ -6,7 +6,7 @@ title: irmajs JavaScript library
 
  * Verify IRMA attributes. You specify which attributes, the library handles the user interaction and the communication with the `irma server` and the [IRMA app](https://github.com/privacybydesign/irma_mobile)).
  * Issue IRMA attributes.
- * Create IMRA attribute-based signatures: signature on a string to which IRMA attributes are verifiably attached.
+ * Perform IRMA attribute-based signature sessions, resulting in a signature on a string to which IRMA attributes are verifiably attached.
 
 ## Building
 
@@ -29,11 +29,11 @@ const request = {
     }]
 };
 
-irma.startSession(urlToServer, request)
-    .then(qr => irma.handleSession(qr, {server: urlToServer}))
+irma.startSession(server, request)
+    .then(({ sessionPtr, token }) => irma.handleSession(sessionPtr, {server, token}))
     .then(result => console.log('Done', result));
 ```
 
-This assumes you have an `irma server` listening at `urlToServer` that accepts unauthenticated requests.
+This assumes you have an [`irma server`](irma-server) that is configured to [accept unauthenticated session requests](irma-server#requestor-authentication) listening at the URL indicated by `server`.
 
 For complete examples, see the `examples` folder.

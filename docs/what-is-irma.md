@@ -44,13 +44,13 @@ Additional notes:
 
 ## Session types
 
-In an IRMA session, the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile) performs one of the following three *session types* with an *IRMA server*:
+In an IRMA session, the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile) performs one of the following three *session types* with an [*IRMA server*](#irma-servers):
 
 * *Disclosure sessions*: Upon receiving a list of requested attributes from the IRMA server, the app discloses the required attributes to the IRMA server if the app user agrees, after which they are verified by the IRMA server.
 * *Attribute-based signature sessions*: Similar to disclosure sessions, but the attributes are attached to a message digitally signed into an [*attribute-based signature*](overview#attribute-based-signatures). The attribute-based signature can be verified at any later time, ensuring that the signed message is intact, and that the IRMA attributes attached to it were valid at the time of creation of the attribute-based signature.
-* *Issuance sessions*: the IRMA app receives a new set of IRMA attributes including valid issuer signatures from the IRMA server, to use in later disclosure or attribute-based signature sessions.
+* *Issuance sessions*: the IRMA app receives a new set of IRMA attributes including valid issuer signatures from the IRMA server, to use in later disclosure or attribute-based signature sessions. (Possibly the user is asked to disclose some attributes as well, within the same IRMA session, before receiving the new attributes. This is called a *combined issuance-disclosure session*.)
 
-This process is depicted schematically and explained in more detail [here](what-is-irma#irma-session-flow). For the user, after scanning the QR in his/her IRMA app this generally looks like the following.
+This process is depicted schematically and explained in more detail [here](what-is-irma#irma-session-flow). For the user, after scanning the QR in his/her IRMA app a disclosure session generally looks like the following. (Attribute-based signature sessions and issuance sessions are identical in terms of their flow (scan qr, provide permission, success screen); only the graphical interface is different.)
 
 <div class="center" style="margin: 3em 0">
   <img src="assets/disclose-permission.png" style="width:30%;margin-right:3em" />

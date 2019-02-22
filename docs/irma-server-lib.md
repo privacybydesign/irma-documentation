@@ -43,9 +43,6 @@ Users are encouraged to provide an email address with the `Email` option in the 
 
 ## See also
 
-The  Go library [`requestorserver`](../requestorserver) wraps the functions that this library exposes
-for starting and managing IRMA sessions into HTTP endpoints. The [`irmad`](../irmad) binary wraps
-`requestorserver` into an executable
- 
-
-The [client](../../irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).
+* The Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) wraps the functions that this library exposes for starting and managing IRMA sessions into HTTP endpoints.
+* The [`irma server`](irma-server) command wraps `requestorserver` into an executable.
+* The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).

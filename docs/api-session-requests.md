@@ -2,15 +2,15 @@
 title: Session requests
 ---
 
-Each IRMA server exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and IRMA client to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
+Each [IRMA server](what-is-irma#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [IRMA app](https://github.com/privacybydesign/irma_mobile) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
 
-* The `POST /session` endpoint from [`irma server`](irma-server).
+* The [`POST /session`](api-irma-server#post-session) endpoint from [`irma server`](irma-server).
 * The [`StartSession()` function](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
 * The [`startSession()` function](api-irmajs#startsession) of `irmajs`.
 
 ## Session request data types
 
-For each of the three session types, we define a *session request* data type. Each request contain a `type` field whose value is `"disclosing"`, `"signing"` or `"issuing"`. For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-irma#irma-session-flow).
+For each of the [three IRMA session types](what-is-irma#session-types), we define a *session request* data type. Each request contain a `type` field whose value is `"disclosing"`, `"signing"` or `"issuing"`. For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-irma#irma-session-flow).
 
 ### Disclosure requests
 Disclosure requests are started with an [`irma.DisclosureRequest`](https://godoc.org/github.com/privacybydesign/irmago#DisclosureRequest). Example:
@@ -54,7 +54,7 @@ Attribute-based signature sessions are started with an [`irma.SignatureRequest`]
 `content` is an array of attribute disjunctions just as in disclosure requests.
 
 ### Issuance requests
-Issuance sesstions are started with an [`irma.IssuanceRequest`](https://godoc.org/github.com/privacybydesign/irmago#IssuanceRequest). Example:
+Issuance sessions are started with an [`irma.IssuanceRequest`](https://godoc.org/github.com/privacybydesign/irmago#IssuanceRequest). Example:
 ```json
 {
   "type": "issuing",
@@ -84,9 +84,9 @@ For each API that accepts one of the above session request data types, the reque
 ```
 
 ## JWTs: signed session requests
-The IRMA API server or `irma server` can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). This way the session request JWT can be sent to an IRMA sever for example by an untrusted source such as the frontend (browser), while the IRMA server is still able to authenticate the session request as coming from a requestor that is authorized to perform sessions.
+The IRMA API server or [`irma server`](irma-server) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). This way the session request JWT can be sent to an IRMA sever for example by an untrusted source such as the frontend (browser), while the IRMA server is still able to authenticate the session request as coming from a requestor that is authorized to perform sessions.
 
-The form of the JWT depends on the session type. For example, here is a JWT produced by the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube):
+The form of the JWT depends on the [session type](what-is-irma#session-types). For example, here is a JWT produced by the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube):
 ```
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImlybWF0dWJlIn0.eyJpYXQiOjE1NTA0MjQ4NDcsImlzcyI6IklSTUFUdWJlIiwic3ViIjoidmVyaWZpY2F0aW9uX3JlcXVlc3QiLCJzcHJlcXVlc3QiOnsidmFsaWRpdHkiOjYwLCJyZXF1ZXN0Ijp7ImNvbnRlbnQiOlt7ImxhYmVsIjoiTWVtYmVyc2hpcCIsImF0dHJpYnV0ZXMiOlsicGJkZi5wYmRmLmlybWF0dWJlLnR5cGUiXX0seyJsYWJlbCI6IkFnZSBvdmVyIDEyIiwiYXR0cmlidXRlcyI6WyJwYmRmLnBiZGYuYWdlTGltaXRzLm92ZXIxMiIsInBiZGYubmlqbWVnZW4uYWdlTGltaXRzLm92ZXIxMiJdfV19fX0.4_b12I4fwXVE5QRf7ll1K-FhjeDYQk3a4XTiykIuWW61gY9VwzJrazWDWU7PRJfb0BgLU36cyw9K5FeQPpsIRxXhFxde4ueAjAixNWtn1JG1Nt_L-7LEOV3cl6G7TAGdVx_-WrLctBQ99NMHWL4_xJ8pY253vI6oQjqp0TTwMPkOAp-taZiRY5AEW0Itj1dbX09WWbxIegL7-SIhi-kjrz-ia6h-l2udAVaeCzpQX_-1Sqm1z8-Fi4lhcRNVituCGMgsWAPUNNPExlOY1YJmuLUogvSIClW6hqTUafVxWqQ-DLJFNBWLzlOoiSj6WqtkEX5r5AsFHKpI5383umcJqA
 ```

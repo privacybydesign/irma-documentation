@@ -4,13 +4,11 @@ title: irma server
 
 
 `irma server` is an IRMA server executable (daemon) allowing you to perform IRMA sessions with
-[IRMA apps](https://github.com/privacybydesign/irma_mobile).
-It exposes the following:
- * HTTP endpoints used by the IRMA app during IRMA sessions
- * a JSON API for [requestors](https://credentials.github.io/docs/irma.html#participants),
-   allowing them to request the server to verify or issue attributes.
+[IRMA apps](https://github.com/privacybydesign/irma_mobile). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an IRMA app on behalf of a [requestor](overview#participants) (the application wishing to verify or issue attributes). It exposes the following:
+ * HTTP endpoints under `/irma`, used by the IRMA app during IRMA sessions
+ * a JSON API under `/sessions` for requestors, allowing them to request the server to verify or issue attributes.
 
-`irma server` is a subcommand of the `irma` command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle IRMA schemes, and more.
+`irma server` is a subcommand of the [`irma`](irma-cli) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle IRMA schemes, and more.
 
 ## Installing
 If necessary, clone `irmago` and install dependencies with [dep](https://github.com/golang/dep):
@@ -25,7 +23,6 @@ Build and install:
 cd irma
 go install
 ```
-
 
 Run `irma server -h` to see configuration options or just `irma server` to run the server with the default configuration.
 In order to verify your configuration, run `irma server check -v`.
@@ -106,7 +103,7 @@ When authentication is enabled (`no_auth` is `false`), requestors that are autho
 The server supports the following three authentication methods, one of which must be specified in `auth_method` for each requestor:
 * `token`: the requestor must include the `key` as an API token in a HTTP header.
 * `hmac`: the requestor symmetrically [signs the session request](api-session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/), with RSA (`RS256`), in this case `key` should be the PEM public key of the requestor.
-* `publickey`: the requestor asymetrically [signs the session request](api-session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/) with HMAC-SHA256 (`HS256`) using `key`. The `key` provided should be the Base64 encoding of the actual secret.
+* `publickey`: the requestor asymmetrically [signs the session request](api-session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/) with HMAC-SHA256 (`HS256`) using `key`. The `key` provided should be the Base64 encoding of the actual secret.
 
 For each of these modes it is also possible to specify `key_file` instead `key`; in that case the file at `key_file` will be read and used as `key`.
 
@@ -147,7 +144,7 @@ This can be useful if the session result travels along an unsafe or untrusted ro
 
 ### TLS
 
-The IRMA protocol relies on TLS for encryption of hte attributes as they travel along the internet. If your server is connected to the internet and it handles actual attributes (personal data from people), then you ***must*** ensure that the attributes are protected in transit with TLS.
+The IRMA protocol relies on TLS for encryption of the attributes as they travel along the internet. If your server is connected to the internet and it handles actual attributes (personal data from people), then you ***must*** ensure that the attributes are protected in transit with TLS.
 
 You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` options (or the `_file` equivalents), specifying a PEM certificate (chain) and PEM private key. If you use [separate requestor and app endpoints](#http-server-endpoints), additionally use `client_tls_cert` and `client_tls_privkey`.
 
@@ -159,8 +156,6 @@ Users of the server are encouraged to provide an email address with the `email` 
 
 ## See also
 
-This executable wraps the Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) which wraps the Go library [`irmaserver`](irma-server-lib).
-
-The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).
-
-This server is an alternative to, and will eventually replace, the Java [irma_api_server](https://github.com/privacybydesign/irma_api_server). 
+* This executable wraps the Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) which wraps the Go library [`irmaserver`](irma-server-lib).
+* The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).
+* This server is an alternative to, and will eventually replace, the Java [irma_api_server](https://github.com/privacybydesign/irma_api_server).
