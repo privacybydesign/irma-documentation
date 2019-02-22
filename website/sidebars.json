@@ -9,13 +9,13 @@
       "irma-server",
       "irma-server-lib",
       "irmajs",
-      "schemes"
+      "schemes",
+      "session-requests"
     ],
     "API reference": [
       "api-go",
       "api-irmajs",
-      "api-irma-server",
-      "api-session-requests"
+      "api-irma-server"
     ],
     "Documentation": [
       "overview",

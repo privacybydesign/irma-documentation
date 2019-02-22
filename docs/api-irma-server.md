@@ -32,10 +32,10 @@ The following fields may occur in this message:
 
 Start an IRMA session. What to POST to this endpoint depends on the server configuration:
 
-* If `no_auth` is true, an [(extended) JSON session request](api-session-requests)
+* If `no_auth` is true, an [(extended) JSON session request](session-requests)
 * If `no_auth` is false:
-  * [(extended) JSON session request](api-session-requests) with an API token in the `Authorization` HTTP header
-  * [JWT session request](api-session-requests#jwts-signed-session-requests) signed with RS256 or HS256
+  * [(extended) JSON session request](session-requests) with an API token in the `Authorization` HTTP header
+  * [JWT session request](session-requests#jwts-signed-session-requests) signed with RS256 or HS256
 
 If `no_auth` is false, then which of these options should be taken depends on the [`requestors`](irma-server#requestor-authentication) option passed to the `irma server`.
 

@@ -102,8 +102,8 @@ When authentication is enabled (`no_auth` is `false`), requestors that are autho
 
 The server supports the following three authentication methods, one of which must be specified in `auth_method` for each requestor:
 * `token`: the requestor must include the `key` as an API token in a HTTP header.
-* `hmac`: the requestor symmetrically [signs the session request](api-session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/), with RSA (`RS256`), in this case `key` should be the PEM public key of the requestor.
-* `publickey`: the requestor asymmetrically [signs the session request](api-session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/) with HMAC-SHA256 (`HS256`) using `key`. The `key` provided should be the Base64 encoding of the actual secret.
+* `hmac`: the requestor symmetrically [signs the session request](session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/), with RSA (`RS256`), in this case `key` should be the PEM public key of the requestor.
+* `publickey`: the requestor asymmetrically [signs the session request](session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/) with HMAC-SHA256 (`HS256`) using `key`. The `key` provided should be the Base64 encoding of the actual secret.
 
 For each of these modes it is also possible to specify `key_file` instead `key`; in that case the file at `key_file` will be read and used as `key`.
 

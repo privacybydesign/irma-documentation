@@ -14,7 +14,7 @@ import irma from '@privacybydesign/irma';
 var irma = require('@privacybydesign/irma');
 ```
 
-Its primary functions are [`startSession()`](#startsession), which can start an IRMA session by sending a (unsigned or JWT) [session request](api-session-requests) to an IRMA server, and [`handleSession()`](#handlesession), which given the output of `startSession()` handles the remainder of an IRMA session.
+Its primary functions are [`startSession()`](#startsession), which can start an IRMA session by sending a (unsigned or JWT) [session request](session-requests) to an IRMA server, and [`handleSession()`](#handlesession), which given the output of `startSession()` handles the remainder of an IRMA session.
 
 ## API reference
 
@@ -93,14 +93,14 @@ Start an IRMA session at an IRMA server. This function supports all authenticati
 
  Parameters:
  * `server`: URL to IRMA server at which to start the session.
- * `request`: Session request, either a JWT or an [(extended) session request](api-session-requests) (see below).
+ * `request`: Session request, either a JWT or an [(extended) session request](session-requests) (see below).
  * `method`: authentication method (supported: `none`, `token`, `hmac`, `publickey`; default is `none`).
  * `key`: API token or JWT key.
  * `name`: name of the requestor (only for `hmac` and `publickey` mode).
 
 The authentication method is determined by the `request` and `method` parameters as follows.
-* If `request` is a `string` then it is posted as a [session request JWT](api-session-requests#jwts-signed-session-requests) to the IRMA server.
-* Otherwise it should be an `object` containing an [(extended) session request](api-session-requests). How it is handled depends on `method`:
+* If `request` is a `string` then it is posted as a [session request JWT](session-requests#jwts-signed-session-requests) to the IRMA server.
+* Otherwise it should be an `object` containing an [(extended) session request](session-requests). How it is handled depends on `method`:
   * `none`: it is POSTed as JSON to the IRMA server (which must be configured to accept unauthorized session requests).
   * `token`: it is POSTed as JSON to the IRMA server along with the `key` parameter as an API token in a HTTP header.
   * `publickey`: it is first signed into a JWT with the specified RSA private `key` in PEM, using `name` as the requestor name, and then POSTed to the IRMA server.

@@ -25,7 +25,7 @@ Software components:
 Explanation of the steps:
 
 1. Usually the session starts by the user performing some action on the website (e.g. clicking on "Log in with IRMA").
-1. The requestor sends its [session request](api-session-requests) (containing the attributes to be disclosed or issued, or message to be signed) to the [IRMA server](#irma-servers). Depending on its configuration, the IRMA server accepts the session request only if the session request is authentic (e.g. a validly signed [session request JWT](api-session-requests#jwts-signed-session-requests)) from an authorized requestor.
+1. The requestor sends its [session request](session-requests) (containing the attributes to be disclosed or issued, or message to be signed) to the [IRMA server](#irma-servers). Depending on its configuration, the IRMA server accepts the session request only if the session request is authentic (e.g. a validly signed [session request JWT](session-requests#jwts-signed-session-requests)) from an authorized requestor.
 1. The IRMA server accepts the request and assigns a session token (a random string) to it. It returns the contents of the QR code that the frontend must display: the URL to itself and the session token.
 1. The frontend ([`irmajs`](irmajs)) receives and displays the QR code, which is scanned by the IRMA app.
 1. The IRMA app requests the session request from step 1, receiving the attributes to be disclosed or issued, or message to be signed.
