@@ -41,12 +41,9 @@ class Footer extends React.Component {
           </a>
           <div>
             <h5>Docs</h5>
-            <a href={this.docUrl('getting-started', this.props.language)}>
-              Getting Started
-            </a>
-            <a href={this.docUrl('overview', this.props.language)}>
-              Technical overview
-            </a>
+            <a href={this.docUrl('what-is-irma')}>What is IRMA?</a>
+            <a href={this.docUrl('getting-started')}>Getting Started</a>
+            <a href={this.docUrl('overview')}>Technical overview</a>
           </div>
           <div>
             <h5>Community</h5>
@@ -57,6 +54,7 @@ class Footer extends React.Component {
           <div>
             <h5>More</h5>
             <a href={this.baseUrl('about')}>About</a>
+            <a href="https://privacybydesign.foundation/attribute-index/en/">Attribute index</a>
             <a href="https://privacybydesign.foundation/">Privacy by Design Foundation</a>
           </div>
         </section>

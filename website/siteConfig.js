@@ -39,6 +39,7 @@ const siteConfig = {
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [
     {doc: 'getting-started', label: 'Docs'},
+    {href: 'https://privacybydesign.foundation/attribute-index/en/', label: 'Attribute index'},
     {page: 'about', label: 'About'},
     {href: 'https://privacybydesign.foundation', label: 'Privacy by Design Foundation'},
   ],
