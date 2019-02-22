@@ -8,7 +8,7 @@ title: irma server
  * HTTP endpoints under `/irma`, used by the IRMA app during IRMA sessions
  * a JSON API under `/sessions` for requestors, allowing them to request the server to verify or issue attributes.
 
-`irma server` is a subcommand of the [`irma`](irma-cli) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle IRMA schemes, and more.
+`irma server` is a subcommand of the [`irma`](irma-cli) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle [IRMA schemes](schemes), and more.
 
 ## Installing
 If necessary, clone `irmago` and install dependencies with [dep](https://github.com/golang/dep):
@@ -29,7 +29,7 @@ In order to verify your configuration, run `irma server check -v`.
 
 
 ## Starting a session
-Assuming the server runs in the [default configuration](#default-configuration) (in particular [requestor authentication](#requestor-authentication) is disabled (`no_auth` is `true`) and the `irma-demo` scheme is installed), issue `irma-demo.MijnOverheid.ageLower` attributes using the [`session`](../../irma) subcommand of the `irma` tool:
+Assuming the server runs in the [default configuration](#default-configuration) (in particular [requestor authentication](#requestor-authentication) is disabled (`no_auth` is `true`) and the `irma-demo` [scheme](schemes) is installed), issue `irma-demo.MijnOverheid.ageLower` attributes using the [`session`](../../irma) subcommand of the `irma` tool:
 ```shell
 irma session --server http://localhost:8088 --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
 ```
@@ -59,7 +59,7 @@ In the remainder of this document, when referring to options we write them as co
 
 ### Default configuration
 In the default configuration (run `irma server check -v` to see it) the server is immediately usable. In particular, it
-* uses the default [IRMA schemes](https://credentials.github.io/docs/irma.html#scheme-managers) ([pbdf](https://github.com/credentials/pbdf-schememanager) and [irma-demo](https://github.com/credentials/irma-demo-schememanager)), downloading them if necessary
+* uses the [default IRMA schemes](schemes#default-schemes-pbdf-and-irma-demo) ([`pbdf`](https://github.com/credentials/pbdf-schememanager) and [`irma-demo`](https://github.com/credentials/irma-demo-schememanager)), downloading them if necessary
 * allows anyone to use the server [without authentication](#requestor-authentication) (the `no_auth` setting is `true`).
 
 If the server is reachable from the internet, you should consider enabling authentication of session requests.

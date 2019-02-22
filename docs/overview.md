@@ -81,34 +81,13 @@ From this the verifier can conclude that the credentials from which attributes a
 
 ## Schemes
 
-Within the IRMA ecosystem, every party (the issuers, verifiers and users) must be aware of the credential types including the names of all attributes, and the issuers and their public keys. All such information is contained in IRMA *schemes*. It is the task of the *scheme manager* to determine and distribute this information to all parties.
-
-The [Privacy by Design Foundation](https://privacybydesign.foundation/), which develops IRMA and issues a basic set of attributes, operates such a scheme (namely, the default one that is hardcoded into the IRMA app). In more detail, the main task of the scheme manager is to maintain a directory structure [such as this one](https://github.com/privacybydesign/pbdf-schememanager), which contains:
- 
-* All information about all issuers that fall under this scheme including their logos,
-* The Idemix public keys of said issuers,
-* All credential types that these issuers may issue, including their logos.
-
-This entire directory structure is signed using an (ECDSA) private-public keypair that the scheme manager has for this purpose. For more information about the layout that this directory tree must have, see this [demo scheme](https://github.com/privacybydesign/irma-demo-schememanager).
-
-A copy of this directory structure is hardcoded into the IRMA app. Another copy is hosted online ([example](http://privacybydesign.foundation/schememanager/pbdf/description.xml)). When the IRMA app encounters an issuer, credential type or public key during an IRMA session that it has not seen before, it downloads it from this website (also verifying the tree's ECDSA signature).
-
-All of this information is thus signed by as well as distributed by the scheme manager. This means that the scheme manager has exclusive and total control over which issuers may join his domain, and what credential types and attributes this issuer may issue. Additionally, the scheme manager spreads the issuer public keys.
-
-As mentioned above, the Privacy by Design Foundation operates the scheme which is hardcoded by default in the IRMA app. However, anyone can create their own IRMA scheme. At minimum the following must be done:
-
-* Create a directory structure like the one linked to above (you can use the `scheme` subcommand of the [`irma` tool](irma) to generate an ECDSA public-private keypair and sign the directory tree);
-* Define at least one issuer and generate its Idemix public-private keypair (again using `irma`), putting the public key in the directory structure;
-* Define at least one credential type that this issuer will issue;
-* Compile a version of the IRMA app with this directory tree hardcoded in it;
-* Host an [`irma server`](irma-server) that will issue and verify your credential type (as this  server will issue credentials it must have a copy of the scheme directory tree, and the Idemix private key);
-* Create a website using [irmajs](irmajs) that will issue and verify instances of your credential type.
+IRMA schemes are documented [here](schemes).
 
 ## Issuers
 
 Each IRMA issuer has an Idemix private key, which it must keep secret as it is used when issuing credentials, and a corresponding public key which is distributed to attribute verifiers and IRMA apps in the IRMA scheme. An issuer may issue multiple credential types (and a scheme may contain many issuers).
 
-As explained above, issuers cannot independently create credential types and start issuing them to IRMA app users: the credential type must first be included in an IRMA scheme by the scheme manager. In case of the default scheme `pbdf` of the IRMA app, this is the [Privacy by Design Foundation]((https://privacybydesign.foundation/issuance/)).
+Issuers cannot independently create credential types and start issuing them to IRMA app users: the credential type must first be included in an [IRMA scheme](schemes) by the scheme manager. In case of the default scheme `pbdf` of the IRMA app, this is the [Privacy by Design Foundation]((https://privacybydesign.foundation/issuance/)).
 
 When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, the Privacy by Design Foundation documents this [here](https://privacybydesign.foundation/issuance/).
 

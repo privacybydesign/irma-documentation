@@ -8,7 +8,8 @@
       "irma-cli",
       "irma-server",
       "irma-server-lib",
-      "irmajs"
+      "irmajs",
+      "schemes"
     ],
     "API reference": [
       "api-go",
