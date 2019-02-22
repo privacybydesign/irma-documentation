@@ -23,7 +23,7 @@ Its primary functions are [`startSession()`](#startsession), which can start an 
 ---
 
 ### `SessionStatus`
-A emum containing possible IRMA session statuses, defined as follows:
+A enum containing possible IRMA [session statuses](https://godoc.org/github.com/privacybydesign/irmago/server#Status), defined as follows:
 
 ```js
 const SessionStatus = {
@@ -57,18 +57,23 @@ Returns a promise that can resolve at any of these phases, depending on the opti
 | `language` | `'en'` | Popup language when `method === 'popup'` |
 | `showConnectedIcon` |  `true` | When method is `'popup'` or `'canvas'`, replace QR with a phone icon when phone connects |
 | `returnStatus` |  `SessionStatus.Done` | When the session reaches this status control is returned to the caller |
-| `server` | `''` | Server URL to fetch the session result from after the session is done. Implies `returnStatus === SessionStatus.Done`. |
+| `server` | `''` | Server URL to fetch the session result when session is done. Implies `returnStatus === SessionStatus.Done` |
+| `token` | `''` | Session token required to fetch the session result when session is done |
 | `resultJwt` |  `false` | Retrieve signed session result from the irma server |
 | `disableMobile` | `false` | Disable automatic navigation to IRMA app on mobile |
 
 The following `method`s are supported:
 * `popup`: Draw a popup overlay with the QR and a cancel button in it.
 * `canvas`: Draw the QR into the HTML `canvas` specified by the `element` option.
-* `mobile`: For mobile browsers, open the IRMA app directly instead of drawing a QR. Note that this mode is default when running `irmajs` in a mobile browser, even if you specify another method. You can disable this behaviour and use your own `method` by setting `disableMobile` to true.
+* `mobile`: For mobile browsers, open the IRMA app directly instead of drawing a QR. Note that this mode is default when running `irmajs` in a mobile browser, even if you specify another method. You can disable this behavior and use your own `method` by setting `disableMobile` to true.
 * `console`: Draw the QR into the console.
 * `url`: Return the QR as a data URL (for in an `img` HTML tag). Implies `returnStatus = SessionStatus.Initialized`.
 
-If the `server` parameter is given and contains a URL to an IRMA server, then at the end of the session the session result is retrieved from the IRMA server. In that case, the promise returned by this function receives a [`SessionResult` message](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult). Otherwise, the promise receives the final `SessionStatus` of the session.
+What the promise returned by this function receives depends on the options as follows:
+* If the `server` and `token` options are not provided then the session status is returned.
+* If the `server` and `token` parameters are given, containing a URL to an IRMA server and the session token at the IRMA server, respectively, then the session result is retrieved from the IRMA server. In that case, the promise returned by this function receives one of the following:
+   * If `resultJwt` is `false` (default), a [`SessionResult` message](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult) as returned by the [`GET /session/{token}/result`](api-irma-server#get-session-token-result) endpoint of the `irma server`. 
+   * Otherwise, a session result JWT as returned by the [`GET /session/{token}/result-jwt`](api-irma-server#get-session-token-result-jwt) endpoint of the `irma server`.
 
 If the session is not successful, an exception is thrown. If the session is cancelled or times out, the message will be `SessionStatus.Cancelled` or `SessionStatus.Timeout`.
 
@@ -80,19 +85,40 @@ If the session is not successful, an exception is thrown. If the session is canc
 irma.startSession(server, request[, method, key[, name]])
 ```
 
-Start an IRMA session at an IRMA server. This function supports all authentication methods of the `POST /session` endpoint of the `irma server`. It returns a promise with the response from the IRMA server (the session QR contents) (which can be handled by [`handleSession()`](#handlesession)).
+Start an IRMA session at an IRMA server. This function supports all authentication methods of the `POST /session` endpoint of the `irma server`. It returns a promise with the response (the session QR contents) from the IRMA server (which can be handled by [`handleSession()`](#handlesession)).
 
  Parameters:
  * `server`: URL to IRMA server at which to start the session.
- * `request`: Session request, either a JWT or an [(extended) session request](api-session-requests) (see below)
- * `method`: authentication method (supported: `undefined`, `none`, `token`, `hmac`, `publickey`)
- * `key`: API token or JWT key
- * `name`: name of the requestor (only for `hmac` and `publickey` mode)
+ * `request`: Session request, either a JWT or an [(extended) session request](api-session-requests) (see below).
+ * `method`: authentication method (supported: `none`, `token`, `hmac`, `publickey`; default is `none`).
+ * `key`: API token or JWT key.
+ * `name`: name of the requestor (only for `hmac` and `publickey` mode).
 
 The authentication method is determined by the `request` and `method` parameters as follows.
 * If `request` is a `string` then it is posted as a [session request JWT](api-session-requests#jwts-signed-session-requests) to the IRMA server.
-* Otherwise it should be an `object` contaning an [(extended) session request](api-session-requests). How it is handled depends on `method`:
-  * `none`: it is POSTED as JSON to the IRMA server (which must be configured to accept unauthorized session requests).
-  * `token`: it is POSTED as JSON to the IRMA server along with an API token from the `key` parameter in a HTTP header.
+* Otherwise it should be an `object` containing an [(extended) session request](api-session-requests). How it is handled depends on `method`:
+  * `none`: it is POSTed as JSON to the IRMA server (which must be configured to accept unauthorized session requests).
+  * `token`: it is POSTed as JSON to the IRMA server along with the `key` parameter as an API token in a HTTP header.
   * `publickey`: it is first signed into a JWT with the specified RSA private `key` in PEM, using `name` as the requestor name, and then POSTed to the IRMA server.
   * `hmac`: it is first signed into a JWT with the specified symmetric HMAC `key`, using `name` as the requestor name, and then POSTed to the IRMA server.
+
+---
+
+### `signSessionRequest()`
+```js
+signSessionRequest(request, method, key, name)
+```
+
+---
+
+### `waitConnected()`
+```js
+waitConnected(url)
+```
+
+---
+
+### `waitDone()`
+```js
+waitDone(url)
+```
