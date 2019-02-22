@@ -19,13 +19,13 @@ A typical IRMA session is depicted schematically below.
 
 Software components:
 * *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the IRMA app scans. All frontend tasks depicted in the diagram are supported by [`irmajs`](irmajs).
-* [*IRMA server*](irma-sessions#irma-servers): Handles IRMA protocol with the IRMA app for the requestor.
+* [*IRMA server*](#irma-servers): Handles IRMA protocol with the IRMA app for the requestor.
 * [*IRMA mobile app*](https://github.com/privacybydesign/irma_mobile): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994).
 
 Explanation of the steps:
 
-1. Usually the [IRMA session](irma-sessions) starts by the user performing some action on the website (e.g. clicking on "Log in with IRMA").
-1. The requestor sends its [session request](api-session-requests) (containing the attributes to be disclosed or issued, or message to be signed) to the [IRMA server](irma-sessions#irma-servers). Depending on its configuration, the IRMA server accepts the session request only if the session request is authentic (e.g. a validly signed [session request JWT](api-session-requests#jwts-signed-session-requests)) from an authorized requestor.
+1. Usually the session starts by the user performing some action on the website (e.g. clicking on "Log in with IRMA").
+1. The requestor sends its [session request](api-session-requests) (containing the attributes to be disclosed or issued, or message to be signed) to the [IRMA server](#irma-servers). Depending on its configuration, the IRMA server accepts the session request only if the session request is authentic (e.g. a validly signed [session request JWT](api-session-requests#jwts-signed-session-requests)) from an authorized requestor.
 1. The IRMA server accepts the request and assigns a session token (a random string) to it. It returns the contents of the QR code that the frontend must display: the URL to itself and the session token.
 1. The frontend ([`irmajs`](irmajs)) receives and displays the QR code, which is scanned by the IRMA app.
 1. The IRMA app requests the session request from step 1, receiving the attributes to be disclosed or issued, or message to be signed.
@@ -41,3 +41,29 @@ Additional notes:
   -  Often the session request is sent to the IRMA server by the requestor's backend, after which the IRMA server's reply in step 2 is forwarded to the frontend which renders it as a QR code. Step 1 can however also be done by `irmajs`, in which case `irmajs` automatically picks up the IRMA server's reply in step 2 and renders the QR code.
   - Similarly, `irmajs` can be instructed to fetch the session result in step 10, but this can also be done in the backend.
 * The IRMA server could be deployed on the same machine as the requestor's backend, but it need not be; possibly it is not even controlled by the requestor. In case the [`irmaserver`](irma-server-lib) library is used, steps 2/3 and 10 are function calls.
+
+## Session types
+
+In an IRMA session, the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile) performs one of the following three *session types* with an *IRMA server*:
+
+* *Disclosure sessions*: Upon receiving a list of requested attributes from the IRMA server, the app discloses the required attributes to the IRMA server if the app user agrees, after which they are verified by the IRMA server.
+* *Attribute-based signature sessions*: Similar to disclosure sessions, but the attributes are attached to a message digitally signed into an [*attribute-based signature*](overview#attribute-based-signatures). The attribute-based signature can be verified at any later time, ensuring that the signed message is intact, and that the IRMA attributes attached to it were valid at the time of creation of the attribute-based signature.
+* *Issuance sessions*: the IRMA app receives a new set of IRMA attributes including valid issuer signatures from the IRMA server, to use in later disclosure or attribute-based signature sessions.
+
+This process is depicted schematically and explained in more detail [here](what-is-irma#irma-session-flow). For the user, after scanning the QR in his/her IRMA app this generally looks like the following.
+
+<div class="center" style="margin: 3em 0">
+  <img src="assets/disclose-permission.png" style="width:30%;margin-right:3em" />
+  <img src="assets/disclose-done.png" style="width:30%" />
+</div>
+
+## IRMA servers
+
+Various existing software components documented on this website can perform the role of the IRMA server. 
+Apart from exposing an API that is used by the IRMA app during IRMA sessions, each of these components also offer an API with which IRMA sessions can be started and monitored, for use by the [*requestor*](overview#participants): the party wishing to issue attributes to or verify attributes from an IRMA app. The IRMA server handles the IRMA session with the IRMA app for the requestor.
+
+Currently the following IRMA servers exist:
+
+* The `irma server` command of the [`irma`](irma-cli) binary: a standalone daemon exposing its requestor API as HTTP endpoints. [Documentation](irma-server); [API reference](api-irma-server).
+* The `irmaserver` Go library, exposing a HTTP server that handles IRMA sessions with the IRMA app, and Go functions for starting and managing IRMA sessions. [Documentation](irma-server-library); [API reference](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver).
+* The now deprecated [`irma_api_server`](https://github.com/privacybydesign/irma_api_server).

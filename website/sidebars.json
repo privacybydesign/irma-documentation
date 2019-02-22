@@ -2,8 +2,7 @@
   "docs": {
     "Intro": [
       "getting-started",
-      "what-is-irma",
-      "irma-sessions"
+      "what-is-irma"
     ],
     "Software components": [
       "irma-cli",

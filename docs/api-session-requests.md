@@ -10,7 +10,7 @@ Each IRMA server exposes APIs for creating IRMA sessions with a session request.
 
 ## Session request data types
 
-For each of the three session types, we define a *session request* data type. Each request contain a `type` field whose value is `"disclosing"`, `"signing"` or `"issuing"`. For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-irma#irma-sessions).
+For each of the three session types, we define a *session request* data type. Each request contain a `type` field whose value is `"disclosing"`, `"signing"` or `"issuing"`. For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-irma#irma-session-flow).
 
 ### Disclosure requests
 Disclosure requests are started with an [`irma.DisclosureRequest`](https://godoc.org/github.com/privacybydesign/irmago#DisclosureRequest). Example:
