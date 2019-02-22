@@ -18,3 +18,7 @@
 .godoc img {
   margin: 0 0;
 }
+
+a.active {
+  font-weight: bold;
+}
