@@ -1,5 +1,4 @@
 ---
-id: getting-started
 title: Getting started
 ---
 
@@ -26,7 +25,8 @@ irma server -v
 ```
 Run `irma server -h` to see configuration options. In order to verify your configuration, run `irma server check -v`.
 
-*Tip*: You can perform a first IRMA session using your server on the command line as follows:
+## Perform a command line IRMA session
+You can perform a first IRMA session using your server on the command line as follows:
 ```shell
 irma session --server http://localhost:8088 --disclose pbdf.pbdf.irmatube.type
 ```
@@ -58,4 +58,4 @@ irma server -v --static-path ~/irmajs/examples/browser
 ```
 A webpage demoing IRMA attribute issuance verification should now be available at http://localhost:8088.
 
-*Tip*: open the browser console and the console running `irma server` to see various log and possibly error messages as the IRMA sesion proceeds.
+> Open the browser console and the console running `irma server` to see various log and possibly error messages as the IRMA session proceeds.
