@@ -114,8 +114,10 @@ For each possible session type, the contents of the `sub` field and the name of 
 | Issuance | `issue_request` | `iprequest` |
 
 Currently the following libraries can produce JWTs of this form:
-* The [`irma`](https://github.com/privacybydesign/irmago) Go library.
-* The [`irma-requestor`](https://github.com/privacybydesign/irma-requestor) PHP library.
-* The [`irma_api_common`](https://github.com/privacybydesign/irma_api_common) Java library.
+* The [`irma`](https://godoc.org/github.com/privacybydesign/irmago) Go library
+* The [`irmajs`](irmajs) Javascript library
+* The [`irma-requestor`](https://github.com/privacybydesign/irma-requestor) PHP library
+* The [`irma_api_common`](https://github.com/privacybydesign/irma_api_common) Java library
+* The [`irma-diva-js`](https://github.com/Alliander/diva-irma-js) Javascript library
 
-`irma server` currently supports JWTS signed (asymmetrically with RSA) with the `RS256` algorithm, and (symmetrically signed with HMAC-SHA256) `RS256`. The IRMA API server only supports `RS256`.
+`irma server` currently supports JWTs signed (asymmetrically with RSA) with the `RS256` algorithm, and (symmetrically signed with HMAC-SHA256) `RS256`. The IRMA API server only supports `RS256`.

@@ -47,7 +47,7 @@ Description of the files:
 * A scheme, issuer, or credential type (call it an *entity*) is always stored in `description.xml`, contained in a folder whose name *must* be that of the entity as specified by the xml file.
 * Each issuer and each credential type should include a `logo.png` for in the IRMA app.
 * `index` contains of each file in the tree its SHA256 hash, as well as its path and filename.
-* `index.sig` is an ECDSA signature over the `index`, thus effectively signing each file listed in the `index.
+* `index.sig` is an ECDSA signature over the `index`, thus effectively signing each file listed in the `index`.
 * `timestamp` contains the Unix timestamp of the last time the scheme was modified.
 * `pk.pem` is the scheme's public key against which `index.sig` should verify.
 * `kss-0.pem` (optional): if the scheme uses a [keyshare server](keyshare-protocol), then this contains the keyshare server's public key.
