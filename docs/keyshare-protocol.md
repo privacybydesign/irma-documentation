@@ -44,28 +44,9 @@ In IRMA, the first attribute $k_0$ of a credential is always the user's *secret 
 
 Thus each user has her own secret key, namely the integer that serves as the first attribute in each of her credentials. We shall drop the index and call this integer $m$. Recalling that the signed tuple of attributes of a credential is then $(m, k_1, ..., k_n)$, the purpose of the keyshare protocol is to enforce that the tuple of integers that is effectively signed in the issuance protocol is $(m_u + m_k, k_1, ..., k_n)$, where $m_u$ is known to the user and hidden from the keyshare server (along with all other attributes), and $m_k$ is known to the keyshare server and hidden from the user. That is, the user's secret key is *split* into two halves, one of which resides at the keyshare server (hence its name). Consequentially, the cooperation of the keyshare server in IRMA sessions, which necessarily always involve the secret key $m = m_u + m_k$, has become necessary.
 
-### Zero-knowledge proofs of hidden attributes
-
-We briefly review how zero-knowledge proofs are used in IRMA to hide attributes. Let $G$ be a (multiplicatively written) cyclic group (in Idemix this is $G = QR(n)$, the subgroup of quadratic residues in the integers modulo $n$), and let $R$ be a generator of $G$ - that is, any element $P$ from $G$ can be written as $P = R^m$ for some integer (attribute) $m$. Suppose that $R$ and $P$ are known, and the (IRMA) user wishes to convince someone (the *verifier*) that she knows the number $m$ which is such that $P = R^m$. IRMA uses *zero-knowledge proofs in the Fiat-Shamir heuristic* for this. Skipping many details, the following happens:
-
-1. The verifier sends a random number $\eta$ called the *nonce* to the user.
-1. The user:
-   1. generates a random number $w$
-   1. computes the *commitment* $W = R^w$,
-   1. computes the *challenge* $c = H(P, W, \eta)$, where $H$ is a hash function (e.g., SHA256)
-   1. computes the *response* $s = cm + w$,
-   1. sends the tuple $(c, s)$ to the verifier.
-1. The verifier computes $W' = R^sP^{-c}$ and $c' = H(P, W', \eta)$, and then verifies that $c = c'$.
-
-If $c$ and $s$ are correctly computed, then $W' = R^sP^{-c} = R^{cm+w}R^{-mc} = R^w = W$, so that the verification equation $c' = H(P, W', \eta) = H(P, W, \eta) = c$ indeed holds. Additionally, when correctly implemented this protocol guarantees the following:
-* The user indeed knows $m$ (more precisely: if the user does not know the number $m$ then it cannot make the verifier accept),
-* The verifier learns nothing about the value or properties of $m$ that it did not already know, except that it is known to the user.
-
-The actual zero-knowledge proof protocol implemented in IRMA allows for simultaneous proving knowledge of *multiple* hidden numbers, instead of just the one $m$ like the protocol above. This extension is essentially straightforward and not relevant here.
-
 ### Splitting the secret key across the user and keyshare server
 
-Now let $m = m_u + m_k$ with $m_u$ only known to the user, $m_k$ only known to the keyshare server, and $m$ known to neither. Then we can modify the protocol above in such a way that the user and keyshare server *jointly* prove knowledge of the number $m$, as follows.
+As mentioned, in IRMA the secret key $m$ is always kept hidden from the verifier using [a zero-knowledge proof](zkp). Now let $m = m_u + m_k$ with $m_u$ only known to the user, $m_k$ only known to the keyshare server, and $m$ known to neither. We now describe how we can modify the zero-knowledge proof of the secret key in such a way that the user and keyshare server *jointly* prove knowledge of the number $m$, as follows. We refer to the diagram and use the notation of the [page on zero-knowledge proofs](zkp).
 
 * After step 2.2, the user asks the keyshare server to generate its own random $w_k$ and compute $W_k = R^{w_k}$. The keyshare server keeps $w_k$ hidden but sends $W_k$ to the user.
 * The user computes the challenge as $c = H(P, WW_k, \eta)$, and then sends $c$ to the keyshare server.
