@@ -55,7 +55,7 @@ class Footer extends React.Component {
             <h5>More</h5>
             <a href={this.baseUrl('about')}>About</a>
             <a href="https://privacybydesign.foundation/attribute-index/en/">Attribute index</a>
-            <a href="https://privacybydesign.foundation/">Privacy by Design Foundation</a>
+            <a href="https://privacybydesign.foundation/en">Privacy by Design Foundation</a>
           </div>
         </section>
 
