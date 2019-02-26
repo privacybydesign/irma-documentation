@@ -23,7 +23,7 @@ function Help(props) {
     {
       title: 'Browse Docs',
       content: `Learn more about IRMA using the [documentation on this site.](${docUrl(
-        'getting-started.html',
+        'what-is-irma',
       )})`,
     },
     {
@@ -47,7 +47,7 @@ function Help(props) {
           <header className="postHeader">
             <h1>About IRMA</h1>
           </header>
-          <p>IRMA is developed and maintained by the <a href="https://privacybydesign.foundation/">Privacy by Design Foundation</a>. See the Foundation's website for a.o. statistics on the Foundation's IRMA infrastructure; scientific publications related to IRMA; and how you can support IRMA.</p>
+          <p>IRMA is developed and maintained by the <a href="https://privacybydesign.foundation/">Privacy by Design Foundation</a>, and is <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software">free and open source</a>. See the Foundation's website for news about IRMA; how you can support IRMA; statistics on the Foundation's IRMA infrastructure; scientific publications related to IRMA; and more.</p>
           <ul>
             <li><a href="https://privacybydesign.foundation/issuance/">IRMA attribute issuance</a></li>
             <li><a href="https://privacybydesign.foundation/irma-start/">IRMA introduction for IRMA app users</a></li>
