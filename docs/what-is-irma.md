@@ -67,3 +67,7 @@ Currently the following IRMA servers exist:
 * The `irma server` command of the [`irma`](irma-cli) binary: a standalone daemon exposing its requestor API as HTTP endpoints. [Documentation](irma-server); [API reference](api-irma-server).
 * The `irmaserver` Go library, exposing a HTTP server that handles IRMA sessions with the IRMA app, and Go functions for starting and managing IRMA sessions. [Documentation](irma-server-library); [API reference](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver).
 * The now deprecated [`irma_api_server`](https://github.com/privacybydesign/irma_api_server).
+
+## About this documentation
+
+IRMA uses JSON to pass messages within IRMA sessions. The majority of IRMA is [written in Go](https://github.com/privacybydesign/irmago), and the JSON messages generally correspond to specific Go structs. For example, the [`GET /session/{token}/result`](api-irma-server#get-session-token-result) endpoint of the [`irma server`](irma-server) outputs instances of the [`server.SessionResult`](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult).  In such cases, a link to the corresponding Go struct will be included. This can tell you what fields you can use or expect. (Note that some structs have custom (un)marshalers. See also the [Go documentation](https://blog.golang.org/json-and-go) on JSON and Go.)
