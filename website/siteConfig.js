@@ -23,14 +23,16 @@
 const siteConfig = {
   title: 'IRMA docs', // Title for your website.
   tagline: 'Technical documentation of the IRMA project',
-  url: 'https://privacybydesign.foundation/en', // Your website URL
-  baseUrl: '/', // Base URL for your project */
+  url: 'https://irma.app', // Your website URL
+  baseUrl: '/docs/', // Base URL for your project
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
 
+  docsUrl: '',
+
   // Used for publishing and more
-  projectName: 'irma-docs',
+  projectName: 'irma-documentation',
   organizationName: 'privacybydesign',
   // For top-level user or org sites, the organization is still the same.
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
@@ -82,8 +84,8 @@ const siteConfig = {
 
   // Add custom scripts here that would be placed in <script> tags.
   scripts: [
-    'https://buttons.github.io/buttons.js',
-    '/js/navhighlight.js'
+    '/docs/js/base.js',
+    '/docs/js/navhighlight.js'
   ],
 
   scrollToTop: true,
