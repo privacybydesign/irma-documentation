@@ -43,7 +43,7 @@ These print QRs in your terminal that you can scan with your IRMA app to perform
 
 ## Configuring
 Run `irma server -h` to see all configuration options. Each option may be passed as:
- 1. a command line flags (e.g. `--listen-addr`)
+ 1. a command line flags (e.g. [`--listen-addr`](#http-server-endpoints))
  2. a environmental variable (e.g. `IRMASERVER_LISTEN_ADDR`)
  3. an item in a configuration file (e.g. `"listen_addr"`) (which may be in JSON, TOML or YAML)
  
@@ -51,7 +51,8 @@ Run `irma server -h` to see all configuration options. Each option may be passed
  * Flags supersede environmental variables which supersede configuration file entries.
  * Dashes are used in flags, but underscores are used in environmental variables and configuration file entries.
  * Environmental variables are uppercased and prefixed with `IRMASERVER_`.
- * The `requestors` option is special: when passed as a flag or environmental variable, it must be passed in JSON.
+ * The [`requestors`](#requestor-authentication) option is special: when passed as a flag or environmental variable, it must be passed in JSON.
+ * When passing a boolean flag [use an `=`](https://golang.org/pkg/flag/#hdr-Command_line_flag_syntax), for example [`--no-auth=false`](#requestor-authentication).
 
 In order to see the configuration that the server uses after having gathered input from these sources, specify `-v` or `-vv` or use the `verbose` option. Use `irma server check -v` (with the same flags, env vars and config files as `irma server`) to check your configuration for correctness before running the server.
 
