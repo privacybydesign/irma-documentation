@@ -51,7 +51,7 @@ Run `irma server -h` to see all configuration options. Each option may be passed
  * Flags supersede environmental variables which supersede configuration file entries.
  * Dashes are used in flags, but underscores are used in environmental variables and configuration file entries.
  * Environmental variables are uppercased and prefixed with `IRMASERVER_`.
- * The [`requestors`](#requestor-authentication) option is special: when passed as a flag or environmental variable, it must be passed in JSON.
+ * The [`requestors`](#requestor-authentication) option is special: when passed as a flag or environmental variable, it must be passed as a JSON object (for example: `--requestors '{"myapp":{"auth_method":"token","key":"12345"}}'`).
  * When passing a boolean flag [use an `=`](https://golang.org/pkg/flag/#hdr-Command_line_flag_syntax), for example [`--no-auth=false`](#requestor-authentication).
 
 In order to see the configuration that the server uses after having gathered input from these sources, specify `-v` or `-vv` or use the `verbose` option. Use `irma server check -v` (with the same flags, env vars and config files as `irma server`) to check your configuration for correctness before running the server.
@@ -109,7 +109,7 @@ The server supports the following three authentication methods, one of which mus
 For each of these modes it is also possible to specify `key_file` instead `key`; in that case the file at `key_file` will be read and used as `key`.
 
 ### Permissions
-For each of the three IRMA session types (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
+For each of the [three IRMA session types](what-is-irma#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
 ```json
 {
     "requestors": {
@@ -129,9 +129,31 @@ This means that `myapp` is authorized to request `irma-demo.MijnOverheid.ageLowe
 
 Global permissions can be applied to all requestors by using the global `disclose_perms`, `sign_perms` and `issue_perms` options. For each requestor, the effective set of permissions is the union of the permissions specified in its `requestors` map and the global permission set.
 
-The global options also work when `no_auth` is enabled. Thus in this case a session type can be disabled by granting no one the permission, e.g., `issue_perms: ["*"]` would disable issuance.
+The global options also work when `no_auth` is enabled. Thus in this case a session type can be disabled by granting no one the permission, e.g., `issue_perms: []` would disable issuance.
 
 In development mode, when `production` is `false`, the defaults for `disclose_perms`, `sign_perms` and `issue_perms` are `["*"]`. In order to protect any IRMA private keys that the server has access to from unintended use by others, when `production` is true the default of `issue_perms` is `[]`: no one can issue unless the global `issue_perms` is modified or unless specific requestors receive nonempty `issue_perms`.
+
+### IRMA schemes
+
+The server uses [IRMA schemes](schemes) to retrieve issuer, credential and attribute names, as well as public and private keys with which attributes can be verified an issued, respectively. By default the server uses the [`pbdf` and `irma-demo` schemes](schemes#default-schemes-pbdf-and-irma-demo). This can be configured with the following options:
+
+* `schemes_path`: path containing IRMA schemes (often called `irma_configuration`). Default: `C:\Users\Username\AppData\Local\irma\irma_configuration` on Windows, `$HOME/.local/share/irma/irma_configuration` otherwise. Created if it does not exist. If empty, the default schemes [`pbdf` and `irma-demo`](schemes#default-schemes-pbdf-and-irma-demo) are downloaded into it.
+* `schemes_assets_path`: path containing initial, read-only IRMA schemes. If specified, the schemes found here are copied into the path specified by `schemes_path`. Can be used to avoid downloading default schemes on first run.
+* `schemes_update`: update IRMA schemes from their scheme URL every this many minutes. Default is 60. Set to 0 to disable automatic scheme updating (not recommended).
+
+### IRMA issuer private keys
+
+If IRMA issuer private keys are included in the server configuration, then the server can issue all credential types of all issuers for which private keys are installed. IRMA issuer private keys can be configured in the following two ways:
+
+* Include the private keys within the [IRMA scheme](schemes) in the issuer's `PrivateKeys` folder, with filenames `0.xml`, `1.xml`, etc ([example](https://github.com/privacybydesign/irma-demo-schememanager/tree/master/MijnOverheid/PrivateKeys)).
+* Set the `privkeys` option to a folder containing IRMA issuer private keys called `issuer-counter.xml` (for example: `MijnOverheid-0.xml`, `RU-2.xml`).
+
+If issuance is enabled in production and private keys are configured, then you should ensure that only authenticated requestors can start issuance requests (otherwise if anyone can use your server to issue attributes then those attributes cannot be trusted or used). You should either:
+
+* disable `no_auth` and [send authenticated session requests](irma-server#requestor-authentication),
+* Restrict the [`/session` HTTP endpoints](#http-server-endpoints) to a internal network interface only accessible by your applications and not from outside.
+
+Taking neither approach is an unsafe configuration as in that case anyone can create issuance sessions. In this case, if `production` mode is enabled then the server will refuse to run.
 
 ### Signed JWT session results
 
