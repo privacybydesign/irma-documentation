@@ -133,13 +133,20 @@ The global options also work when `no_auth` is enabled. Thus in this case a sess
 
 In development mode, when `production` is `false`, the defaults for `disclose_perms`, `sign_perms` and `issue_perms` are `["*"]`. In order to protect any IRMA private keys that the server has access to from unintended use by others, when `production` is true the default of `issue_perms` is `[]`: no one can issue unless the global `issue_perms` is modified or unless specific requestors receive nonempty `issue_perms`.
 
+### Static file hosting
+
+Apart from hosting endpoints under [`/session` and `/irma`](irma-server#http-server-endpoints), the server also supports statically hosting all files from a certain directory. This can be useful [for experimenting](getting-started#perform-browser-irma-session). It can be configured with the following options:
+
+* `static_path`: Host files under this path as static files. Leave empty to disable static file hosting.
+* `static_prefix`: Host static files under this URL prefix (default: no prefix)
+
 ### IRMA schemes
 
 The server uses [IRMA schemes](schemes) to retrieve issuer, credential and attribute names, as well as public and private keys with which attributes can be verified an issued, respectively. By default the server uses the [`pbdf` and `irma-demo` schemes](schemes#default-schemes-pbdf-and-irma-demo). This can be configured with the following options:
 
 * `schemes_path`: path containing IRMA schemes (often called `irma_configuration`). Default: `C:\Users\Username\AppData\Local\irma\irma_configuration` on Windows, `$HOME/.local/share/irma/irma_configuration` otherwise. Created if it does not exist. If empty, the default schemes [`pbdf` and `irma-demo`](schemes#default-schemes-pbdf-and-irma-demo) are downloaded into it.
 * `schemes_assets_path`: path containing initial, read-only IRMA schemes. If specified, the schemes found here are copied into the path specified by `schemes_path`. Can be used to avoid downloading default schemes on first run.
-* `schemes_update`: update IRMA schemes from their scheme URL every this many minutes. Default is 60. Set to 0 to disable automatic scheme updating (not recommended).
+* `schemes_update`: update IRMA schemes from their scheme URL every this many minutes. Default is `60`. Set to `0` to disable automatic scheme updating (not recommended).
 
 ### IRMA issuer private keys
 
