@@ -182,7 +182,7 @@ Alternatively, if your IRMA server is connected to the internet through a revers
 
 ### Email
 
-Users of the server are encouraged to provide an email address with the `email` option, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](../#specifying-an-email-address). In `production` mode, it is required to either provide an email address or to explicitly out with the `no_email` option. 
+Users of the server are encouraged to provide an email address with the `email` option, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](email). In `production` mode, it is required to either provide an email address or to explicitly out with the `no_email` option.
 
 ### Logging and verbosity
 

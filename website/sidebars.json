@@ -10,7 +10,8 @@
       "irma-server-lib",
       "irmajs",
       "schemes",
-      "session-requests"
+      "session-requests",
+      "email"
     ],
     "API reference": [
       "api-go",

@@ -39,7 +39,7 @@ The server is configured by passing a `server.Configuration` instance to `irmase
 
 ## Email
 
-Users are encouraged to provide an email address with the `Email` option in the `server.Configuration` struct, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](../#specifying-an-email-address).
+Users are encouraged to provide an email address with the `Email` option in the `server.Configuration` struct, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](email).
 
 ## See also
 
