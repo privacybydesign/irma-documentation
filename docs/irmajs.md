@@ -8,6 +8,8 @@ title: irmajs JavaScript library
  * Issue IRMA attributes.
  * Perform IRMA attribute-based signature sessions, resulting in a signature on a string to which IRMA attributes are verifiably attached.
 
+`irmajs` supports all major browsers (Firefox, Chrome, Safari, Edge, Internet Explorer 11).
+
 ## Building
 
 Compile the library:
