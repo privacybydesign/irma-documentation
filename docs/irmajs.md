@@ -14,7 +14,7 @@ title: irmajs JavaScript library
 
 Compile the library:
 
-    npm build
+    npm run build
 
 This writes `irma.js` to the `dist` folder, which you can include in your website in a `<script>` tag.
 

@@ -13,8 +13,8 @@ This guide assumes you have [Go](https://golang.org/doc/install), [dep](https://
 ## Installing and running `irma server`
 Install the main `irma` command:
 ```shell
-mkdir -p $GOPATH/github.com/privacybydesign && cd $GOPATH/github.com/privacybydesign
-git clone https://github.com/privacybydesign/irmago && cd irmago
+go get -d -u github.com/privacybydesign/irmago
+cd $GOPATH/src/github.com/privacybydesign/irmago
 dep ensure
 go install ./irma
 ```

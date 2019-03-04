@@ -13,8 +13,8 @@ title: irma server
 ## Installing
 If necessary, clone `irmago` and install dependencies with [dep](https://github.com/golang/dep):
 ```shell
-mkdir -p $GOPATH/github.com/privacybydesign && cd $GOPATH/github.com/privacybydesign
-git clone https://github.com/privacybydesign/irmago && cd irmago
+go get -d -u github.com/privacybydesign/irmago
+cd $GOPATH/src/github.com/privacybydesign/irmago
 dep ensure
 ```
 
