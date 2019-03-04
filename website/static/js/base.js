@@ -1,4 +1,4 @@
-let base = "http://" + document.location.host + "/docs/";
+let base = "//" + document.location.host + "/docs/";
 document.write("<base href='" + base + "' />");
 
 document.addEventListener('DOMContentLoaded', () => {
