@@ -66,6 +66,7 @@ class HomeSplash extends React.Component {
           <PromoSection>
             <Button href={docUrl('what-is-irma')}>What is IRMA?</Button>
             <Button href={docUrl('getting-started')}>Getting started</Button>
+            <Button href={docUrl('workshop')}>March 8 Workshop</Button>
             <Button href="https://github.com/privacybydesign">Source code</Button>
           </PromoSection>
         </div>

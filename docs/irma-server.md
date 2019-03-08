@@ -10,23 +10,13 @@ title: irma server
 
 `irma server` is a subcommand of the [`irma`](irma-cli) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle [IRMA schemes](schemes), and more.
 
-## Installing
-If necessary, clone `irmago` and install dependencies with [dep](https://github.com/golang/dep):
-```shell
-go get -d -u github.com/privacybydesign/irmago
-cd $GOPATH/src/github.com/privacybydesign/irmago
-dep ensure
-```
+For installation instructions, see [`irma`](irma-cli).
 
-Build and install:
-```shell
-cd irma
-go install
-```
+## Running the server
 
-Run `irma server -h` to see configuration options or just `irma server` to run the server with the default configuration.
-In order to verify your configuration, run `irma server check -v`.
+Simply run `irma server` to run the server with the default configuration in development mode. Use `irma server -v` for more verbose logging, for example to see the current configuration. Use `irma server -vv` to also log session contents.
 
+Run `irma server --help` to see configuration options. In order to verify your configuration, run `irma server check -v`.
 
 ## Starting a session
 Assuming the server runs in the [default configuration](#default-configuration) (in particular [requestor authentication](#requestor-authentication) is disabled (`no_auth` is `true`) and the `irma-demo` [scheme](schemes) is installed), issue `irma-demo.MijnOverheid.ageLower` attributes using the [`session`](../../irma) subcommand of the `irma` tool:
@@ -39,14 +29,12 @@ irma session --server http://localhost:8088 --disclose irma-demo.MijnOverheid.ag
 ```
 These print QRs in your terminal that you can scan with your IRMA app to perform the session. For more extensive examples, see [irmajs](irmajs).
 
-
-
 ## Configuring
 Run `irma server -h` to see all configuration options. Each option may be passed as:
  1. a command line flags (e.g. [`--listen-addr`](#http-server-endpoints))
  2. a environmental variable (e.g. `IRMASERVER_LISTEN_ADDR`)
  3. an item in a configuration file (e.g. `"listen_addr"`) (which may be in JSON, TOML or YAML)
- 
+
  with the following rules:
  * Flags supersede environmental variables which supersede configuration file entries.
  * Dashes are used in flags, but underscores are used in environmental variables and configuration file entries.

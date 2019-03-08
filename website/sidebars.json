@@ -2,7 +2,8 @@
   "docs": {
     "Intro": [
       "what-is-irma",
-      "getting-started"
+      "getting-started",
+      "workshop"
     ],
     "Guides": [
       "irma-cli",

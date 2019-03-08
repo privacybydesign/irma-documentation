@@ -12,7 +12,11 @@ title: irma command line tool
 
 Pass `-h` or `--help` to any of these subcommands to see usage details and examples.
 
-## Install
+## Installation
+
+Preferably, you should build `irma` from source, but we also provided binary releases built by our CI server.
+
+### Compiling from source
 
 If necessary, clone `irmago` and install dependencies with [dep](https://github.com/golang/dep):
 ```shell
@@ -27,13 +31,17 @@ cd irma
 go install
 ```
 
+### Using the binary release
+
+You can download the precompiled `irmago` binaries from our [CI build server](https://gitlab.science.ru.nl/irma/github-mirrors/irmago/-/jobs/artifacts/master/download?job=binaries). Extract the zip file, and use the binary for your OS and architecture (most likely amd64). Rename the file to `/usr/local/bin/irma` to have it available in your PATH.
+
 ## Examples
 
-Perform IRMA sessions on the command line (start the session, print the QR, and print session result when the session is done):
+Perform IRMA sessions on the command line. By default, this starts a IRMA server specfically for one session on port 48680, prints the QR, and prints session results when the session is done:
 ```shell
+$ irma session --disclose pbdf.nijmegen.personalData.fullname
 $ irma session --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
-$ irma session --disclose irma-demo.MijnOverheid.ageLower.over18
-$ irma session --request '{"type":"disclosing","content":[{"label":"BSN","attributes":["irma-demo.MijnOverheid.ageLower.over18"]}]}'
+$ irma session --noqr --request '{"type":"disclosing","content":[{"label":"BSN","attributes":["irma-demo.MijnOverheid.ageLower.over18"]}]}'
 $ irma session --server http://localhost:8088 --authmethod token --key mytoken --disclose irma-demo.MijnOverheid.ageLower.over18
 ```
 

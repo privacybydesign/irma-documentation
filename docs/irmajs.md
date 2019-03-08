@@ -10,13 +10,21 @@ title: irmajs JavaScript library
 
 `irmajs` supports all major browsers (Firefox, Chrome, Safari, Edge, Internet Explorer 11).
 
-## Building
+## Installation
 
+### Compiling from source
 Compile the library:
 
+    git clone https://github.com/privacybydesign/irmajs.git
+    cd irmajs
+    npm install
     npm run build
 
 This writes `irma.js` to the `dist` folder, which you can include in your website in a `<script>` tag.
+
+### Using prebuilt bundles
+
+You can download the prebuilt `irmajs` bundles from our [CI build server](https://gitlab.science.ru.nl/irma/github-mirrors/irmajs/-/jobs/artifacts/master/download?job=bundle).
 
 ## Browser example
 
@@ -38,4 +46,6 @@ irma.startSession(server, request)
 
 This assumes you have an [`irma server`](irma-server) that is configured to [accept unauthenticated session requests](irma-server#requestor-authentication) listening at the URL indicated by `server`.
 
-For complete examples, see the `examples` folder.
+For complete examples, see the `examples` folder. You can host these examples using the IRMA server, with:
+
+    irma server -v --static-path examples/browser
