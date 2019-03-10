@@ -84,9 +84,7 @@ For each API that accepts one of the above session request data types, the reque
 ```
 
 ## JWTs: signed session requests
-The IRMA API server or [`irma server`](irma-server) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). This way the session request JWT can be sent to an IRMA sever for example by an untrusted source such as the frontend (browser), while the IRMA server is still able to authenticate the session request as coming from a requestor that is authorized to perform sessions.
-
-The form of the JWT depends on the [session type](what-is-irma#session-types). For example, here is a JWT produced by the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube):
+The IRMA API server or [`irma server`](irma-server) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). The form of the JWT depends on the [session type](what-is-irma#session-types). For example, here is a JWT produced by the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube):
 ```
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImlybWF0dWJlIn0.eyJpYXQiOjE1NTA0MjQ4NDcsImlzcyI6IklSTUFUdWJlIiwic3ViIjoidmVyaWZpY2F0aW9uX3JlcXVlc3QiLCJzcHJlcXVlc3QiOnsidmFsaWRpdHkiOjYwLCJyZXF1ZXN0Ijp7ImNvbnRlbnQiOlt7ImxhYmVsIjoiTWVtYmVyc2hpcCIsImF0dHJpYnV0ZXMiOlsicGJkZi5wYmRmLmlybWF0dWJlLnR5cGUiXX0seyJsYWJlbCI6IkFnZSBvdmVyIDEyIiwiYXR0cmlidXRlcyI6WyJwYmRmLnBiZGYuYWdlTGltaXRzLm92ZXIxMiIsInBiZGYubmlqbWVnZW4uYWdlTGltaXRzLm92ZXIxMiJdfV19fX0.4_b12I4fwXVE5QRf7ll1K-FhjeDYQk3a4XTiykIuWW61gY9VwzJrazWDWU7PRJfb0BgLU36cyw9K5FeQPpsIRxXhFxde4ueAjAixNWtn1JG1Nt_L-7LEOV3cl6G7TAGdVx_-WrLctBQ99NMHWL4_xJ8pY253vI6oQjqp0TTwMPkOAp-taZiRY5AEW0Itj1dbX09WWbxIegL7-SIhi-kjrz-ia6h-l2udAVaeCzpQX_-1Sqm1z8-Fi4lhcRNVituCGMgsWAPUNNPExlOY1YJmuLUogvSIClW6hqTUafVxWqQ-DLJFNBWLzlOoiSj6WqtkEX5r5AsFHKpI5383umcJqA
 ```
