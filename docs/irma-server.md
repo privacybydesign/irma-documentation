@@ -57,7 +57,12 @@ If the server is reachable from the internet, you should consider enabling authe
 A configuration file can be provided using the `config` option (for example: `irma server --config ./irmaserver.json`). When not specified, the server looks for a configuration file called `irmaserver.json` or `irmaserver.toml` or `irmaserver.yaml` in (1) the current path; (2) `/etc/irmaserver/`; (3) `$HOME/irmaserver`, in that order. A configuration file is not required; if none is found at any of these locations the server takes its configuration from just command line flags and environmental variables.
 
 ### Production mode
-When running the server in production, enable the `production` option. This enables stricter defaults on the configuration options for safety and prints warnings on possibly unsafe configurations.
+When running the server in production, you should enable the `production` option. This enables stricter defaults on the configuration options for safety and prints warnings on possibly unsafe configurations. In particular, when `production` is enabled, the default values of some options change as follows (cf. `diff <(irma server -h) <(irma server -h --production)`):
+
+* `url` from `"http://$YOUR_LOCAL_IP:port"` to `""`: in development mode the `url` to which IRMA apps will connect is set by default to your current local IP address; in `production` mode you must configure it yourself.
+* [`no_auth`](#requestor-authentication) from `true` to `false`: you should consider enabling requestor authentication, or explicitly disable this by setting this flag to `true`.
+* [`issue_perms`](#global-permissions) from `[*]` (everything) to `[]` (none).
+* [`no_email`](email) from `true` to `false`: in `production` mode, opting out of providing an email address can be done by explicitly setting this flag to `true`.
 
 ### Keys and certificates
 For each configuration option that refers to some kind of key or certificate (for example `jwt_privkey`), there is a corresponding option with the `_file` suffix (for example `jwt_privkey_file`). Keys can be specified either by setting former to a (PEM) string, or setting the the latter to a file containing the (PEM) string.
@@ -74,7 +79,9 @@ In the default mode, the server starts one HTTP server that offers both, configu
 The `/irma` endpoints must always be reachable for the IRMA app. Using this double server mode you can restrict access to the `/session` endpoints by e.g. setting `listen_addr` to `127.0.0.1` or to an interface only reachable from an internal network. Restricting access to the `/session` endpoints in this way may make requestor authentication unnecessary.
 
 ### Requestor authentication
-The server runs in one of two modes: it either accepts all session requests from anyone that can reach the server, or it accepts only authenticated session requests from authorized requestors. This can be toggled with the `no_auth` boolean option. The default is `true` (requests are not authenticated) when `production` is not enabled, and `false` otherwise.
+The server runs in one of two modes: it either accepts all session requests from anyone that can reach the server, or it accepts only authenticated session requests from authorized requestors. This can be toggled with the `no_auth` boolean option. If the `/session` creation endpoint of your `irma server` is publicly accessible from the internet (i.e. the `client_port` option is used, see [above](#http-server-endpoints)), then you should consider enabling requestor authentication (i.e. turn `no_auth` off), otherwise anyone can use your `irma server`.
+
+The default is `true` (requests are not authenticated) when `production` is disabled and `false` otherwise.
 
 When authentication is enabled (`no_auth` is `false`), requestors that are authorized to use the server must be configured in the `requestor` option in the form of a map, for example:
 
@@ -89,10 +96,11 @@ When authentication is enabled (`no_auth` is `false`), requestors that are autho
 }
 ```
 
-The server supports the following three authentication methods, one of which must be specified in `auth_method` for each requestor:
-* `token`: the requestor must include the `key` as an API token in a HTTP header.
-* `hmac`: the requestor symmetrically [signs the session request](session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/), with RSA (`RS256`), in this case `key` should be the PEM public key of the requestor.
-* `publickey`: the requestor asymmetrically [signs the session request](session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/) with HMAC-SHA256 (`HS256`) using `key`. The `key` provided should be the Base64 encoding of the actual secret.
+The server supports several authentication methods, one of which must be specified in the `auth_method` field for each requestor. The snippet above demonstrates the recommended and easiest to use authentication method, called `token`. When using this method the requestor must include the `key` as an API token in a HTTP header (for more details see the [API reference](api-irma-server#post-session)).
+
+In addition the server supports the following authentication methods:
+* `hmac`: the requestor symmetrically [signs the session request](session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/), with HMAC-SHA256 (`HS256`) using `key`. The `key` provided should be the Base64 encoding of the actual secret.
+* `publickey`: the requestor asymmetrically [signs the session request](session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/) with RSA (`RS256`), in this case `key` should be the PEM public key of the requestor.
 
 For each of these modes it is also possible to specify `key_file` instead `key`; in that case the file at `key_file` will be read and used as `key`.
 
