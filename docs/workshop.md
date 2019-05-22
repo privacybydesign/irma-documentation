@@ -26,6 +26,24 @@ For this part, follow the instructions in the [Getting Started](getting-started)
 
 This IRMA server automatically detects your LAN IP address, and adjusts the URL in the QR to match that address. This is necessary because the IRMA app on your phone somehow needs to connect to your server. However, not all network allow direct LAN access, especially not corporate wifi. Mobile hotspots often work well.
 
+#### Using a workshop server
+
+To bypass any compilation and network issues, you can also use one of our workshop Debian Linux servers over an SSH connection. Please reserve one by grabbing a token at the front of the room. Then edit and execute the following:
+
+```
+PASSWORD=...
+SERVER_NUMBER=01
+
+wget -O irma_workshop_id_rsa "https://irma.app/irma_workshop_id_rsa_${PASSWORD}"
+chmod 600 irma_workshop_id_rsa
+ssh -i irma_workshop_id_rsa "debian@irma${SERVER_NUMBER}.irma.app"
+```
+
+Add the `PASSWORD` you received during the workshop (as a super basic precaution). The private key gives access to all workshop servers. Enter the two-digit server number that's on your token as `SERVER_NUMBER`.
+
+You can then run the example with `./run_example.sh` and browse to the address listed in the output. The server is completely yours to use for purposes of the workshop, and can also be easily reset on request.
+
+
 ## Part 2
 Integrate IRMA attribute verification in your own website or application, for example with one of the following use cases:
 
