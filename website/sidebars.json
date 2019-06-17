@@ -5,6 +5,9 @@
       "getting-started",
       "workshop"
     ],
+    "News": [
+      "condiscon"
+    ],
     "Guides": [
       "irma-cli",
       "irma-server",
