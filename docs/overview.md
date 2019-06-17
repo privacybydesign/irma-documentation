@@ -9,8 +9,8 @@ This document presents a technical overview of the IRMA project.
 ### Participants
 
 * *IRMA app*: (mobile) application that receives attributes, and can disclose them. Also called *client* as it acts as the client in the IRMA protocol.
-* *Service provider*: a party wanting to verify someone's attributes (in order to provide some service).
-* *Identity provider*: a party wanting to issue attributes to someone.
+* *Verifier* or *service provider*: a party wanting to verify someone's attributes (in order to provide some service).
+* *Issuer* or *Identity provider*: a party wanting to issue attributes to someone.
 * *Issuer*: uses an Idemix private key in order to issue credentials to a client, when instructed to by an identity provider
 * *Requestor*: the service or identity provider that wants to, respectively, verify someone's attributes or issue attributes to them.
 * *Scheme manager*: distributes Idemix public keys, credential types and issuer information to clients and requestors; also decides which issuers may join its domain and what credential types they may issue.
@@ -20,6 +20,7 @@ This document presents a technical overview of the IRMA project.
 * *Attribute*: a small piece of data, generally containing a statement about the attribute owner (e.g., '> 18 years old').
 * *Credential*: a group of attributes, jointly signed by the issuer using an Idemix private key, in an interactive protocol (called the *issuance protocol*) between the issuer and client.
 * *Credential type*: each IRMA credential is an instance of a credential type, which determines the names of the contained attributes, its validity period, and by which issuer the credential is issued.
+  * *Singleton credential type*: users can store at most one instance of such credential types in her IRMA app.
 * *Idemix private-public keypair*: a pair of related keys:
   * *Idemix private key*: used by the issuer to sign a credential in the issuance protocol.
   * *Idemix public key*: used by a verifier when attributes are disclosed to it, in order to establish that the disclosed attributes have been signed using the corresponding Idemix private key.
@@ -57,6 +58,10 @@ In IRMA, each credential is an instance of a *credential type*. A credential typ
 | **id**         | 123456          |
 
 In this table, the right column are the attribute values which are stored and signed in the credential. The left column contains the attribute names from the credential type.
+
+### Singletons
+
+A credential type can be marked as a *singleton* by the scheme manager. If so the IRMA app will store at most one instance of this credential type simultaneously, and receiving a new one would overwrite any older instance. (Example:  [`pbdf.nijmegen.bsn`](https://privacybydesign.foundation/attribute-index/en/pbdf.nijmegen.bsn.html)) If a credential type is not a singleton (example: [`pbdf.pbdf.diploma`](https://privacybydesign.foundation/attribute-index/en/pbdf.pbdf.diploma.html)), then the user can have any number of instances of that credential type in her IRMA app.
 
 ### Special attributes
 
