@@ -27,7 +27,6 @@ For each of the [three IRMA session types](what-is-irma#session-types), we defin
 * `"@context": "https://irma.app/ld/request/signature/v2"`
 * `"@context": "https://irma.app/ld/request/issuance/v2"`
 
-
 ## Disclosure requests
 Disclosure requests are started with an [`irma.DisclosureRequest`](https://godoc.org/github.com/privacybydesign/irmago#DisclosureRequest). Example:
 
@@ -56,7 +55,7 @@ Disclosure requests are started with an [`irma.DisclosureRequest`](https://godoc
 }
 ```
 <!--IRMA app-->
-<img src="assets/condiscon.png" class="ss"/>
+<img src="/docs/assets/condiscon.png" class="ss"/>
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 This asks for a (demo) `BSN` attribute, as well as either `street`, `houseNumber` and `city` from `irma-demo.nijmegen.address`, or `address` and `city` from `irma-demo.idin.idin`. The three levels correspond to a *conjunction* of *disjunctions* of *conjunctions* of requested attributes, allowing verifiers to request multiple attribute sets from the user, offering choices for some or all of these sets.
@@ -146,7 +145,7 @@ A disjunction within a session request can be marked as *optional*, by including
 }
 ```
 <!--IRMA app-->
-<img src="assets/optional-disjunction.png" class="ss"/>
+<img src="/docs/assets/optional-disjunction.png" class="ss"/>
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 This can be useful when certain attributes are not required, so that if the user does not have them the session does not need to be aborted.
@@ -171,7 +170,7 @@ Per disjunction a *label* can be specified, which is shown in the IRMA app when 
 }
 ```
 <!--IRMA app-->
-<img src="assets/condiscon-label.png" class="ss"/>
+<img src="/docs/assets/condiscon-label.png" class="ss"/>
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 In this way each disjunction can be given a optional label explaining to the user the purpose of the disjunction. It is recommended to only provide a label to explain something to the user that would otherwise not be obvious; for example, to request the user to send a work email address instead of a personal one. Repeating the credential or attribute name or description in labels is an antipattern.

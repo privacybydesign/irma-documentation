@@ -84,7 +84,6 @@ const siteConfig = {
 
   // Add custom scripts here that would be placed in <script> tags.
   scripts: [
-    '/docs/js/base.js',
     '/docs/js/navhighlight.js'
   ],
 

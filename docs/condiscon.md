@@ -12,11 +12,11 @@ img.ss {
 </style>
 
 This page introduces *condiscon*: a new IRMA feature allowing IRMA [verifiers and signature requestors](overview#participants) to express the attributes they need with much more flexibility, using a new format for the [session request](session-requests) with which sessions are started at the IRMA server. This affects:
-- [Requestors](overview#participants) using an [`irma server`](irma-server) or [`irmaserver` library](irma-server-lib), as they need to convert their session request to the new condiscon format.
-- The `irma` command including `irma server` (`0.3.0` and up supports condiscon).
+- [Requestors](overview#participants) using an [`irma server`](irma-server) or the [`irmaserver` library](irma-server-lib), as they need to convert their session request to the new condiscon format.
+- The [`irma` command](irma-cli) including [`irma server`](irma-server) (`0.3.0` and up supports condiscon).
 - The [IRMA app](https://github.com/privacybydesign/irma_mobile) (a condiscon-compatible version will soon be released in the beta channel).
 
-Below we describe the new session format, explaining the new features that it brings, and highlighting differences with the old session format. The documentation of the updated session request format can be found [here](session-request).
+Below we describe the new session format, explaining the new features that it brings, and highlighting differences with the old session format. The documentation of the updated session request format can be found [here](session-requests).
 
 ## New session request format
 
@@ -24,7 +24,7 @@ An [IRMA disclosure session](what-is-irma#session-types) is started by a verifie
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--IRMA app-->
-<img src="assets/pre-condiscon.png" class="ss"/>
+<img src="/docs/assets/pre-condiscon.png" class="ss"/>
 <!--Session request (old format)-->
 ```json
 {
@@ -51,7 +51,7 @@ An [IRMA disclosure session](what-is-irma#session-types) is started by a verifie
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--IRMA app-->
-<img src="assets/condiscon.png" class="ss"/>
+<img src="/docs/assets/condiscon.png" class="ss"/>
 <!--Session request (condiscon format)-->
 ```json
 {
@@ -122,7 +122,7 @@ As before, the verifier can indicate in the session request that it requires spe
 - **Null attributes**: Attributes that were skipped by the issuer during issuance, assigning them the `null` value, can now be requested and disclosed normally. The verifier receives the JSON value `null` instead of a (string) attribute value. (Previously such null attributes would have caused the IRMA app to abort the session, considering them "absent" and thus the request unsatisfiable. This made it impractical to request an optional attribute along with other attributes.)
 - **Disjunction labels** are now optional. They often only repeated the requested credential or attribute names (mainly because they were required); this is now discouraged. Instead, labels should only be used to explain something to the user that would otherwise not be obvious (e.g, to request the user to send a work email address instead of a personal one).
 
-For full details, see the documentation of the [session request format](session-request).
+For full details, see the documentation of the [session request format](session-requests).
 
 ## Compatibility
 
