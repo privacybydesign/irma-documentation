@@ -20,7 +20,7 @@ This document presents a technical overview of the IRMA project.
 * *Attribute*: a small piece of data, generally containing a statement about the attribute owner (e.g., '> 18 years old').
 * *Credential*: a group of attributes, jointly signed by the issuer using an Idemix private key, in an interactive protocol (called the *issuance protocol*) between the issuer and client.
 * *Credential type*: each IRMA credential is an instance of a credential type, which determines the names of the contained attributes, its validity period, and by which issuer the credential is issued.
-  * *Singleton credential type*: users can store at most one instance of such credential types in her IRMA app.
+  * *Singleton credential type*: users can store at most one instance of such credential types in their IRMA app.
 * *Idemix private-public keypair*: a pair of related keys:
   * *Idemix private key*: used by the issuer to sign a credential in the issuance protocol.
   * *Idemix public key*: used by a verifier when attributes are disclosed to it, in order to establish that the disclosed attributes have been signed using the corresponding Idemix private key.

@@ -2,8 +2,7 @@
   "docs": {
     "Intro": [
       "what-is-irma",
-      "getting-started",
-      "workshop"
+      "getting-started"
     ],
     "New": [
       "condiscon"
