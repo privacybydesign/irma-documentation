@@ -68,7 +68,7 @@ In the request above we call the three JSON lists that contain strings *inner co
 - When attributes coming from multiple credential types occur in an inner conjunction, at most one of them may be a non-[singleton](overview#singletons).
 - If some of the attributes occuring in the inner conjunction come from the same credential type, then the attributes that the user sends must come from the same credential instance: it is not allowed to mix attributes coming from distinct instances of that credential type. (The IRMA app automatically only offers candidate sets as choices to the user that satisfy this property.)
 
-For example, consider the following condiscon session request:
+For example, consider the following session request:
 ```json
 {
   "@context": "https://irma.app/ld/request/disclosure/v2",

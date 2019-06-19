@@ -1,5 +1,5 @@
 ---
-title: "Introducing \"condiscon\""
+title: "\"Condiscon\" session requests"
 ---
 
 <style>
