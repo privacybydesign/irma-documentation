@@ -1,6 +1,6 @@
 ---
 title: Technical overview
-id: version-v0.2.0-overview
+id: version-0.2.0-overview
 original_id: overview
 ---
 

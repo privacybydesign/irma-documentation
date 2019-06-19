@@ -1,0 +1,28 @@
+{
+  "version-0.2.0-docs": {
+    "Intro": [
+      "version-0.2.0-what-is-irma",
+      "version-0.2.0-getting-started",
+      "version-0.2.0-workshop"
+    ],
+    "Guides": [
+      "version-0.2.0-irma-cli",
+      "version-0.2.0-irma-server",
+      "version-0.2.0-irma-server-lib",
+      "version-0.2.0-irmajs",
+      "version-0.2.0-schemes",
+      "version-0.2.0-session-requests",
+      "version-0.2.0-email"
+    ],
+    "API reference": [
+      "version-0.2.0-api-go",
+      "version-0.2.0-api-irmajs",
+      "version-0.2.0-api-irma-server"
+    ],
+    "Documentation": [
+      "version-0.2.0-overview",
+      "version-0.2.0-zkp",
+      "version-0.2.0-keyshare-protocol"
+    ]
+  }
+}

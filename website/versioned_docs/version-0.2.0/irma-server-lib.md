@@ -1,6 +1,6 @@
 ---
 title: irma server library
-id: version-v0.2.0-irma-server-lib
+id: version-0.2.0-irma-server-lib
 original_id: irma-server-lib
 ---
 

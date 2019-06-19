@@ -1,6 +1,6 @@
 ---
 title: Keyshare protocol
-id: version-v0.2.0-keyshare-protocol
+id: version-0.2.0-keyshare-protocol
 original_id: keyshare-protocol
 ---
 
