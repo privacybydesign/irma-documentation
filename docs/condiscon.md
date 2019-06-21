@@ -25,7 +25,7 @@ An [IRMA disclosure session](what-is-irma#session-types) is started by a verifie
 <!--DOCUSAURUS_CODE_TABS-->
 <!--IRMA app-->
 <img src="/docs/assets/pre-condiscon.png" class="ss"/>
-<!--Session request (old format)-->
+<!--Session request (old format, JSON)-->
 ```json
 {
   "type": "disclosing",
@@ -52,7 +52,7 @@ An [IRMA disclosure session](what-is-irma#session-types) is started by a verifie
 <!--DOCUSAURUS_CODE_TABS-->
 <!--IRMA app-->
 <img src="/docs/assets/condiscon.png" class="ss"/>
-<!--Session request (condiscon format)-->
+<!--Session request (condiscon, JSON)-->
 ```json
 {
   "@context": "https://irma.app/ld/request/disclosure/v2",
@@ -74,6 +74,26 @@ An [IRMA disclosure session](what-is-irma#session-types) is started by a verifie
   ]
 }
 ```
+<!--Session request (condiscon, Go)-->
+```golang
+request := irma.NewDisclosureRequest()
+request.Disclose = irma.AttributeConDisCon{
+	irma.AttributeDisCon{
+		irma.AttributeCon{irma.NewAttributeRequest("irma-demo.MijnOverheid.root.BSN")},
+	},
+	irma.AttributeDisCon{
+		irma.AttributeCon{
+			irma.NewAttributeRequest("irma-demo.nijmegen.address.street"),
+			irma.NewAttributeRequest("irma-demo.nijmegen.address.houseNumber"),
+			irma.NewAttributeRequest("irma-demo.nijmegen.address.city"),
+		},
+		irma.AttributeCon{
+			irma.NewAttributeRequest("irma-demo.idin.idin.address"),
+			irma.NewAttributeRequest("irma-demo.idin.idin.city"),
+		},
+	},
+}
+```
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 In this disclosure request, the user is asked for her (demo) BSN, and for her `street`, `houseNumber` and `city` attribute from the `irma-demo.nijmegen.address` credential type. For the latter three the user has one other option which is not currently shown in the screenshot (but it is present in the session request).
@@ -84,6 +104,8 @@ In the session request above (see the second tab) we call the three JSON lists t
 - If some of the attributes occuring in the inner conjunction come from the same credential type, then the attributes that the user sends must come from the same credential instance: it is not allowed to mix attributes coming from distinct instances of that credential type. (The IRMA app automatically only offers candidate sets as choices to the user that satisfy this property.)
 
 For example, consider the following condiscon session request:
+<!--DOCUSAURUS_CODE_TABS-->
+<!--Session request (JSON)-->
 ```json
 {
   "@context": "https://irma.app/ld/request/disclosure/v2",
@@ -97,6 +119,19 @@ For example, consider the following condiscon session request:
   ]
 }
 ```
+<!--Session request (Go)-->
+```golang
+request := irma.NewDisclosureRequest()
+request.Disclose = irma.AttributeConDisCon{
+	irma.AttributeDisCon{
+		irma.AttributeCon{
+			irma.NewAttributeRequest("pbdf.pbdf.diploma.degree"),
+			irma.NewAttributeRequest("pbdf.pbdf.diploma.institute"),
+		},
+	},
+}
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
 
 Supposing that the user has two instances of `pbdf.pbdf.diploma` whose `degree` and `institute` attributes are `(degree 1, institute 1)` and `(degree 2, institute 2)`, this means that the user can choose only either `(degree 1, institute 1)` or `(degree 2, institute 2)`, and not `(degree 1, institute 2)` or `(degree 2, institute 1)`. (If desired it would be possible to give the user those options by asking for the two attributes in two *outer* conjunctions instead of within an *inner* conjunction.)
 
@@ -107,6 +142,8 @@ When combining multiple credential types within a disjunction these restrictions
 As before, the verifier can indicate in the session request that it requires specific values for one or more of the requested attributes. In addition, the new condiscon versions of the IRMA app and server include the following new features.
 
 - **Optional disjunctions**: Now that inner conjunctions can be of any length (instead of just 1 as it previously was), verifiers can mark a disjunction as *optional* by specifying an empty inner conjunction `[]` as one of its candidates, indicating that by disclosing nothing this disjunction is satisfied:
+  <!--DOCUSAURUS_CODE_TABS-->
+  <!--Session request (JSON)-->
   ```json
   {
     "@context": "https://irma.app/ld/request/disclosure/v2",
@@ -118,7 +155,19 @@ As before, the verifier can indicate in the session request that it requires spe
     ]
   }
   ```
+  <!--Session request (Go)-->
+  ```golang
+  request := irma.NewDisclosureRequest()
+  request.Disclose = irma.AttributeConDisCon{
+    irma.AttributeDisCon{
+      irma.AttributeCon{},
+      irma.AttributeCon{irma.NewAttributeRequest("pbdf.pbdf.diploma.degree")},
+    },
+  }
+  ```
+<!--END_DOCUSAURUS_CODE_TABS-->
   This can be useful when certain attributes would be useful but not required, so that their absence does not abort the IRMA session.
+
 - **Null attributes**: Attributes that were skipped by the issuer during issuance, assigning them the `null` value, can now be requested and disclosed normally. The verifier receives the JSON value `null` instead of a (string) attribute value. (Previously such null attributes would have caused the IRMA app to abort the session, considering them "absent" and thus the request unsatisfiable. This made it impractical to request an optional attribute along with other attributes.)
 - **Disjunction labels** are now optional. They often only repeated the requested credential or attribute names (mainly because they were required); this is now discouraged. Instead, labels should only be used to explain something to the user that would otherwise not be obvious (e.g, to request the user to send a work email address instead of a personal one).
 
@@ -128,9 +177,9 @@ For full details, see the documentation of the [session request format](session-
 
 The `irma server` of version `0.3.0` and up is:
 - Backwards compatible with the old session request format, i.e. with old IRMA requestor applications. New session request JSON objects are recognized as such by the presence of their `@context` property; if this is absent the request is interpreted as a pre-condiscon IRMA session request.
-- Backwards compatible with old IRMA apps, as long as condiscon feature is not used in the session (i.e., all inner conjunctions contain exactly 1 attribute).
+- Backwards compatible with old IRMA apps, as long as the condiscon feature is not used in the session (i.e., all inner conjunctions contain exactly 1 attribute).
 
-The new IRMA app is backwards compatible with the old session request format, i.e. with old `irma server`s, *except* in case of signature sessions (see below).
+The new IRMA app is backwards compatible with the old session request format, i.e. with old `irma server`s, *except* in case of signature sessions (see below). The documentation of the pre-condiscon session format can be found [here](/docs/session-requests).
 
 ## Signature sessions
 
