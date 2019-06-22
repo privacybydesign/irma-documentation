@@ -30,7 +30,7 @@ For each of the [three IRMA session types](what-is-irma#session-types), we defin
 (For now these URIs do not resolve to anything; they just distinguish the message type.)
 
 ## Disclosure requests
-Disclosure requests are started with an [`irma.DisclosureRequest`](https://godoc.org/github.com/privacybydesign/irmago#DisclosureRequest). Example:
+Disclosure sessions are started with an [`irma.DisclosureRequest`](https://godoc.org/github.com/privacybydesign/irmago#DisclosureRequest). Example:
 
 
 <!--DOCUSAURUS_CODE_TABS-->

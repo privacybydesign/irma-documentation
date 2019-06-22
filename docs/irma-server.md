@@ -186,7 +186,7 @@ The server's verbosity can be increased by two degrees:
 * `-v` flag is given, or `verbosity` option set to `1`: includes `DEBUG` messages. Logs server configuration when starting the server, stack traces of errors, and more.
 * `-vv` flag is given, or `verbosity` option set to `2`: includes `TRACE` messages. Additionally includes dumps of all HTTP traffic from and to the server.
 
-***Note***: in its default mode, the server will not log attribute values (personal data). If the verbosity is increased, then attribute values may be logged. You should avoid doing this in production.
+> in its default mode, the server will not log attribute values (personal data). If the verbosity is increased, then attribute values may be logged. You should avoid doing this in production.
 
 The output is [structured](https://github.com/sirupsen/logrus#fields), putting certain recurring values in fields:
 ```text
@@ -201,4 +201,4 @@ Outputting JSON is enabled with the `log-json` option:
 
 * This executable wraps the Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) which wraps the Go library [`irmaserver`](irma-server-lib).
 * The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).
-* This server is an alternative to, and will eventually replace, the Java [irma_api_server](https://github.com/privacybydesign/irma_api_server).
+* This server is has replaced the deprecated Java [irma_api_server](https://github.com/privacybydesign/irma_api_server).
