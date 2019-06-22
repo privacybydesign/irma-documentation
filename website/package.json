@@ -9,7 +9,7 @@
     "rename-version": "docusaurus-rename-version"
   },
   "devDependencies": {
-    "docusaurus": "^1.11.1"
+    "docusaurus": "sietseringers/docusaurus#860be33493f95239c3cbc0e75a009064fc2052a1"
   },
   "license": "MIT"
 }
