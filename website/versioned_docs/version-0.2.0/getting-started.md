@@ -6,8 +6,8 @@ original_id: getting-started
 
 This page shows how to get started with verifying or issuing IRMA attributes, using the following components:
 
- * [`irma server`](irma-server), a server that verifies or issues IRMA attributes to [IRMA apps](https://github.com/privacybydesign/irma_mobile),
- * [`irmajs`](irmajs), a JavaScript library for drawing the IRMA QR in your website, and handling IRMA session with the `irma server`.
+ * [`irma server`](irma-server.md), a server that verifies or issues IRMA attributes to [IRMA apps](https://github.com/privacybydesign/irma_mobile),
+ * [`irmajs`](irmajs.md), a JavaScript library for drawing the IRMA QR in your website, and handling IRMA session with the `irma server`.
 
 You should have the IRMA app installed ([Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994)). If you want to compile from source instead of using prebuilt binaries, you should additionally have [Git](https://git-scm.com/), [Go](https://golang.org/doc/install), [dep](https://golang.github.io/dep/docs/installation.html), and [npm](https://docs.npmjs.com/cli/npm) installed.
 
@@ -28,7 +28,7 @@ After installing the `irma` binary, start the server (with increased verbosity b
 ```shell
 irma server -v
 ```
-Run `irma server -h` to see configuration options. In order to verify your configuration, run `irma server check -v`. General documentation [here](irma-server), API documentation of HTTP endpoints [here](api-irma-server).
+Run `irma server -h` to see configuration options. In order to verify your configuration, run `irma server check -v`. General documentation [here](irma-server.md), API documentation of HTTP endpoints [here](api-irma-server.md).
 
 ## Perform a command line IRMA session
 You can perform a first IRMA session using your server on the command line as follows:

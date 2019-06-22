@@ -22,9 +22,9 @@ This document describes the goals and details of the IRMA keyshare protocol.
 
 ## Introduction
 
-The [IRMA mobile app](https://github.com/privacybydesign/irma_mobile) allows users to obtain and disclose [IRMA attributes](overview#cryptographic-entities), as well as attach them to signed statements. Before such an IRMA session proceeds, the IRMA app may ask the user to enter her IRMA PIN code so that the [requestor](overview#participants) can be sure that it is indeed the attribute owner initiating the session (as opposed to, e.g., a thief of the user's phone). The verification of the correctness of the IRMA PIN code, and preventing the session from happening when it is not, is the responsibility of the [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server). In order to do this, it interacts with the IRMA app and possibly the IRMA API server in a protocol that we call the *keyshare protocol*. This protocol is documented here.
+The [IRMA mobile app](https://github.com/privacybydesign/irma_mobile) allows users to obtain and disclose [IRMA attributes](overview.md#cryptographic-entities), as well as attach them to signed statements. Before such an IRMA session proceeds, the IRMA app may ask the user to enter her IRMA PIN code so that the [requestor](overview.md#participants) can be sure that it is indeed the attribute owner initiating the session (as opposed to, e.g., a thief of the user's phone). The verification of the correctness of the IRMA PIN code, and preventing the session from happening when it is not, is the responsibility of the [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server). In order to do this, it interacts with the IRMA app and possibly the IRMA API server in a protocol that we call the *keyshare protocol*. This protocol is documented here.
 
-Each [IRMA scheme](schemes) decides whether or not it employs an IRMA keyshare server. If it does, then this keyshare server is involved in any IRMA session that involves attributes that fall under the scheme manager's responsibility.
+Each [IRMA scheme](schemes.md) decides whether or not it employs an IRMA keyshare server. If it does, then this keyshare server is involved in any IRMA session that involves attributes that fall under the scheme manager's responsibility.
 
 Upon app installation, the IRMA user *registers* to the keyshare servers of the installed scheme managers. At this point the user chooses her IRMA PIN code. Afterwards, whenever the user performs an IRMA session, the user must first enter her IRMA PIN code. Only if the PIN is correct will the keyshare server allow the session to proceed.
 
@@ -48,7 +48,7 @@ Thus each user has her own secret key, namely the integer that serves as the fir
 
 ### Splitting the secret key across the user and keyshare server
 
-As mentioned, in IRMA the secret key $m$ is always kept hidden from the verifier using [a zero-knowledge proof](zkp). Now let $m = m_u + m_k$ with $m_u$ only known to the user, $m_k$ only known to the keyshare server, and $m$ known to neither. We now describe how we can modify the zero-knowledge proof of the secret key in such a way that the user and keyshare server *jointly* prove knowledge of the number $m$, as follows. We refer to the diagram and use the notation of the [page on zero-knowledge proofs](zkp).
+As mentioned, in IRMA the secret key $m$ is always kept hidden from the verifier using [a zero-knowledge proof](zkp.md). Now let $m = m_u + m_k$ with $m_u$ only known to the user, $m_k$ only known to the keyshare server, and $m$ known to neither. We now describe how we can modify the zero-knowledge proof of the secret key in such a way that the user and keyshare server *jointly* prove knowledge of the number $m$, as follows. We refer to the diagram and use the notation of the [page on zero-knowledge proofs](zkp.md).
 
 * After step 2.2, the user asks the keyshare server to generate its own random $w_k$ and compute $W_k = R^{w_k}$. The keyshare server keeps $w_k$ hidden but sends $W_k$ to the user.
 * The user computes the challenge as $c = H(P, WW_k, \eta)$, and then sends $c$ to the keyshare server.

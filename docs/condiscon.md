@@ -11,16 +11,16 @@ img.ss {
 }
 </style>
 
-This page introduces *condiscon*: a new IRMA feature allowing IRMA [verifiers and signature requestors](overview#participants) to express the attributes they need with much more flexibility, using a new format for the [session request](session-requests) with which sessions are started at the IRMA server. This affects:
-- [Requestors](overview#participants) using an [`irma server`](irma-server) or the [`irmaserver` library](irma-server-lib), as they need to convert their session request to the new condiscon format.
-- The [`irma` command](irma-cli) including [`irma server`](irma-server) (`0.3.0` and up supports condiscon).
+This page introduces *condiscon*: a new IRMA feature allowing IRMA [verifiers and signature requestors](overview.md#participants) to express the attributes they need with much more flexibility, using a new format for the [session request](session-requests.md) with which sessions are started at the IRMA server. This affects:
+- [Requestors](overview.md#participants) using an [`irma server`](irma-server.md) or the [`irmaserver` library](irma-server-lib.md), as they need to convert their session request to the new condiscon format.
+- The [`irma` command](irma-cli.md) including [`irma server`](irma-server.md) (`0.3.0` and up supports condiscon).
 - The [IRMA app](https://github.com/privacybydesign/irma_mobile) (a condiscon-compatible version will soon be released in the beta channel).
 
-Below we describe the new session format, explaining the new features that it brings, and highlighting differences with the old session format. The documentation of the updated session request format can be found [here](session-requests).
+Below we describe the new session format, explaining the new features that it brings, and highlighting differences with the old session format. The documentation of the updated session request format can be found [here](session-requests.md).
 
 ## New session request format
 
-An [IRMA disclosure session](what-is-irma#session-types) is started by a verifier submitting a [*session request*](session-requests) to an IRMA server, listing the attributes that it requires, offering the user a choice between multiple options for some or all of these attributes. That is, IRMA supports requesting the user for a [*conjunction*](https://en.wikipedia.org/wiki/Logical_conjunction) of [*disjunctions*](https://en.wikipedia.org/wiki/Logical_disjunction) of attributes. In the (new) IRMA app, this looks as follows.
+An [IRMA disclosure session](what-is-irma.md#session-types) is started by a verifier submitting a [*session request*](session-requests.md) to an IRMA server, listing the attributes that it requires, offering the user a choice between multiple options for some or all of these attributes. That is, IRMA supports requesting the user for a [*conjunction*](https://en.wikipedia.org/wiki/Logical_conjunction) of [*disjunctions*](https://en.wikipedia.org/wiki/Logical_disjunction) of attributes. In the (new) IRMA app, this looks as follows.
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--IRMA app-->
@@ -100,7 +100,7 @@ In this disclosure request, the user is asked for her (demo) BSN, and for her `s
 
 In the session request above (see the second tab) we call the three JSON lists that contain strings *inner conjunctions* (distinguishing them from the *outer conjunctions*, that contain not attribute but disjunctions). Asking for multiple attributes within such an inner conjunctions of a session request is subject to the following rules:
 
-- When attributes coming from multiple credential types occur in an inner conjunction, at most one of them may be a non-[singleton](overview#singletons).
+- When attributes coming from multiple credential types occur in an inner conjunction, at most one of them may be a non-[singleton](overview.md#singletons).
 - If some of the attributes occuring in the inner conjunction come from the same credential type, then the attributes that the user sends must come from the same credential instance: it is not allowed to mix attributes coming from distinct instances of that credential type. (The IRMA app automatically only offers candidate sets as choices to the user that satisfy this property.)
 
 For example, consider the following condiscon session request:
@@ -171,7 +171,7 @@ As before, the verifier can indicate in the session request that it requires spe
 - **Null attributes**: Attributes that were skipped by the issuer during issuance, assigning them the `null` value, can now be requested and disclosed normally. The verifier receives the JSON value `null` instead of a (string) attribute value. (Previously such null attributes would have caused the IRMA app to abort the session, considering them "absent" and thus the request unsatisfiable. This made it impractical to request an optional attribute along with other attributes.)
 - **Disjunction labels** are now optional. They often only repeated the requested credential or attribute names (mainly because they were required); this is now discouraged. Instead, labels should only be used to explain something to the user that would otherwise not be obvious (e.g, to request the user to send a work email address instead of a personal one).
 
-For full details, see the documentation of the [session request format](session-requests).
+For full details, see the documentation of the [session request format](session-requests.md).
 
 ## Compatibility
 

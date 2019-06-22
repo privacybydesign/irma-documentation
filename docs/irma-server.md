@@ -4,13 +4,13 @@ title: irma server
 
 
 `irma server` is an IRMA server executable (daemon) allowing you to perform IRMA sessions with
-[IRMA apps](https://github.com/privacybydesign/irma_mobile). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an IRMA app on behalf of a [requestor](overview#participants) (the application wishing to verify or issue attributes). It exposes the following:
+[IRMA apps](https://github.com/privacybydesign/irma_mobile). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an IRMA app on behalf of a [requestor](overview.md#participants) (the application wishing to verify or issue attributes). It exposes the following:
  * HTTP endpoints under `/irma`, used by the IRMA app during IRMA sessions
  * a JSON API under `/sessions` for requestors, allowing them to request the server to verify or issue attributes.
 
-`irma server` is a subcommand of the [`irma`](irma-cli) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle [IRMA schemes](schemes), and more.
+`irma server` is a subcommand of the [`irma`](irma-cli.md) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle [IRMA schemes](schemes.md), and more.
 
-For installation instructions, see [`irma`](irma-cli).
+For installation instructions, see [`irma`](irma-cli.md).
 
 ## Running the server
 
@@ -19,7 +19,7 @@ Simply run `irma server` to run the server with the default configuration in dev
 Run `irma server --help` to see configuration options. In order to verify your configuration, run `irma server check -v`.
 
 ## Starting a session
-Assuming the server runs in the [default configuration](#default-configuration) (in particular [requestor authentication](#requestor-authentication) is disabled (`no_auth` is `true`) and the `irma-demo` [scheme](schemes) is installed), issue `irma-demo.MijnOverheid.ageLower` attributes using the [`session`](../../irma) subcommand of the `irma` tool:
+Assuming the server runs in the [default configuration](#default-configuration) (in particular [requestor authentication](#requestor-authentication) is disabled (`no_auth` is `true`) and the `irma-demo` [scheme](schemes.md) is installed), issue `irma-demo.MijnOverheid.ageLower` attributes using the [`session`](irma-cli.md) subcommand of the `irma` tool:
 ```shell
 irma session --server http://localhost:8088 --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
 ```
@@ -27,7 +27,7 @@ Verify the `irma-demo.MijnOverheid.ageLower.over18` attribute:
 ```shell
 irma session --server http://localhost:8088 --disclose irma-demo.MijnOverheid.ageLower.over18
 ```
-These print QRs in your terminal that you can scan with your IRMA app to perform the session. For more extensive examples, see [irmajs](irmajs).
+These print QRs in your terminal that you can scan with your IRMA app to perform the session. For more extensive examples, see [irmajs](irmajs.md).
 
 ## Configuring
 Run `irma server -h` to see all configuration options. Each option may be passed as:
@@ -48,7 +48,7 @@ In the remainder of this document, when referring to options we write them as co
 
 ### Default configuration
 In the default configuration (run `irma server check -v` to see it) the server is immediately usable. In particular, it
-* uses the [default IRMA schemes](schemes#default-schemes-pbdf-and-irma-demo) ([`pbdf`](https://github.com/credentials/pbdf-schememanager) and [`irma-demo`](https://github.com/credentials/irma-demo-schememanager)), downloading them if necessary
+* uses the [default IRMA schemes](schemes.md#default-schemes-pbdf-and-irma-demo) ([`pbdf`](https://github.com/credentials/pbdf-schememanager) and [`irma-demo`](https://github.com/credentials/irma-demo-schememanager)), downloading them if necessary
 * allows anyone to use the server [without authentication](#requestor-authentication) (the `no_auth` setting is `true`).
 
 If the server is reachable from the internet, you should consider enabling authentication of session requests.
@@ -62,7 +62,7 @@ When running the server in production, you should enable the `production` option
 * `url` from `"http://$YOUR_LOCAL_IP:port"` to `""`: in development mode the `url` to which IRMA apps will connect is set by default to your current local IP address; in `production` mode you must configure it yourself.
 * [`no_auth`](#requestor-authentication) from `true` to `false`: you should consider enabling requestor authentication, or explicitly disable this by setting this flag to `true`.
 * [`issue_perms`](#global-permissions) from `[*]` (everything) to `[]` (none).
-* [`no_email`](email) from `true` to `false`: in `production` mode, opting out of providing an email address can be done by explicitly setting this flag to `true`.
+* [`no_email`](email.md) from `true` to `false`: in `production` mode, opting out of providing an email address can be done by explicitly setting this flag to `true`.
 
 ### Keys and certificates
 For each configuration option that refers to some kind of key or certificate (for example `jwt_privkey`), there is a corresponding option with the `_file` suffix (for example `jwt_privkey_file`). Keys can be specified either by setting former to a (PEM) string, or setting the the latter to a file containing the (PEM) string.
@@ -96,16 +96,16 @@ When authentication is enabled (`no_auth` is `false`), requestors that are autho
 }
 ```
 
-The server supports several authentication methods, one of which must be specified in the `auth_method` field for each requestor. The snippet above demonstrates the recommended and easiest to use authentication method, called `token`. When using this method the requestor must include the `key` as an API token in a HTTP header (for more details see the [API reference](api-irma-server#post-session)).
+The server supports several authentication methods, one of which must be specified in the `auth_method` field for each requestor. The snippet above demonstrates the recommended and easiest to use authentication method, called `token`. When using this method the requestor must include the `key` as an API token in a HTTP header (for more details see the [API reference](api-irma-server.md#post-session)).
 
 In addition the server supports the following authentication methods:
-* `hmac`: the requestor symmetrically [signs the session request](session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/), with HMAC-SHA256 (`HS256`) using `key`. The `key` provided should be the Base64 encoding of the actual secret.
-* `publickey`: the requestor asymmetrically [signs the session request](session-requests#jwts-signed-session-requests) in a [JWT](https://jwt.io/) with RSA (`RS256`), in this case `key` should be the PEM public key of the requestor.
+* `hmac`: the requestor symmetrically [signs the session request](session-requests.md#jwts-signed-session-requests) in a [JWT](https://jwt.io/), with HMAC-SHA256 (`HS256`) using `key`. The `key` provided should be the Base64 encoding of the actual secret.
+* `publickey`: the requestor asymmetrically [signs the session request](session-requests.md#jwts-signed-session-requests) in a [JWT](https://jwt.io/) with RSA (`RS256`), in this case `key` should be the PEM public key of the requestor.
 
 For each of these modes it is also possible to specify `key_file` instead `key`; in that case the file at `key_file` will be read and used as `key`.
 
 ### Permissions
-For each of the [three IRMA session types](what-is-irma#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
+For each of the [three IRMA session types](what-is-irma.md#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
 ```json
 {
     "requestors": {
@@ -131,16 +131,16 @@ In development mode, when `production` is `false`, the defaults for `disclose_pe
 
 ### Static file hosting
 
-Apart from hosting endpoints under [`/session` and `/irma`](irma-server#http-server-endpoints), the server also supports statically hosting all files from a certain directory. This can be useful [for experimenting](getting-started#perform-browser-irma-session). It can be configured with the following options:
+Apart from hosting endpoints under [`/session` and `/irma`](irma-server.md#http-server-endpoints), the server also supports statically hosting all files from a certain directory. This can be useful [for experimenting](getting-started.md#perform-browser-irma-session). It can be configured with the following options:
 
 * `static_path`: Host files under this path as static files. Leave empty to disable static file hosting.
 * `static_prefix`: Host static files under this URL prefix (default: no prefix)
 
 ### IRMA schemes
 
-The server uses [IRMA schemes](schemes) to retrieve issuer, credential and attribute names, as well as public and private keys with which attributes can be verified an issued, respectively. By default the server uses the [`pbdf` and `irma-demo` schemes](schemes#default-schemes-pbdf-and-irma-demo). This can be configured with the following options:
+The server uses [IRMA schemes](schemes.md) to retrieve issuer, credential and attribute names, as well as public and private keys with which attributes can be verified an issued, respectively. By default the server uses the [`pbdf` and `irma-demo` schemes](schemes.md#default-schemes-pbdf-and-irma-demo). This can be configured with the following options:
 
-* `schemes_path`: path containing IRMA schemes (often called `irma_configuration`). Default: `C:\Users\Username\AppData\Local\irma\irma_configuration` on Windows, `$HOME/.local/share/irma/irma_configuration` otherwise. Created if it does not exist. If empty, the default schemes [`pbdf` and `irma-demo`](schemes#default-schemes-pbdf-and-irma-demo) are downloaded into it.
+* `schemes_path`: path containing IRMA schemes (often called `irma_configuration`). Default: `C:\Users\Username\AppData\Local\irma\irma_configuration` on Windows, `$HOME/.local/share/irma/irma_configuration` otherwise. Created if it does not exist. If empty, the default schemes [`pbdf` and `irma-demo`](schemes.md#default-schemes-pbdf-and-irma-demo) are downloaded into it.
 * `schemes_assets_path`: path containing initial, read-only IRMA schemes. If specified, the schemes found here are copied into the path specified by `schemes_path`. Can be used to avoid downloading default schemes on first run.
 * `schemes_update`: update IRMA schemes from their scheme URL every this many minutes. Default is `60`. Set to `0` to disable automatic scheme updating (not recommended).
 
@@ -148,12 +148,12 @@ The server uses [IRMA schemes](schemes) to retrieve issuer, credential and attri
 
 If IRMA issuer private keys are included in the server configuration, then the server can issue all credential types of all issuers for which private keys are installed. IRMA issuer private keys can be configured in the following two ways:
 
-* Include the private keys within the [IRMA scheme](schemes) in the issuer's `PrivateKeys` folder, with filenames `0.xml`, `1.xml`, etc ([example](https://github.com/privacybydesign/irma-demo-schememanager/tree/master/MijnOverheid/PrivateKeys)).
+* Include the private keys within the [IRMA scheme](schemes.md) in the issuer's `PrivateKeys` folder, with filenames `0.xml`, `1.xml`, etc ([example](https://github.com/privacybydesign/irma-demo-schememanager/tree/master/MijnOverheid/PrivateKeys)).
 * Set the `privkeys` option to a folder containing IRMA issuer private keys called `scheme.issuer.xml` (for example, `irma-demo.MijnOverheid.xml`).
 
 If issuance is enabled in production and private keys are configured, then you should ensure that only authenticated requestors can start issuance requests (otherwise if anyone can use your server to issue attributes then those attributes cannot be trusted or used). You should either:
 
-* disable `no_auth` and [send authenticated session requests](irma-server#requestor-authentication),
+* disable `no_auth` and [send authenticated session requests](irma-server.md#requestor-authentication),
 * Restrict the [`/session` HTTP endpoints](#http-server-endpoints) to a internal network interface only accessible by your applications and not from outside.
 
 Taking neither approach is an unsafe configuration as in that case anyone can create issuance sessions. In this case, if `production` mode is enabled then the server will refuse to run.
@@ -178,7 +178,7 @@ Alternatively, if your IRMA server is connected to the internet through a revers
 
 ### Email
 
-Users of the server are encouraged to provide an email address with the `email` option, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](email). In `production` mode, it is required to either provide an email address or to explicitly out with the `no_email` option.
+Users of the server are encouraged to provide an email address with the `email` option, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](email.md). In `production` mode, it is required to either provide an email address or to explicitly out with the `no_email` option.
 
 ### Logging and verbosity
 
@@ -199,6 +199,6 @@ Outputting JSON is enabled with the `log-json` option:
 
 ## See also
 
-* This executable wraps the Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) which wraps the Go library [`irmaserver`](irma-server-lib).
+* This executable wraps the Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) which wraps the Go library [`irmaserver`](irma-server-lib.md).
 * The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).
 * This server is has replaced the deprecated Java [irma_api_server](https://github.com/privacybydesign/irma_api_server).

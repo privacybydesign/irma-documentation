@@ -34,12 +34,12 @@ The following fields may occur in this message:
 
 Start an IRMA session. What to POST to this endpoint depends on the server configuration:
 
-* If `no_auth` is true, an [(extended) JSON session request](session-requests)
+* If `no_auth` is true, an [(extended) JSON session request](session-requests.md)
 * If `no_auth` is false:
-  * [(extended) JSON session request](session-requests) with an API token in the `Authorization` HTTP header
-  * [JWT session request](session-requests#jwts-signed-session-requests) signed with RS256 or HS256
+  * [(extended) JSON session request](session-requests.md) with an API token in the `Authorization` HTTP header
+  * [JWT session request](session-requests.md#jwts-signed-session-requests) signed with RS256 or HS256
 
-If `no_auth` is false, then which of these options should be taken depends on the [`requestors`](irma-server#requestor-authentication) option passed to the `irma server`.
+If `no_auth` is false, then which of these options should be taken depends on the [`requestors`](irma-server.md#requestor-authentication) option passed to the `irma server`.
 
 In each case an appropriate `Content-Type` with `text/plain` or `application/json` must be included.
 
@@ -50,7 +50,7 @@ If the request was successfully parsed, and authenticated if applicable, then th
   "sessionPtr": {"u":"https://example.com/irma/ysDohpoySavbHAUDjmpz","irmaqr":"disclosing"}
 }
 ```
-In the endpoints below, the `{token}` placeholder must be replaced with the above session `token`. The `sessionPtr` points to the IRMA session for the IRMA app user, and should be displayed as a QR for the user to scan, or encoded in a universal link for a mobile session, e.g. using [`handleSesion()`](api-irmajs#handlesession) from `irmajs`.
+In the endpoints below, the `{token}` placeholder must be replaced with the above session `token`. The `sessionPtr` points to the IRMA session for the IRMA app user, and should be displayed as a QR for the user to scan, or encoded in a universal link for a mobile session, e.g. using [`handleSesion()`](api-irmajs.md#handlesession) from `irmajs`.
 
 Each session starts in the `"INITIALIZED"` [session status](#get-session-token-status). Regardless of how it reaches its ending status (`"DONE"`, `"CANCELLED"`, `"TIMEOUT"`), it is kept in memory for 5 minutes after reaching its ending status. After that all endpoints below requiring the session `token` return error `"SESSION_UNKNOWN"`.
 
@@ -109,7 +109,7 @@ Get the [session result](https://godoc.org/github.com/privacybydesign/irmago/ser
 The response may contain the following fields:
 * `token`: Session token
 * `status`: Current [session status](#get-session-token-status)
-* `type`: [Session type](what-is-irma#session-types): one of `"disclosing"`, `"signing"`, or `"issuing"`
+* `type`: [Session type](what-is-irma.md#session-types): one of `"disclosing"`, `"signing"`, or `"issuing"`
 * `proofStatus`: One of the package level [irma.ProofStatus](https://godoc.org/github.com/privacybydesign/irmago#pkg-constants) constants, indicating the cryptographic validity of the attributes and proofs of knowledge:
    * `"VALID"`: proofs are valid
    * `"INVALID"`: proofs are invalid
@@ -129,7 +129,7 @@ This endpoint just fetches the session result, and works normally even if the se
 
 ### `GET /session/{token}/result-jwt`
 
-If a JWT private key was [provided in the configuration of the `irma server`](irma-server#signed-jwt-session-results), then this returns a [JWT](https://jwt.io) signed by the `irma server` with the message from [`GET /session/{token}/result`](#get-session-token-result) above as JWT body, along with the following standard JWT fields:
+If a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results), then this returns a [JWT](https://jwt.io) signed by the `irma server` with the message from [`GET /session/{token}/result`](#get-session-token-result) above as JWT body, along with the following standard JWT fields:
 * `iss`: name of the current `irma server` as defined in its configuration
 * `iat`: Unix timestamp indicating when this JWT was created
 * `sub`: `verification_result` or `signing_result` or `issuing_result`
@@ -140,10 +140,10 @@ This way, even if the session result from the `irma server` travels along an unt
 
 ### `GET /session/{token}/getproof`
 
-Also returns a session result JWT, but one whose structure is the same as the session JWTs returned by the [`irma_api_server`](https://github.com/privacybydesign/irma_api_server). Only works if a JWT private key was [provided in the configuration of the `irma server`](irma-server#signed-jwt-session-results).
+Also returns a session result JWT, but one whose structure is the same as the session JWTs returned by the [`irma_api_server`](https://github.com/privacybydesign/irma_api_server). Only works if a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results).
 
 ---
 
 ### `GET /publickey`
 
-If a JWT private key was [provided in the configuration of the `irma server`](irma-server#signed-jwt-session-results), then this returns the corresponding public key in PEM with which the server's session result JWTs returned by [`GET /session/{token}/result-jwt`](#get-session-token-result-jwt) and [`GET /session/{token}/getproof`](#get-session-token-getproof) can be verified.
+If a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results), then this returns the corresponding public key in PEM with which the server's session result JWTs returned by [`GET /session/{token}/result-jwt`](#get-session-token-result-jwt) and [`GET /session/{token}/getproof`](#get-session-token-getproof) can be verified.

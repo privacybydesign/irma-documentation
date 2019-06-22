@@ -11,17 +11,17 @@ img.ss {
 }
 </style>
 
-Each [IRMA server](what-is-irma#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [IRMA app](https://github.com/privacybydesign/irma_mobile) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
+Each [IRMA server](what-is-irma.md#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [IRMA app](https://github.com/privacybydesign/irma_mobile) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
 
-* The [`POST /session`](api-irma-server#post-session) endpoint from [`irma server`](irma-server).
+* The [`POST /session`](api-irma-server.md#post-session) endpoint from [`irma server`](irma-server.md).
 * The [`StartSession()` function](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
-* The [`startSession()` function](api-irmajs#startsession) of `irmajs`.
+* The [`startSession()` function](api-irmajs.md#startsession) of `irmajs`.
 
-For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-irma#irma-session-flow).
+For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-irma.md#irma-session-flow).
 
 ## Session request data types
 
-For each of the [three IRMA session types](what-is-irma#session-types), we define a *session request* data type: an object whose JSON representation contains at least a [JSON-LD `@context`](https://w3c.github.io/json-ld-syntax/#the-context) key identifying which message type it is, and extra keys specific to the session type. The following three `@context` values identify disclosure, attribute-based signature, and issuance session requests respectively:
+For each of the [three IRMA session types](what-is-irma.md#session-types), we define a *session request* data type: an object whose JSON representation contains at least a [JSON-LD `@context`](https://w3c.github.io/json-ld-syntax/#the-context) key identifying which message type it is, and extra keys specific to the session type. The following three `@context` values identify disclosure, attribute-based signature, and issuance session requests respectively:
 
 * `"@context": "https://irma.app/ld/request/disclosure/v2"`
 * `"@context": "https://irma.app/ld/request/signature/v2"`
@@ -92,7 +92,7 @@ All of the attribute types (i.e., the string values) contained in the request mu
 ### Multiple credential types within inner conjunctions
 In the request above we call the three JSON lists that contain strings *inner conjunctions* (distinguishing them from the *outer conjunctions*, that contain not attribute but disjunctions). Asking for multiple attributes within such an inner conjunctions of a session request is subject to the following rules:
 
-- When attributes coming from multiple credential types occur in an inner conjunction, at most one of them may be a non-[singleton](overview#singletons).
+- When attributes coming from multiple credential types occur in an inner conjunction, at most one of them may be a non-[singleton](overview.md#singletons).
 - If some of the attributes occuring in the inner conjunction come from the same credential type, then the attributes that the user sends must come from the same credential instance: it is not allowed to mix attributes coming from distinct instances of that credential type. (The IRMA app automatically only offers candidate sets as choices to the user that satisfy this property.)
 
 For example, consider the following session request:
@@ -334,7 +334,7 @@ request.Labels = map[int]irma.TranslatedString{} // optional
 ```
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-Per credential in the `credentials` array the `validity` is optional; if skipped it is assigned the default value of 6 months. If present, the validity is always rounded down to the [nearest epoch boundary](overview#special-attributes), which is one week (60 * 60 * 24 * 7  = 604800 seconds).
+Per credential in the `credentials` array the `validity` is optional; if skipped it is assigned the default value of 6 months. If present, the validity is always rounded down to the [nearest epoch boundary](overview.md#special-attributes), which is one week (60 * 60 * 24 * 7  = 604800 seconds).
 
 Attributes marked as `optional` in the containing credential type ([example](https://github.com/privacybydesign/irma-demo-schememanager/blob/482ba298ee038ea43bd0cf8017567a844be0919e/MijnOverheid/Issues/fullName/description.xml#L54)) may be skipped in the `attributes` map. This issues [the `null` value](#null-attributes) to these attributes.
 
@@ -368,7 +368,7 @@ irma.ServiceProviderRequest{
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 ## JWTs: signed session requests
-The IRMA API server or [`irma server`](irma-server) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). The form of the JWT depends on the [session type](what-is-irma#session-types). For example, here is a JWT produced by the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube):
+The IRMA API server or [`irma server`](irma-server.md) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). The form of the JWT depends on the [session type](what-is-irma.md#session-types). For example, here is a JWT produced by the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube):
 ```
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImlybWF0dWJlIn0.eyJpYXQiOjE1NTA0MjQ4NDcsImlzcyI6IklSTUFUdWJlIiwic3ViIjoidmVyaWZpY2F0aW9uX3JlcXVlc3QiLCJzcHJlcXVlc3QiOnsidmFsaWRpdHkiOjYwLCJyZXF1ZXN0Ijp7ImNvbnRlbnQiOlt7ImxhYmVsIjoiTWVtYmVyc2hpcCIsImF0dHJpYnV0ZXMiOlsicGJkZi5wYmRmLmlybWF0dWJlLnR5cGUiXX0seyJsYWJlbCI6IkFnZSBvdmVyIDEyIiwiYXR0cmlidXRlcyI6WyJwYmRmLnBiZGYuYWdlTGltaXRzLm92ZXIxMiIsInBiZGYubmlqbWVnZW4uYWdlTGltaXRzLm92ZXIxMiJdfV19fX0.4_b12I4fwXVE5QRf7ll1K-FhjeDYQk3a4XTiykIuWW61gY9VwzJrazWDWU7PRJfb0BgLU36cyw9K5FeQPpsIRxXhFxde4ueAjAixNWtn1JG1Nt_L-7LEOV3cl6G7TAGdVx_-WrLctBQ99NMHWL4_xJ8pY253vI6oQjqp0TTwMPkOAp-taZiRY5AEW0Itj1dbX09WWbxIegL7-SIhi-kjrz-ia6h-l2udAVaeCzpQX_-1Sqm1z8-Fi4lhcRNVituCGMgsWAPUNNPExlOY1YJmuLUogvSIClW6hqTUafVxWqQ-DLJFNBWLzlOoiSj6WqtkEX5r5AsFHKpI5383umcJqA
 ```
@@ -409,7 +409,7 @@ For each possible session type, the contents of the `sub` field and the name of 
 
 Currently the following libraries can produce JWTs of this form:
 * The [`irmago`](https://godoc.org/github.com/privacybydesign/irmago) library, using the mentioned functions
-* The [`irmajs`](irmajs) Javascript library
+* The [`irmajs`](irmajs.md) Javascript library
 * The [`irma-requestor`](https://github.com/privacybydesign/irma-requestor) PHP library
 * The [`irma_api_common`](https://github.com/privacybydesign/irma_api_common) Java library
 * The [`irma-diva-js`](https://github.com/Alliander/diva-irma-js) Javascript library

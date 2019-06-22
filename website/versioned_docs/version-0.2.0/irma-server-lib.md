@@ -22,7 +22,7 @@ The server is configured by passing a `server.Configuration` instance to `irmase
 
 ## Email
 
-Users are encouraged to provide an email address with the `Email` option in the `server.Configuration` struct, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](email).
+Users are encouraged to provide an email address with the `Email` option in the `server.Configuration` struct, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](email.md).
 
 ## Example
 
@@ -85,5 +85,5 @@ func createFullnameRequest(w http.ResponseWriter, r *http.Request) {
 ## See also
 
 * The Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) wraps the functions that this library exposes for starting and managing IRMA sessions into HTTP endpoints.
-* The [`irma server`](irma-server) command wraps `requestorserver` into an executable.
+* The [`irma server`](irma-server.md) command wraps `requestorserver` into an executable.
 * The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).

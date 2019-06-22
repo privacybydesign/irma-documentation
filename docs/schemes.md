@@ -2,7 +2,7 @@
 title: IRMA schemes
 ---
 
-In IRMA, every party ([IRMA apps](https://github.com/privacybydesign/irma_mobile), [IRMA servers](what-is-irma#irma-servers), [requestors](overview#participants)) must be aware of existing [credential types](overview#credential-types), attribute names, and the [issuers](overview#issuers) and their public keys. All such information is contained in IRMA *schemes*. It is the task of the *scheme manager* to determine and distribute this information to all parties, in the form of a directory structure [such as this one](https://github.com/privacybydesign/pbdf-schememanager), which contains:
+In IRMA, every party ([IRMA apps](https://github.com/privacybydesign/irma_mobile), [IRMA servers](what-is-irma.md#irma-servers), [requestors](overview.md#participants)) must be aware of existing [credential types](overview.md#credential-types), attribute names, and the [issuers](overview.md#issuers) and their public keys. All such information is contained in IRMA *schemes*. It is the task of the *scheme manager* to determine and distribute this information to all parties, in the form of a directory structure [such as this one](https://github.com/privacybydesign/pbdf-schememanager), which contains:
 
 * All information about all issuers that fall under this scheme including their logos,
 * The Idemix public keys of said issuers,
@@ -50,7 +50,7 @@ Description of the files:
 * `index.sig` is an ECDSA signature over the `index`, thus effectively signing each file listed in the `index`.
 * `timestamp` contains the Unix timestamp of the last time the scheme was modified.
 * `pk.pem` is the scheme's public key against which `index.sig` should verify.
-* `kss-0.pem` (optional): if the scheme uses a [keyshare server](keyshare-protocol), then this contains the keyshare server's public key.
+* `kss-0.pem` (optional): if the scheme uses a [keyshare server](keyshare-protocol.md), then this contains the keyshare server's public key.
 
 ## Default schemes: `pbdf` and `irma-demo`
 
@@ -61,12 +61,12 @@ Most IRMA software components automatically use the following two schemes:
 
 The [Privacy by Design Foundation](https://privacybydesign.foundation/), which develops IRMA and issues a basic set of attributes, is the scheme manager of these two schemes. New issuers wishing to issue attributes under the `pbdf` scheme, or existing issuers wishing to issue new credential types, can [ask](https://privacybydesign.foundation/people#developers) the Foundation to be included in these schemes.
 
-These two schemes are hardcoded into the [IRMA app](https://github.com/privacybydesign/irma_mobile), and if an [`irma`](irma-cli) subcommand that requires schemes is run for the first time, these two schemes are downloaded to a default location on disk (`~/.local/share/irma/irma_configuration` on Linux/macOS). It is always possible to use other schemes in conjunction with these two, or without them, either by making a custom build of the IRMA app, or by passing the appropriate options to the `irma` subcommands (see the `--help` messages).
+These two schemes are hardcoded into the [IRMA app](https://github.com/privacybydesign/irma_mobile), and if an [`irma`](irma-cli.md) subcommand that requires schemes is run for the first time, these two schemes are downloaded to a default location on disk (`~/.local/share/irma/irma_configuration` on Linux/macOS). It is always possible to use other schemes in conjunction with these two, or without them, either by making a custom build of the IRMA app, or by passing the appropriate options to the `irma` subcommands (see the `--help` messages).
 
 
 ## Updating and signing schemes with `irma`
 
-The following `irma scheme` subcommands from the [`irma`](irma) command line tool act on IRMA schemes:
+The following `irma scheme` subcommands from the [`irma`](irma-cli.md) command line tool act on IRMA schemes:
 
 * `download`: Download a scheme from its remote URL
 * `issuer`: Manage IRMA issuers within an IRMA scheme
@@ -82,9 +82,9 @@ Check `-h` or `--help` of these for usage details.
 
 Anyone can create their own IRMA scheme. At minimum the following must be done:
 
-* Create a directory structure like the one above (you can use the `scheme` subcommand of the [`irma`](irma) command line tool to generate an ECDSA public-private keypair and sign the directory tree);
+* Create a directory structure like the one above (you can use the `scheme` subcommand of the [`irma`](irma-cli.md) command line tool to generate an ECDSA public-private keypair and sign the directory tree);
 * Define at least one issuer and generate its Idemix public-private keypair (again using `irma`), putting the public key in the directory structure;
 * Define at least one credential type that this issuer will issue;
 * Compile a version of the IRMA app with this directory tree hardcoded in it;
-* Host an [`irma server`](irma-server) that will issue and verify your credential type (as this  server will issue credentials it must have a copy of the scheme directory tree, and the Idemix private key);
-* Create a website using [irmajs](irmajs) that will issue and verify instances of your credential type.
+* Host an [`irma server`](irma-server.md) that will issue and verify your credential type (as this  server will issue credentials it must have a copy of the scheme directory tree, and the Idemix private key);
+* Create a website using [irmajs](irmajs.md) that will issue and verify instances of your credential type.

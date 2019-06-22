@@ -16,7 +16,7 @@ import irma from '@privacybydesign/irma';
 var irma = require('@privacybydesign/irma');
 ```
 
-Its primary functions are [`startSession()`](#startsession), which can start an IRMA session by sending a (unsigned or JWT) [session request](session-requests) to an IRMA server, and [`handleSession()`](#handlesession), which given the output of `startSession()` handles the remainder of an IRMA session.
+Its primary functions are [`startSession()`](#startsession), which can start an IRMA session by sending a (unsigned or JWT) [session request](session-requests.md) to an IRMA server, and [`handleSession()`](#handlesession), which given the output of `startSession()` handles the remainder of an IRMA session.
 
 ## API reference
 
@@ -74,8 +74,8 @@ The following `method`s are supported:
 What the promise returned by this function receives depends on the options as follows:
 * If the `server` and `token` options are not provided then the session status is returned.
 * If the `server` and `token` parameters are given, containing a URL to an IRMA server and the session token at the IRMA server, respectively, then the session result is retrieved from the IRMA server. In that case, the promise returned by this function receives one of the following:
-   * If `resultJwt` is `false` (default), a [`SessionResult` message](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult) as returned by the [`GET /session/{token}/result`](api-irma-server#get-session-token-result) endpoint of the `irma server`. 
-   * Otherwise, a session result JWT as returned by the [`GET /session/{token}/result-jwt`](api-irma-server#get-session-token-result-jwt) endpoint of the `irma server`.
+   * If `resultJwt` is `false` (default), a [`SessionResult` message](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult) as returned by the [`GET /session/{token}/result`](api-irma-server.md#get-session-token-result) endpoint of the `irma server`. 
+   * Otherwise, a session result JWT as returned by the [`GET /session/{token}/result-jwt`](api-irma-server.md#get-session-token-result-jwt) endpoint of the `irma server`.
 
 If the session is not successful, an exception is thrown. If the session is cancelled or times out, the message will be `SessionStatus.Cancelled` or `SessionStatus.Timeout`.
 
@@ -95,14 +95,14 @@ Start an IRMA session at an IRMA server. This function supports all authenticati
 
  Parameters:
  * `server`: URL to IRMA server at which to start the session.
- * `request`: Session request, either a JWT or an [(extended) session request](session-requests) (see below).
+ * `request`: Session request, either a JWT or an [(extended) session request](session-requests.md) (see below).
  * `method`: authentication method (supported: `none`, `token`, `hmac`, `publickey`; default is `none`).
  * `key`: API token or JWT key.
  * `name`: name of the requestor (only for `hmac` and `publickey` mode).
 
 The authentication method is determined by the `request` and `method` parameters as follows.
-* If `request` is a `string` then it is posted as a [session request JWT](session-requests#jwts-signed-session-requests) to the IRMA server.
-* Otherwise it should be an `object` containing an [(extended) session request](session-requests). How it is handled depends on `method`:
+* If `request` is a `string` then it is posted as a [session request JWT](session-requests.md#jwts-signed-session-requests) to the IRMA server.
+* Otherwise it should be an `object` containing an [(extended) session request](session-requests.md). How it is handled depends on `method`:
   * `none`: it is POSTed as JSON to the IRMA server (which must be configured to accept unauthorized session requests).
   * `token`: it is POSTed as JSON to the IRMA server along with the `key` parameter as an API token in a HTTP header.
   * `publickey`: it is first signed into a JWT with the specified RSA private `key` in PEM, using `name` as the requestor name, and then POSTed to the IRMA server.

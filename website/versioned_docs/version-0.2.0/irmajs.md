@@ -46,7 +46,7 @@ irma.startSession(server, request)
     .then(result => console.log('Done', result));
 ```
 
-This assumes you have an [`irma server`](irma-server) that is configured to [accept unauthenticated session requests](irma-server#requestor-authentication) listening at the URL indicated by `server`.
+This assumes you have an [`irma server`](irma-server.md) that is configured to [accept unauthenticated session requests](irma-server.md#requestor-authentication) listening at the URL indicated by `server`.
 
 For complete examples, see the `examples` folder. You can host these examples using the IRMA server, with:
 
