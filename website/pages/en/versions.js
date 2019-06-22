@@ -18,9 +18,7 @@ const versions = require(`${CWD}/versions.json`);
 function Versions(props) {
   const {config: siteConfig} = props;
   const latestVersion = versions[0];
-  const repoUrl = `https://github.com/${siteConfig.organizationName}/${
-    siteConfig.projectName
-  }`;
+  const repoUrl = `https://github.com/${siteConfig.organizationName}/${siteConfig.package}`;
   return (
     <div className="docMainWrapper wrapper">
       <Container className="mainContainer versionsContainer">
@@ -28,7 +26,7 @@ function Versions(props) {
           <header className="postHeader">
             <h1>{siteConfig.title} versions</h1>
           </header>
-          <p>The version numbers shown here refer to the version of <a href="https://github.com/privacybydesign/irmago"><code>irmago</code></a>, which contains the bulk of the IRMA core software.</p>
+          <p>The version numbers shown here refer to the version of <a href={`${repoUrl}`}><code>{siteConfig.package}</code></a>, which contains the bulk of the IRMA core software.</p>
           <h3 id="latest">Current version (Stable)</h3>
           <table className="versions">
             <tbody>
