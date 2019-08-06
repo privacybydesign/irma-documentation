@@ -199,8 +199,25 @@ Outputting JSON is enabled with the `log-json` option:
 {"action":"disclosing","level":"info","msg":"Session started","session":"WdypvSs97JTotpfl1Dtd","time":"2019-02-28T20:51:09+01:00"}
 ```
 
+## Design goals
+
+The server was designed with the following goals in mind.
+- Developer and user friendliness
+  - Completely [configurable](#configuring) with configuration file, flags, or environmental vars (see `-h`)
+  - Default configuration (demo mode) is immediately useful
+  - Thorough and configurable logging (`-v`, `-vv`; by default logs exclude attribute values)
+  - Partial backwards compatibility with predecessor [`irma_api_server`](https://github.com/privacybydesign/irma_api_server)
+  - Small startup time
+- Also available as [Go library](irma-server-lib.md) instead of standalone server
+  - Bindings to other programming languages (Python, Ruby) are expected
+
+Being written in [Go](https://golang.org/) this server (in fact, the containing [`irma` binary](irma-cli.md)) additionally automatically has the following properties.
+- Simple to install (one binary, no dependencies, cross platform) and/or compile
+- [Reproducible builds](https://www.gnu.org/software/mes/manual/html_node/Reproducible-Builds.html)
+- [API documentation](https://godoc.org/github.com/privacybydesign/irmago) (generated automatically from `master` branch)
+
 ## See also
 
 * This executable wraps the Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) which wraps the Go library [`irmaserver`](irma-server-lib.md).
 * The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).
-* This server is has replaced the deprecated Java [irma_api_server](https://github.com/privacybydesign/irma_api_server).
+* This server is has replaced the deprecated Java [`irma_api_server`](https://github.com/privacybydesign/irma_api_server).
