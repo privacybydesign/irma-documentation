@@ -1,6 +1,6 @@
 ---
 title: Zero-knowledge proofs
-id: version-0.2.0-zkp
+id: version-v0.2.0-zkp
 original_id: zkp
 ---
 

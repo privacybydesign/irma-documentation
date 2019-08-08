@@ -1,6 +1,6 @@
 ---
 title: Email address
-id: version-0.2.0-email
+id: version-v0.2.0-email
 original_id: email
 ---
 

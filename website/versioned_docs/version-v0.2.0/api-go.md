@@ -1,6 +1,6 @@
 ---
 title: Go libraries
-id: version-0.2.0-api-go
+id: version-v0.2.0-api-go
 original_id: api-go
 ---
 

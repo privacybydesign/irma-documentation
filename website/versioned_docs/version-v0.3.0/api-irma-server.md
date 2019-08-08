@@ -119,7 +119,7 @@ The response may contain the following fields:
    * `"UNMATCHED_REQUEST"`: proofs do not correspond to a specified request
    * `"MISSING_ATTRIBUTES"`: proofs do not contain all requested attributes
    * `"EXPIRED"`: Attributes were expired at creation time
-* `disclosed`: List of [attributes disclosed](https://godoc.org/github.com/privacybydesign/irmago#DisclosedAttribute) by the user. The array structure mirrors that of the [session request](session-requests#disclosure-requests) that started the session: the i-th item of the outer array is a conjunction of attributes satisfying the i-th outer conjunction of the session request. (*Note*: if the session was started with a legacy, pre-[condiscon](condiscon.md) session request, then this array structure has a different legacy structure; see the [legacy documentation](/docs/0.2.0/api-irma-server#get-session-token-result))
+* `disclosed`: List of [attributes disclosed](https://godoc.org/github.com/privacybydesign/irmago#DisclosedAttribute) by the user. The array structure mirrors that of the [session request](session-requests#disclosure-requests) that started the session: the i-th item of the outer array is a conjunction of attributes satisfying the i-th outer conjunction of the session request. (*Note*: if the session was started with a legacy, pre-[condiscon](condiscon.md) session request, then this array structure has a different legacy structure; see the [legacy documentation](/docs/v0.2.0/api-irma-server#get-session-token-result))
 * `signature`: The full attribute-based signature in case of `"signing"` sessions
 * `error`: Error message in case of failure
 
