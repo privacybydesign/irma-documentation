@@ -89,11 +89,11 @@ When registering, the IRMA app POSTs a message like the one below to the to `/ap
 }
 ```
 
-The email address is optional and may be absent. The `language` indicates the user's preferred language, used for a confirmation mail if the email address is present. Lastly, the `pin` field is computed as `Base64(SHA256(nonce, pin))\n` (the trailing newline is there for legacy purposes and will be removed in the future).
+The email address is optional and may be absent. The `language` indicates the user's preferred language, used for a confirmation mail if the email address is present. Lastly, the `pin` field is computed as `Base64(SHA256(salt, pin))\n` (the trailing newline is there for legacy purposes and will be removed in the future).
 
 ### Authentication
 
-During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done by sending the same hashed PIN `Base64(SHA256(nonce, pin))\n` as during registration. If the PIN is valid, then the keyshare server returns a signed JWT containing the user's username, having an expiry date of 15 minutes. This JWT later serves as authentication token in the keyshare protocol, described below.
+During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done by sending the same hashed PIN `Base64(SHA256(salt, pin))\n` as during registration. If the PIN is valid, then the keyshare server returns a signed JWT containing the user's username, having an expiry date of 15 minutes. This JWT later serves as authentication token in the keyshare protocol, described below.
 
 Below, the API endpoints of the keyshare server are described in the order they are called during the IRMA protocol.
 
@@ -107,7 +107,7 @@ Below, the API endpoints of the keyshare server are described in the order they 
     ```
     where status is either `"authorized"` or `"expired"`. (The `candidates` array lists the supported methods for authentication, which is currently only using PIN codes.) If the status is "authorized" then the keyshare protocol itself starts using `/api/v1/prove/getCommitments` described below. Else the user must enter her PIN, after which
 
-*   `POST /api/v1/user/verify/pin`: After computing the PIN again as `Base64(SHA256(nonce, pin))\n`, a message like the following is sent to the keyshare server:
+*   `POST /api/v1/user/verify/pin`: After computing the PIN again as `Base64(SHA256(salt, pin))\n`, a message like the following is sent to the keyshare server:
 
     ```json
     {
