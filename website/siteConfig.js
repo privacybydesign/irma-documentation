@@ -51,14 +51,14 @@ const siteConfig = {
   // users,
 
   /* path to images for header/footer */
-  headerIcon: 'img/irma.png',
+  headerIcon: 'img/irma-simplified.png',
   footerIcon: 'img/irma.png',
   favicon: 'img/favicon.png',
 
   /* Colors for website */
   colors: {
-    primaryColor: '#006798', // 003780
-    secondaryColor: '#5c8699', // '#003780',
+    primaryColor: '#004C92', // 003780
+    secondaryColor: '#47679e', // '#003780',
   },
 
   /* Custom fonts for website */
