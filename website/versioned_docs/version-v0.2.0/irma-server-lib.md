@@ -48,7 +48,7 @@ func main() {
 	   	// ...
 	}
 
-	http.Handle("/irma", irmaserver.HandlerFunc())
+	http.Handle("/irma/", irmaserver.HandlerFunc())
 	http.HandleFunc("/createrequest", createFullnameRequest)
 
 	// Start the server
