@@ -39,7 +39,7 @@ Run `irma server -h` to see all configuration options. Each option may be passed
  * Flags supersede environmental variables which supersede configuration file entries.
  * Dashes are used in flags, but underscores are used in environmental variables and configuration file entries.
  * Environmental variables are uppercased and prefixed with `IRMASERVER_`.
- * The [`requestors`](#requestor-authentication) option is special: when passed as a flag or environmental variable, it must be passed as a JSON object (for example: `--requestors '{"myapp":{"auth_method":"token","key":"12345"}}'`).
+ * The [`requestors`](#requestor-authentication) and [`static_sessions`](#static-irma-qrs) options are special: when passed as a flag or environmental variable, they must be passed as a JSON object (for example: `--requestors '{"myapp":{"auth_method":"token","key":"12345"}}'`).
  * When passing a boolean flag [use an `=`](https://golang.org/pkg/flag/#hdr-Command_line_flag_syntax), for example [`--no-auth=false`](#requestor-authentication).
 
 In order to see the configuration that the server uses after having gathered input from these sources, specify `-v` or `-vv` or use the `verbose` option. Use `irma server check -v` (with the same flags, env vars and config files as `irma server`) to check your configuration for correctness before running the server.
@@ -103,6 +103,35 @@ In addition the server supports the following authentication methods:
 * `publickey`: the requestor asymmetrically [signs the session request](session-requests.md#jwts-signed-session-requests) in a [JWT](https://jwt.io/) with RSA (`RS256`), in this case `key` should be the PEM public key of the requestor.
 
 For each of these modes it is also possible to specify `key_file` instead `key`; in that case the file at `key_file` will be read and used as `key`.
+
+### Static IRMA QRs
+Unlike normal QRs which differ per session (as they contain the session token), the server also supports static QRs which, when scanned by the IRMA app, start preconfigured IRMA sessions. This makes it possible to for example print such a static QR. These preconfigured sessions are configured with the `static_sessions` options, for example:
+```json
+{
+    "static_sessions": {
+        "mystaticsession": {
+            "callbackUrl": "https://example.com/callbackUrl",
+            "request": {
+                "@context": "https://irma.app/ld/request/disclosure/v2",
+                "disclose": [[[ "irma-demo.MijnOverheid.ageLower" ]]]
+            }
+        }
+    }
+}
+```
+Thus `static_sessions` must contain a map of which each item must be an [extended session request](session-requests.md#extra-parameters). Including a `callbackUrl` to which the [session result](api-irma-server.md#get-session-token-result) is sent after the session is required (since for these sessions there is no requestor waiting to receive the attributes after the session has finished). If a JWT private key is installed, then the session result is sent as a [JWT](api-irma-server.md#get-session-token-result-jwt).
+
+> If no JWT private key is installed, then the `callbackUrl` should either not be publically reachable, or it should use a secret URL with TLS enabled (which it should anyway as personal data will be POSTed to it). Otherwise there is no way of distinguishing POSTs from your `irma server` from POSTs made by someone else.
+
+Assuming the URL of the `irma server` is `http://example.com`, the session configured above is started when the IRMA app scans a QR with the following contents:
+```json
+{
+    "irmaqr": "redirect",
+    "u":" http://example.com/irma/session/mystaticsession"
+}
+```
+
+Only static [disclosure or attribute-based signature sessions](what-is-irma.md#session-types) are supported.
 
 ### Permissions
 For each of the [three IRMA session types](what-is-irma.md#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
