@@ -8,12 +8,12 @@ original_id: api-irmajs
 ```html
 <script src="irma.js" defer></script>
 ```
-as well as in Node:
+as well as in Node or Webpack:
 ```js
 // ES modules
-import irma from '@privacybydesign/irma';
+import * as irma from '@privacybydesign/irmajs';
 // CommonJS
-var irma = require('@privacybydesign/irma');
+const irma = require('@privacybydesign/irmajs');
 ```
 
 Its primary functions are [`startSession()`](#startsession), which can start an IRMA session by sending a (unsigned or JWT) [session request](session-requests.md) to an IRMA server, and [`handleSession()`](#handlesession), which given the output of `startSession()` handles the remainder of an IRMA session.
