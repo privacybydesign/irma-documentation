@@ -372,7 +372,7 @@ irma.ServiceProviderRequest{
 ## JWTs: signed session requests
 The IRMA API server or [`irma server`](irma-server.md) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). The form of the JWT depends on the [session type](what-is-irma.md#session-types). An example requesting [IRMATube](https://privacybydesign.foundation/demo/irmaTube) attributes:
 ```
-eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImlybWF0dWJlIn0.eyJpYXQiOjE1NjQ2NTczNzUsImlzcyI6IklSTUFUdWJlIiwic3ViIjoidmVyaWZpY2F0aW9uX3JlcXVlc3QiLCJzcHJlcXVlc3QiOnsidmFsaWRpdHkiOjYwLCJyZXF1ZXN0Ijp7IkBjb250ZXh0IjoiaHR0cHM6Ly9pcm1hLmFwcC9sZC9yZXF1ZXN0L2Rpc2Nsb3N1cmUvdjIiLCJkaXNjbG9zZSI6W1tbInBiZGYucGJkZi5pcm1hdHViZS50eXBlIl1dLFtbInBiZGYucGJkZi5hZ2VMaW1pdHMub3ZlcjEyIl0sWyJwYmRmLm5pam1lZ2VuLmFnZUxpbWl0cy5vdmVyMTIiXV1dLCJ0eXBlIjoiZGlzY2xvc2luZyIsIm5vbmNlIjoienRuMWRoOGVoZnBjZ0V5M0VCR1daUT09IiwiY29udGV4dCI6IkFRPT0ifX19.lW9mqjrLkoahDP6Fcw_9mH5hlfl1tq5qp3W3ga0Nrd_j0NXFj-6ngqHVXEV1zhC_OkVH4LN8fMBAgN8nqaFWgEdQvrCuB7-ynuBVjLR-QU272Ym86zLEWYggAkbZ5KY40MpTxU1dgFMucG7fyAESic04OribWOCVxstAMsM28yCxvzkBMCOSjFEe3abcg_N6VvQnLn3LgZP_UrxQmQsh4DK7mBjW04LesLG1vjcliyhDGUb52FHOP_NAsG7G2FvIgojPzALlPrpTMu5p8a95wc5CGR791wybmh0F8kDdwZWAU0W2FjlX5bNPsyXN8AxRVWaRmWoGrGsQhy_sKEf8lg
+eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImlybWF0dWJlIn0.eyJpYXQiOjE1NjQ2NTczNzUsInN1YiI6InZlcmlmaWNhdGlvbl9yZXF1ZXN0Iiwic3ByZXF1ZXN0Ijp7InJlcXVlc3QiOnsiQGNvbnRleHQiOiJodHRwczovL2lybWEuYXBwL2xkL3JlcXVlc3QvZGlzY2xvc3VyZS92MiIsImRpc2Nsb3NlIjpbW1sicGJkZi5wYmRmLmlybWF0dWJlLnR5cGUiXV0sW1sicGJkZi5wYmRmLmFnZUxpbWl0cy5vdmVyMTIiXSxbInBiZGYuZ2VtZWVudGUucGVyc29uYWxEYXRhLm92ZXIxMiJdXV19fX0.lW9mqjrLkoahDP6Fcw_9mH5hlfl1tq5qp3W3ga0Nrd_j0NXFj-6ngqHVXEV1zhC_OkVH4LN8fMBAgN8nqaFWgEdQvrCuB7-ynuBVjLR-QU272Ym86zLEWYggAkbZ5KY40MpTxU1dgFMucG7fyAESic04OribWOCVxstAMsM28yCxvzkBMCOSjFEe3abcg_N6VvQnLn3LgZP_UrxQmQsh4DK7mBjW04LesLG1vjcliyhDGUb52FHOP_NAsG7G2FvIgojPzALlPrpTMu5p8a95wc5CGR791wybmh0F8kDdwZWAU0W2FjlX5bNPsyXN8AxRVWaRmWoGrGsQhy_sKEf8lg
 ```
 In case of disclosure sessions, the body of the JWT (the part in between the two dots) contains a Base64-encoding of the following:
 <!--DOCUSAURUS_CODE_TABS-->
@@ -380,7 +380,6 @@ In case of disclosure sessions, the body of the JWT (the part in between the two
 ```json
 {
   "iat": 1550424847,
-  "iss": "IRMATube",
   "sub": "verification_request",
   "sprequest": ...
 }
