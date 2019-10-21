@@ -271,6 +271,36 @@ request.Labels = map[int]irma.TranslatedString{
 
 In this way each disjunction can be given a optional label explaining to the user the purpose of the disjunction. It is recommended to only provide a label to explain something to the user that would otherwise not be obvious; for example, to request the user to send a work email address instead of a personal one. Repeating the credential or attribute name or description in labels is an antipattern.
 
+### Client return URL
+Besides starting sessions by scanning a QR code, it is also possible to start a session on a smartphone directly. This is useful when the session is started on the same device as where the user's IRMA app is installed on. Instead of showing a QR code to scan, the IRMA app is automatically launched and the session is started on the same device. 
+
+Sessions can be either started from a website opened in the mobile browser or from any other app that has IRMA support built-in. For mobile websites, the behaviour is automatically realized by [irmajs](irmajs.md). For other apps, libraries are available for handling IRMA sessions on [Android](https://github.com/privacybydesign/irmaandroid) and [iOS](https://github.com/privacybydesign/irmaios). After the IRMA session is finished, the default behaviour on Android is that the user returns to the app by which the session was started. On iOS however, automatically returning to the previous app is not possible at the moment.
+
+If automated returning to the previous app is desired on iOS too or when the user must be redirected to another location than the originating app, we offer the option to specify a `clientReturnUrl` in the session request. When a user finishes a session (either successfully or unsuccessfully), the user is redirected to the location of the `clientReturnUrl`. 
+
+This URL does not necessarily have to be a web URL. It can also be a universal link to another app. Universal links work both on Android and iOS. It is also possible to use iOS or Android scheme URLs. However, be aware that iOS and Android scheme URLs differ from one another. This means an iOS scheme URL will not work on Android and vice versa. When starting a session with a scheme URL as return URL you should therefore determine on which platform that user's app is running.
+
+To use the `clientReturnUrl` option, the session request from [above](#disclosure-requests) could be augmented in the following way:
+
+<!--DOCUSAURUS_CODE_TABS-->
+<!--Session request (JSON)-->
+```json
+{
+  "@context": "https://irma.app/ld/request/disclosure/v2",
+  "disclose": [
+    [ ... ],
+    [ ... ]
+  ],
+  "clientReturnUrl": "https://privacybydesign.foundation"
+}
+```
+<!--Session request (Go)-->
+```go
+request := irma.NewDisclosureRequest()
+request.ClientReturnURL = "https://privacybydesign.foundation"
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
 ## Attribute-based signature requests
 Attribute-based signature sessions are started with an [`irma.SignatureRequest`](https://godoc.org/github.com/privacybydesign/irmago#SignatureRequest), which are similar to disclosure requests:
 <!--DOCUSAURUS_CODE_TABS-->
@@ -339,6 +369,8 @@ Per credential in the `credentials` array the `validity` is optional; if skipped
 Attributes marked as `optional` in the containing credential type ([example](https://github.com/privacybydesign/irma-demo-schememanager/blob/482ba298ee038ea43bd0cf8017567a844be0919e/MijnOverheid/Issues/fullName/description.xml#L54)) may be skipped in the `attributes` map. This issues [the `null` value](#null-attributes) to these attributes.
 
 `disclose` and `labels` are optional, allowing for *combined disclosure-issuance sessions*, in which the user is required to disclose attributes before the IRMA server will issue the credentials.
+
+The `clientReturnUrl` option can also be used, both for issuance only and combined disclosure-issuance sessions. Usage is similar as in [disclosure sessions](#client-return-url). 
 
 ## Extra parameters
 For each API that accepts one of the above session request data types, the requestor can provide additional parameters to configure the session at the IRMA server, by providing an *extended session request* instead, as follows:
