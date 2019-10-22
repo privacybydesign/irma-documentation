@@ -142,7 +142,7 @@ Within inner conjunctions, specific attribute values can be requested by replaci
     [
       [
         { "type": "pbdf.pbdf.diploma.degree", "value": "PhD" },
-        { "type": "pbdf.pbdf.diploma.institute", "value": null }
+        { "type": "pbdf.pbdf.diploma.institute", "value": null },
       ]
     ]
   ]
@@ -213,7 +213,7 @@ A disjunction within a session request can be marked as *optional*, by including
   "@context": "https://irma.app/ld/request/disclosure/v2",
   "disclose": [
     [
-      [ "irma-demo.nijmegen.address.city" ]
+      [ "irma-demo.nijmegen.address.city" ],
     ],
     [
       [],
