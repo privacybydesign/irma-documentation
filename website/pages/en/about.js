@@ -49,8 +49,8 @@ function Help(props) {
           </header>
           <p>IRMA is developed and maintained by the <a href="https://privacybydesign.foundation/">Privacy by Design Foundation</a>, and is <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software">free and open source</a>. See the Foundation's website for news about IRMA; how you can support IRMA; statistics on the Foundation's IRMA infrastructure; scientific publications related to IRMA; and more.</p>
           <ul>
+            <li><a href="https://irma.app/">IRMA introduction for IRMA app users</a></li>
             <li><a href="https://privacybydesign.foundation/issuance/">IRMA attribute issuance</a></li>
-            <li><a href="https://privacybydesign.foundation/irma-start/">IRMA introduction for IRMA app users</a></li>
           </ul>
           <GridBlock contents={supportLinks} layout="fourColumn" />
         </div>
