@@ -127,7 +127,7 @@ Assuming the URL of the `irma server` is `http://example.com`, the session confi
 ```json
 {
     "irmaqr": "redirect",
-    "u":" http://example.com/irma/session/mystaticsession"
+    "u": "http://example.com/irma/session/mystaticsession"
 }
 ```
 
