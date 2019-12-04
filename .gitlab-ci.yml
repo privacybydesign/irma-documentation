@@ -1,0 +1,17 @@
+image: privacybydesign/node_yarn:latest
+
+stages:
+  - build
+
+before_script:
+  - set -euxo pipefail
+  - cd website
+  - yarn install
+
+build:
+  stage: build
+  script:
+    - yarn run build
+  artifacts:
+    paths:
+      - website/build/irma-documentation/*
