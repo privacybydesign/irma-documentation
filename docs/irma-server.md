@@ -113,7 +113,7 @@ Unlike normal QRs which differ per session (as they contain the session token), 
             "callbackUrl": "https://example.com/callbackUrl",
             "request": {
                 "@context": "https://irma.app/ld/request/disclosure/v2",
-                "disclose": [[[ "irma-demo.MijnOverheid.ageLower" ]]]
+                "disclose": [[[ "irma-demo.MijnOverheid.ageLower.over18" ]]]
             }
         }
     }
