@@ -169,7 +169,7 @@ For example, the following `RevocationRequest` instructs the server to revoke th
 
 ## Cryptography
 
-The IRMA issuer private key is $(p', q')$ where $p, q$ are both [safe primes](https://en.wikipedia.org/wiki/Safe_prime): if written as $p' = 2p+1$ and $q' = 2q+1$, then $p$ and $q$ are also prime. The issuers uses this private key for issuing attributes as well as for revoking. The corresponding IRMA issuer public key contains the modulus $n = p'q'$. This modulus defines the group $QR_n = (\mathbb{Z}/n\mathbb{Z})^2$ of quadratic residues within the integers modulo $n$, in which both the Idemix and the revocation cryptography takes place. For signing various revocation related messages the issuer additionally generates an ECDSA public/private keypair. These are included in the existing IRMA private/public keys.
+The IRMA issuer private key is $(p', q')$ where $p', q'$ are both [safe primes](https://en.wikipedia.org/wiki/Safe_prime): if written as $p' = 2p+1$ and $q' = 2q+1$, then $p$ and $q$ are also prime. The issuers uses this private key for issuing attributes as well as for revoking. The corresponding IRMA issuer public key contains the modulus $n = p'q'$. This modulus defines the group $QR_n = ((\mathbb{Z}/n\mathbb{Z})^*)^2$ of quadratic residues within the multiplicative integers modulo $n$, in which both the Idemix and the revocation cryptography takes place. For signing various revocation related messages the issuer additionally generates an ECDSA private/public keypair. These are included in the existing IRMA private/public keys.
 
 ### Issuance
 The current accumulator is a number $\nu \in QR_n$. The first accumulator is randomly chosen by the issuer from $QR_n$. During issuance, the issuer
