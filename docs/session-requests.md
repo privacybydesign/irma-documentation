@@ -271,35 +271,6 @@ request.Labels = map[int]irma.TranslatedString{
 
 In this way each disjunction can be given a optional label explaining to the user the purpose of the disjunction. It is recommended to only provide a label to explain something to the user that would otherwise not be obvious; for example, to request the user to send a work email address instead of a personal one. Repeating the credential or attribute name or description in labels is an antipattern.
 
-### Client return URL
-If the user performs a mobile session, i.e. on the same device as where the IRMA app is installed on, then after the session has completed the user will be redirect to the `clientReturnUrl` specified in the session request, if present.
-
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Session request (JSON)-->
-```json
-{
-  "@context": "https://irma.app/ld/request/disclosure/v2",
-  "disclose": [
-    ...
-  ],
-  "clientReturnUrl": "https://privacybydesign.foundation"
-}
-```
-<!--Session request (Go)-->
-```go
-request := irma.NewDisclosureRequest()
-request.ClientReturnURL = "https://privacybydesign.foundation"
-```
-<!--END_DOCUSAURUS_CODE_TABS-->
-
-This can be set on session requests of any type. If set, when the user finishes a session (either successfully or unsuccessfully), she is redirected to the location specified by `clientReturnUrl`. If *not* set:
-* On Android the IRMA app automatically toggles back to the previous app;
-* On iOS it is not possible to toggle back to the previous app due to restrictions by Apple, so the IRMA app stays open. In the top left corner of the screen, however, a button appears that leads back to the previous app.
-
-This URL does not necessarily have to be a web URL; it can also be a universal link to another app. Universal links work both on Android and iOS. It is also possible to use iOS or Android scheme URLs. (Note however that iOS and Android scheme URLs differ from one another, so when starting a session with a scheme URL as return URL you should therefore determine on which platform the user's app is running.)
-
-On iOS, toggling back to the calling app or website after the session can be simulated by navigating towards the calling app using a `clientReturnUrl`, either a normal URL or universal link. This works on Android as well, so currently this is the only platform-independent way of ensuring that the used ends up at a specified place after the session. If the URL opens a website, however, then the user is navigated towards a new browser tab instead of back to an existing browser tab, so in website-IRMA-website flows you will need to reload your webapp and state in the newly opened tab.
-
 ## Attribute-based signature requests
 Attribute-based signature sessions are started with an [`irma.SignatureRequest`](https://godoc.org/github.com/privacybydesign/irmago#SignatureRequest), which are similar to disclosure requests:
 <!--DOCUSAURUS_CODE_TABS-->
@@ -369,7 +340,38 @@ Attributes marked as `optional` in the containing credential type ([example](htt
 
 `disclose` and `labels` are optional, allowing for *combined disclosure-issuance sessions*, in which the user is required to disclose attributes before the IRMA server will issue the credentials.
 
-The `clientReturnUrl` option can also be used, both for issuance only and combined disclosure-issuance sessions. Usage is similar as in [disclosure sessions](#client-return-url). 
+The `clientReturnUrl` option can also be used, both for issuance only and combined disclosure-issuance sessions. Usage is similar as in [disclosure sessions](#client-return-url).
+
+## Client return URL
+If the user performs a mobile session, i.e. on the same device as where the IRMA app is installed on, then after the session has completed the user will be redirect to the `clientReturnUrl` specified in the session request, if present.
+
+<!--DOCUSAURUS_CODE_TABS-->
+<!--Session request (JSON)-->
+```json
+{
+  "@context": "https://irma.app/ld/request/disclosure/v2",
+  "disclose": [
+    ...
+  ],
+  "clientReturnUrl": "https://privacybydesign.foundation"
+}
+```
+<!--Session request (Go)-->
+```go
+request := irma.NewDisclosureRequest()
+request.ClientReturnURL = "https://privacybydesign.foundation"
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+The example shows a disclosure request but `clientReturnUrl` can be set on session requests of any type. If set, when the user finishes a session (either successfully or unsuccessfully), she is redirected to the location specified by `clientReturnUrl`.
+
+If *not* set:
+* On Android the IRMA app automatically toggles back to the previous app;
+* On iOS it is not possible to toggle back to the previous app due to restrictions by Apple, so the IRMA app stays open. In the top left corner of the screen, however, a button appears that leads back to the previous app.
+
+This URL does not necessarily have to be a web URL; it can also be a universal link to another app. Universal links work both on Android and iOS. It is also possible to use iOS or Android scheme URLs. (Note however that iOS and Android scheme URLs differ from one another, so when starting a session with a scheme URL as return URL you should therefore determine on which platform the user's app is running.)
+
+On iOS, toggling back to the calling app or website after the session can be simulated by navigating towards the calling app using a `clientReturnUrl`, either a normal URL or universal link. This works on Android as well, so currently this is the only platform-independent way of ensuring that the used ends up at a specified place after the session. If the URL opens a website, however, then the user is navigated towards a new browser tab instead of back to an existing browser tab, so in website-IRMA-website flows you will need to reload your webapp and state in the newly opened tab.
 
 ## Extra parameters
 For each API that accepts one of the above session request data types, the requestor can provide additional parameters to configure the session at the IRMA server, by providing an *extended session request* instead, as follows:
