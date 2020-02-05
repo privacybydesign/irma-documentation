@@ -32,11 +32,8 @@ If you have included `irma.js` (e.g. `<script src="irma.js" defer></script>`) yo
 
 ```js
 const request = {
-    'type': 'disclosing',
-    'content': [{
-        'label': 'Over 18',
-        'attributes': [ 'irma-demo.MijnOverheid.ageLower.over18' ]
-    }]
+    '@context': 'https://irma.app/ld/request/disclosure/v2',
+    'disclose': [[[ 'irma-demo.MijnOverheid.ageLower.over18' ]]]
 };
 
 irma.startSession(server, request)
