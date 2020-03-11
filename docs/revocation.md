@@ -50,7 +50,7 @@ In the papers linked to above (and generally in the scientific literature on rev
 
 ### Revocation updates
 
-Whenever the issuer revokes a credential, updating its accumulator, it publishes a revocation update message as explained above, which apps require to update their witness so that it is valid against the new accumulator. Accumulators are labeled with an index which is increased whenever the issuer makes a new accumulator by revoking. Apps use the index keep track of against which accumulator their witness is valid in the chain of all past accumulators, and thus how many update messages it needs to obtain and apply. The app requires all of update messages that it has not already received and applied; if it misses one or more of them it cannot update its witness and it is no longer able to compute nonrevocation proofs for the witness's credential. If that happens but the verifier requires a nonrevocation proof, then the user is unable to disclose attributes from the credential.
+Whenever the issuer revokes a credential, updating its accumulator, it publishes a revocation update message as explained above, which apps require to update their witness so that it is valid against the new accumulator. Accumulators are labeled with an index which is increased whenever the issuer makes a new accumulator by revoking. Apps use the index keep track of against which accumulator their witness is valid in the chain of all past accumulators, and thus how many update messages it needs to obtain and apply. The app requires all of the update messages that it has not already received and applied; if it misses one or more of them it cannot update its witness and it is no longer able to compute nonrevocation proofs for the witness's credential. If that happens but the verifier requires a nonrevocation proof, then the user is unable to disclose attributes from the credential.
 
 It is thus crucial that the set of update messages is always available to each IRMA app. In IRMA, the issuer is responsible for ensuring that all update messages and the latest accumulator are available. To that end, the IRMA server exposes these messages through new HTTP endpoints, if so configured. For each revocation-enabled credential type, at least one URL to such an IRMA server instance must be included within the credential type in the scheme.
 
@@ -60,9 +60,11 @@ If within an IRMA session a requestor requests revocation for a given credential
 
 Whenever a credential is revoked and the accumulator changes value, its index is incremented. If an app has a witness at index $i$ but the current accumulator $\nu_j$ has index $j$, then the app requires $(e_i,\dots,e_j,\nu_j)$ to update its witness to the latest index $j$. As soon as another credential is revoked and the current accumulator becomes $\nu_{j+1}$, the old accumulator $\nu_j$ is no longer needed. Thus the revocation attributes $e_i$ naturally form a chain, always headed with the latest accumulator $\nu_j$.
 
-Each element of this chain (including the top element $\nu_j$) contains the hash of its predecessor, and $\nu_j$ is signed by the issuer using ECDSA. Thus this one ECDSA signature signs the entire partial chain $(e_i,\dots,e_j,\nu_j)$: apps and IRMA servers can check its authenticity regardless of its length. This makes it safe for the IRMA app to receive revocation update messages through the requestor in the session request.
+Each element of this chain (including the head element $\nu_j$) contains the cryptographic hash of its predecessor, and $\nu_j$ is signed by the issuer using ECDSA. Thus this one ECDSA signature signs the entire partial chain $(e_i,\dots,e_j,\nu_j)$: apps and IRMA servers can check its authenticity regardless of its length. This makes it safe for the IRMA app to receive revocation update messages through the requestor in the session request.
 
-A requestor by itself only needs the accumulator $\nu_j$ against which the app has proved nonrevocation in order to verify the proof, and not necessarily the revocation attributes $e_j$. However, they will still fetch these from the issuer's IRMA server in order to pass them on to apps during IRMA sessions.
+Each accumulator $\nu_j$ contains the time of its creation, and every minute this timestamp is refreshed: the accumulator is replaced with a new (signed) accumulator $\nu'_j$ with the same value and index but newer timestamp. To others receiving the updated accumulator, this proves that the issuer's revocation setup is still live. In addition, when verifying an attribute-based signature this makes it possible to establish that the attributes in in were not revoked at creation time of the signature.
+
+A requestor by itself only needs the accumulator $\nu_j$ against which the app has proved nonrevocation in order to verify the proof, and not necessarily the revocation attributes $e_j$. However, they will still fetch a number of these from the issuer's revocation IRMA server in order to pass them on to apps during IRMA sessions.
 
 ### Issuer responsibilities
 
@@ -159,7 +161,7 @@ For each credential type revocation settings may be specified in the `revocation
   "server": false,
   "authority": false,
   "revocation_server_url": "",
-  "tolerance": 10 * 60,
+  "tolerance": 600,
   "sse": false
 }
 ```
@@ -248,11 +250,9 @@ If the age of the accumulator is greater than a configurable value called `toler
 * The IRMA app user took longer over deciding whether or not to perform the session than the `tolerance`;
 * The issuer's revocation IRMA server is offline and no updates can be retrieved.
 
-When signing the newest accumulator the issuer always includes the current time, and as mentioned earlier, when disclosing attributes (or when constructing an attribute-based signatures), the IRMA app includes the accumulator against which it proves nonrevocation in its disclosure (or attribute-based signature). In case of signatures, this means that by checking that the accumulator time is sufficiently close to the time in the timestamp of the sigature, it can be established that the attributes were not revoked at the moment the attribute-based signature was created. The attribute-based signature by itself is sufficient to establish this; i.e., it is not necessary to contact either the issuer or timestamp server during verification.
+When signing the newest accumulator the issuer always includes the current time, and as mentioned earlier, when disclosing attributes (or when constructing an attribute-based signature), the IRMA app includes the accumulator against which it proves nonrevocation in its disclosure (or attribute-based signature). In case of signatures, this means that by checking that the accumulator time is sufficiently close to the time in the timestamp of the sigature, it can be established that the attributes were not revoked at the moment the attribute-based signature was created. The attribute-based signature by itself is sufficient to establish this; i.e., it is not necessary to contact either the issuer or timestamp server during verification.
 
-If during disclosure the requestor asks for a nonrevocation proof of a given credential type, but the app only posesses credentials of that type that do not support revocation (i.e., no witnesses were included with them during issuance), then the app will abort as it is not able to fulfill the requestor's request. However, as the issuer starts issuing revocation-enabled credentials the ratio of credentials that don't versus do support revocation will only gradually increase. Consequentially:
-
-> Requestors should not immediately request nonrevocation proofs during disclosures when revocation has been enabled in the scheme for a credential type, or at least assist the user in obtaining new, revocation-enabled credentials.
+If during disclosure the requestor asks for a nonrevocation proof of a given credential type, but the app only posesses credentials of that type that do not support revocation (i.e., no witnesses were included with them during issuance), then the app will abort as it is not able to fulfill the requestor's request.
 
 IRMA apps can disclose attributes out of revocation-aware credentials even to non-revocation aware IRMA servers (by not disclosing the revocation attribute $e$ but proving knowledge of it, like any other nondisclosed attribute).
 
@@ -277,7 +277,7 @@ For example, the following `RevocationRequest` instructs the server to revoke th
 
 ## Cryptography
 
-The IRMA issuer private key is $(p', q')$ where $p', q'$ are both [safe primes](https://en.wikipedia.org/wiki/Safe_prime): if written as $p' = 2p+1$ and $q' = 2q+1$, then $p$ and $q$ are also prime. The issuers uses this private key for issuing attributes as well as for revoking. The corresponding IRMA issuer public key contains the modulus $n = p'q'$. This modulus defines the group $QR_n = ((\mathbb{Z}/n\mathbb{Z})^*)^2$ of quadratic residues within the multiplicative integers modulo $n$, in which both the Idemix and the revocation cryptography takes place. For signing various revocation related messages the issuer additionally generates an ECDSA private/public keypair. These are included in the existing IRMA private/public keys.
+The IRMA issuer private key is $(p', q')$ where $p', q'$ are both [safe primes](https://en.wikipedia.org/wiki/Safe_prime): if written as $p' = 2p+1$ and $q' = 2q+1$, then $p$ and $q$ are also prime. The issuer uses this private key for issuing attributes as well as for revoking. The corresponding IRMA issuer public key contains the modulus $n = p'q'$. This modulus defines the group $QR_n = ((\mathbb{Z}/n\mathbb{Z})^*)^2$ of quadratic residues within the multiplicative integers modulo $n$, in which both the Idemix and the revocation cryptography takes place. For signing various revocation related messages the issuer additionally generates an ECDSA private/public keypair. These are included in the existing IRMA private/public keys.
 
 ### Issuance
 The current accumulator is a number $\nu \in QR_n$. The first accumulator is randomly chosen by the issuer from $QR_n$. During issuance, the issuer
@@ -291,7 +291,7 @@ The revocation witness is the tuple $(u, e)$. By definition it is valid only if 
 * "I possess a valid credential containing the disclosed attributes as well as an undisclosed attribute $e$."
 * "I know a number $u$ which is such that $u^e = \nu \bmod n$."
 
-The app proves this in zero-knowledge, meaning that the verifier can infer nothing from this proof except the above two facts. In particular, the proof hides the undisclosed attributes as well as $u$ and $e$. This provides unlinkability, as it ensures that a later session using the same credential and same witness cannot be linked to earlier ones. From the fact that the witness is valid, the verifier infers that the witness's credential is not revoked.
+The app proves this in zero-knowledge, meaning that the verifier can infer nothing from this proof except the above two facts. In particular, the proof hides the undisclosed attributes as well as $u$ and $e$. This provides unlinkability, as it ensures that a later session using the same credential and same witness cannot be linked to earlier ones (before or after the credential has been revoked). From the fact that the witness is valid, the verifier infers that the witness's credential is not revoked.
 
 The app includes the accumulator $\nu$ signed by the issuer against which it proved nonrevocation with its nonrevocation proof. The verifier accepts if this included accumulator is validly signed by the issuer; if the nonrevocation proof is valid against that accumulator; and if the accumulator is the same or newer than its own copy.
 
