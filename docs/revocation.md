@@ -23,8 +23,6 @@ This page explains in detail how revocation is implemented in IRMA and what it m
 * In the [API section](#api) we give a much more expansive explanation, including the new revocation API for issuers and verifiers.
 * In the [cryptography section](#cryptography) we explain the cryptographic mechanism enabling revocation.
 
-> This page gives an overview of the current state of the revocation implementation in IRMA. It is not yet finished, and its contents are not yet final and subject to change.
-
 ## Overview
 
 Revocation in IRMA is an implementation of the RSA-B scheme from ["Accumulators with applications to anonymity-preserving revocation"](https://eprint.iacr.org/2017/043.pdf) by Baldimtsi et al, which in turn is based on ["Dynamic accumulators and application to efficient revocation of anonymous credentials"](http://static.cs.brown.edu/people/alysyans/papers/camlys02.pdf) by Camenisch et al. Using this scheme the app can prove nonrevocation of its credential in zero-knowledge, preserving [unlinkability of multiple disclosures](overview.md#irma-security-properties) of the attributes within the credential.
