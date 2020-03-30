@@ -12,6 +12,7 @@
       "irma-server",
       "irma-server-lib",
       "irmajs",
+      "irma-frontend",
       "schemes",
       "session-requests",
       "email"
