@@ -11,6 +11,7 @@
       "irma-cli",
       "irma-server",
       "irma-server-lib",
+      "irma-backend",
       "irmajs",
       "irma-frontend",
       "schemes",
