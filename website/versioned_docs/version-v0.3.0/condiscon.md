@@ -18,7 +18,7 @@ This page introduces *condiscon*: a new IRMA feature allowing IRMA [verifiers an
 - The [`irma` command](irma-cli.md) including [`irma server`](irma-server.md) (`0.3.0` and up supports condiscon).
 - The [IRMA app](https://github.com/privacybydesign/irma_mobile) (a condiscon-compatible version will soon be released in the beta channel).
 
-Below we describe the new session format, explaining the new features that it brings, and highlighting differences with the old session format. The documentation of the updated session request format can be found [here](session-requests.md).
+Below we describe the new session format, explaining the new features that it brings, and highlighting differences with the old session format. The documentation of the updated session request format can be on the [session requests](session-requests.md) page.
 
 ## New session request format
 
@@ -26,7 +26,7 @@ An [IRMA disclosure session](what-is-irma.md#session-types) is started by a veri
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--IRMA app-->
-<img src="/docs/assets/pre-condiscon.png" class="ss"/>
+<img src="/docs/assets/pre-condiscon.png" class="ss" alt="pre-condiscon" />
 <!--Session request (old format, JSON)-->
 ```json
 {
@@ -53,7 +53,7 @@ An [IRMA disclosure session](what-is-irma.md#session-types) is started by a veri
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--IRMA app-->
-<img src="/docs/assets/condiscon.png" class="ss"/>
+<img src="/docs/assets/condiscon.png" class="ss" alt="condiscon" />
 <!--Session request (condiscon, JSON)-->
 ```json
 {
@@ -181,7 +181,7 @@ The `irma server` of version `0.3.0` and up is:
 - Backwards compatible with the old session request format, i.e. with old IRMA requestor applications. New session request JSON objects are recognized as such by the presence of their `@context` property; if this is absent the request is interpreted as a pre-condiscon IRMA session request.
 - Backwards compatible with old IRMA apps, as long as the condiscon feature is not used in the session (i.e., all inner conjunctions contain exactly 1 attribute).
 - [This `irmago` unit test](https://github.com/privacybydesign/irmago/blob/condiscon/irmago_test.go#L259) shows how pre-condiscon session requests are converted, by asserting equality of pre- and post-condiscon session requests, for all three session types.
-- The documentation of the pre-condiscon session format can be found [here](/docs/v0.2.0/session-requests).
+- The documentation of the pre-condiscon session format can be found on the [session requests](/docs/v0.2.0/session-requests).
 
 The new IRMA app is backwards compatible with the old session request format, i.e. with old `irma server`s, *except* in case of signature sessions (see below).
 

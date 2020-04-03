@@ -26,14 +26,14 @@ After installing the `irma` binary, start the server (with increased verbosity b
 ```shell
 irma server -v
 ```
-Run `irma server -h` to see configuration options. In order to verify your configuration, run `irma server check -v`. General documentation [here](irma-server.md), API documentation of HTTP endpoints [here](api-irma-server.md).
+Run `irma server -h` to see configuration options. In order to verify your configuration, run `irma server check -v`. General documentation can be found on the [irma server](irma-server.md) page, API documentation of HTTP endpoints can be found on the [api irma server](api-irma-server.md) page.
 
 ## Perform a command line IRMA session
 You can perform a first IRMA session using your server on the command line as follows:
 ```shell
 irma session --server http://localhost:8088 --disclose pbdf.pbdf.irmatube.type
 ```
-([IRMATube attributes](https://privacybydesign.foundation/attribute-index/en/pbdf.pbdf.irmatube.html) are available [here](https://privacybydesign.foundation/demo/irmaTube/)). This will print a QR that you can scan with your IRMA app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
+([IRMATube attributes](https://privacybydesign.foundation/attribute-index/en/pbdf.pbdf.irmatube.html) are available on the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube/)) page. This will print a QR that you can scan with your IRMA app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
 
 
 ## Installing `irmajs` and an example webpage

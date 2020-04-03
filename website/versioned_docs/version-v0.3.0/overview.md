@@ -52,7 +52,7 @@ In addition to attribute disclosure, users can also attach their attributes to m
 
 ## Credential types
 
-In IRMA, each credential is an instance of a *credential type*. A credential type specifies (among other things) how many attributes its instances have, what their names are, and by which issuer instances of this credential type are issued. Credential types are not shared between issuers: even if two issuers would issue two credential types with the same name and with the same amount of attributes having the same names, they still are distinct credential types. [Here](https://github.com/privacybydesign/pbdf-schememanager/blob/master/pbdf/Issues/irmatube/description.xml) is an example of such a credential type, defining the "IRMATube" credential type which is issued and verified in [this IRMA demo](https://privacybydesign.foundation/demo/irmaTube/). Schematically, an instance of such a credential type would look as follows.
+In IRMA, each credential is an instance of a *credential type*. A credential type specifies (among other things) how many attributes its instances have, what their names are, and by which issuer instances of this credential type are issued. Credential types are not shared between issuers: even if two issuers would issue two credential types with the same name and with the same amount of attributes having the same names, they still are distinct credential types. on [Github](https://github.com/privacybydesign/pbdf-schememanager/blob/master/pbdf/Issues/irmatube/description.xml) an example of such a credential type is available, defining the "IRMATube" credential type which is issued and verified in [this IRMA demo](https://privacybydesign.foundation/demo/irmaTube/). Schematically, an instance of such a credential type would look as follows.
 
 | Attribute name | Attribute value |
 | -------------- | --------------- |
@@ -88,7 +88,7 @@ From this the verifier can conclude that the credentials from which attributes a
 
 ## Schemes
 
-IRMA schemes are documented [here](schemes.md).
+IRMA schemes are documented on the [Schemes](schemes.md) page.
 
 ## Issuers
 
@@ -96,7 +96,7 @@ Each IRMA issuer has an Idemix private key, which it must keep secret as it is u
 
 Issuers cannot independently create credential types and start issuing them to IRMA app users: the credential type must first be included in an [IRMA scheme](schemes.md) by the scheme manager. In case of the default scheme `pbdf` of the IRMA app, this is the [Privacy by Design Foundation]((https://privacybydesign.foundation/issuance/)).
 
-When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, the Privacy by Design Foundation documents this [here](https://privacybydesign.foundation/issuance/).
+When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, this is documented on the [Privacy by Design Foundation website](https://privacybydesign.foundation/issuance/).
 
 ## IRMA PIN codes using the keyshare server
 
@@ -130,11 +130,11 @@ Additionally, the keyshare server comes with a small website on which users can,
 
 As the keyshare server's contribution to the proof of knowledge of the secret key is passed to the verifier through the IRMA app instead of directly from the keyshare server to the verifier, the keyshare server does not know to whom attributes are being disclosed. In fact, the only thing it learns is which issuer (and which Idemix public keys) are involved; it does not get to see which attributes are being disclosed nor their values, nor which attributes are kept hidden, nor how many attributes from how many credentials. The transaction log that the user sees in the keyshare server's website is correspondingly bare.
 
-Summarizing, the keyshare server increases the binding between the attributes and the user through the PIN code and through the option of revocation in case of loss or theft, at the cost of a decrease in the decentral nature of IRMA and in some of the privacy guarantees. In order to keep the privacy cost as low as possible, using various cryptographic means we have tried to keep the amount of information that the keyshare server learns about the participants as small as possible. Although we are still looking at ways to make the keyshare server still more privacy-friendly, at the Privacy by Design Foundation we believe that this tradeoff is already worth it. Thus, the `pbdf` scheme indeed uses a keyshare server (towards users we call it "MyIRMA"; its website is [here](https://privacybydesign.foundation/myirma/)).
+Summarizing, the keyshare server increases the binding between the attributes and the user through the PIN code and through the option of revocation in case of loss or theft, at the cost of a decrease in the decentral nature of IRMA and in some of the privacy guarantees. In order to keep the privacy cost as low as possible, using various cryptographic means we have tried to keep the amount of information that the keyshare server learns about the participants as small as possible. Although we are still looking at ways to make the keyshare server still more privacy-friendly, at the Privacy by Design Foundation we believe that this tradeoff is already worth it. Thus, the `pbdf` scheme indeed uses a keyshare server (towards users we call it ["MyIRMA"](https://privacybydesign.foundation/myirma/)).
 
 Each scheme manager can decide for itself whether or not to use a keyshare server in its scheme. Currently, however, due to a limitation in the IRMA protocol only one keyshare server can be involved simultaneously in IRMA sessions. This will be solved in future new versions of the IRMA app and the IRMA API server.
 
-Full details on the protocol spoken between the IRMA client and an [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server) is documented [here](keyshare-protocol.md).
+Full details on the protocol spoken between the IRMA client and an [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server) is documented on the [Keyshare protocol](keyshare-protocol.md) page.
 
 ## Attribute-based signatures
 
@@ -148,7 +148,7 @@ IRMA attribute-based signatures can be used in any case where conventional (digi
 
 Technically, IRMA attribute-based signatures are very similar to disclosure proofs. As mentioned earlier IRMA disclosures use a challenge-response protocol: the verifier generates a random number called the nonce and sends it to the IRMA app, whose response has to take this nonce into account in a precise fashion (this is achieved using the [Fiat-Shamir heuristic](https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic)). More precisely, the disclosure proof is a digital signature on the nonce that was used; if the nonce was freshly generated then the verifier can be sure that the attribute owner is actually present instead of replaying an earlier or eavesdropped disclosure proof. An IRMA attribute-based signature is the same except that not a nonce but an actual message is signed (or rather its SHA256 hash).
 
-Currently IRMA only supports creating attribute-based signatures on strings, although we plan to support other types of documents as well. They can be created using [irmajs](https://github.com/privacybydesign/irmajs) and verified using [IRMA servers](what-is-irma.md#irma-servers) almost the same as disclosure proofs. An online demo (using [demo attributes](https://demo.irmacard.org/tomcat/irma_api_server/examples/issue-all.html)) is available [here](https://demo.irmacard.org/tomcat/irma_api_server/examples/sign.html).
+Currently IRMA only supports creating attribute-based signatures on strings, although we plan to support other types of documents as well. They can be created using [irmajs](https://github.com/privacybydesign/irmajs) and verified using [IRMA servers](what-is-irma.md#irma-servers) almost the same as disclosure proofs. An online demo (using [demo attributes](https://demo.irmacard.org/tomcat/irma_api_server/examples/issue-all.html)) is available on the [demo.irmacard website](https://demo.irmacard.org/tomcat/irma_api_server/examples/sign.html).
 
 ## IRMA security properties
 

@@ -23,7 +23,7 @@ For each of these endpoints, if the HTTP status code indicates that the request 
 ```
 The following fields may occur in this message:
 * `status`: HTTP error code associated to this error
-* `error`: an error `Type` from the list of possible errors found [here](https://godoc.org/github.com/privacybydesign/irmago/server#Error)
+* `error`: an error `Type` from the list of possible errors in the [server API documentation](https://godoc.org/github.com/privacybydesign/irmago/server#Error)
 * `description`: English human-readable description of this error
 * `message`: May contain additional information
 * `stacktrace`: Stack trace of the error, only if verbose mode is enabled
