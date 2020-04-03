@@ -268,7 +268,7 @@ request.Labels = map[int]irma.TranslatedString{
 }
 ```
 <!--IRMA app-->
-<img src="/docs/assets/condiscon-label.png" class="ss"/>
+<img src="/docs/assets/condiscon-label.png" class="ss" alt="condiscon-label" />
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 In this way each disjunction can be given a optional label explaining to the user the purpose of the disjunction. It is recommended to only provide a label to explain something to the user that would otherwise not be obvious; for example, to request the user to send a work email address instead of a personal one. Repeating the credential or attribute name or description in labels is an antipattern.

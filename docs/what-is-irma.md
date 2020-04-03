@@ -5,8 +5,8 @@ title: What is IRMA?
 IRMA is a set of free and open source software projects implementing the Idemix attribute-based credential scheme, allowing users to safely and securely authenticate themselves as privacy-preserving as the situation permits. Users receive digitally signed attributes from trusted issuer, storing them in their IRMA app, after which the user can selectively disclose attributes to others. Schematically:
 
 <div class="center">
-  <img src="/docs/assets/issuance.png" style="width: 40%; margin-right: 3em"/>
-  <img src="/docs/assets/disclosure.png" style="width: 40%;"/>
+  <img src="/docs/assets/issuance.png" style="width: 40%; margin-right: 3em" alt="issuance-flow"/>
+  <img src="/docs/assets/disclosure.png" style="width: 40%;" alt="disclosure-flow" />
 </div>
 
 Using the issuer's digital signature over the attributes the verifier can verify that the attributes were given to the user in the past, and that they have not been modified since.
@@ -50,11 +50,11 @@ In an IRMA session, the [IRMA mobile app](https://github.com/privacybydesign/irm
 * *Attribute-based signature sessions*: Similar to disclosure sessions, but the attributes are attached to a message digitally signed into an [*attribute-based signature*](overview.md#attribute-based-signatures). The attribute-based signature can be verified at any later time, ensuring that the signed message is intact, and that the IRMA attributes attached to it were valid at the time of creation of the attribute-based signature.
 * *Issuance sessions*: the IRMA app receives a new set of IRMA attributes including valid issuer signatures from the IRMA server, to use in later disclosure or attribute-based signature sessions. (Possibly the user is asked to disclose some attributes as well, within the same IRMA session, before receiving the new attributes. This is called a *combined issuance-disclosure session*.)
 
-This process is depicted schematically and explained in more detail [here](what-is-irma.md#irma-session-flow). For the user, after scanning the QR in his/her IRMA app a disclosure session generally looks like the following. (Attribute-based signature sessions and issuance sessions are identical in terms of their flow (scan qr, provide permission, success screen); only the graphical interface is different.)
+This process is depicted schematically and explained in more detail in the [IRMA session flow](what-is-irma.md#irma-session-flow) chapter. For the user, after scanning the QR in his/her IRMA app a disclosure session generally looks like the following. (Attribute-based signature sessions and issuance sessions are identical in terms of their flow (scan qr, provide permission, success screen); only the graphical interface is different.)
 
 <div class="center" style="margin: 3em 0">
-  <img src="/docs/assets/disclose-permission.png" style="width:30%;margin-right:3em" />
-  <img src="/docs/assets/disclose-done.png" style="width:30%" />
+  <img src="/docs/assets/disclose-permission.png" style="width:30%;margin-right:3em" alt="disclose-permission" />
+  <img src="/docs/assets/disclose-done.png" style="width:30%" alt="disclosure-done" />
 </div>
 
 ## IRMA servers

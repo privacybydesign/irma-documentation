@@ -82,7 +82,7 @@ request.Disclose = irma.AttributeConDisCon{
 }
 ```
 <!--IRMA app-->
-<img src="/docs/assets/condiscon.png" class="ss"/>
+<img src="/docs/assets/condiscon.png" class="ss" alt="condiscon" />
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 This asks for a (demo) `BSN` attribute, as well as either `street`, `houseNumber` and `city` from `irma-demo.nijmegen.address`, or `address` and `city` from `irma-demo.idin.idin`. The three levels correspond to a *conjunction* of *disjunctions* of *conjunctions* of requested attributes, allowing verifiers to request multiple attribute sets from the user, offering choices for some or all of these sets.
