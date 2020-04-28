@@ -12,8 +12,8 @@
       "irma-server",
       "irma-server-lib",
       "irma-backend",
-      "irmajs",
       "irma-frontend",
+      "irmajs",
       "schemes",
       "session-requests",
       "email"
@@ -21,7 +21,8 @@
     "API reference": [
       "api-go",
       "api-irmajs",
-      "api-irma-server"
+      "api-irma-server",
+      "api-irma-frontend"
     ],
     "Documentation": [
       "overview",
