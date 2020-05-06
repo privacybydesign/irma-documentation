@@ -1,11 +1,11 @@
 ---
-title: irma frontend packages
+title: IRMA frontend packages
 ---
 
 The IRMA frontend packages consist of multiple packages. Therefore we describe the API per package.
 The API description of the IRMA frontend plugins is combined into one section.
 
-# IRMA core
+## IRMA core
 The [IRMA core](irma-frontend.md#irma-core) package only exports the `IrmaCore` class. To handle an IRMA session, 
 an instance of this class can be made with the relevant options for your session. The options object is shared
 between all plugins that are registered at the `IrmaCore` instance. The plugins don't need to be configured
@@ -28,7 +28,7 @@ Below you can find an overview of all methods an IRMA core instance offers you.
 
 For an example of how the IRMA core API can be used, you can also check the [usage guide](irma-frontend.md#usage-guide).
 
-# IRMA frontend
+## IRMA frontend
 [IRMA frontend](irma-frontend.md#irma-frontend) does not export any explicit class or function. It is a wrapper
 package around IRMA core combined with several of its plugins and the default [`irma-css`](irma-frontend.md#irma-css)
 styling. The package can only be used in web browser environments and it adds an `IrmaCore` instance
@@ -41,7 +41,7 @@ This `irma` instance has two methods:
 | `new({/* Options*/})` | With this method an `IrmaCore` instance is initialized (using its constructor) using the given options. The options that can be used are all options from [`irma-client`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client) and [`irma-web`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-web).
 | `start()` | Calls the `start` method of `IrmaCore` internally and behaves exactly like this method.
 
-# Plugins
+## Plugins
 The [plugins](irma-frontend.md#available-plugins-for-irma-core) do not export any class or method. They only add extra
 possible options to IRMA core. An overview of the options that can be used per plugin can be found in the READMEs.
 
@@ -53,7 +53,7 @@ possible options to IRMA core. An overview of the options that can be used per p
 | [`irma-console`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/examples/browser/irma-console) |
 | [`irma-dummy`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/examples/browser/irma-dummy) |
 
-# IRMA legacy
+## IRMA legacy
 This package uses the exact API from [irmajs](api-irmajs.md). However, due to technical changes in IRMA, 
 we were not able to realize full backwards compatibility with `irmajs`.
 All changes are related to the function call `handleSession`.
