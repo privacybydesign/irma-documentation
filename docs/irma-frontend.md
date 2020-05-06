@@ -79,8 +79,8 @@ const IrmaWeb    = require('@privacybydesign/irma-web');
 const IrmaClient = require('@privacybydesign/irma-client');
 ```
 
-Then we can instantiate IRMA core. Lets assume we already have an endpoint `/get-irma-session`
-in our backend that starts a relevant IRMA session at the [`irma server`](irma-server.md). Lets say the endpoint
+Then we can instantiate IRMA core. Let's assume we already have an endpoint `/get-irma-session`
+in our backend that starts a relevant IRMA session at the [`irma server`](irma-server.md). Let's say the endpoint
 returns a single session package (in JSON) without any backend token.
 ```javascript
 const irma = new IrmaCore({
