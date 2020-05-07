@@ -90,7 +90,7 @@ const irma = new IrmaCore({
   // The option 'element' is used by irma-web to find its HTML element in the DOM.
   element: '#irma-web-form',
 
-  // The 'session' option struct is used by irma-client to find the session informnation.
+  // The 'session' option struct is used by irma-client to find the session information.
   session: {
     // The base url of our website
     url: 'http://example.com',
