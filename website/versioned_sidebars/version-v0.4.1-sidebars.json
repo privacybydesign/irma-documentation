@@ -11,6 +11,8 @@
       "version-v0.4.1-irma-cli",
       "version-v0.4.1-irma-server",
       "version-v0.4.1-irma-server-lib",
+      "version-v0.4.1-irma-backend",
+      "version-v0.4.1-irma-frontend",
       "version-v0.4.1-irmajs",
       "version-v0.4.1-schemes",
       "version-v0.4.1-session-requests",
@@ -19,7 +21,8 @@
     "API reference": [
       "version-v0.4.1-api-go",
       "version-v0.4.1-api-irmajs",
-      "version-v0.4.1-api-irma-server"
+      "version-v0.4.1-api-irma-server",
+      "version-v0.4.1-api-irma-frontend"
     ],
     "Documentation": [
       "version-v0.4.1-overview",
