@@ -7,18 +7,17 @@ This page shows how to get started with verifying or issuing IRMA attributes, us
  * [`irma server`](irma-server.md), a server that verifies or issues IRMA attributes to [IRMA apps](irma-app.md),
  * [`irmajs`](irmajs.md), a JavaScript library for drawing the IRMA QR in your website, and handling IRMA session with the `irma server`.
 
-You should have the IRMA app installed ([Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994)). If you want to compile from source instead of using prebuilt binaries, you should additionally have [Git](https://git-scm.com/), [Go](https://golang.org/doc/install), [dep](https://golang.github.io/dep/docs/installation.html), and [npm](https://docs.npmjs.com/cli/npm) installed.
+You should have the [IRMA app](irma-app.md) installed ([Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994)). If you want to compile from source instead of using prebuilt binaries, you should additionally have [Git](https://git-scm.com/), [Go](https://golang.org/doc/install), and [npm](https://docs.npmjs.com/cli/npm) installed.
 
 
 ## Installing and running `irma server`
 You can install the `irma` command line tool in the following two ways.
 
 * **Download prebuilt binary**: From our [CI build server](https://gitlab.science.ru.nl/irma/github-mirrors/irmago/-/jobs/artifacts/master/download?job=binaries). Extract the zip file, and use the binary for your OS and architecture (most likely amd64). Rename the file to `/usr/local/bin/irma` to have it available in your PATH.
-* **Compile and install from source** with `go` and `dep`, as follows:
+* **Compile and install from source** as follows:
   ```shell
-  go get -d github.com/privacybydesign/irmago
-  cd $GOPATH/src/github.com/privacybydesign/irmago
-  dep ensure
+  git clone https://github.com/privacybydesign/irmago
+  cd irmago
   go install ./irma
   ```
 

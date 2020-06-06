@@ -20,17 +20,10 @@ Preferably, you should build `irma` from source, but we also provided binary rel
 
 ### Compiling from source
 
-If necessary, clone `irmago` and install dependencies with [dep](https://github.com/golang/dep):
 ```shell
-go get -d -u github.com/privacybydesign/irmago
-cd $GOPATH/src/github.com/privacybydesign/irmago
-dep ensure
-```
-
-Build and install `irma`:
-```shell
-cd irma
-go install
+git clone https://github.com/privacybydesign/irmago
+cd irmago
+go install ./irma
 ```
 
 ### Using the binary release

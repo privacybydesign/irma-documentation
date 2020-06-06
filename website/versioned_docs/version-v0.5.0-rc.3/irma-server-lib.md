@@ -10,11 +10,8 @@ original_id: irma-server-lib
 
 ## Installing
 
-Clone `irmago` and install dependencies with [dep](https://github.com/golang/dep):
 ```shell
-go get -d -u github.com/privacybydesign/irmago
-cd $GOPATH/src/github.com/privacybydesign/irmago
-dep ensure
+go get github.com/privacybydesign/irmago
 ```
 
 ## Configuring
