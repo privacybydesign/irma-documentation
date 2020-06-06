@@ -57,7 +57,7 @@ Integrate IRMA attribute verification in your own website or application, for ex
 1. In production scenarios, you should switch to the [`pbdf`](https://github.com/credentials/pbdf-schememanager) [scheme](schemes.md), which contrary to the [`irma-demo`](https://github.com/credentials/irma-demo-schememanager) scheme contains actual personal data.
 2. Start issuing your own attributes, as follows:
    1. Create a new credential type within the `irma-demo` scheme, and re-sign the scheme (`irma scheme sign`)
-   2. Create a custom build of the IRMA app [`irma_mobile`](https://github.com/privacybydesign/irma_mobile) with your modified `irma-demo` scheme in its `irma_configuration` folder
+   2. Create a custom build of the IRMA app [`irma_mobile`](irma-app.md) with your modified `irma-demo` scheme in its `irma_configuration` folder
    3. Start an `irma server` and point it to your modified `irma-demo` scheme, e.g. with the `--schemes-path` flag
    4. Start an issuance session of your new credential type, e.g. by modifying the [`irmajs` browser demo](https://github.com/privacybydesign/irmajs)
 3. The HTTP endpoints exposed by the `irma server` are also available as Go functions in the [`irmaserver`](irma-server-lib.md) Go library, and as C functions [here](https://github.com/privacybydesign/irmago/tree/master/server/irmac). Enable IRMA attribute verification and issuance from your own favorite programming language by binding to these C functions.

@@ -15,7 +15,7 @@ of your application. In particular, these libraries allow you to do the followin
  * Generating a JWT of a session request
  * Verifying a JWT of a session request or a session result
 
-Additionally, they will handle all communication with the IRMA app.
+Additionally, they will handle all communication with the [IRMA app](irma-app.md).
 
 Depending on the programming language, the libraries achieve this by either directly including
 the IRMA server functionality, or by consuming the [REST API](api-irma-server.md) exposed

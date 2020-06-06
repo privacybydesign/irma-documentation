@@ -16,7 +16,8 @@
       "irmajs",
       "schemes",
       "session-requests",
-      "email"
+      "email",
+      "irma-app"
     ],
     "API reference": [
       "api-go",

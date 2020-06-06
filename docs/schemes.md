@@ -2,7 +2,7 @@
 title: IRMA schemes
 ---
 
-In IRMA, every party ([IRMA apps](https://github.com/privacybydesign/irma_mobile), [IRMA servers](what-is-irma.md#irma-servers), [requestors](overview.md#participants)) must be aware of existing [credential types](overview.md#credential-types), attribute names, and the [issuers](overview.md#issuers) and their public keys. All such information is contained in IRMA *schemes*. It is the task of the *scheme manager* to determine and distribute this information to all parties, in the form of a directory structure [such as this one](https://github.com/privacybydesign/pbdf-schememanager), which contains:
+In IRMA, every party ([IRMA apps](irma-app.md), [IRMA servers](what-is-irma.md#irma-servers), [requestors](overview.md#participants)) must be aware of existing [credential types](overview.md#credential-types), attribute names, and the [issuers](overview.md#issuers) and their public keys. All such information is contained in IRMA *schemes*. It is the task of the *scheme manager* to determine and distribute this information to all parties, in the form of a directory structure [such as this one](https://github.com/privacybydesign/pbdf-schememanager), which contains:
 
 * All information about all issuers that fall under this scheme including their logos,
 * The Idemix public keys of said issuers,
@@ -61,7 +61,7 @@ Most IRMA software components automatically use the following two schemes:
 
 The [Privacy by Design Foundation](https://privacybydesign.foundation/), which develops IRMA and issues a basic set of attributes, is the scheme manager of these two schemes. New issuers wishing to issue attributes under the `pbdf` scheme, or existing issuers wishing to issue new credential types, can [ask](https://privacybydesign.foundation/people#developers) the Foundation to be included in these schemes.
 
-These two schemes are hardcoded into the [IRMA app](https://github.com/privacybydesign/irma_mobile), and if an [`irma`](irma-cli.md) subcommand that requires schemes is run for the first time, these two schemes are downloaded to a default location on disk (`~/.local/share/irma/irma_configuration` on Linux/macOS). It is always possible to use other schemes in conjunction with these two, or without them, either by making a custom build of the IRMA app, or by passing the appropriate options to the `irma` subcommands (see the `--help` messages).
+These two schemes are hardcoded into the [IRMA app](irma-app.md), and if an [`irma`](irma-cli.md) subcommand that requires schemes is run for the first time, these two schemes are downloaded to a default location on disk (`~/.local/share/irma/irma_configuration` on Linux/macOS). It is always possible to use other schemes in conjunction with these two, or without them, either by making a custom build of the IRMA app, or by passing the appropriate options to the `irma` subcommands (see the `--help` messages).
 
 
 ## Updating and signing schemes with `irma`

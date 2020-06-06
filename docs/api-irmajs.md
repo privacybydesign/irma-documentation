@@ -42,7 +42,7 @@ const SessionStatus = {
 ```js
 irma.handleSession(qr, [options])
 ```
-Handle an IRMA session after it has been created at an IRMA server, given the QR contents obtained from the IRMA server (e.g. using [`startSession()`](#startsession)) to be sent to the IRMA app. This function can
+Handle an IRMA session after it has been created at an IRMA server, given the QR contents obtained from the IRMA server (e.g. using [`startSession()`](#startsession)) to be sent to the [IRMA app](irma-app.md). This function can
 1. draw an IRMA QR, 
 2. wait for the phone to connect, 
 3. wait for the session to complete, 

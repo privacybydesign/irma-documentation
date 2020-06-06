@@ -4,7 +4,7 @@ title: irma server
 
 
 `irma server` is an IRMA server executable (daemon) allowing you to perform IRMA sessions with
-[IRMA apps](https://github.com/privacybydesign/irma_mobile). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an IRMA app on behalf of a [requestor](overview.md#participants) (the application wishing to verify or issue attributes). It exposes the following:
+[IRMA apps](irma-app.md). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an IRMA app on behalf of a [requestor](overview.md#participants) (the application wishing to verify or issue attributes). It exposes the following:
  * HTTP endpoints under `/irma`, used by the IRMA app during IRMA sessions
  * a JSON API under `/sessions` for requestors, allowing them to request the server to verify or issue attributes.
 
@@ -27,7 +27,7 @@ Verify the `irma-demo.MijnOverheid.ageLower.over18` attribute:
 ```shell
 irma session --server http://localhost:8088 --disclose irma-demo.MijnOverheid.ageLower.over18
 ```
-These print QRs in your terminal that you can scan with your IRMA app to perform the session. For more extensive examples, see [irmajs](irmajs.md).
+These print QRs in your terminal that you can scan with your [IRMA app](irma-app.md) to perform the session. For more extensive examples, see [irmajs](irmajs.md).
 
 ## Configuring
 Run `irma server -h` to see all configuration options. Each option may be passed as:
@@ -63,6 +63,8 @@ When running the server in production, you should enable the `production` option
 * [`no_auth`](#requestor-authentication) from `true` to `false`: you should consider enabling requestor authentication, or explicitly disable this by setting this flag to `true`.
 * [`issue_perms`](#global-permissions) from `[*]` (everything) to `[]` (none).
 * [`no_email`](email.md) from `true` to `false`: in `production` mode, opting out of providing an email address can be done by explicitly setting this flag to `true`.
+
+In addition, when [developer mode is not enabled in the IRMA app](irma-app.md#developer-mode) (the default setting), the IRMA app wil refuse to perform sessions with IRMA servers not running in `production` mode. Since the majority of the IRMA app users will not have developer mode enabled, this requires IRMA servers facing those users to enable `production` mode.
 
 ### Keys and certificates
 For each configuration option that refers to some kind of key or certificate (for example `jwt_privkey`), there is a corresponding option with the `_file` suffix (for example `jwt_privkey_file`). Keys can be specified either by setting former to a (PEM) string, or setting the the latter to a file containing the (PEM) string.

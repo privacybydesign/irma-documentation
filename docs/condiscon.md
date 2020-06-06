@@ -14,7 +14,7 @@ img.ss {
 This page introduces *condiscon*: a new IRMA feature allowing IRMA [verifiers and signature requestors](overview.md#participants) to express the attributes they need with much more flexibility, using a new format for the [session request](session-requests.md) with which sessions are started at the IRMA server. This affects:
 - [Requestors](overview.md#participants) using an [`irma server`](irma-server.md) or the [`irmaserver` library](irma-server-lib.md), as they need to convert their session request to the new condiscon format.
 - The [`irma` command](irma-cli.md) including [`irma server`](irma-server.md) (`0.3.0` and up supports condiscon).
-- The [IRMA app](https://github.com/privacybydesign/irma_mobile) (a condiscon-compatible version will soon be released in the beta channel).
+- The [IRMA app](irma-app.md) (a condiscon-compatible version will soon be released in the beta channel).
 
 Below we describe the new session format, explaining the new features that it brings, and highlighting differences with the old session format. The documentation of the updated session request format can be on the [session requests](session-requests.md) page.
 

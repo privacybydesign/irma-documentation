@@ -18,9 +18,9 @@ A typical IRMA session is depicted schematically below.
 ![IRMA session flow](assets/irmaflow.png)
 
 Software components:
-* *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the IRMA app scans. All frontend tasks depicted in the diagram are supported by [`irmajs`](irmajs.md).
+* *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the [IRMA app](irma-app.md) scans. All frontend tasks depicted in the diagram are supported by [`irmajs`](irmajs.md).
 * [*IRMA server*](#irma-servers): Handles IRMA protocol with the IRMA app for the requestor.
-* [*IRMA mobile app*](https://github.com/privacybydesign/irma_mobile): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994).
+* [*IRMA mobile app*](irma-app.md): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994).
 
 Explanation of the steps:
 
@@ -44,7 +44,7 @@ Additional notes:
 
 ## Session types
 
-In an IRMA session, the [IRMA mobile app](https://github.com/privacybydesign/irma_mobile) performs one of the following three *session types* with an [*IRMA server*](#irma-servers):
+In an IRMA session, the [IRMA mobile app](irma-app.md) performs one of the following three *session types* with an [*IRMA server*](#irma-servers):
 
 * *Disclosure sessions*: Upon receiving a list of requested attributes from the IRMA server, the app discloses the required attributes to the IRMA server if the app user agrees, after which they are verified by the IRMA server.
 * *Attribute-based signature sessions*: Similar to disclosure sessions, but the attributes are attached to a message digitally signed into an [*attribute-based signature*](overview.md#attribute-based-signatures). The attribute-based signature can be verified at any later time, ensuring that the signed message is intact, and that the IRMA attributes attached to it were valid at the time of creation of the attribute-based signature.
@@ -60,7 +60,7 @@ This process is depicted schematically and explained in more detail in the [IRMA
 ## IRMA servers
 
 Various existing software components documented on this website can perform the role of the IRMA server. 
-Apart from exposing an API that is used by the IRMA app during IRMA sessions, each of these components also offer an API with which IRMA sessions can be started and monitored, for use by the [*requestor*](overview.md#participants): the party wishing to issue attributes to or verify attributes from an IRMA app. The IRMA server handles the IRMA session with the IRMA app for the requestor.
+Apart from exposing an API that is used by the [IRMA app](irma-app.md) during IRMA sessions, each of these components also offer an API with which IRMA sessions can be started and monitored, for use by the [*requestor*](overview.md#participants): the party wishing to issue attributes to or verify attributes from an IRMA app. The IRMA server handles the IRMA session with the IRMA app for the requestor.
 
 Currently the following IRMA servers exist:
 

@@ -29,7 +29,7 @@ This document presents a technical overview of the IRMA project.
 
 ### Core software projects
 
-* [IRMA mobile app](https://github.com/privacybydesign/irma_mobile): (mobile) application that receives attributes, and can disclose them.
+* [IRMA mobile app](irma-app.md): (mobile) application that receives attributes, and can disclose them.
 * [`irma` command](irma-cli.md): contains an IRMA attribute verification and issuance server, scheme management, and more.
 * [irmajs](irmajs.md): javascript library acting as glue between an IRMA server and the requestor's website, allowing the requestor to instruct an API server to issue or verify attributes.
 
@@ -37,7 +37,7 @@ This document presents a technical overview of the IRMA project.
 
 IRMA is at its core a set of software projects implementing the Idemix attribute-based credential scheme. An *attribute* is a statement or property about a person, such as "I am over 18 years old" or "my name is John Doe".
 
-These attributes are grouped together in a *credential*. In attribute-based credential schemes such as Idemix, such a credential can be issued to a user by a trusted party called the *issuer*. This issuer creates a digital signature over the credential and its containing attributes using its *private key*. The user receives the credential as well as the issuer's signature in her [IRMA mobile app](https://github.com/privacybydesign/irma_mobile).
+These attributes are grouped together in a *credential*. In attribute-based credential schemes such as Idemix, such a credential can be issued to a user by a trusted party called the *issuer*. This issuer creates a digital signature over the credential and its containing attributes using its *private key*. The user receives the credential as well as the issuer's signature in her [IRMA mobile app](irma-app.md).
 
 After that, the user can disclose these attributes to other parties, who are called *verifiers*, selectively showing some and hiding the other attributes from the credential. The verifier then receives the disclosed attributes, as well as a *proof of knowledge* which proves to the verifier that the user
 

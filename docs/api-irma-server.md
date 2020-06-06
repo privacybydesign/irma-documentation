@@ -8,7 +8,7 @@ irma server [options...]
 
 The API that this server offers consists of two parts:
 
-* Endpoints under `/irma`. This is used exclusively by the [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](https://github.com/privacybydesign/irma_mobile), and is not documented here.
+* Endpoints under `/irma`. This is used exclusively by the [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md), and is not documented here.
 * Endpoints under `/session` with which IRMA session requestors can start IRMA sessions, monitor their status and retrieve their result afterwards.
 
 ## API reference

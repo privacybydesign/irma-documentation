@@ -62,7 +62,7 @@ All changes are related to the function call `handleSession`.
  This also means the canvas related options `element` and `showConnectedIcon` are deprecated.
 * Method `mobile` has the same behaviour as method `popup` now. On mobile devices, the popup
  mode automatically detects whether a mobile device is used and then shows the user the option to open
- the IRMA app installed on the mobile device itself. It is now an explicit choice, so users can also get
+ the [IRMA app](irma-app.md) installed on the mobile device itself. It is now an explicit choice, so users can also get
  a QR on mobile devices instead (useful for tablets).
 * The option `disableMobile` is not useful anymore. This module does not have
  automatic redirects to other apps anymore without explicit user interaction.
