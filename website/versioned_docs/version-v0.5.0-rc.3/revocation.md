@@ -1,5 +1,5 @@
 ---
-title: Coming: revocation
+title: Revocation
 id: version-v0.5.0-rc.3-revocation
 original_id: revocation
 ---
@@ -18,7 +18,7 @@ original_id: revocation
 </script>
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 
-Revocation will add to IRMA issuers the ability to revoke a credential that it previously issued to an [IRMA app](irma-app.md), when the contained attributes are no longer accurate. This allows IRMA attribute verifiers to establish that the attributes it received are still factual, as otherwise the credential would have been revoked by the issuer.
+Revocation adds to IRMA issuers the ability to revoke a credential that it previously issued to an [IRMA app](irma-app.md), when the contained attributes are no longer accurate. This allows IRMA attribute verifiers to establish that the attributes it received are still factual, as otherwise the credential would have been revoked by the issuer.
 
 This page explains in detail how revocation is implemented in IRMA and what it means to requestors and app users, on three levels:
 * In the first part of the section below, we give a summarizing overview fitting in one page.
