@@ -191,6 +191,9 @@ examplePopup.start()
 .catch(error => console.error("Couldn't do what you asked 😢", error));
 ```
 
+Be aware that you can start an instance of `irma-frontend` only once.
+When you want to call `start()` again, you have to create a new instance.
+
 More information about the methods the IRMA frontend package offers to you can be found
 in the [API overview](api-irma-frontend.md#irma-frontend).
 
