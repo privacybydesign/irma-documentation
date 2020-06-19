@@ -7,7 +7,8 @@ related JavaScript packages that together form a Javascript frontend client to t
 [`irma server`](https://github.com/privacybydesign/irmago/tree/master/irma). The packages contain a state
 machine package [`irma-core`](#irma-core) to which several plugin packages can be added to achieve IRMA support
 for your application. We also provide a wrapper package [`irma-frontend`](#irma-frontend) that combines `irma-core` with some of the
-plugins in a bundle to have an easy starting point for handling sessions using an embedded web element in the browser.
+plugins in a bundle. With this wrapper package you have an easy starting point for handling sessions using an embedded
+web element or using a popup overlay in the browser.
 
 Using the default styling, the browser version will look like this:
 
@@ -141,8 +142,9 @@ For detailed information about all available options, you can check the README o
 particular plugin on GitHub. There are links in the plugin overview [above](#available-plugins-for-IRMA-core).
 
 ## IRMA frontend
-For convenience we already bundled `irma-core`, `irma-web` and `irma-client` together with the default styling
-from `irma-css`. This bundled package can be downloaded [here](https://gitlab.science.ru.nl/irma/github-mirrors/irma-frontend-packages/-/jobs/artifacts/master/raw/irma-frontend/dist/irma.js?job=irma-frontend).
+For convenience we already bundled `irma-core`, `irma-web`, `irma-popup` and `irma-client` together with the default styling
+from `irma-css`. The package can be installed from the npm registry.
+The bundled package can also be downloaded directly [here](https://gitlab.science.ru.nl/irma/github-mirrors/irma-frontend-packages/-/jobs/artifacts/master/raw/irma-frontend/dist/irma.js?job=irma-frontend).
 Please host this file as asset yourself.
 
 The bundle can be imported in your JavaScript file by doing `require('@privacybydesign/irma-frontend')` or it can
@@ -152,9 +154,9 @@ be included directly in the HTML.
 <script src="assets/irma.js" type="text/javascript" defer></script>
 ```
 
-You can then instantiate `irma-core` and start a session like this:
+You can then instantiate `irma-frontend` and start a session like this when using an embedded web element:
 ```javascript
-irma.new({
+const exampleWeb = irma.newWeb({
   debugging: false,            // Enable to get helpful output in the browser console
   element:   '#irma-web-form', // Which DOM element to render to
 
@@ -166,7 +168,25 @@ irma.new({
   ...
 });
 
-irma.start()
+exampleWeb.start()
+.then(result => console.log("Successful disclosure! 🎉", result))
+.catch(error => console.error("Couldn't do what you asked 😢", error));
+```
+
+When you want a popup overlay to be used to, you can do the following:
+```javascript
+const examplePopup = irma.newPopup({
+  debugging: false, // Enable to get helpful output in the browser console
+
+  // Back-end options
+  session: {
+    // Configure your flow here, see usage guide of irma-core
+  },
+
+  ...
+});
+
+examplePopup.start()
 .then(result => console.log("Successful disclosure! 🎉", result))
 .catch(error => console.error("Couldn't do what you asked 😢", error));
 ```

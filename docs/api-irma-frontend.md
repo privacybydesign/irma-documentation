@@ -29,17 +29,25 @@ Below you can find an overview of all methods an IRMA core instance offers you.
 For an example of how the IRMA core API can be used, you can also check the [usage guide](irma-frontend.md#usage-guide).
 
 ## IRMA frontend
-[IRMA frontend](irma-frontend.md#irma-frontend) does not export any explicit class or function. It is a wrapper
+[IRMA frontend](irma-frontend.md#irma-frontend) is a wrapper
 package around IRMA core combined with several of its plugins and the default [`irma-css`](irma-frontend.md#irma-css)
-styling. The package can only be used in web browser environments and it adds an `IrmaCore` instance
-directly to the JavaScript DOM, named `irma`.
+styling. The package can only be used in web browser environments.
 
-This `irma` instance has two methods:
+It exports two functions:
+
+| Function | Functionality |
+|---|---|
+| `newWeb({/* Options */})` | With this method an `IrmaCore` instance is initialized, using the given options, configured to control an embedded web element. The options that can be used are all options from [`irma-client`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client) and [`irma-web`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-web).
+| `newPopup({/* Options */})` | With this method an `IrmaCore` instance is initialized, using the given options, configured to start a popup overlay. The options that can be used are all options from [`irma-client`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client) and [`irma-popup`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-popup).
+
+Both functions return an interface with the following methods:
 
 | Method | Functionality |
 |---|---|
-| `new({/* Options*/})` | With this method an `IrmaCore` instance is initialized (using its constructor) using the given options. The options that can be used are all options from [`irma-client`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client) and [`irma-web`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-web).
-| `start()` | Calls the `start` method of `IrmaCore` internally and behaves exactly like this method.
+| `start()` | Calls the `start` method of the initialized `IrmaCore` and behaves exactly like this method.
+
+When importing this library via a `<script>` tag in HTML the JavaScript variable `irma` will be bound to this library.
+In these environments you can therefore directly access the exported functions by for instance saying `irma.newWeb(...)`.
 
 ## Plugins
 The [plugins](irma-frontend.md#available-plugins-for-irma-core) do not export any class or method. They only add extra
