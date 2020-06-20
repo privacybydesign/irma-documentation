@@ -201,7 +201,7 @@ This can be useful if the session result travels along an unsafe or untrusted ro
 
 ### TLS
 
-The IRMA protocol relies on TLS for encryption of the attributes as they travel along the internet. If your server is connected to the internet and it handles actual attributes (personal data from people), then you ***must*** ensure that the attributes are protected in transit with TLS.
+The IRMA protocol relies on TLS for encryption of the attributes as they travel along the internet. If your server is connected to the internet and it handles actual attributes (personal data from people), then you ***must*** ensure that the attributes are protected in transit with TLS. In its default configuration (i.e. with [developer mode](irma-app.md#developer-mode) disabled), the IRMA app will refuse to connect to servers not using TLS.
 
 You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` options (or the `_file` equivalents), specifying a PEM certificate (chain) and PEM private key. If you use [separate requestor and app endpoints](#http-server-endpoints), additionally use `client_tls_cert` and `client_tls_privkey`.
 
@@ -232,7 +232,7 @@ Outputting JSON is enabled with the `log-json` option:
 
 The server was designed with the following goals in mind.
 - Developer and user friendliness
-  - Completely [configurable](#configuring) with configuration file, flags, or environmental vars (see `-h`)
+  - Each of the [configuration options](#configuring) can be specified in a configuration file, command line flag, or environmental vars (see `-h`)
   - Default configuration (demo mode) is immediately useful
   - Thorough and configurable logging (`-v`, `-vv`; by default logs exclude attribute values)
   - Partial backwards compatibility with predecessor [`irma_api_server`](https://github.com/privacybydesign/irma_api_server)
@@ -240,13 +240,12 @@ The server was designed with the following goals in mind.
 - Also available as [Go library](irma-server-lib.md) instead of standalone server
   - Bindings to other programming languages (Python, Ruby) are expected
 
-Being written in [Go](https://golang.org/) this server (in fact, the containing [`irma` binary](irma-cli.md)) additionally automatically has the following properties.
+Being written in [Go](https://golang.org/), this server (in fact, the containing [`irma` binary](irma-cli.md)) additionally automatically has the following properties.
 - Simple to install (one binary, no dependencies, cross platform) and/or compile
 - [Reproducible builds](https://www.gnu.org/software/mes/manual/html_node/Reproducible-Builds.html)
 - [API documentation](https://godoc.org/github.com/privacybydesign/irmago) (generated automatically from `master` branch)
 
 Referring to Go packages (i.e. folders) under [`irmago`](https://github.com/privacybydesign/irmago), the server is structured as follows.
-* `internal/servercore`: Go library implementing the HTTP endpoints for the IRMA protocol (in which the IRMA app is the client), and a Go API for requestors to manage sessons. Not meant for direct use, can instead be compiled to a C-compatible library (at `server/irmac`) for binding to other languages (Ruby, Python, Swift).
-* [`server/irmaserver`](irma-server-lib.md): Go library wrapping the server and API implemented by `internal/servercore`.  ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver))
+* [`server/irmaserver`](irma-server-lib.md): Go library implementing the HTTP endpoints for the IRMA protocol (in which the IRMA app is the client), and a Go API for requestors to manage sessons. ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver))
 * `server/requestorserver`: Go library wrapping `server/irmaserver`, exposing the requestor API as a second HTTP endpoint set under `/session` URLs instead of as Go functions (next to `/irma` for the IRMA app endpoints). ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver))
 * `irma`: executuable whose `server` commands wraps `server/requestorserver`.
