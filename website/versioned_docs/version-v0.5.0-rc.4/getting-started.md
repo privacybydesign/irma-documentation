@@ -1,6 +1,6 @@
 ---
 title: Getting started
-id: version-v0.5.0-rc.3-getting-started
+id: version-v0.5.0-rc.4-getting-started
 original_id: getting-started
 ---
 

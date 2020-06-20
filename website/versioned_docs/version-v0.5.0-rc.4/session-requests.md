@@ -1,6 +1,6 @@
 ---
 title: Session requests
-id: version-v0.5.0-rc.3-session-requests
+id: version-v0.5.0-rc.4-session-requests
 original_id: session-requests
 ---
 

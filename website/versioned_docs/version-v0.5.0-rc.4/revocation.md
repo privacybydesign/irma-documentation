@@ -1,6 +1,6 @@
 ---
 title: Revocation
-id: version-v0.5.0-rc.3-revocation
+id: version-v0.5.0-rc.4-revocation
 original_id: revocation
 ---
 

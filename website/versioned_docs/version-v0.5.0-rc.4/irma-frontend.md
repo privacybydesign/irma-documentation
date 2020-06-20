@@ -1,6 +1,6 @@
 ---
 title: IRMA frontend JavaScript packages
-id: version-v0.5.0-rc.3-irma-frontend
+id: version-v0.5.0-rc.4-irma-frontend
 original_id: irma-frontend
 ---
 
