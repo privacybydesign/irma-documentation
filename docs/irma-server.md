@@ -180,7 +180,7 @@ The server uses [IRMA schemes](schemes.md) to retrieve issuer, credential and at
 If IRMA issuer private keys are included in the server configuration, then the server can issue all credential types of all issuers for which private keys are installed. IRMA issuer private keys can be configured in the following two ways:
 
 * Include the private keys within the [IRMA scheme](schemes.md) in the issuer's `PrivateKeys` folder, with filenames `0.xml`, `1.xml`, etc ([example](https://github.com/privacybydesign/irma-demo-schememanager/tree/master/MijnOverheid/PrivateKeys)).
-* Set the `privkeys` option to a folder containing IRMA issuer private keys called `scheme.issuer.xml` (for example, `irma-demo.MijnOverheid.xml`).
+* Set the `privkeys` option to a folder containing IRMA issuer private keys called `scheme.issuer.xml` or `scheme.issuer.counter.xml` (for example, `irma-demo.MijnOverheid.xml` or `irma-demo.MijnOverheid.2.xml`).
 
 If issuance is enabled in production and private keys are configured, then you should ensure that only authenticated requestors can start issuance requests (otherwise if anyone can use your server to issue attributes then those attributes cannot be trusted or used). You should either:
 
