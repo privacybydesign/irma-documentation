@@ -228,6 +228,37 @@ Outputting JSON is enabled with the `log-json` option:
 {"action":"disclosing","level":"info","msg":"Session started","session":"WdypvSs97JTotpfl1Dtd","time":"2019-02-28T20:51:09+01:00"}
 ```
 
+## Running as daemon
+
+On most Linux systems, the `irma server` can be made into an automatically started daemon as follows:
+
+1. Write a new systemd unit file to `/etc/systemd/system/irmaserver.service`:
+    ```ini
+    [Unit]
+    Description=IRMA server
+    Documentation=https://irma.app/docs/irma-server
+    Requires=network.target
+
+    [Service]
+    Type=simple
+    ExecStart=/usr/local/bin/irma server --config=/etc/irmaserver/config.json
+    TimeoutStopSec=60
+    Restart=always
+    RestartSec=1
+    StandardOutput=syslog
+    StandardError=syslog
+    SyslogIdentifier=irma
+    User=irmaserver
+    Group=irmaserver
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+    Modify the path to `irma` and [your configuration file (or flags or environmental variables)](#configuring) in `ExecStart` as needed, as well as `User` and `Group`.
+2.  Start the daemon and schedule it for automatic start on boot by running `systemctl start irmaserver.service && systemctl enable irmaserver.service`.
+
+See `systemctl status irmaserver.service` for the status of the daemon, and `journalctl -u irmaserver.service` for the console output of the IRMA server.
+
 ## Design goals
 
 The server was designed with the following goals in mind.
