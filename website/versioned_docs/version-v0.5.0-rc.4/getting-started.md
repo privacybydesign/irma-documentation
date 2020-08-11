@@ -66,3 +66,60 @@ irma server -v --static-path ~/irmajs/examples/browser
 A webpage demoing IRMA attribute issuance verification should now be available at http://localhost:8088.
 
 > Open the browser console and the console running `irma server` to see various log messages and possibly error messages as the IRMA session proceeds.
+
+## Example configuration and IRMA session
+
+Generally, your IRMA server runs in your backend alongside a server application serving your frontend (website), with which the IRMA app user is interacting. Your server application starts and manages sessions at your IRMA server to verify or issue attributes (for example, when the user wants to log in). This can be setup as follows.
+
+### Configure `irma server`
+
+In production it is generally best to [authenticate incoming session requests](irma-server.md#requestor-authentication) from your application. The following is an example production configuration file ([in YAML](irma-server.md#configuring)) for the `irma server` (start with `irma server -c /path/to/config.yml`) that will accept [session requests](session-requests.md) if they include a `Authorization: mysecrettoken` HTTP header.
+
+```yaml
+production: true
+email: "example@example.com"  # see https://irma.app/docs/email
+
+port: 443
+url: "https://example.com/irma/"
+tls_cert: "/etc/letsencrypt/live/example.com/fullchain.pem"
+tls_privkey: "/etc/letsencrypt/live/example.com/privkey.pem"
+
+no_auth: false
+requestors:
+  myapp:
+    auth_method: "token"
+    key: "mysecrettoken"
+```
+
+* You may want to [restrict permissions](irma-server.md/#permissions) to verify or issue specific attributes, globally or per requestor.
+* The server can be made into a daemon on most Linux systems [using a systemd unit file](irma-server.md#running-as-daemon).
+* Another common setup is to have a reverse proxy between the IRMA server and the internet, which handles TLS instead and forwards traffic on `https://example.com/irma/` to the IRMA server.
+
+### Perform a session
+
+Assuming your application runs on the same server as the IRMA server, your application can now start a session at your IRMA server as follows (using `curl` as example):
+
+```bash
+curl https://example.com/session \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: mysecrettoken" \
+  -d '{
+        "@context": "https://irma.app/ld/request/disclosure/v2",
+        "disclose": [[["irma-demo.MijnOverheid.ageLower.over18"]]]
+      }'
+```
+
+This will output something like the following:
+
+```json
+{
+  "sessionPtr": {"u": "https://example.com/irma/t1nXs4ZduyhvAeAAlB77","irmaqr": "disclosing"},
+  "token": "X7LU5Q8Jhig0330gjYUO"
+}
+```
+
+* Send the `sessionPtr` to your frontend (i.e., a suitable [`irma-frontend` plugin](api-irma-frontend.md), or [`handleSession()` of `irmajs`](api-irmajs.md#handlesession)), to show an IRMA QR or toggle to the IRMA app.
+* Use the `token` to [track the session status](api-irma-server.md#get-session-token-status), and to [get the session result](api-irma-server.md#get-session-token-result) after the session has finished.
+
+Instead of managing sessions with HTTP requests as shown here, [for certain languages](irma-backend.md) (currently Go and JavaScript) it is also possible to include an IRMA library and manage sessions using function invocations.

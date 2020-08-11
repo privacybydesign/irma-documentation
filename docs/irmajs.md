@@ -46,3 +46,7 @@ This assumes you have an [`irma server`](irma-server.md) that is configured to [
 For complete examples, see the `examples` folder. You can host these examples using the IRMA server, with:
 
     irma server -v --static-path examples/browser
+
+> If your `irma server` is publically reachable, having a setup like the one above allows anyone on the internet to start IRMA sessions at your `irma server`. Additionally, starting IRMA sessions from the browser is generally an antipattern. You should enable either [requestor authentication](irma-server.md#requestor-authentication) or [restrict access to the IRMA session creation endpoints](irma-server.md#http-server-endpoints).
+
+A more realistic configuration for this case may be found in the [Getting started](getting-started.md#example-configuration-and-irma-session) page.

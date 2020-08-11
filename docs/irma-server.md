@@ -44,6 +44,8 @@ Run `irma server -h` to see all configuration options. Each option may be passed
 
 In order to see the configuration that the server uses after having gathered input from these sources, specify `-v` or `-vv` or use the `verbose` option. Use `irma server check -v` (with the same flags, env vars and config files as `irma server`) to check your configuration for correctness before running the server.
 
+For a full configuation example, see [Getting started](getting-started.md#example-configuration-and-irma-session).
+
 In the remainder of this document, when referring to options we write them as configuration file entries, with underscores and without prefix.
 
 ### Default configuration
