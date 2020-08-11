@@ -1,6 +1,6 @@
 ---
 title: irmajs
-id: version-v0.5.0-rc.4-api-irmajs
+id: version-v0.5.0-rc.5-api-irmajs
 original_id: api-irmajs
 ---
 
