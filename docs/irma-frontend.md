@@ -138,12 +138,25 @@ promise.then(() => {
 });
 ```
 
+Be aware that you can start an instance of `irma-core` only once.
+When you want to call `start()` again, you have to create a new instance.
+When a promise of an earlier `start()` call is not completed yet, promise rejection
+can be forced by calling the `abort()` method. In this way a new `irma-core`
+instance can be created without any risk on interference with other running instances.
+When a promise is rejected because of an `abort()` call, the promise will return the
+error message `Aborted`.
+
+```javascript
+irma.abort();
+```
+
 For detailed information about all available options, you can check the README of the
 particular plugin on GitHub. There are links in the plugin overview [above](#available-plugins-for-IRMA-core).
 
 ## IRMA frontend
 For convenience we already bundled `irma-core`, `irma-web`, `irma-popup` and `irma-client` together with the default styling
-from `irma-css`. The package can be installed from the npm registry.
+from `irma-css`. We also added polyfills in this package to realize support for Internet Explorer 11.
+The package can be installed from the npm registry.
 The bundled package can also be downloaded directly [here](https://gitlab.science.ru.nl/irma/github-mirrors/irma-frontend-packages/-/jobs/artifacts/master/raw/irma-frontend/dist/irma.js?job=irma-frontend).
 Please host this file as asset yourself.
 
@@ -193,6 +206,16 @@ examplePopup.start()
 
 Be aware that you can start an instance of `irma-frontend` only once.
 When you want to call `start()` again, you have to create a new instance.
+When a promise of an earlier `start()` call is not completed yet, promise rejection
+can be forced by calling the `abort()` method. In this way a new `irma-frontend`
+instance can be created without any risk on interference with other running instances.
+When a promise is rejected because of an `abort()` call, the promise will return the
+error message `Aborted`.
+
+```javascript
+exampleWeb.abort();
+examplePopup.abort();
+```
 
 More information about the methods the IRMA frontend package offers to you can be found
 in the [API overview](api-irma-frontend.md#irma-frontend).
