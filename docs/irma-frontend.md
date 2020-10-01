@@ -104,7 +104,10 @@ const irma = new IrmaCore({
       method: 'GET',
       // No additional HTTP headers are needed.
       headers: {},
-      // For all other options the default value is sufficient in our example.
+      // Note: a GET request with empty headers is fetch's default, so
+      // omitting these options would lead to the same result.
+      // All options the fetch API exposes can be used here to customize the request.
+      // https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
     },
     
     // The 'mapping' option specifies how the data can be derived from a 'start' response.
@@ -234,14 +237,15 @@ Based on this you can adapt the CSS and then import the modified version into yo
 
 ## Make your own IRMA core plugin
 If you need functionality that is not covered by one of the existing IRMA core plugins, you can also define
-one yourself. The defined class must at least have a constructor. In the constructor the `stateMachine` and
-the `options` from `IrmaCore` can be accessed. Furthermore a plugin can have a `start` method that is
+one yourself. In the constructor the `stateMachine` and the `options` from `IrmaCore` can be accessed.
+The constructor can be omitted if you do not need it.
+Furthermore a plugin can have a `start` method that is
 called when the `start` method of the associated `IrmaCore` instance is called, and a `stateChange` method 
 that is called when the state of the state machine changes:
 
 ```javascript
 class IrmaPlugin {
-
+  // Optional
   constructor({stateMachine, options}) {
     ...
   }
