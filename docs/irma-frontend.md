@@ -234,6 +234,59 @@ of the default styles. The CSS can be linked into your website the regular way:
 
 When you want to adapt the design to suit for your own use case, you can take a look in the [styleguide](https://privacybydesign.github.io/irma-frontend-packages/styleguide/).
 Based on this you can adapt the CSS and then import the modified version into your project.
+Customized versions of `irma-css` can be used in combination with the `irma-web` and
+`irma-popup` plugins for `irma-core`.
+
+### Customizing the design
+Customizing the design is especially useful for developers that want to use an embedded
+web element to initiate the IRMA flow and see that the default design does not fit
+into the design of their website. We provide you a convenient way to alter the
+design and build a new, customized style. This can be done in the following way:
+
+1. Clone the [`irma-frontend-packages` repository](https://github.com/privacybydesign/irma-frontend-packages).
+2. Use our [guide](https://github.com/privacybydesign/irma-frontend-packages/tree/master/irma-css#compiling-locally)
+   to compile the CSS styleguide locally.
+3. Make the desired changes in the source files. These files can be found in the
+   `irma-css/src` directory.
+4. Check **all pages** of the locally built styleguide to check whether your local
+   changes work for all flows.
+5. Build a release version for your customized CSS by running `npm run release` in the
+   `irma-css` directory. The built CSS files can be found in the `irma-css/dist` directory.
+6. Include the new style in your website and use [IRMA core](#irma-core) in combination
+   with the `irma-web` plugin (for embedded web elements) or the `irma-popup` plugin (for
+   a popup overlay). The plugins will use the custom CSS that you have embedded. For
+   managing the session state we recommend you to use the `irma-client` plugin.
+   
+```javascript
+require('assets/my-custom-irma-css-design.min.css');
+
+const IrmaCore   = require('@privacybydesign/irma-core');
+const IrmaWeb    = require('@privacybydesign/irma-web');
+const IrmaClient = require('@privacybydesign/irma-client');
+
+const irma = new IrmaCore({
+  debugging: true,
+  element:   '#irma-web-form',
+  language:  'en',
+  // Check the irma-web README on how to customize the default texts.
+  session: {
+    // Check the irma-client README for all options.
+  },
+});
+
+irma.use(IrmaWeb);
+irma.use(IrmaClient);
+
+irma.start()
+.then(result => console.log("Successful disclosure! 🎉", result))
+.catch(error => {
+  if (error === 'Aborted') {
+    console.log('We closed it ourselves, so no problem 😅');
+    return;
+  }
+  console.error("Couldn't do what you asked 😢", error);
+});
+```
 
 ## Make your own IRMA core plugin
 If you need functionality that is not covered by one of the existing IRMA core plugins, you can also define
