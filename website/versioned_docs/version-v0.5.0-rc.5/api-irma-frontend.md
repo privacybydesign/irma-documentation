@@ -25,23 +25,33 @@ Below you can find an overview of all methods an IRMA core instance offers you.
 
 | Method | Functionality |
 |---|---|
-| `use(/* Plugin*/)` | With this method plugins can be added to the IRMA core instance. This method takes care of instantiating the plugin. You simply pass the plugin class as an argument to this function; you must not instantiate the plugin yourself.
-| `start()` | The start method activates the state machine. From then the IRMA core instance is ready to be used and no plugins can be added to the instance anymore. It returns a promise that resolves when a session is finished successfully and rejects when a unrecoverable error occurs. By calling IRMA core's `start` method, the plugins will be started too.
+| `use(/* Plugin*/)` | With this method plugins can be added to the IRMA core instance. This method takes care of instantiating the plugin. You simply pass the plugin class as an argument to this function; you must not instantiate the plugin yourself.|
+| `start()` | The start method activates the state machine. From then the IRMA core instance is ready to be used and no plugins can be added to the instance anymore. It returns a promise that resolves when a session is finished successfully and rejects when a unrecoverable error occurs. By calling IRMA core's `start` method, the plugins will be started too.|
+| `abort()` | The abort method forces an `irma-core` instance to abort the session and all associated plugins should stop making changes. In this way you can stop the instance from being active when it is not relevant anymore. If a promise returned by the `start` method is still active, the promise will be rejected with error message `Aborted`.|
 
 For an example of how the IRMA core API can be used, you can also check the [usage guide](irma-frontend.md#usage-guide).
 
 ## IRMA frontend
-[IRMA frontend](irma-frontend.md#irma-frontend) does not export any explicit class or function. It is a wrapper
+[IRMA frontend](irma-frontend.md#irma-frontend) is a wrapper
 package around IRMA core combined with several of its plugins and the default [`irma-css`](irma-frontend.md#irma-css)
-styling. The package can only be used in web browser environments and it adds an `IrmaCore` instance
-directly to the JavaScript DOM, named `irma`.
+styling. The package can only be used in web browser environments.
 
-This `irma` instance has two methods:
+It exports two functions:
+
+| Function | Functionality |
+|---|---|
+| `newWeb({/* Options */})` | With this method an `IrmaCore` instance is initialized, using the given options, configured to control an embedded web element. The options that can be used are all options from [`irma-client`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client) and [`irma-web`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-web).
+| `newPopup({/* Options */})` | With this method an `IrmaCore` instance is initialized, using the given options, configured to start a popup overlay. The options that can be used are all options from [`irma-client`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client) and [`irma-popup`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-popup).
+
+Both functions return an interface with the following methods:
 
 | Method | Functionality |
 |---|---|
-| `new({/* Options*/})` | With this method an `IrmaCore` instance is initialized (using its constructor) using the given options. The options that can be used are all options from [`irma-client`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client) and [`irma-web`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-web).
-| `start()` | Calls the `start` method of `IrmaCore` internally and behaves exactly like this method.
+| `start()` | Calls the `start` method of the initialized `IrmaCore` instance and returns the promise it gets as result.
+| `abort()` | Calls the `abort` method of the initialized `IrmaCore` instance.
+
+When importing this library via a `<script>` tag in HTML the JavaScript variable `irma` will be bound to this library.
+In these environments you can therefore directly access the exported functions by for instance saying `irma.newWeb(...)`.
 
 ## Plugins
 The [plugins](irma-frontend.md#available-plugins-for-irma-core) do not export any class or method. They only add extra
@@ -69,5 +79,8 @@ All changes are related to the function call `handleSession`.
 * The option `disableMobile` is not useful anymore. This module does not have
  automatic redirects to other apps anymore without explicit user interaction.
  The option is therefore deprecated.
+* Because the explicit methods for mobile devices are deprecated, the undocumented exported function `detectUserAgent`
+ and the undocumented exported struct `UserAgent` are also deprecated. An explicit distinction based on user agent
+ is not necessary anymore. This is all handled internally now.
 * The option `returnStatus` is deprecated. Instead you can use the functions `waitConnected` and `waitDone`
  to detect yourself whether the session reached a certain status.

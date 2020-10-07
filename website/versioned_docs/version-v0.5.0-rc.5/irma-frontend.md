@@ -9,7 +9,8 @@ related JavaScript packages that together form a Javascript frontend client to t
 [`irma server`](https://github.com/privacybydesign/irmago/tree/master/irma). The packages contain a state
 machine package [`irma-core`](#irma-core) to which several plugin packages can be added to achieve IRMA support
 for your application. We also provide a wrapper package [`irma-frontend`](#irma-frontend) that combines `irma-core` with some of the
-plugins in a bundle to have an easy starting point for handling sessions using an embedded web element in the browser.
+plugins in a bundle. With this wrapper package you have an easy starting point for handling sessions using an embedded
+web element or using a popup overlay in the browser.
 
 Using the default styling, the browser version will look like this:
 
@@ -105,7 +106,10 @@ const irma = new IrmaCore({
       method: 'GET',
       // No additional HTTP headers are needed.
       headers: {},
-      // For all other options the default value is sufficient in our example.
+      // Note: a GET request with empty headers is fetch's default, so
+      // omitting these options would lead to the same result.
+      // All options the fetch API exposes can be used here to customize the request.
+      // https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
     },
     
     // The 'mapping' option specifies how the data can be derived from a 'start' response.
@@ -139,12 +143,26 @@ promise.then(() => {
 });
 ```
 
+Be aware that you can start an instance of `irma-core` only once.
+When you want to call `start()` again, you have to create a new instance.
+When a promise of an earlier `start()` call is not completed yet, promise rejection
+can be forced by calling the `abort()` method. In this way a new `irma-core`
+instance can be created without any risk on interference with other running instances.
+When a promise is rejected because of an `abort()` call, the promise will return the
+error message `Aborted`.
+
+```javascript
+irma.abort();
+```
+
 For detailed information about all available options, you can check the README of the
 particular plugin on GitHub. There are links in the plugin overview [above](#available-plugins-for-IRMA-core).
 
 ## IRMA frontend
-For convenience we already bundled `irma-core`, `irma-web` and `irma-client` together with the default styling
-from `irma-css`. This bundled package can be downloaded [here](https://gitlab.science.ru.nl/irma/github-mirrors/irma-frontend-packages/-/jobs/artifacts/master/raw/irma-frontend/dist/irma.js?job=irma-frontend).
+For convenience we already bundled `irma-core`, `irma-web`, `irma-popup` and `irma-client` together with the default styling
+from `irma-css`. We also added polyfills in this package to realize support for Internet Explorer 11.
+The package can be installed from the npm registry.
+The bundled package can also be downloaded directly [here](https://gitlab.science.ru.nl/irma/github-mirrors/irma-frontend-packages/-/jobs/artifacts/master/raw/irma-frontend/dist/irma.js?job=irma-frontend).
 Please host this file as asset yourself.
 
 The bundle can be imported in your JavaScript file by doing `require('@privacybydesign/irma-frontend')` or it can
@@ -154,9 +172,9 @@ be included directly in the HTML.
 <script src="assets/irma.js" type="text/javascript" defer></script>
 ```
 
-You can then instantiate `irma-core` and start a session like this:
+You can then instantiate `irma-frontend` and start a session like this when using an embedded web element:
 ```javascript
-irma.new({
+const exampleWeb = irma.newWeb({
   debugging: false,            // Enable to get helpful output in the browser console
   element:   '#irma-web-form', // Which DOM element to render to
 
@@ -168,9 +186,40 @@ irma.new({
   ...
 });
 
-irma.start()
+exampleWeb.start()
 .then(result => console.log("Successful disclosure! 🎉", result))
 .catch(error => console.error("Couldn't do what you asked 😢", error));
+```
+
+When you want a popup overlay to be used to, you can do the following:
+```javascript
+const examplePopup = irma.newPopup({
+  debugging: false, // Enable to get helpful output in the browser console
+
+  // Back-end options
+  session: {
+    // Configure your flow here, see usage guide of irma-core
+  },
+
+  ...
+});
+
+examplePopup.start()
+.then(result => console.log("Successful disclosure! 🎉", result))
+.catch(error => console.error("Couldn't do what you asked 😢", error));
+```
+
+Be aware that you can start an instance of `irma-frontend` only once.
+When you want to call `start()` again, you have to create a new instance.
+When a promise of an earlier `start()` call is not completed yet, promise rejection
+can be forced by calling the `abort()` method. In this way a new `irma-frontend`
+instance can be created without any risk on interference with other running instances.
+When a promise is rejected because of an `abort()` call, the promise will return the
+error message `Aborted`.
+
+```javascript
+exampleWeb.abort();
+examplePopup.abort();
 ```
 
 More information about the methods the IRMA frontend package offers to you can be found
@@ -187,17 +236,71 @@ of the default styles. The CSS can be linked into your website the regular way:
 
 When you want to adapt the design to suit for your own use case, you can take a look in the [styleguide](https://privacybydesign.github.io/irma-frontend-packages/styleguide/).
 Based on this you can adapt the CSS and then import the modified version into your project.
+Customized versions of `irma-css` can be used in combination with the `irma-web` and
+`irma-popup` plugins for `irma-core`.
+
+### Customizing the design
+Customizing the design is especially useful for developers that want to use an embedded
+web element to initiate the IRMA flow and see that the default design does not fit
+into the design of their website. We provide you a convenient way to alter the
+design and build a new, customized style. This can be done in the following way:
+
+1. Clone the [`irma-frontend-packages` repository](https://github.com/privacybydesign/irma-frontend-packages).
+2. Use our [guide](https://github.com/privacybydesign/irma-frontend-packages/tree/master/irma-css#compiling-locally)
+   to compile the CSS styleguide locally.
+3. Make the desired changes in the source files. These files can be found in the
+   `irma-css/src` directory.
+4. Check **all pages** of the locally built styleguide to check whether your local
+   changes work for all flows.
+5. Build a release version for your customized CSS by running `npm run release` in the
+   `irma-css` directory. The built CSS files can be found in the `irma-css/dist` directory.
+6. Include the new style in your website and use [IRMA core](#irma-core) in combination
+   with the `irma-web` plugin (for embedded web elements) or the `irma-popup` plugin (for
+   a popup overlay). The plugins will use the custom CSS that you have embedded. For
+   managing the session state we recommend you to use the `irma-client` plugin.
+   
+```javascript
+require('assets/my-custom-irma-css-design.min.css');
+
+const IrmaCore   = require('@privacybydesign/irma-core');
+const IrmaWeb    = require('@privacybydesign/irma-web');
+const IrmaClient = require('@privacybydesign/irma-client');
+
+const irma = new IrmaCore({
+  debugging: true,
+  element:   '#irma-web-form',
+  language:  'en',
+  // Check the irma-web README on how to customize the default texts.
+  session: {
+    // Check the irma-client README for all options.
+  },
+});
+
+irma.use(IrmaWeb);
+irma.use(IrmaClient);
+
+irma.start()
+.then(result => console.log("Successful disclosure! 🎉", result))
+.catch(error => {
+  if (error === 'Aborted') {
+    console.log('We closed it ourselves, so no problem 😅');
+    return;
+  }
+  console.error("Couldn't do what you asked 😢", error);
+});
+```
 
 ## Make your own IRMA core plugin
 If you need functionality that is not covered by one of the existing IRMA core plugins, you can also define
-one yourself. The defined class must at least have a constructor. In the constructor the `stateMachine` and
-the `options` from `IrmaCore` can be accessed. Furthermore a plugin can have a `start` method that is
+one yourself. In the constructor the `stateMachine` and the `options` from `IrmaCore` can be accessed.
+The constructor can be omitted if you do not need it.
+Furthermore a plugin can have a `start` method that is
 called when the `start` method of the associated `IrmaCore` instance is called, and a `stateChange` method 
 that is called when the state of the state machine changes:
 
 ```javascript
 class IrmaPlugin {
-
+  // Optional
   constructor({stateMachine, options}) {
     ...
   }
