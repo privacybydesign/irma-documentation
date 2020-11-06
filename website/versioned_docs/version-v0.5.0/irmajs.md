@@ -1,6 +1,6 @@
 ---
 title: irmajs JavaScript library
-id: version-v0.5.0-rc.5-irmajs
+id: version-v0.5.0-irmajs
 original_id: irmajs
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: What is IRMA?
-id: version-v0.5.0-rc.5-what-is-irma
+id: version-v0.5.0-what-is-irma
 original_id: what-is-irma
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: IRMA frontend packages
-id: version-v0.5.0-rc.5-api-irma-frontend
+id: version-v0.5.0-api-irma-frontend
 original_id: api-irma-frontend
 ---
 

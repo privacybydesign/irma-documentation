@@ -1,6 +1,6 @@
 ---
 title: "Condiscon" session requests
-id: version-v0.5.0-rc.5-condiscon
+id: version-v0.5.0-condiscon
 original_id: condiscon
 ---
 

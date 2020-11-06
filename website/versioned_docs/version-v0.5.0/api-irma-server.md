@@ -1,6 +1,6 @@
 ---
 title: irma server
-id: version-v0.5.0-rc.5-api-irma-server
+id: version-v0.5.0-api-irma-server
 original_id: api-irma-server
 ---
 

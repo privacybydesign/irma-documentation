@@ -1,6 +1,6 @@
 ---
 title: IRMA schemes
-id: version-v0.5.0-rc.5-schemes
+id: version-v0.5.0-schemes
 original_id: schemes
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: irma command line tool
-id: version-v0.5.0-rc.5-irma-cli
+id: version-v0.5.0-irma-cli
 original_id: irma-cli
 ---
 
