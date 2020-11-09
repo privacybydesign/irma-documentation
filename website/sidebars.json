@@ -13,17 +13,17 @@
       "irma-server-lib",
       "irma-backend",
       "irma-frontend",
-      "irmajs",
       "schemes",
       "session-requests",
       "email",
-      "irma-app"
+      "irma-app",
+      "irmajs"
     ],
     "API reference": [
       "api-go",
-      "api-irmajs",
       "api-irma-server",
-      "api-irma-frontend"
+      "api-irma-frontend",
+      "api-irmajs"
     ],
     "Documentation": [
       "overview",

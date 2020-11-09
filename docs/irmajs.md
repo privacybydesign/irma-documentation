@@ -2,6 +2,8 @@
 title: irmajs JavaScript library
 ---
 
+> This concerns documentation of a deprecated library. Please use [`irma-frontend`](irma-frontend.md) instead. If you are looking for a library to manage your `irma server` using Node.js, you can use the JavaScript packages from [`irma-backend`](irma-backend.md).
+
 `irmajs` is a Javascript client of the RESTful JSON API offered by the [`irma server`](https://github.com/privacybydesign/irmago/tree/master/irma). It  allows you to use the `irma server` to:
 
  * Verify IRMA attributes. You specify which attributes, the library handles the user interaction and the communication with the `irma server` and the [IRMA app](irma-app.md)).
