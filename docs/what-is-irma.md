@@ -18,7 +18,7 @@ A typical IRMA session is depicted schematically below.
 ![IRMA session flow](assets/irmaflow.png)
 
 Software components:
-* *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the [IRMA app](irma-app.md) scans. All frontend tasks depicted in the diagram are supported by [`irmajs`](irmajs.md).
+* *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the [IRMA app](irma-app.md) scans. All frontend tasks depicted in the diagram are supported by [`irma-frontend`](irma-frontend.md).
 * [*IRMA server*](#irma-servers): Handles IRMA protocol with the IRMA app for the requestor.
 * [*IRMA mobile app*](irma-app.md): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994).
 
@@ -27,7 +27,7 @@ Explanation of the steps:
 1. Usually the session starts by the user performing some action on the website (e.g. clicking on "Log in with IRMA").
 1. The requestor sends its [session request](session-requests.md) (containing the attributes to be disclosed or issued, or message to be signed) to the [IRMA server](#irma-servers). Depending on its configuration, the IRMA server accepts the session request only if the session request is authentic (e.g. a validly signed [session request JWT](session-requests.md#jwts-signed-session-requests)) from an authorized requestor.
 1. The IRMA server accepts the request and assigns a session token (a random string) to it. It returns the contents of the QR code that the frontend must display: the URL to itself and the session token.
-1. The frontend ([`irmajs`](irmajs.md)) receives and displays the QR code, which is scanned by the IRMA app.
+1. The frontend ([`irma-frontend`](irma-frontend.md)) receives and displays the QR code, which is scanned by the IRMA app.
 1. The IRMA app requests the session request from step 1, receiving the attributes to be disclosed or issued, or message to be signed.
 1. The IRMA server returns the session request.
 1. The IRMA app displays the attributes to be disclosed or issued, or message to be signed, and asks the user if she wants to proceed.
@@ -38,9 +38,10 @@ Explanation of the steps:
 Additional notes: 
 
 * Which of these tasks are performed by the requestor's backend and which by its frontend differs case by case:
-  -  Often the session request is sent to the IRMA server by the requestor's backend, after which the IRMA server's reply in step 2 is forwarded to the frontend which renders it as a QR code. Step 1 can however also be done by `irmajs`, in which case `irmajs` automatically picks up the IRMA server's reply in step 2 and renders the QR code.
-  - Similarly, `irmajs` can be instructed to fetch the session result in step 10, but this can also be done in the backend.
+  - Often the session request is sent to the IRMA server by the requestor's backend, after which the IRMA server's reply in step 2 is forwarded to the frontend which renders it as a QR code. Step 1 can however also be done by `irma-frontend`, in which case `irma-frontend` automatically picks up the IRMA server's reply in step 2 and renders the QR code.
+  - Similarly, `irma-frontend` can be instructed to fetch the session result in step 10, but this can also be done in the backend. In the latter, `irma-frontend` can fetch a custom result at your backend, if desired.
 * The IRMA server could be deployed on the same machine as the requestor's backend, but it need not be; possibly it is not even controlled by the requestor. In case the [`irmaserver`](irma-server-lib.md) library is used, steps 2/3 and 10 are function calls.
+* To make it easier for a requestor's backend to integrate communication with the `irma server`, you can use one of our [irma-backend-packages](irma-backend.md).
 
 ## Session types
 

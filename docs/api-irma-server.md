@@ -48,7 +48,7 @@ If the request was successfully parsed, and authenticated if applicable, then th
   "sessionPtr": {"u":"https://example.com/irma/ysDohpoySavbHAUDjmpz","irmaqr":"disclosing"}
 }
 ```
-In the endpoints below, the `{token}` placeholder must be replaced with the above session `token`. The `sessionPtr` points to the IRMA session for the IRMA app user, and should be displayed as a QR for the user to scan, or encoded in a universal link for a mobile session, e.g. using [`handleSesion()`](api-irmajs.md#handlesession) from `irmajs`.
+In the endpoints below, the `{token}` placeholder must be replaced with the above session `token`. The `sessionPtr` points to the IRMA session for the IRMA app user, and should be displayed as a QR for the user to scan, or encoded in a universal link for a mobile session, e.g. using [`irma-frontend`](api-irma-frontend.md).
 
 Each session starts in the `"INITIALIZED"` [session status](#get-session-token-status). Regardless of how it reaches its ending status (`"DONE"`, `"CANCELLED"`, `"TIMEOUT"`), it is kept in memory for 5 minutes after reaching its ending status. After that all endpoints below requiring the session `token` return error `"SESSION_UNKNOWN"`.
 
