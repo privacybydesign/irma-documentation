@@ -74,7 +74,7 @@ Cancel the session: set the [session status](#get-session-token-status) to `"CAN
 
 Retrieve the [session status](https://godoc.org/github.com/privacybydesign/irmago/server#Status) as a JSON string. Returns one of:
 * `"INITIALIZED"`: the session has been started and is waiting for the client
-* `"BINDING"`: the client is waiting for the frontend to [give permission to connect](#post-irma-session-clienttoken-frontend-bindingcompleted)
+* `"PAIRING"`: the client is waiting for the frontend to [give permission to connect](#post-irma-session-clienttoken-frontend-pairingcompleted)
 * `"CONNECTED"`: the client has retrieved the session request, we wait for its response
 * `"CANCELLED"`: the session is cancelled: the user refused, or the user did not have the requested attributes, or an error occurred during the session
 * `"DONE"`: the session has completed successfully
@@ -217,47 +217,47 @@ The body of an options request should have the following structure:
 ```json
 {
   "@context": "https://irma.app/ld/request/options/v1",
-  "bindingMethod": "..."
+  "pairingMethod": "..."
 }
 ```
 
-Currently we only have one option, the option `bindingMethod`. It can have two values:
- * `"bindingMethod": "none"` **(default value)**  
-   No session binding is used.
- * `"bindingMethod": "pin"`  
+Currently we only have one option, the option `pairingMethod`. It can have two values:
+ * `"pairingMethod": "none"` **(default value)**  
+   No device pairing is used.
+ * `"pairingMethod": "pin"`  
    When an [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md)
-   connects to the session, first a `BINDING` [session status](#get-session-token-status) is introduced 
-   between the `INITIALIZED` and `CONNECTED` status. Both the irmaclient and the frontend show a PIN code and
+   connects to the session, first a `PAIRING` [session status](#get-session-token-status) is introduced 
+   between the `INITIALIZED` and `CONNECTED` status. Both the irmaclient and the frontend show a 4 digit pairing code and
    only when the user confirms in the frontend that both PINs match, the session can continue. This method can be
    used when a user is expected to scan an IRMA QR code using his/her phone and there is a risk on shoulder surfing
    (i.e. someone in close physical proximity to the user scans the QR code that was meant for the user).
    
-   Binding confirmation can be communicated by the frontend using the [`bindingcompleted` endpoint](#post-irma-session-clienttoken-frontend-bindingcompleted).
+   Pairing confirmation can be communicated by the frontend using the [`pairingcompleted` endpoint](#post-irma-session-clienttoken-frontend-pairingcompleted).
    
    When this option is requested, the session options response on this request will contain an extra field
-   `bindingCode` containing the expected PIN code.
+   `pairingCode` containing the expected 4 digit code.
    
 A response of this endpoint has the following structure:
 ```json
 {
   "@context": "https://irma.app/ld/options/v1",
-  "bindingMethod": "pin",
-  "bindingCode":  "1234"
+  "pairingMethod": "pin",
+  "pairingCode":  "1234"
 }
 ```
 
-If the `bindingMethod` field has the value `none`, the `bindingCode` field is omitted.
+If the `pairingMethod` field has the value `none`, the `pairingCode` field is omitted.
 
 ---
 
-### `POST /irma/session/{clientToken}/frontend/bindingcompleted`
-This endpoint can be used by the frontend to confirm the binding of the frontend
+### `POST /irma/session/{clientToken}/frontend/pairingcompleted`
+This endpoint can be used by the frontend to confirm the pairing of the frontend
 and the [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md).
-The endpoint can only be used while the [session status](#get-session-token-status) is set to `BINDING`.
-A valid request to this endpoint will initiate the session status being changed from `BINDING` to `CONNECTED`.
+The endpoint can only be used while the [session status](#get-session-token-status) is set to `PAIRING`.
+A valid request to this endpoint will initiate the session status being changed from `PAIRING` to `CONNECTED`.
 When the request succeeds, a `204 No Content` response is returned.
 
-To make sure this endpoint cannot be accessed by frontends, requests to this endpoint
+To make sure this endpoint can only be accessed by frontends, requests to this endpoint
 must be done with an additional `Authorization` HTTP request header. The expected value for this request header
 is the `frontendAuth` token, as received along with the `sessionPtr` from
 the [`POST /session`](#post-session) requestor endpoint.
