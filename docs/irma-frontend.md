@@ -312,6 +312,12 @@ class IrmaPlugin {
   stateChange({newState, oldState, transition, isFinal, payload}) {
     ...
   }
+
+  // Optional method
+  close() {
+    ...
+    return Promise.resolve(); // Must return a Promise
+  }
 }
 ```
 
@@ -322,9 +328,13 @@ As second parameter `payload` can be added to the transition. The payload can th
 as it is one of the parameters of the `stateChange` method. When requesting a `finalTransition`, the state
 machine will be locked in the new state. From then no transitions can be made anymore. For a `finalTransition`
 the potential `newState` must be in the list of possible end states. Otherwise an error is returned. After
-a `finalTransition` the promise returned by the `start` method of `IrmaCore` will resolve or reject
-(depending on the transaction). The promise also resolves or rejects when the `transition` method is used
-and the state machine gets in a state from which no transitions are possible anymore.
+a `finalTransition` the `close` method of the plugin is called to close the plugin's state. This method should
+return a Promise which resolves when the plugin finishes closing. When the `close` Promises of all plugins are
+resolved, the promise returned by the `start` method of `IrmaCore` will resolve or reject (depending on the
+transaction). In this way we can guarantee that plugins are not active anymore when the promise returned by the
+`start` method of `IrmaCore` is finished. Besides when calling `finalTransition`, the closing procedure can also
+be activated when the `transition` method is used and the state machine gets in a state from which no
+transitions are possible anymore.
 
 For example, in the `IrmaPopup` plugin the user can press on the close button in the UI to abort the session.
 When this happens the `IrmaPopup` plugin must request a state change at the IRMA core state machine to
