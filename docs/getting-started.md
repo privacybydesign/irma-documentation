@@ -35,30 +35,22 @@ irma session --server http://localhost:8088 --disclose pbdf.pbdf.irmatube.type
 ([IRMATube attributes](https://privacybydesign.foundation/attribute-index/en/pbdf.pbdf.irmatube.html) are available on the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube/)) page. This will print a QR that you can scan with your IRMA app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
 
 
-## Installing `irma-frontend` and an example webpage
+## Installing an example webpage for `irma-frontend`
 Download the `irma-frontend-packages` source code, as [zip](https://github.com/privacybydesign/irma-frontend-packages/archive/master.zip) from GitHub, or using git:
 ```shell
 git clone https://github.com/privacybydesign/irma-frontend-packages && cd irma-frontend-packages
 ```
 
-Like the `irma` command line tool, the `irma-frontend` bundle package needs to be compiled before it can be used in the browser. This bundles all dependencies, images and CSS into one JavaScript file. You can obtain a compiled version of `irma-frontend` in one of the following two ways:
-
-* **Download prebuilt binary**: From our [CI build server](https://gitlab.science.ru.nl/irma/github-mirrors/irma-frontend-packages/-/jobs/artifacts/master/browse/irma-frontend?job=irma-frontend) or from the [NPM repository](https://www.npmjs.com/package/@privacybydesign/irma-frontend).
-* **Compile from source**, as follows:
-  ```shell
-  git clone https://github.com/privacybydesign/irma-frontend-packages && cd irma-frontend
-  ./build.sh
-  ```
-
-The `irma.js` JavaScript file in the `irma-frontend/dist` folder (or from the zip file) can now be included in a `<script>` tag in your website.
-
-Examples for the browser and for nodejs are included in the `examples` folder. 
+Examples for the browser and for nodejs are included in the `examples` folder. In this guide we will use the `irma-frontend` example for browsers to realize the example webpage. This example has to be installed first.
+```shell
+cd examples/browser/irma-frontend/
+npm install
+```
 
 ## Perform browser IRMA session
 
 (Re)start your `irma server`, configuring it such that it statically hosts the `irma-frontend` example webpage we just built:
 ```shell
-( cd irma-frontend-packages/examples/browser/irma-frontend/ && npm install )
 irma server -v --static-path ~/irma-frontend-packages/examples/browser/irma-frontend
 ```
 A webpage demoing IRMA attribute issuance verification should now be available at http://localhost:8088.
