@@ -40,7 +40,7 @@ Additional notes:
 * Which of these tasks are performed by the requestor's backend and which by its frontend differs case by case:
   - Often the session request is sent to the IRMA server by the requestor's backend, after which the IRMA server's reply in step 2 is forwarded to the frontend which renders it as a QR code. Step 1 can however also be done by `irma-frontend`, in which case `irma-frontend` automatically picks up the IRMA server's reply in step 2 and renders the QR code.
   - Similarly, `irma-frontend` can be instructed to fetch the session result in step 10, but this can also be done in the backend. In the latter, `irma-frontend` can fetch a custom result at your backend, if desired.
-* The IRMA server could be deployed on the same machine as the requestor's backend, but it need not be; possibly it is not even controlled by the requestor. In case the [`irmaserver`](irma-server-lib.md) library is used, steps 2/3 and 10 are function calls. Alternatively, you could use one of the packages in [`irma-backend-packages`](irma-backend.md) for these steps.
+* The IRMA server could be deployed on the same machine as the requestor's backend, but it need not be; possibly it is not even controlled by the requestor. Generally, steps 2/3 and 10 are done with REST HTTP calls to the IRMA server, but in case the [`irmaserver`](irma-server-lib.md) library is used, these steps are function calls. Alternatively, you could use one of the packages in [`irma-backend-packages`](irma-backend.md) to do these steps with function calls in other programming languages.
 
 ## Session types
 
