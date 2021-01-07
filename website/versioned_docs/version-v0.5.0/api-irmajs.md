@@ -90,7 +90,7 @@ If the session is not successful, an exception is thrown. If the session is canc
 ### `startSession()`
 
 ```js
-irma.startSession(server, request[, method, key[, name]])
+irma.startSession(server, request[, method, [key[, name]]])
 ```
 
 Start an IRMA session at an IRMA server. This function supports all authentication methods of the `POST /session` endpoint of the `irma server`. It returns a promise with the response (the session QR contents) from the IRMA server (which can be handled by [`handleSession()`](#handlesession)).
@@ -103,7 +103,7 @@ Start an IRMA session at an IRMA server. This function supports all authenticati
  * `name`: name of the requestor (only for `hmac` and `publickey` mode).
 
 The authentication method is determined by the `request` and `method` parameters as follows.
-* If `request` is a `string` then it is posted as a [session request JWT](session-requests.md#jwts-signed-session-requests) to the IRMA server.
+* If `request` is a `string` then it is posted as a [session request JWT](session-requests.md#jwts-signed-session-requests) to the IRMA server. In this case, the `method` parameter needs to be set appropriately (`hmac` or `publickey`).
 * Otherwise it should be an `object` containing an [(extended) session request](session-requests.md). How it is handled depends on `method`:
   * `none`: it is POSTed as JSON to the IRMA server (which must be configured to accept unauthorized session requests).
   * `token`: it is POSTed as JSON to the IRMA server along with the `key` parameter as an API token in a HTTP header.
