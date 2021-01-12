@@ -100,11 +100,14 @@ session. In the following example, we only have one randomblind attribute, but
 the protocol can be extended straightforwardly to issue multiple randomblind
 attributes.
 
-TODO: link to intro on CL-signatures.
+The following requires a bit of background regarding Camenisch-Lysyanskaya (CL)
+signatures.  A short summary can be found
+[here](https://privacybydesign.foundation/pdf/Idemix_overview.pdf).  A more
+extensive description of the Idemix specification can be found
+[here](https://dominoweb.draco.res.ibm.com/reports/rz3730_revised.pdf).
 
-Variables $R, S, Z$ are public parameters defined by the Idemix public key of the issuer.
-
-The issuance goes as follows:
+In the following, the variables $R, S, Z$ are public parameters defined by the
+Idemix public key of the issuer. The issuance goes as follows:
 - The user starts by sampling a random $v'$ and a random 255-bit integer $m_{r}'$ at
   the index $r$ of the randomblind attribute.
   This so-called *share* of the attribute remains secret, similar to
@@ -115,7 +118,7 @@ The issuance goes as follows:
   of $v', m_0$ and $m_{r}'$.
 
 - The issuer samples a random prime $e$. The issuer also samples $v''$ and $m_{r}''$ at random.
-  Since attribute values ($m$'s) are at most 256 bits, $m_{r}''$ is also 255 bits (to not overflow).
+  Since attribute values (the $m$'s) are at most 256 bits, $m_{r}''$ is also 255 bits (to not overflow).
   Next, the issuer computes 
 
   $$
