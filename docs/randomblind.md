@@ -145,3 +145,40 @@ Idemix public key of the issuer. The issuance goes as follows:
   user is now free to use this attribute, knowing the issuer cannot trace it
   back to him/her.  Note that after revealing this attribute once, this
   guarantuee no longer holds.
+
+## Digital elections using randomblind IRMA attributes
+
+Two important requirements in digital elections, not just online, but rather in
+general, are *secrecy* and *verifiability*.  Secrecy means that nobody else is
+able to figure whom someone voted for. Verifiablity means that any user of the
+system is able to verify that his/her vote is included in the final tally.
+
+A key observation to preserve secrecy is that there has to be a split between
+authentication and registering or tallying the votes.  In physically held
+elections this is realized by handing out an anonimized ballot after the user
+has proven eligibility.  For this purpose, two parties are required; one that
+the user authenticates to after which this party determines if the user is
+eligible; and one that registers votes.
+
+In digital elections, the same principle applies.  Using IRMA randomblind
+attributes the following system can be realized:
+
+1. (Eligiblity check \& voting pass retrieval).
+   A user authenticates to the eligiblity party using IRMA. The party then
+   decides whether or not this user is eligible as per the system's criteria.
+   In this process the eligiblity party learns (part of) the identity of the
+   user.  Note that this identity has to be unique to not allow casting
+   multiple votes as an individual. If the user is eligible, the party issues a
+   voting card, which includes a randomblind attribute.  Since the issuing
+   party does not learn the value of the attribute, this party can also not
+   learn whom or what a user decides to vote for.
+
+2. (Casting the vote). To vote, a user creates an
+   [attribute-based signature](https://irma.app/docs/overview/#attribute-based-signatures) on a
+   "ballot" string, i.e., the user's choice. This signature, the choice and the attribute
+   are then registered in a database.
+
+3. (Verification).
+   After the election ends, the database is published.  To verify whether a vote
+   has been correctly cast the user can simply check if it's voting number is
+   among the registered vote entries.
