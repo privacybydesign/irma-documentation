@@ -29,9 +29,8 @@ attribute.  In this sense, the attribute can be seen as a one-time attribute.
 
 This page explains how to enable this feature and later how this guarantee is
 upheld cryptographically.  The primary use case of this feature is online
-voting, where voting secrecy plays a vital role. Since it is easier to explain
-by example, we'll use this use case as a practical example throughout this
-document.
+voting, where voting secrecy plays a vital role. In the last section,
+we will explain how randomblind attributes can be used in digital elections.
 
 
 ## API
@@ -148,10 +147,12 @@ Idemix public key of the issuer. The issuance goes as follows:
 
 ## Digital elections using randomblind IRMA attributes
 
-Two important requirements in digital elections, not just online, but rather in
-general, are *secrecy* and *verifiability*.  Secrecy means that nobody else is
-able to figure whom someone voted for. Verifiablity means that any user of the
-system is able to verify that his/her vote is included in the final tally.
+Two important requirements in digital elections in not just an online setting,
+but rather in general, are *secrecy* and *verifiability*.  Secrecy means that
+nobody else is able to figure whom someone voted for. Verifiablity means that
+any user of the system is able to verify that his/her vote is included in the
+final tally.  In this section we explain how IRMA's randomblind attributes can
+help realize these requirements.
 
 A key observation to preserve secrecy is that there has to be a split between
 authentication and registering or tallying the votes.  In physically held
@@ -171,14 +172,17 @@ attributes the following system can be realized:
    multiple votes as an individual. If the user is eligible, the party issues a
    voting card, which includes a randomblind attribute.  Since the issuing
    party does not learn the value of the attribute, this party can also not
-   learn whom or what a user decides to vote for.
+   learn whom or what a user decides to vote for in the upcoming steps.
 
-2. (Casting the vote). To vote, a user creates an
-   [attribute-based signature](https://irma.app/docs/overview/#attribute-based-signatures) on a
-   "ballot" string, i.e., the user's choice. This signature, the choice and the attribute
-   are then registered in a database.
+2. (Casting the vote). To vote, a user creates an [attribute-based
+   signature](https://irma.app/docs/overview/#attribute-based-signatures) on a
+   "ballot" string, i.e., the user's choice using the randomblind attribute
+   acquired in the previous step.  This signature, the choice and the attribute
+   are then registered in a database. The signature ensures authentication,
+   integrity and non-repudiation.
 
 3. (Verification).
-   After the election ends, the database is published.  To verify whether a vote
-   has been correctly cast the user can simply check if it's voting number is
-   among the registered vote entries.
+   After the election ends, the database is published.  To verify whether a
+   vote has been correctly cast the user can simply check if it's voting number
+   is among the registered vote entries and accompanied by a valid
+   signature set using user's the randomblind attribute.
