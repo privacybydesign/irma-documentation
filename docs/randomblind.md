@@ -16,6 +16,8 @@ title: Randomblind issuance
 </script>
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
 
+## Overview
+
 *Randomblind* attributes are a new IRMA feature introduced in
 [`irmago` v0.6.0](https://github.com/privacybydesign/irmago/releases/tag/v0.6.0)
 that can give the user extra privacy
