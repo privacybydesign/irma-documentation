@@ -132,18 +132,17 @@ Idemix public key of the issuer. The issuance goes as follows:
 
 - Finally, the user is able to reconstruct any attributes that are the sum of two shares:
   $$
-  v = v' + v'' \\
   m_r = m_r' + m_r''
   $$
 
-  The CL signature becomes $(A, e, v)$. It follows that $Z = A^e S^v
-  \prod_{i=0}^{l} R_{i}^{m_i}$ holds for the attributes $m$ in the resulting
-  credential, meaning that signature (and thereby the credential) is valid.  We
-  also note that the issuer does not have enough information to fully uncover
-  $m_r$, which ends up as the attribute value in the resulting credential. The
-  user is now free to use this attribute, knowing the issuer cannot trace it
-  back to him/her.  Note that after revealing this attribute once, this
-  guarantuee no longer holds.
+  The CL signature becomes $(A, e, v)$ with $v = v' + v''$.  It follows that $Z
+  = A^e S^v \prod_{i=0}^{l} R_{i}^{m_i}$ holds for the attributes $m$ in the
+  resulting credential, meaning that signature (and thereby the credential) is
+  valid.  We also note that the issuer does not have enough information to
+  fully uncover $m_r$, which ends up as the attribute value in the resulting
+  credential. The user is now free to use this attribute, knowing the issuer
+  cannot trace it back to him/her.  Note that after revealing this attribute
+  once, this guarantuee no longer holds.
 
 ## Use case: Digital elections
 
