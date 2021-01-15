@@ -145,7 +145,7 @@ Idemix public key of the issuer. The issuance goes as follows:
   back to him/her.  Note that after revealing this attribute once, this
   guarantuee no longer holds.
 
-## Digital elections using randomblind IRMA attributes
+## Use case: Digital elections
 
 Two important requirements in digital elections in not just an online setting,
 but rather in general, are *secrecy* and *verifiability*.  Secrecy means that
