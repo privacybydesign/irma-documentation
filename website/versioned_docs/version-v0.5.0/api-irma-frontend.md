@@ -8,10 +8,10 @@ The IRMA frontend packages consist of multiple packages. Therefore we describe t
 The API description of the IRMA frontend plugins is combined into one section.
 
 ## IRMA core
-The [IRMA core](irma-frontend.md#irma-core) package only exports the `IrmaCore` class. To handle an IRMA session, 
+The [IRMA core](irma-frontend.md#irma-core) package only exports the `IrmaCore` class. To handle an IRMA session,
 an instance of this class can be made with the relevant options for your session. The options object is shared
 between all plugins that are registered at the `IrmaCore` instance. The plugins don't need to be configured
-individually. The options that can be specified depend on the specific plugins you are using. You can find all 
+individually. The options that can be specified depend on the specific plugins you are using. You can find all
 possible options in the READMEs of the plugins. You can find an overview of all available IRMA core plugins
 [here](#plugins).
 
@@ -64,23 +64,3 @@ possible options to IRMA core. An overview of the options that can be used per p
 | [`irma-popup`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/examples/browser/irma-popup) |
 | [`irma-console`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/examples/browser/irma-console) |
 | [`irma-dummy`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/examples/browser/irma-dummy) |
-
-## IRMA legacy
-This package uses the exact API from [irmajs](api-irmajs.md). However, due to technical changes in IRMA, 
-we were not able to realize full backwards compatibility with `irmajs`.
-All changes are related to the function call `handleSession`.
-* Method `canvas` is not supported anymore. Please use the module `irma-frontend` instead or make
- your own composition of plugins and layouts using `irma-core`.
- This also means the canvas related options `element` and `showConnectedIcon` are deprecated.
-* Method `mobile` has the same behaviour as method `popup` now. On mobile devices, the popup
- mode automatically detects whether a mobile device is used and then shows the user the option to open
- the [IRMA app](irma-app.md) installed on the mobile device itself. It is now an explicit choice, so users can also get
- a QR on mobile devices instead (useful for tablets).
-* The option `disableMobile` is not useful anymore. This module does not have
- automatic redirects to other apps anymore without explicit user interaction.
- The option is therefore deprecated.
-* Because the explicit methods for mobile devices are deprecated, the undocumented exported function `detectUserAgent`
- and the undocumented exported struct `UserAgent` are also deprecated. An explicit distinction based on user agent
- is not necessary anymore. This is all handled internally now.
-* The option `returnStatus` is deprecated. Instead you can use the functions `waitConnected` and `waitDone`
- to detect yourself whether the session reached a certain status.

@@ -22,7 +22,7 @@ All packages are published on [npm](https://www.npmjs.com/) in `@privacybydesign
 
 This package contains the [state machine](https://github.com/privacybydesign/irma-frontend-packages/blob/master/irma-core/state-transitions.js)
 for implementing IRMA flows. `irma-core` itself does not provide any real functionality. Plugins can be registered at the
-state machine and the plugins then provide the functionality depending on the state the state machine is in. 
+state machine and the plugins then provide the functionality depending on the state the state machine is in.
 The plugins can also request state modifications to the state machine.
 
 IRMA core can be initialized in the following way:
@@ -162,7 +162,7 @@ particular plugin on GitHub. There are links in the plugin overview [above](#ava
 For convenience we already bundled `irma-core`, `irma-web`, `irma-popup` and `irma-client` together with the default styling
 from `irma-css`. We also added polyfills in this package to realize support for Internet Explorer 11.
 The package can be installed from the npm registry.
-The bundled package can also be downloaded directly [here](https://gitlab.science.ru.nl/irma/github-mirrors/irma-frontend-packages/-/jobs/artifacts/master/raw/irma-frontend/dist/irma.js?job=irma-frontend).
+The bundled package can also be downloaded directly [here](http://github.com/privacybydesign/irma-frontend-packages/releases/latest/download/irma.js).
 Please host this file as asset yourself.
 
 The bundle can be imported in your JavaScript file by doing `require('@privacybydesign/irma-frontend')` or it can
@@ -227,7 +227,8 @@ in the [API overview](api-irma-frontend.md#irma-frontend).
 
 ## IRMA css
 For the IRMA core plugins `irma-web` and `irma-popup` we made it possible to manually include the style
-that it will use. We provide to you a [normal version and a minified version](https://gitlab.science.ru.nl/irma/github-mirrors/irma-frontend-packages/-/jobs/artifacts/master/browse/irma-css/dist?job=irma-css)
+that it will use. We provide to you a [normal version](http://github.com/privacybydesign/irma-frontend-packages/releases/latest/download/irma.css)
+and a [minified version](http://github.com/privacybydesign/irma-frontend-packages/releases/latest/download/irma.min.css)
 of the default styles. The CSS can be linked into your website the regular way:
 
 ```html
@@ -258,7 +259,7 @@ design and build a new, customized style. This can be done in the following way:
    with the `irma-web` plugin (for embedded web elements) or the `irma-popup` plugin (for
    a popup overlay). The plugins will use the custom CSS that you have embedded. For
    managing the session state we recommend you to use the `irma-client` plugin.
-   
+
 ```javascript
 require('assets/my-custom-irma-css-design.min.css');
 
@@ -295,7 +296,7 @@ If you need functionality that is not covered by one of the existing IRMA core p
 one yourself. In the constructor the `stateMachine` and the `options` from `IrmaCore` can be accessed.
 The constructor can be omitted if you do not need it.
 Furthermore a plugin can have a `start` method that is
-called when the `start` method of the associated `IrmaCore` instance is called, and a `stateChange` method 
+called when the `start` method of the associated `IrmaCore` instance is called, and a `stateChange` method
 that is called when the state of the state machine changes:
 
 ```javascript
@@ -351,7 +352,7 @@ to true.
 
 ## Differences with [irmajs](irmajs.md)
 The previous JavaScript library `irmajs` combined frontend and backend functionality. The `startSession` related
-functions could be used to for starting sessions, and `handleSession` could be used for actually being the 
+functions could be used to for starting sessions, and `handleSession` could be used for actually being the
 frontend to the user.
 
 In the new library we have split these functionalities into two libraries. The session management functionality

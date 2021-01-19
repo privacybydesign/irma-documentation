@@ -26,7 +26,7 @@ This writes `irma.js` to the `dist` folder, which you can include in your websit
 
 ### Using prebuilt bundles
 
-You can download the prebuilt `irmajs` bundles from our [CI build server](https://gitlab.science.ru.nl/irma/github-mirrors/irmajs/-/jobs/artifacts/master/download?job=bundle).
+You can download the prebuilt `irmajs` bundles from the [Github release](https://github.com/privacybydesign/irmajs/releases/latest).
 
 ## Browser example
 

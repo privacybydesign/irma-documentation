@@ -8,9 +8,9 @@ original_id: irmajs
 
 `irmajs` is a Javascript client of the RESTful JSON API offered by the [`irma server`](https://github.com/privacybydesign/irmago/tree/master/irma). It  allows you to use the `irma server` to:
 
- * Verify IRMA attributes. You specify which attributes, the library handles the user interaction and the communication with the `irma server` and the [IRMA app](irma-app.md)).
- * Issue IRMA attributes.
- * Perform IRMA attribute-based signature sessions, resulting in a signature on a string to which IRMA attributes are verifiably attached.
+* Verify IRMA attributes. You specify which attributes, the library handles the user interaction and the communication with the `irma server` and the [IRMA app](irma-app.md)).
+* Issue IRMA attributes.
+* Perform IRMA attribute-based signature sessions, resulting in a signature on a string to which IRMA attributes are verifiably attached.
 
 `irmajs` supports all major browsers (Firefox, Chrome, Safari, Edge, Internet Explorer 11).
 
@@ -28,7 +28,7 @@ This writes `irma.js` to the `dist` folder, which you can include in your websit
 
 ### Using prebuilt bundles
 
-You can download the prebuilt `irmajs` bundles from our [CI build server](https://gitlab.science.ru.nl/irma/github-mirrors/irmajs/-/jobs/artifacts/master/download?job=bundle).
+You can download the prebuilt `irmajs` bundles from the [Github release](https://github.com/privacybydesign/irmajs/releases/latest).
 
 ## Browser example
 
