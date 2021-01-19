@@ -189,7 +189,7 @@ attributes the following system can be realized:
    learns what somebody voted for, but not the actual identity of the voter.
 
 3. (Verification).
-   After the election ends, the database is published.  To verify whether a
-   vote has been correctly cast the user can simply check if its randomblind
-   attribute is among the registered vote entries and accompanied by a valid
-   signature set using user's the randomblind attribute.
+   After the election ends, the database is published. To verify whether her
+   vote has been correctly cast, the user can simply check if the
+   attribute-based signature created in the previous step containing her
+   randomblind attribute is among the registered vote entries.
