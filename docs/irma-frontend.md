@@ -160,7 +160,7 @@ particular plugin on GitHub. There are links in the plugin overview [above](#ava
 For convenience we already bundled `irma-core`, `irma-web`, `irma-popup` and `irma-client` together with the default styling
 from `irma-css`. We also added polyfills in this package to realize support for Internet Explorer 11.
 The package can be installed from the npm registry.
-The bundled package can also be downloaded directly [here](http://github.com/privacybydesign/irma-frontend-packages/releases/latest/download/irma.js).
+The bundled package can also be downloaded directly [here](https://github.com/privacybydesign/irma-frontend-packages/releases/latest/download/irma.js).
 Please host this file as asset yourself.
 
 The bundle can be imported in your JavaScript file by doing `require('@privacybydesign/irma-frontend')` or it can
@@ -225,8 +225,8 @@ in the [API overview](api-irma-frontend.md#irma-frontend).
 
 ## IRMA css
 For the IRMA core plugins `irma-web` and `irma-popup` we made it possible to manually include the style
-that it will use. We provide to you a [normal version](http://github.com/privacybydesign/irma-frontend-packages/releases/latest/download/irma.css)
-and a [minified version](http://github.com/privacybydesign/irma-frontend-packages/releases/latest/download/irma.min.css)
+that it will use. We provide to you a [normal version](https://github.com/privacybydesign/irma-frontend-packages/releases/latest/download/irma.css)
+and a [minified version](https://github.com/privacybydesign/irma-frontend-packages/releases/latest/download/irma.min.css)
 of the default styles. The CSS can be linked into your website the regular way:
 
 ```html
