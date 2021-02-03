@@ -50,7 +50,7 @@ In addition to attribute disclosure, users can also attach their attributes to m
 
 ## Credential types
 
-In IRMA, each credential is an instance of a *credential type*. A credential type specifies (among other things) how many attributes its instances have, what their names are, and by which issuer instances of this credential type are issued. Credential types are not shared between issuers: even if two issuers would issue two credential types with the same name and with the same amount of attributes having the same names, they still are distinct credential types. on [Github](https://github.com/privacybydesign/pbdf-schememanager/blob/master/pbdf/Issues/irmatube/description.xml) an example of such a credential type is available, defining the "IRMATube" credential type which is issued and verified in [this IRMA demo](https://privacybydesign.foundation/demo/irmaTube/). Schematically, an instance of such a credential type would look as follows.
+In IRMA, each credential is an instance of a *credential type*. A credential type specifies (among other things) how many attributes its instances have, what their names are, and by which issuer instances of this credential type are issued. Credential types are not shared between issuers: even if two issuers would issue two credential types with the same name and with the same amount of attributes having the same names, they still are distinct credential types. On [Github](https://github.com/privacybydesign/pbdf-schememanager/blob/master/pbdf/Issues/irmatube/description.xml) an example of such a credential type is available, defining the "IRMATube" credential type which is issued and verified in [this IRMA demo](https://privacybydesign.foundation/demo/irmaTube/). Schematically, an instance of such a credential type would look as follows.
 
 | Attribute name | Attribute value |
 | -------------- | --------------- |
@@ -67,7 +67,7 @@ A credential type can be marked as a *singleton* by the scheme manager. If so th
 
 #### The metadata attribute
 
-In IRMA, each credential always contain a special attribute called the *metadata attribute*, which must always be disclosed whenever other attributes are disclosed from this credential. This metadata attribute contains:
+In IRMA, each credential always contains a special attribute called the *metadata attribute*, which must always be disclosed whenever other attributes are disclosed from this credential. This metadata attribute contains:
 
 * which credential type this credential is an instance of (from which it follows by which issuer this credential was issued),
 * the date at which this credential was issued,
@@ -92,7 +92,7 @@ IRMA schemes are documented on the [Schemes](schemes.md) page.
 
 Each IRMA issuer has an Idemix private key, which it must keep secret as it is used when issuing credentials, and a corresponding public key which is distributed to attribute verifiers and IRMA apps in the IRMA scheme. An issuer may issue multiple credential types (and a scheme may contain many issuers).
 
-Issuers cannot independently create credential types and start issuing them to IRMA app users: the credential type must first be included in an [IRMA scheme](schemes.md) by the scheme manager. In case of the default scheme `pbdf` of the IRMA app, this is the [Privacy by Design Foundation]((https://privacybydesign.foundation/issuance/)).
+Issuers cannot independently create credential types and start issuing them to IRMA app users: the credential type must first be included in an [IRMA scheme](schemes.md) by the scheme manager. In case of the default scheme `pbdf` of the IRMA app, this is the [Privacy by Design Foundation](https://privacybydesign.foundation/issuance/).
 
 When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, this is documented on the [Privacy by Design Foundation website](https://privacybydesign.foundation/issuance/).
 
@@ -146,7 +146,7 @@ IRMA attribute-based signatures can be used in any case where conventional (digi
 
 Technically, IRMA attribute-based signatures are very similar to disclosure proofs. As mentioned earlier IRMA disclosures use a challenge-response protocol: the verifier generates a random number called the nonce and sends it to the IRMA app, whose response has to take this nonce into account in a precise fashion (this is achieved using the [Fiat-Shamir heuristic](https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic)). More precisely, the disclosure proof is a digital signature on the nonce that was used; if the nonce was freshly generated then the verifier can be sure that the attribute owner is actually present instead of replaying an earlier or eavesdropped disclosure proof. An IRMA attribute-based signature is the same except that not a nonce but an actual message is signed (or rather its SHA256 hash).
 
-Currently IRMA only supports creating attribute-based signatures on strings, although we plan to support other types of documents as well. They can be created using [irmajs](https://github.com/privacybydesign/irmajs) and verified using [IRMA servers](what-is-irma.md#irma-servers) almost the same as disclosure proofs. An online demo (using [demo attributes](https://demo.irmacard.org/tomcat/irma_api_server/examples/issue-all.html)) is available on the [demo.irmacard website](https://demo.irmacard.org/tomcat/irma_api_server/examples/sign.html).
+Currently IRMA only supports creating attribute-based signatures on strings, although we plan to support other types of documents as well. They can be created using [irmajs](https://github.com/privacybydesign/irmajs) and verified using [IRMA servers](what-is-irma.md#irma-servers) almost the same as disclosure proofs. An online demo is available on the [website of the Foundation](https://privacybydesign.foundation/demo/ondertekenen/).
 
 ## IRMA security properties
 
