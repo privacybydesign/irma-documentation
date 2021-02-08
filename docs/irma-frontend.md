@@ -293,9 +293,9 @@ irma.start()
 If you need functionality that is not covered by one of the existing IRMA core plugins, you can also define
 one yourself. In the constructor the `stateMachine` and the `options` from `IrmaCore` can be accessed.
 The constructor can be omitted if you do not need it.
-Furthermore a plugin can have a `start` method that is
-called when the `start` method of the associated `IrmaCore` instance is called, and a `stateChange` method 
-that is called when the state of the state machine changes:
+Furthermore, a plugin can have a `start` method that is
+called when the `start` method of the associated `IrmaCore` instance is called, a `stateChange` method 
+that is called when the state of the state machine changes, and a `close` method (check the explanation below for details).
 
 ```javascript
 class IrmaPlugin {
@@ -316,8 +316,9 @@ class IrmaPlugin {
 
   // Optional method
   close() {
+    // May return a Promise when the closing operation is async;
+    // irma-core will then wait for the Promise to be completed.
     ...
-    return Promise.resolve(); // Must return a Promise
   }
 }
 ```
@@ -328,7 +329,7 @@ transition. The possible transitions can be found in the [state machine](https:/
 As second parameter `payload` can be added to the transition. The payload can then be accessed by all other plugins
 as it is one of the parameters of the `stateChange` method. When requesting a `finalTransition`, the state
 machine will be locked in the new state. From then no transitions can be made anymore. For a `finalTransition`
-the potential `newState` must be in the list of possible end states. Otherwise an error is returned. After
+the potential `newState` must be in the list of possible end states. Otherwise, an error is returned. After
 a `finalTransition` the `close` method of the plugin is called to close the plugin's state. This method should
 return a Promise which resolves when the plugin finishes closing. When the `close` Promises of all plugins are
 resolved, the promise returned by the `start` method of `IrmaCore` will resolve or reject (depending on the
