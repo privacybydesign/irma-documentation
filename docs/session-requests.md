@@ -404,7 +404,7 @@ Below you can find an overview of all extra parameters and their default value.
 
 | Option (JSON) | Option (Go) | Meaning | Default value |
 | ------------- | ----------- | ------- | ------------- |
-| `"validity"` | `ResultJwtValidity`  | Validity of session result JWT in seconds (to determine JWT expiration time `exp`)  | 0 seconds |
+| `"validity"` | `ResultJwtValidity`  | Validity of session result JWT in seconds (to determine JWT expiration time `exp`)  | 120 seconds |
 | `"timeout"` | `ClientTimeout` | Wait this many seconds for the IRMA app to connect before the session times out | 300 seconds (5 minutes) |
 | `"callbackUrl"` | `CallbackUrl` | URL to post session result to | `""` (no callback is performed) |
 
