@@ -373,6 +373,29 @@ This URL does not necessarily have to be a web URL; it can also be a universal l
 
 On iOS, toggling back to the calling app or website after the session can be simulated by navigating towards the calling app using a `clientReturnUrl`, either a normal URL or universal link. This works on Android as well, so currently this is the only platform-independent way of ensuring that the used ends up at a specified place after the session. If the URL opens a website, however, then the user is navigated towards a new browser tab instead of back to an existing browser tab, so in website-IRMA-website flows you will need to reload your webapp and state in the newly opened tab.
 
+### Augmenting the client return URL
+
+It is possible to have the irma server augment the `clientReturnUrl` with the server token of a session. This token is then appended as a query parameter with name token to the `clientReturnUrl`. To enable this, both the server configuration flag augment-client-return-url needs to be enabled, as well as the `augmentReturnUrl` session request parameter needs to be true
+<!--DOCUSAURUS_CODE_TABS-->
+<!--Session request (JSON)-->
+```json
+{
+  "@context": "https://irma.app/ld/request/disclosure/v2",
+  "disclose": [
+    ...
+  ],
+  "clientReturnUrl": "https://privacybydesign.foundation"
+}
+```
+<!--Session request (Go)-->
+```go
+request := irma.NewDisclosureRequest()
+request.ClientReturnURL = "https://privacybydesign.foundation"
+```
+<!--END_DOCUSAURUS_CODE_TABS-->
+
+In this example, the client return url would be augmented to become `https://privacybydesign.foundation?token=0123456789abcdef`, where `0123456789abcdef` would be the server token of the session.
+
 ## Extra parameters
 For each API that accepts one of the above session request data types, the requestor can provide additional parameters to configure the session at the IRMA server, by providing an *extended session request* instead, as follows:
 <!--DOCUSAURUS_CODE_TABS-->

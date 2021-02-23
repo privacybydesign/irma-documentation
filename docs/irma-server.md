@@ -162,6 +162,10 @@ The global options also work when `no_auth` is enabled. Thus in this case a sess
 
 In development mode, when `production` is `false`, the defaults for `disclose_perms`, `sign_perms` and `issue_perms` are `["*"]`. In order to protect any IRMA private keys that the server has access to from unintended use by others, when `production` is true the default of `issue_perms` is `[]`: no one can issue unless the global `issue_perms` is modified or unless specific requestors receive nonempty `issue_perms`.
 
+### Augmented client return urls
+
+The server can be configured to [augment the client return url](Augmenting the client return URL) under certain circumstances. In order to enable this feature, the `augment_client_return_url` setting needs to be set to `true`.
+
 ### Static file hosting
 
 Apart from hosting endpoints under [`/session` and `/irma`](irma-server.md#http-server-endpoints), the server also supports statically hosting all files from a certain directory. This can be useful [for experimenting](getting-started.md#perform-browser-irma-session). It can be configured with the following options:
