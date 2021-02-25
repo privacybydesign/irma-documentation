@@ -353,13 +353,13 @@ If the user performs a mobile session, i.e. on the same device as where the IRMA
   "disclose": [
     ...
   ],
-  "clientReturnUrl": "https://privacybydesign.foundation"
+  "clientReturnUrl": "https://example.com"
 }
 ```
 <!--Session request (Go)-->
 ```go
 request := irma.NewDisclosureRequest()
-request.ClientReturnURL = "https://privacybydesign.foundation"
+request.ClientReturnURL = "https://example.com"
 ```
 <!--END_DOCUSAURUS_CODE_TABS-->
 
@@ -375,7 +375,7 @@ On iOS, toggling back to the calling app or website after the session can be sim
 
 ### Augmenting the client return URL
 
-It is possible to have the irma server augment the `clientReturnUrl` with the server token of a session. This token is then appended as a query parameter with name token to the `clientReturnUrl`. To enable this, both the server configuration flag augment-client-return-url needs to be enabled, as well as the `augmentReturnUrl` session request parameter needs to be true
+It is possible to have the IRMA server augment the `clientReturnUrl` with the server token of a session. This token is then appended as a query parameter with name `token` to the `clientReturnUrl`. To enable this, both the server configuration flag augment-client-return-url needs to be enabled, as well as the `augmentReturnUrl` session request parameter needs to be true.
 <!--DOCUSAURUS_CODE_TABS-->
 <!--Session request (JSON)-->
 ```json
@@ -384,17 +384,19 @@ It is possible to have the irma server augment the `clientReturnUrl` with the se
   "disclose": [
     ...
   ],
-  "clientReturnUrl": "https://privacybydesign.foundation"
+  "augmentReturnUrl": true,
+  "clientReturnUrl": "https://example.com"
 }
 ```
 <!--Session request (Go)-->
 ```go
 request := irma.NewDisclosureRequest()
-request.ClientReturnURL = "https://privacybydesign.foundation"
+request.ClientReturnURL = "https://example.com"
+request.AugmentReturnURL = true
 ```
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-In this example, the client return url would be augmented to become `https://privacybydesign.foundation?token=0123456789abcdef`, where `0123456789abcdef` would be the server token of the session.
+In this example, the client return url would be augmented to become `https://example.com?token=0123456789abcdef`, where `0123456789abcdef` would be the server token of the session.
 
 ## Extra parameters
 For each API that accepts one of the above session request data types, the requestor can provide additional parameters to configure the session at the IRMA server, by providing an *extended session request* instead, as follows:
