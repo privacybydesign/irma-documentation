@@ -164,7 +164,7 @@ In development mode, when `production` is `false`, the defaults for `disclose_pe
 
 ### Client return urls
 
-In session requests, the server can be asked to pass a [client return url](session-request.md#client-return-url) to the irma app, which the app will open after completing the session for sessions that involve only one device. This feature is always enabled.
+In session requests, the server can be asked to pass a [client return url](session-request.md#client-return-url) to the IRMA app, which the app will open after completing the session for sessions that involve only one device. This feature is always enabled.
 
 ### Augmented client return urls
 
