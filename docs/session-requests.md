@@ -375,7 +375,9 @@ On iOS, toggling back to the calling app or website after the session can be sim
 
 ### Augmenting the client return URL
 
-It is possible to have the IRMA server augment the `clientReturnUrl` with the server token of a session. This token is then appended as a query parameter with name `token` to the `clientReturnUrl`. To enable this, both the server configuration flag `augment-client-return-url` needs to be enabled, as well as the `augmentReturnUrl` session request parameter needs to be true.
+It is possible to have the IRMA server augment the `clientReturnUrl` with the server token of a session (i.e., the `token` in the [response of the `/session` endpoint](api-irma-server.md#post-session)). This token is then appended as a query parameter with name `token` to the `clientReturnUrl`. Using this token, one can the retrieve the [session result](api-irma-server.md#get-session-token-result).
+
+To enable this, both the server configuration flag `augment-client-return-url` needs to be enabled, as well as the `augmentReturnUrl` session request parameter needs to be true.
 <!--DOCUSAURUS_CODE_TABS-->
 <!--Session request (JSON)-->
 ```json
