@@ -10,6 +10,7 @@ The API that this server offers consists of two parts:
 
 * [Endpoints under `/session`](#api-reference-requestor-endpoints) with which IRMA session requestors can start IRMA sessions, monitor their status and retrieve their result afterwards.
 * [Endpoints under `/irma`](#api-reference-irma-endpoints) for [frontend libraries](irma-frontend.md) and the [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md).
+* [Endpoints under `/irma/frontend`](#api-reference-irma-frontend-endpoints) exclusively for [frontend libraries](irma-frontend.md).
 
 ---
 ## API overview
@@ -51,12 +52,12 @@ If the request was successfully parsed, and authenticated if applicable, then th
 {
   "token":"KzxuWKwL5KGLKr4uerws",
   "sessionPtr": {"u":"https://example.com/irma/session/ysDohpoySavbHAUDjmpz","irmaqr":"disclosing"},
-  "frontendAuth": "Gn8Uyf0XCgBpnUe13r1c"
+  "frontendRequest": {"authorization":"qGrMmL8UZwZ88Sq8gobV", "minProtocolVersion": "1.0", "maxProtocolVersion": "1.1"}
 }
 ```
 In the endpoints below, the `{requestorToken}` placeholder must be replaced with the above session `token`. The `sessionPtr` points to the IRMA session for the IRMA app user, and should be displayed as a QR for the user to scan, or encoded in a universal link for a mobile session, e.g. using [`irma-frontend`](api-irma-frontend.md).
 The final part of the `u` field in the `sessionPtr` is called the `clientToken`. The `clientToken` can be used to access the [public `/irma` endpoints](#api-reference-irma-endpoints) of the irma server.
-For the `/irma/frontend` endpoints also the `frontendAuth` token must be included as `Authorization` HTTP request header.
+For accessing and using the `/irma/frontend` endpoints, you need the `frontendRequest`.
 
 Each session starts in the `"INITIALIZED"` [session status](#get-session-requestortoken-status). Regardless of how it reaches its ending status (`"DONE"`, `"CANCELLED"`, `"TIMEOUT"`), it is kept in memory for 5 minutes after reaching its ending status. After that all endpoints below requiring the requestor `token` return error `"SESSION_UNKNOWN"`.
 
@@ -170,7 +171,8 @@ The `/irma` endpoints of your IRMA server have to be publicly reachable from the
 behind the `/irma` prefix are exclusively used by the
 [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md).
 We do not document those endpoints here, because these are only relevant for
-irmaclient developers. We only document the endpoints that are relevant for [frontend libraries](irma-frontend.md).
+irmaclient developers. We only document the endpoints that are also relevant for [frontend libraries](irma-frontend.md).
+The endpoints exclusively meant for frontend libraries can be found below [in a separate section](#api-reference-irmafrontend-endpoints).
 
 ---
 
@@ -182,30 +184,64 @@ Behaves exactly the same as the [delete endpoint for requestors](#delete-session
 
 ### `GET /irma/session/{clientToken}/status`
 Behaves exactly the same as the [status endpoint for requestors](#get-session-requestortoken-status), but uses the [client token
-from the `sessionPtr`](#post-session) instead of the requestor token.
+from the `sessionPtr`](#post-session) instead of the requestor token. For frontend libraries, this endpoint is deprecated.
+Please use the [frontend status endpoint](#get-irmasessionclienttokenfrontendstatus) instead.
 
 ---
 
 ### `GET /irma/session/{clientToken}/statusevents`
 Behaves exactly the same as the [statusevents endpoint for requestors](#get-session-requestortoken-statusevents), but uses the
-[client token from the `sessionPtr`](#post-session) instead of the requestor token.
+[client token from the `sessionPtr`](#post-session) instead of the requestor token. For frontend libraries this endpoint is deprecated.
+Please use the [frontend statusevents endpoint](#get-irmasessionclienttokenfrontendstatusevents) instead.
 
 ---
 
+## API reference `/irma/frontend/` endpoints
+The frontend endpoints are exclusively meant for [frontend libraries](irma-frontend.md) to communicate with the IRMA server.
+Frontends need the information from the `frontendRequest` in order to use these endpoints. The `frontendRequest` is received
+along with the `sessionPtr` from the [`POST /session`](#post-session) requestor endpoint.
+Just like the [other `/irma` endpoints](#api-reference-irma-endpoints), the `/irma/frontend` endpoints of your IRMA server
+have to be publicly reachable from the internet.
+
+To make sure these endpoints can only be accessed by frontends, requests should be done with an
+additional `Authorization` HTTP request header. The expected value for this request header is the `authorization`
+token in the `frontendRequest`.
+
+The frontend endpoints in this version of the IRMA server implement frontend protocol version 1.1.
+
+### `GET /irma/session/{clientToken}/frontend/status`
+Retrieve the current [session status](https://godoc.org/github.com/privacybydesign/irmago/server#Status), and additional information
+being relevant for that session status, as a JSON string.
+
+The JSON object always contains a `status` field, containing the session status as being described in [status endpoint for requestors](#get-session-requestortoken-status).
+Additionally, when the session status is `DONE`, the `nextSession` field might be included.
+It contains the `sessionPtr` of the IRMA session following up the current session (a chained session).
+This happens when the `nextSession` option is used as [extra parameter in the session request](session-requests.md#extra-parameters).
+
+
+Below you can find an example response:
+```json
+{
+  "status" : "DONE",
+  "nextSession": {"u":"https://example.com/irma/ysDohpoySavbHAUDjmpz","irmaqr":"disclosing"}
+}
+```
+
+### `GET /irma/session/{clientToken}/frontend/statusevents`
+Subscribe to a [server-sent event](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) stream of status updates.
+Whenever the session status changes, an event is sent as a JSON string. This JSON string follows the exact same format as the
+output of the [frontend status endpoint](#get-irma-session-clienttoken-frontend-status).
+If you need to monitor the status of a session, this is preferred over polling the frontend status endpoint.
+
 ### `POST /irma/session/{clientToken}/frontend/options`
-This endpoint can be used by [frontend libraries](irma-frontend.md) to set pairing options for an IRMA
-session. Specific options can be sent to this endpoint and in the response an overview of the current
-pairing options is sent. If an options request holds an invalid combination of options, an error is returned.
+This endpoint can be used to set pairing options for an IRMA session. Specific options can be sent to this endpoint and
+in the response an overview of the current pairing options is sent. If an options request holds an invalid combination
+of options, an error is returned.
 
 Session options can be changed multiple times. However, as soon as an
 [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md)
 has connected to the session, it is not possible to change the options anymore. In other words, this
-endpoint can only be used when the [session status](#get-session-requestortoken-status) is `"INITIALIZED"`.
-
-To make sure this endpoint can only be accessed by frontends, requests must be done with an
-additional `Authorization` HTTP request header. The expected value for this request header
-is the `frontendAuth` token, as received along with the `sessionPtr` from
-the [`POST /session`](#post-session) requestor endpoint.
+endpoint can only be used when the [session status](#get-irma-session-clienttoken-frontend-status) is `"INITIALIZED"`.
 
 The body of an options request should have the following structure:
 ```json
@@ -220,8 +256,8 @@ Currently we only have one option, the option `pairingMethod`. It can have two v
    No device pairing is used. This is the normal, already known behaviour.
  * `"pairingMethod": "pin"`  
    When an [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md)
-   connects to a session in which pairing is enabled, the [session status](#get-session-token-status) becomes
-   `PAIRING`. The irmaclient shows a 4 digit pairing code and only after the user correctly enters this code
+   connects to a session in which pairing is enabled, the [session status](#get-irma-session-clienttoken-frontend-status)
+   becomes `PAIRING`. The irmaclient shows a 4 digit pairing code and only after the user correctly enters this code
    in the frontend the session continues, and the status becomes `CONNECTED`. This method can be
    used when a user is expected to scan an IRMA QR code using his/her phone and there is a risk on shoulder surfing
    (i.e. someone in close physical proximity to the user scans the QR code that was meant for the user).
@@ -250,8 +286,3 @@ and the [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmac
 The endpoint can only be used while the [session status](#get-session-requestortoken-status) is set to `PAIRING`.
 A valid request to this endpoint will cause the session status to change from `PAIRING` to `CONNECTED`.
 When the request succeeds, a `204 No Content` response is returned.
-
-To make sure this endpoint can only be accessed by frontends, requests to this endpoint
-must be done with an additional `Authorization` HTTP request header. The expected value for this request header
-is the `frontendAuth` token, as received along with the `sessionPtr` from
-the [`POST /session`](#post-session) requestor endpoint.
