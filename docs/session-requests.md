@@ -424,7 +424,7 @@ irma.ServiceProviderRequest{
 		ResultJwtValidity: 120,
 		ClientTimeout:     120,
 		CallbackUrl:       "https://example.com",
-        NextSession:       &irma.NextSessionData{URL: "https://example.com/nextsession"},
+		NextSession:       &irma.NextSessionData{URL: "https://example.com/nextsession"},
 	},
 	irma.NewDisclosureRequest(),
 }
