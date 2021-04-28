@@ -45,6 +45,7 @@ Examples for the browser and for nodejs are included in the `examples` folder. I
 ```shell
 cd examples/browser/irma-frontend/
 npm install
+npm run build
 ```
 
 ## Perform browser IRMA session
