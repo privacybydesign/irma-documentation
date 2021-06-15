@@ -438,7 +438,7 @@ Below you can find an overview of all extra parameters and their default value.
 | `"validity"` | `ResultJwtValidity`  | Validity of session result JWT in seconds (to determine JWT expiration time `exp`)  | 120 seconds |
 | `"timeout"` | `ClientTimeout` | Wait this many seconds for the IRMA app to connect before the session times out | 300 seconds (5 minutes) |
 | `"callbackUrl"` | `CallbackUrl` | URL to post session result to | `""` (no callback is performed) |
-| `"nextSession"` | `NextSession` | Continue with a follow-up IRMA session when this session succeeds. The session result is posted to `URL`, and as response on the `POST` a new session request should be returned for the IRMA server to start. | `nil` (there is no next session) |
+| `"nextSession"` | `NextSession` | Continue with a follow-up IRMA session when this session succeeds. The session result is posted to `URL`, and as response on the `POST` a new session request should be returned for the IRMA server to start. More documentation [here](chained-sessions.md). | `nil` (there is no next session) |
 
 ## JWTs: signed session requests
 The IRMA API server or [`irma server`](irma-server.md) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). The form of the JWT depends on the [session type](what-is-irma.md#session-types). An example requesting [IRMATube](https://privacybydesign.foundation/demo/irmaTube) attributes::
