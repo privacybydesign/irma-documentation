@@ -6,7 +6,8 @@
     ],
     "New": [
       "revocation",
-      "randomblind"
+      "randomblind",
+      "chained-sessions"
     ],
     "Guides": [
       "irma-cli",
