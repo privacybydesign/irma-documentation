@@ -52,7 +52,11 @@ If the request was successfully parsed, and authenticated if applicable, then th
 {
   "token":"KzxuWKwL5KGLKr4uerws",
   "sessionPtr": {"u":"https://example.com/irma/session/ysDohpoySavbHAUDjmpz","irmaqr":"disclosing"},
-  "frontendRequest": {"authorization":"qGrMmL8UZwZ88Sq8gobV", "minProtocolVersion": "1.0", "maxProtocolVersion": "1.1"}
+  "frontendRequest": {
+    "authorization":"qGrMmL8UZwZ88Sq8gobV",
+    "minProtocolVersion": "1.0",
+    "maxProtocolVersion": "1.1"
+  }
 }
 ```
 In the endpoints below, the `{requestorToken}` placeholder must be replaced with the above session `token`. The `sessionPtr` points to the IRMA session for the IRMA app user, and should be displayed as a QR for the user to scan, or encoded in a universal link for a mobile session, e.g. using [`irma-frontend`](api-irma-frontend.md).
