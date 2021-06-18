@@ -215,7 +215,7 @@ The frontend endpoints in this version of the IRMA server implement frontend pro
 
 ### `GET /irma/session/{clientToken}/frontend/status`
 Retrieve the current [session status](https://godoc.org/github.com/privacybydesign/irmago/server#Status), and additional information
-being relevant for that session status, as a JSON string.
+being relevant for that session status, as a JSON object.
 
 The JSON object always contains a `status` field, containing the session status as being described in [status endpoint for requestors](#get-session-requestortoken-status).
 Additionally, when the session status is `DONE`, the `nextSession` field might be included.
@@ -233,7 +233,7 @@ Below you can find an example response:
 
 ### `GET /irma/session/{clientToken}/frontend/statusevents`
 Subscribe to a [server-sent event](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) stream of status updates.
-Whenever the session status changes, an event is sent as a JSON string. This JSON string follows the exact same format as the
+Whenever the session status changes, an event is sent as a JSON object. This JSON object follows the exact same format as the
 output of the [frontend status endpoint](#get-irma-session-clienttoken-frontend-status).
 If you need to monitor the status of a session, this is preferred over polling the frontend status endpoint.
 
