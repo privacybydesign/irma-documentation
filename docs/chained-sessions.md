@@ -32,7 +32,7 @@ If a [JWT private key is installed in the IRMA server](irma-server.md#signed-jwt
 
 If a JWT private key is not installed, then the boolean `--allow-unsigned-callbacks` option must be passed to the IRMA server before chained sessions may be used, to explicitly enable POSTing unsigned session results. Otherwise, the server will reject session requests containing a `nextSession` object.
 
-> If no JWT private key is installed, then the `nextSession` URL should either not be publically reachable, or it should be kept secret with TLS enabled (which it should anyway as personal data will be POSTed to it). Otherwise there is no way for the server at the `nextSession` URL to distinguish POSTs from your IRMA server from POSTs made by anyone else.
+> If no JWT private key is installed, then the `nextSession` URL should either not be publically reachable, or it should include a secret token (e.g. `https://example.com/cX5aTins5kEZpjDpfYcN`) and have TLS enabled (which it should anyway as personal data will be POSTed to it). Otherwise there is no way for the server at the `nextSession` URL to distinguish POSTs from your IRMA server from POSTs made by anyone else.
 
 ## Use cases
 
