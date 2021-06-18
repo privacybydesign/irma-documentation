@@ -152,7 +152,7 @@ After the user discloses the `irma-demo.gemeente.personalData.fullname` attribut
 
 ## Differences with combined issuance-disclosure requests
 
-[Combined issuance-disclosure requests](session-requests.md#issuance-requests), i.e. issuance requests with a nonempty `disclose` field requesting attributes to be disclosed, is another way of first requesting and then issuing attributes from/to an IRMA app user within a single flow. Thus, this is very similar to a session chain consisting of first a disclosure request and then an issuance request. Contrary to session chains, however, this flow is started using a single session request. Thus, using such session requests it is impossible for the issued attributes to depend on the disclosed attributes, because at the time the session request is composed the value of the disclosed attributes are not yet known.
+[Combined issuance-disclosure requests](session-requests.md#issuance-requests), i.e. issuance requests with a nonempty `disclose` field requesting attributes to be disclosed, is another way of first requesting and then issuing attributes from/to an IRMA app user within a single flow. Thus, this is very similar to a session chain consisting of first a disclosure request and then an issuance request. However, contrary to session chains, this flow is started using a single session request. Thus, when using combined issuance-disclosure requests it is impossible for the issued attributes to depend on the disclosed attributes, because at the time the session request is composed the value of the disclosed attributes are not yet known.
 
 Comparing the two, chained sessions are more powerful in the following ways:
 
