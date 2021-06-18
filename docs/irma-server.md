@@ -125,7 +125,7 @@ Unlike normal QRs which differ per session (as they contain the session token), 
 ```
 Thus `static_sessions` must contain a map of which each item must be an [extended session request](session-requests.md#extra-parameters). Including a `callbackUrl` to which the [session result](api-irma-server.md#get-session-token-result) is sent after the session is required (since for these sessions there is no requestor waiting to receive the attributes after the session has finished). If a JWT private key is installed, then the session result is sent as a [JWT](api-irma-server.md#get-session-token-result-jwt).
 
-> If no JWT private key is installed, then the `callbackUrl` should either not be publically reachable, or it should use a secret URL with TLS enabled (which it should anyway as personal data will be POSTed to it). Otherwise there is no way of distinguishing POSTs from your `irma server` from POSTs made by someone else.
+> If no JWT private key is installed, then the `callbackUrl` should either not be publically reachable, or it should include a secret token (e.g. https://example.com/cX5aTins5kEZpjDpfYcN) and have TLS enabled (which it should anyway as personal data will be POSTed to it). Otherwise there is no way of distinguishing POSTs from your `irma server` from POSTs made by someone else.
 
 Assuming the URL of the `irma server` is `http://example.com`, the session configured above is started when the IRMA app scans a QR with the following contents:
 ```json
