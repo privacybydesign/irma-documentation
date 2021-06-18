@@ -10,7 +10,7 @@ The API that this server offers consists of two parts:
 
 * [Endpoints under `/session`](#api-reference-requestor-endpoints) with which IRMA session requestors can start IRMA sessions, monitor their status and retrieve their result afterwards.
 * [Endpoints under `/irma`](#api-reference-irma-endpoints) for [frontend libraries](irma-frontend.md) and the [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md).
-* [Endpoints under `/irma/frontend`](#api-reference-irma-frontend-endpoints) exclusively for [frontend libraries](irma-frontend.md).
+    * [Frontend endpoints under `/irma`](#api-reference-irma-frontend-endpoints) exclusively for [frontend libraries](irma-frontend.md).
 
 ---
 ## API overview
@@ -61,7 +61,7 @@ If the request was successfully parsed, and authenticated if applicable, then th
 ```
 In the endpoints below, the `{requestorToken}` placeholder must be replaced with the above session `token`. The `sessionPtr` points to the IRMA session for the IRMA app user, and should be displayed as a QR for the user to scan, or encoded in a universal link for a mobile session, e.g. using [`irma-frontend`](api-irma-frontend.md).
 The final part of the `u` field in the `sessionPtr` is called the `clientToken`. The `clientToken` can be used to access the [public `/irma` endpoints](#api-reference-irma-endpoints) of the irma server.
-For accessing and using the `/irma/frontend` endpoints, you need the `frontendRequest`.
+For accessing and using the [`/irma` frontend endpoints](#api-reference-irma-frontend-endpoints), you need the `frontendRequest`.
 
 Each session starts in the `"INITIALIZED"` [session status](#get-session-requestortoken-status). Regardless of how it reaches its ending status (`"DONE"`, `"CANCELLED"`, `"TIMEOUT"`), it is kept in memory for 5 minutes after reaching its ending status. After that all endpoints below requiring the requestor `token` return error `"SESSION_UNKNOWN"`.
 
@@ -176,7 +176,7 @@ behind the `/irma` prefix are exclusively used by the
 [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md).
 We do not document those endpoints here, because these are only relevant for
 irmaclient developers. We only document the endpoints that are also relevant for [frontend libraries](irma-frontend.md).
-The endpoints exclusively meant for frontend libraries can be found below [in a separate section](#api-reference-irmafrontend-endpoints).
+The endpoints exclusively meant for frontend libraries can be found below [in a separate section](#api-reference-irma-frontend-endpoints).
 
 ---
 
@@ -189,18 +189,18 @@ Behaves exactly the same as the [delete endpoint for requestors](#delete-session
 ### `GET /irma/session/{clientToken}/status`
 Behaves exactly the same as the [status endpoint for requestors](#get-session-requestortoken-status), but uses the [client token
 from the `sessionPtr`](#post-session) instead of the requestor token. For frontend libraries, this endpoint is deprecated.
-Please use the [frontend status endpoint](#get-irmasessionclienttokenfrontendstatus) instead.
+Please use the [frontend status endpoint](#get-irma-session-clienttoken-frontend-status) instead.
 
 ---
 
 ### `GET /irma/session/{clientToken}/statusevents`
 Behaves exactly the same as the [statusevents endpoint for requestors](#get-session-requestortoken-statusevents), but uses the
 [client token from the `sessionPtr`](#post-session) instead of the requestor token. For frontend libraries this endpoint is deprecated.
-Please use the [frontend statusevents endpoint](#get-irmasessionclienttokenfrontendstatusevents) instead.
+Please use the [frontend statusevents endpoint](#get-irma-session-clienttoken-frontend-statusevents) instead.
 
 ---
 
-## API reference `/irma/frontend/` endpoints
+## API reference `/irma` frontend endpoints
 The frontend endpoints are exclusively meant for [frontend libraries](irma-frontend.md) to communicate with the IRMA server.
 Frontends need the information from the `frontendRequest` in order to use these endpoints. The `frontendRequest` is received
 along with the `sessionPtr` from the [`POST /session`](#post-session) requestor endpoint.
