@@ -204,7 +204,7 @@ Please use the [frontend statusevents endpoint](#get-irma-session-clienttoken-fr
 The frontend endpoints are exclusively meant for [frontend libraries](irma-frontend.md) to communicate with the IRMA server.
 Frontends need the information from the `frontendRequest` in order to use these endpoints. The `frontendRequest` is received
 along with the `sessionPtr` from the [`POST /session`](#post-session) requestor endpoint.
-Just like the [other `/irma` endpoints](#api-reference-irma-endpoints), the `/irma/frontend` endpoints of your IRMA server
+Just like the [other `/irma` endpoints](#api-reference-irma-endpoints), the frontend endpoints of your IRMA server
 have to be publicly reachable from the internet.
 
 To make sure these endpoints can only be accessed by frontends, requests should be done with an
