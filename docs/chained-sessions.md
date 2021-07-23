@@ -79,8 +79,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Perform sanity checks on the session result
-	if result.Status != server.StatusDone ||
+	// Perform sanity checks on the session result.
+	// NB: this endpoint is called by the IRMA server just before it ends the
+	// session, so the session status is expected to be server.StatusConnected
+	// (or the JSON string "CONNECTED").
+	if result.Status != server.StatusConnected ||
 		result.ProofStatus != irma.ProofStatusValid ||
 		len(result.Disclosed) == 0 || len(result.Disclosed[0]) == 0 ||
 		result.Disclosed[0][0].Identifier.String() != "irma-demo.gemeente.personalData.fullname" ||
