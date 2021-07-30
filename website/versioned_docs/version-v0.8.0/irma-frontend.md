@@ -353,7 +353,7 @@ to true.
 
 ## Differences with [irmajs](irmajs.md)
 The previous JavaScript library `irmajs` combined frontend and backend functionality. The `startSession` related
-functions could be used to for starting sessions, and `handleSession` could be used for actually being the 
+functions could be used to start sessions, and `handleSession` could be used for actually being the 
 frontend to the user.
 
 In the new library we have split these functionalities into two libraries. The session management functionality
