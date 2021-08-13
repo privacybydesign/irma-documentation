@@ -315,8 +315,8 @@ $
   &=& (u_i^b\nu_{i+1}^a)^{e}
    = u_i^{be}\nu_{i+1}^{ae} \\
   &=& \nu_i^{b}\nu_{i}^{ae/\tilde{e}}
-   = (\nu_i^{\tilde{e}}\nu_{i}^{ae})^{1/\tilde{e}}
-   = (\nu_i^{\tilde{e}+ae})^{1/\tilde{e}} \\
+   = (\nu_i^{b\tilde{e}}\nu_{i}^{ae})^{1/\tilde{e}}
+   = (\nu_i^{b\tilde{e}+ae})^{1/\tilde{e}} \\
   &=& \nu_i^{1/\tilde{e}}
    = \nu_{i+1}
   \end{eqnarray*}
