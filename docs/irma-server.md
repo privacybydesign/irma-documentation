@@ -211,7 +211,7 @@ This can be useful if the session result travels along an unsafe or untrusted ro
 
 ### TLS
 
-The IRMA protocol relies on TLS for encryption of the attributes as they travel along the internet. If your server is connected to the internet and it handles actual attributes (personal data from people), then you ***must*** ensure that the attributes are protected in transit with TLS. In its default configuration (i.e. with [developer mode](irma-app.md#developer-mode) disabled), the IRMA app will refuse to connect to servers not using TLS.
+The [IRMA protocol](irma-protocol.md) relies on TLS for encryption of the attributes as they travel along the internet. If your server is connected to the internet and it handles actual attributes (personal data from people), then you ***must*** ensure that the attributes are protected in transit with TLS. In its default configuration (i.e. with [developer mode](irma-app.md#developer-mode) disabled), the IRMA app will refuse to connect to servers not using TLS.
 
 You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` options (or the `_file` equivalents), specifying a PEM certificate (chain) and PEM private key. If you use [separate requestor and app endpoints](#http-server-endpoints), additionally use `client_tls_cert` and `client_tls_privkey`.
 
@@ -287,6 +287,6 @@ Being written in [Go](https://golang.org/), this server (in fact, the containing
 - [API documentation](https://godoc.org/github.com/privacybydesign/irmago) (generated automatically from `master` branch)
 
 Referring to Go packages (i.e. folders) under [`irmago`](https://github.com/privacybydesign/irmago), the server is structured as follows.
-* [`server/irmaserver`](irma-server-lib.md): Go library implementing the HTTP endpoints for the IRMA protocol (in which the IRMA app is the client), and a Go API for requestors to manage sessons. ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver))
+* [`server/irmaserver`](irma-server-lib.md): Go library implementing the HTTP endpoints for the [IRMA protocol](irma-protocol.md) (in which the IRMA app is the client), and a Go API for requestors to manage sessons. ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver))
 * `server/requestorserver`: Go library wrapping `server/irmaserver`, exposing the requestor API as a second HTTP endpoint set under `/session` URLs instead of as Go functions (next to `/irma` for the IRMA app endpoints). ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver))
 * `irma`: executuable whose `server` commands wraps `server/requestorserver`.
