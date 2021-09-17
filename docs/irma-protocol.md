@@ -16,13 +16,7 @@ In order to protect the attributes as they travel over the internet from being r
 
 The IRMA protocol as outlined below can be seen in action by performing an IRMA session with an IRMA server configured with [maximum verbosity](irma-server.md#logging-and-verbosity), as then it will log all HTTP traffic that it sends and receives.
 
-### Further reading
-
-This page is concerned only with the IRMA protocol. For more technical information on IRMA in general, as well as explanations and definitions of some of the terms mentioned in this page, see the [technical overview](overview.md).
-
-This page does not deal with the cryptographic contents of the messages being passed nor how they achieve [IRMA's security properties](overview.md#irma-security-properties), only with how and when they are passed. IRMA being an implementation of the Idemix attribute-based credential scheme, details on the cryptographic contents and mechanisms of the messages  may be found in the [Idemix specification](https://dominoweb.draco.res.ibm.com/reports/rz3730_revised.pdf) and in the [paper introducing Idemix](https://cs.brown.edu/people/alysyans/papers/camlys02b.pdf) by Camenisch and Lysyanskaya.
-
-## The session state
+### The session state
 
 At any time after its creation an IRMA session is in a particular [session state](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatus), and with respect to this state the IRMA server acts as a state machine. Each of the endpoints below may be invoked only when the session is in a particular state, and most of them cause the session to progress to a next state. The requestor, the frontend and the IRMA app may keep track of the session state through server-sent events or through polling. An IRMA session progresses through the following states, in the order as they appear here:
 
@@ -37,6 +31,12 @@ At any time, the session may move from one of the first three states to any of t
 * `CANCELLED`: the session was cancelled [by the IRMA app](#cancelling-delete-irma-session-clienttoken), [the requestor or by the frontend](api-irma-server.md#delete-session-requestortoken); or an error occurred.
 
 Of these states, `DONE`, `TIMEOUT` and `CANCELLED` are final states: no valid state transition exists from these to any other state.
+
+### Further reading
+
+This page is concerned only with the IRMA protocol. For more technical information on IRMA in general, as well as explanations and definitions of some of the terms mentioned in this page, see the [technical overview](overview.md).
+
+This page does not deal with the cryptographic contents of the messages being passed nor how they achieve [IRMA's security properties](overview.md#irma-security-properties), only with how and when they are passed. IRMA being an implementation of the Idemix attribute-based credential scheme, details on the cryptographic contents and mechanisms of the messages  may be found in the [Idemix specification](https://dominoweb.draco.res.ibm.com/reports/rz3730_revised.pdf) and in the [paper introducing Idemix](https://cs.brown.edu/people/alysyans/papers/camlys02b.pdf) by Camenisch and Lysyanskaya.
 
 ## Session creation
 
