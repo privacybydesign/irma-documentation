@@ -32,6 +32,21 @@ At any time, the session may move from one of the first three states to any of t
 
 Of these states, `DONE`, `TIMEOUT` and `CANCELLED` are final states: no valid state transition exists from these to any other state.
 
+### Sequence diagram
+
+The following sequence diagrams showing an IRMA session in the happy flow, without and with device pairing, summarize the above. Note that these diagrams show a complete session for completeness, including the actions of the frontend, while the remainder of this document focuses on the actions of the IRMA app.
+
+<!--
+Generate these using `java -jar path-to-plantuml.jar -tsvg *.puml` in docs/assets. E.g. if the PlantUML extension is installed in VSCode: `java -jar ~/.vscode/extensions/jebbs.plantuml-2.15.1/plantuml.jar -tsvg *.puml`
+-->
+
+<!--DOCUSAURUS_CODE_TABS-->
+<!--Pairing disabled-->
+<img src="/docs/assets/session-no-pairing.svg">
+<!--Pairing enabled-->
+<img src="/docs/assets/session-pairing.svg">
+<!--END_DOCUSAURUS_CODE_TABS-->
+
 ### Further reading
 
 This page is concerned only with the IRMA protocol. For more technical information on IRMA in general, as well as explanations and definitions of some of the terms mentioned in this page, see the [technical overview](overview.md).
