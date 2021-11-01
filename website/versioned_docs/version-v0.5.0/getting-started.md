@@ -107,12 +107,13 @@ This will output something like the following:
 
 ```json
 {
+  "token": "X7LU5Q8Jhig0330gjYUO",
   "sessionPtr": {"u": "https://example.com/irma/t1nXs4ZduyhvAeAAlB77","irmaqr": "disclosing"},
-  "token": "X7LU5Q8Jhig0330gjYUO"
+  "frontendRequest":{"authorization":"X9XeI0gJG2HZv4hZ1WkP","minProtocolVersion":"1.0","maxProtocolVersion":"1.1"}
 }
 ```
 
-* Send the `sessionPtr` to your frontend (i.e., a suitable [`irma-frontend` plugin](api-irma-frontend.md), or [`handleSession()` of `irmajs`](api-irmajs.md#handlesession)), to show an IRMA QR or toggle to the IRMA app.
 * Use the `token` to [track the session status](api-irma-server.md#get-session-token-status), and to [get the session result](api-irma-server.md#get-session-token-result) after the session has finished.
+* The `sessionPtr` and `frontendRequest` are used by [`irma-frontend`](api-irma-frontend.md) to show an IRMA QR code or toggle to the IRMA app. Generally you [configure `irma-frontend`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client#usage) with an URL that returns the `sessionPtr` and `frontendRequest`; it will then start the session automatically.
 
 Instead of managing sessions with HTTP requests as shown here, [for certain languages](irma-backend.md) (currently Go and JavaScript) it is also possible to include an IRMA library and manage sessions using function invocations.
