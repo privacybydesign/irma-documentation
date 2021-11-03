@@ -174,8 +174,8 @@ If a JWT private key was [provided in the configuration of the `irma server`](ir
 The `/irma` endpoints of your IRMA server have to be publicly reachable from the internet. Most of the endpoints
 behind the `/irma` prefix are exclusively used by the
 [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[IRMA app](irma-app.md).
-We do not document those endpoints here, because these are only relevant for
-irmaclient developers. We only document the endpoints that are also relevant for [frontend libraries](irma-frontend.md).
+These endpoints are documented in full in the page on the [IRMA protocol](irma-protocol.md).
+The endpoints used by both the IRMA app and the [frontend libraries](irma-frontend.md) are documented below.
 The endpoints exclusively meant for frontend libraries can be found below [in a separate section](#api-reference-irma-frontend-endpoints).
 
 ---
