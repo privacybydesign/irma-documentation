@@ -241,7 +241,7 @@ KeyExpires      : 2021-09-23 11:43:09 +0200 CEST
 KeyModulusBitlen: 2048
 ```
 
-### ABS: `POST /irma/session/{clientToken}/proofs`
+### Attribute-based signatures: `POST /irma/session/{clientToken}/proofs`
 
 The app POSTs an [`irma.SignedMessage` instance](https://pkg.go.dev/github.com/privacybydesign/irmago#SignedMessage), for example:
 
