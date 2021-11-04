@@ -8,7 +8,7 @@ This document presents a technical overview of the IRMA project.
 
 ### Participants
 
-* *IRMA app*: (mobile) application that receives attributes, and can disclose them. Also called *client* as it acts as the client in the IRMA protocol.
+* *IRMA app*: (mobile) application that receives attributes, and can disclose them. Also called *client* as it acts as the client in the [IRMA protocol](irma-protocol.md).
 * *Verifier* or *service provider*: a party wanting to verify someone's attributes (in order to provide some service).
 * *Issuer* or *Identity provider*: a party wanting to issue attributes to someone.
 * *Issuer*: uses an Idemix private key in order to issue credentials to a client, when instructed to by an identity provider

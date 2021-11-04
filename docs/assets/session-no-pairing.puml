@@ -1,0 +1,47 @@
+@startuml session-no-pairing
+skinparam sequence {
+backgroundColor #transparent
+ActorBorderColor #7A2626
+ActorBackgroundColor #transparent
+ParticipantBorderColor #7A2626
+ParticipantBackgroundColor #004C92
+ParticipantFontColor white
+} 
+
+actor "IRMA app user" as user
+participant "IRMA app" as app
+participant frontend as browser
+participant "requestor" as requestor
+participant "IRMA server" as server
+
+user -> browser: initiate session
+browser -> requestor: initiate session
+requestor -> server: <font color=#1D5B2A>**POST** /session/</font> (create session)
+server <- server: set state to INITIALIZED   
+server --> requestor: session pointer + requestor token + frontendAuth 
+requestor --> browser: session pointer (QR) + frontendAuth
+browser -> server: <font color=#1D5B2A>**GET** /irma/session/{clientToken}/frontend/status </font>(start polling)
+browser -> user: QR
+user -> app: scan QR
+app -> browser: read QR
+app -> server: <font color=#1D5B2A>**GET** /irma/session/{clientToken}</font>
+return session request
+server <- server: change state to CONNECTED
+server --> browser: polling response: state changed to CONNECTED
+
+app -> user: perform session?
+return yes
+
+app -> server: <font color=#1D5B2A>**POST** /irma/session/{clientToken}/proofs or /irma/session/{clientToken}/commitments</font>
+return proofStatus, possibly nextSession, possibly issuer signatures
+server <- server: change state to DONE
+
+server --> browser: polling response: state changed to DONE (+ possibly nextSession)
+browser -> requestor: done
+requestor -> server: <font color=#1D5B2A>**GET** /session/{requestorToken}/result
+server -> requestor: session result
+requestor --> browser: follow-up action
+
+browser -> user: follow-up action
+
+@enduml

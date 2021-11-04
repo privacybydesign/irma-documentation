@@ -29,6 +29,7 @@
     ],
     "Documentation": [
       "version-v0.8.0-overview",
+      "version-v0.8.0-irma-protocol",
       "version-v0.8.0-zkp",
       "version-v0.8.0-keyshare-protocol"
     ]

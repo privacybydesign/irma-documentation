@@ -29,6 +29,7 @@
     ],
     "Documentation": [
       "overview",
+      "irma-protocol",
       "zkp",
       "keyshare-protocol"
     ]
