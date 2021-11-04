@@ -21,7 +21,7 @@ A typical IRMA session is depicted schematically below.
 
 Software components:
 * *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the [IRMA app](irma-app.md) scans. All frontend tasks depicted in the diagram are supported by [`irma-frontend`](irma-frontend.md).
-* [*IRMA server*](#irma-servers): Handles IRMA protocol with the IRMA app for the requestor.
+* [*IRMA server*](#irma-servers): Handles [IRMA protocol](irma-protocol.md) with the IRMA app for the requestor.
 * [*IRMA mobile app*](irma-app.md): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994).
 
 Explanation of the steps:
