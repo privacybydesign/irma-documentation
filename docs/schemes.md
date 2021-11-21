@@ -20,25 +20,25 @@ Schematically the directory structure of a scheme looks as follows:
 
 ```text
 SchemeName
-+-- IssuerName
-|   +-- Issues
-|   |   +-- CredentialTypeName
-|   |       +--- description.xml
-|   |       +--- logo.png
-|   +-- PublicKeys
-|   |   +-- 0.xml
-|   |   +-- 1.xml
-|   +-- PrivateKeys (need not be present)
-|   |   +-- 0.xml
-|   |   +-- 1.xml
-|   +-- description.xml
-|   +-- logo.png
-+-- description.xml
-+-- index
-+-- index.sig
-+-- timestamp
-+-- pk.pem
-+-- kss-0.pem
+├── IssuerName
+│   ├── Issues
+│   │   └── CredentialTypeName
+│   │       ├── description.xml
+│   │       └── logo.png
+│   ├── PublicKeys
+│   │   ├── 0.xml
+│   │   └── 1.xml
+│   ├── PrivateKeys (need not be present)
+│   │   ├── 0.xml
+│   │   └── 1.xml
+│   ├── description.xml
+│   └── logo.png
+├── description.xml
+├── index
+├── index.sig
+├── timestamp
+├── pk.pem
+└── kss-0.pem
 ```
 
 Multiple issuers are grouped under the scheme, and each issuer may issue multiple credential types.
