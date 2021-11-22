@@ -16,6 +16,7 @@
       "irma-backend",
       "irma-frontend",
       "schemes",
+      "issuer",
       "session-requests",
       "email",
       "irma-app",
