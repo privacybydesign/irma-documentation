@@ -17,7 +17,7 @@ With the new feature of running the IRMA server in stateless mode, the session d
 
 ## Running the IRMA server in stateless mode
 ### Example
-You can start the IRMA server in stateless mode by passing the flag `--store-type redis` on the commandline. Additionally you need to provide a Redis server address and password. For test purposes you can override the need for a password by using the `--redis-allow-empty-password` flag. However, make sure to use a secure Redis password in production. Your Redis data store will contain sensitive data and must be password-protected.
+You can start the IRMA server in stateless mode by setting the `store-type` option to `redis`. Additionally you need to provide a Redis server address and password. For test purposes you can override the need for a password by setting the `redis-allow-empty-password` option to `true`. However, make sure to use a secure Redis password in production. Your Redis data store will contain sensitive data and must be password-protected.
 
 ```
 irma server -vv --store-type redis --redis-addr "localhost:6379" --redis-pw "placeholderPassword"
