@@ -53,7 +53,5 @@ Currently the IRMA server does not support Redis clusters or a master/slave mode
 
 Please get in touch with us, should you wish the IRMA server to support multiple Redis instances.
 
-> Be aware that running a single Redis instance only makes the Redis connection a single point of failure. The current implementation makes the IRMA server stateless but only moves the single point of failure from the IRMA server to Redis.
-
 ### Using stateless mode in combination with server-sent events
 Currently the IRMA server does not support a stateless mode in combination with server-sent events. Please contact us, should you be in need of this combination.
