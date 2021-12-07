@@ -23,9 +23,9 @@ You can start the IRMA server in stateless mode by setting the `store-type` opti
 irma server -vv --store-type redis --redis-addr "localhost:6379" --redis-pw "placeholderPassword"
 ```
 
-> By default Redis does _not_ use TLS. Since the session data is not encrypted before being sent to Redis, you should turn on TLS for your Redis server!
+> By default TLS is _not_ enabled when using Redis. Since the session data is not encrypted before being sent to Redis, we recommend turning on TLS for your Redis server. 
 
-Your Redis server configuration should look as follows:
+Your Redis server configuration may look as follows:
 ```
 requirepass placeholderPassword
 
