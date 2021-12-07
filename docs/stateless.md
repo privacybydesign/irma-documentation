@@ -15,13 +15,6 @@ With the new feature of running the IRMA server in stateless mode, the session d
 * Preventing data loss when restarting an IRMA server.
 * Preventing data loss in case of IRMA server crashes.
 
-### Stateless implementation using Redis
-The IRMA stateless mode uses Redis, an in-memory data structure store with on-disk persistence, to keep track of the session state. When a new session is started, two key/value pairs are added to the data store. The first key/value pair maps the `client token` (key) to a JSON blob which contains all stateful session data (value). Additionally, a second key/value pair is added to Redis which maps the `requestor token` (key) to the corresponding `client token` (value). This second key/value pair is needed so the session data can be retrieved not only when a `client token` is used for querying but also when a `requestor token` is used. In this later case, the `requestor token` will first be used to retrieve the `client token` with which the session data can be retrieved. The key/value pairs will expire eventually and will get removed by Redis automatically so the data store is not polluted with old sessions.  
-
-When a session is requested with a `client token` or a `requestor token`, a simple lock is introduced. The lock is another key/value pair with the `client token` as the key and a random identifier that is associated with the locking server as the value. The locked session can then be updated if necessary and will be unlocked again. This lock will also expire eventually and be removed automatically in case the unlocking for some reason did not succeed.
-
-> When running a single Redis instance only, this simple locking mechanism is sufficient. When running several Redis instances in parallel, edge cases may occur. With the current implementation, we recommend to run a single Redis instance only.
-
 ## Running the IRMA server in stateless mode
 ### Example
 You can start the IRMA server in stateless mode by passing the flag `--store-type redis` on the commandline. Additionally you need to provide a Redis server address and password. For test purposes you can override the need for a password by using the `--redis-allow-empty-password` flag. However, make sure to use a secure Redis password in production. Your Redis data store will contain sensitive data and must be password-protected.
@@ -52,6 +45,8 @@ tls-auth-clients no
 The IRMA server already authenticates to the Redis server using a password. The IRMA server currently does not support mutual TLS for the Redis connection. Therefore, the `tls-auth-clients` in the Redis configuration is set to `no`. For more information on TLS support in Redis see the [Redis documentation](https://redis.io/topics/encryption).
 
 If you want to run several IRMA servers, you can now run them behind a load balancer and connect them to the same Redis instance.
+
+> Currently a simple locking mechanism is implemented. When running several Redis instances in parallel, edge cases may occur. We recommend to use a single Redis instance.
 
 ### Using multiple Redis instances
 Currently the IRMA server does not support Redis clusters or a master/slave mode. You can only connect to one Redis address. This means that the Redis connection is currently a bottleneck and single point of failure. You could use Redis enterprise which will let you connect with one outward-facing Redis connection and will provide you with an underlying failover mechanism.  
