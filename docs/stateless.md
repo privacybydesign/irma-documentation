@@ -49,7 +49,7 @@ If you want to run several IRMA servers, you can now run them behind a load bala
 > Currently a simple locking mechanism is implemented. When running several Redis instances in parallel, edge cases may occur. We recommend to use a single Redis instance.
 
 ### Using multiple Redis instances
-Currently the IRMA server does not support Redis clusters or a master/slave mode. You can only connect to one Redis address. This means that the Redis connection is currently a bottleneck and single point of failure. You could use Redis enterprise which will let you connect with one outward-facing Redis connection and will provide you with an underlying failover mechanism.  
+Currently the IRMA server does not support Redis clusters or a master/slave mode. You can only connect to one Redis address. This means that the Redis connection is currently a bottleneck and single point of failure. You could use [Redis Enterprise](https://redis.com/redis-enterprise-cloud/overview/) which will let you connect with one outward-facing Redis connection and will provide you with an underlying failover mechanism.  
 
 Please get in touch with us, should you wish the IRMA server to support multiple Redis instances.
 
