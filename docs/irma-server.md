@@ -70,7 +70,9 @@ When running the server in production, you should enable the `production` option
 In addition, when [developer mode is not enabled in the IRMA app](irma-app.md#developer-mode) (the default setting), the IRMA app wil refuse to perform sessions with IRMA servers not running in `production` mode. Since the majority of the IRMA app users will not have developer mode enabled, this requires IRMA servers facing those users to enable `production` mode.
 
 ### Stateless mode
-By default session states are kept in memory. If you want to run several IRMA servers in parallel or if you wish data persistence for sessions, you can enable [stateless mode](stateless.md).
+By default session states are kept in memory. If you want to run several IRMA servers in parallel or if you wish data persistence for sessions, you can use [stateless mode](stateless.md) which is implemented in the IRMA server via a Redis data store.
+
+You can enable the Redis data store in the `irma server` by setting the `store-type` option to `redis` and specifying the `redis-addr` and `redis-pw` options.
 
 ### Keys and certificates
 For each configuration option that refers to some kind of key or certificate (for example `jwt_privkey`), there is a corresponding option with the `_file` suffix (for example `jwt_privkey_file`). Keys can be specified either by setting former to a (PEM) string, or setting the the latter to a file containing the (PEM) string.
