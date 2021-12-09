@@ -53,5 +53,5 @@ Currently the IRMA server does not support Redis clusters or a master/slave mode
 
 Please get in touch with us, should you wish the IRMA server to support multiple Redis instances.
 
-### Using stateless mode in combination with server-sent events
+### Server-sent events
 Currently the IRMA server does not support a stateless mode in combination with server-sent events. Please contact us, should you be in need of this combination.
