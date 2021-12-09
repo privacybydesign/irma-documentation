@@ -23,7 +23,14 @@ You can start the IRMA server in stateless mode by setting the `store-type` opti
 irma server -vv --store-type redis --redis-addr "localhost:6379" --redis-pw "placeholderPassword"
 ```
 
-> By default TLS is _not_ enabled when using Redis. Since the session data is not encrypted before being sent to Redis, we recommend turning on TLS for your Redis server. 
+If you want to run several IRMA servers, you can now run them behind a load balancer and connect them to the same Redis instance.
+
+> Currently a simple locking mechanism is implemented. When running several Redis instances in parallel, edge cases may occur. We recommend to use a single Redis instance.
+
+### TLS
+By default TLS is _not_ enabled when using Redis. Since the session data is not encrypted before being sent to Redis, you should not connect to a Redis instance on an external network. If you cannot connect to an instance on your internal network, we recommend turning on TLS for your Redis server.
+
+> Pay attention that the IRMNA server will only accept TLS connections that use certificates from ordinary CAs.
 
 Your Redis server configuration may look as follows:
 ```
@@ -43,10 +50,6 @@ tls-auth-clients no
 ```
 
 The IRMA server already authenticates to the Redis server using a password. The IRMA server currently does not support mutual TLS for the Redis connection. Therefore, the `tls-auth-clients` in the Redis configuration is set to `no`. For more information on TLS support in Redis see the [Redis documentation](https://redis.io/topics/encryption).
-
-If you want to run several IRMA servers, you can now run them behind a load balancer and connect them to the same Redis instance.
-
-> Currently a simple locking mechanism is implemented. When running several Redis instances in parallel, edge cases may occur. We recommend to use a single Redis instance.
 
 ### Using multiple Redis instances
 Currently the IRMA server does not support Redis clusters or a master/slave mode. You can only connect to one Redis address. This means that the Redis connection is currently a bottleneck and single point of failure. You could use [Redis Enterprise](https://redis.com/redis-enterprise-cloud/overview/) which will let you connect with one outward-facing Redis connection and will provide you with an underlying failover mechanism.  
