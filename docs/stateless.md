@@ -27,7 +27,27 @@ If you want to run several IRMA servers, you can now run them behind a load bala
 
 > Currently a simple locking mechanism is implemented. When running several Redis instances in parallel, edge cases may occur. We recommend to use a single Redis instance.
 
-> By default TLS is _not_ enabled when using Redis. Since the session data is not encrypted before being sent to Redis, you should not connect to a Redis instance on an external network.
+By default the IRMA server connects to Redis with TLS, using the system store of certificate authorities. Alternatively, you can specify the certificate that Redis uses, or the certificate authority with which that certificate is signed, using the `redis-tls-cert` or `redis-tls-cert-file` options. A certificate may be configured in Redis as follows:
+
+```
+requirepass placeholderPassword
+
+# Disable the non-TLS port completely
+port 0
+# Enable TLS on the default Redis port
+tls-port 6379
+
+# X.509 certificate and a private key
+tls-cert-file /path/to/cert.pem
+tls-key-file /path/to/privkey.pem
+
+# Disable TLS client authentication
+tls-auth-clients no
+```
+
+It is also possible to disable TLS altogether for connections to Redis, using the `redis-no-tls` option.
+
+> In production, always using TLS for Redis is recommended. If you disable TLS, be sure to run your Redis server in an internal network protected against unauthorized access.
 
 ### Using multiple Redis instances
 Currently the IRMA server does not support Redis clusters or a master/slave mode. You can only connect to one Redis address. This means that the Redis connection is currently a bottleneck and single point of failure. You could use [Redis Enterprise](https://redis.com/redis-enterprise-cloud/overview/) which will let you connect with one outward-facing Redis connection and will provide you with an underlying failover mechanism.  
