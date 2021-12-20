@@ -6,7 +6,7 @@ Being an IRMA issuer allows you to issue credentials containing attributes to IR
 
 This page documents some of the processes involved.
 
-## Becoming an IRMA issuer
+## Becoming an issuer
 
 In IRMA, information on all issuers, their credentials and the contained attributes is stored in datastructures called [IRMA schemes](schemes.md). The two standard IRMA schemes, `irma-demo` and `pbdf`, meant for demo and production respectively, are maintained by [the Privacy by Design Foundation](https://privacybydesign.foundation) and [SIDN](https://sidn.nl/irma). All IRMA apps and servers contain a copy of these two schemes, which they automatically periodically update. A party wishing to become an issuer must therefore be included in these schemes. 
 
