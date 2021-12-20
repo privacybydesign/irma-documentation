@@ -1,5 +1,5 @@
 ---
-title: Issuer documentation
+title: Issuer guide
 ---
 
 Being an IRMA issuer allows you to issue credentials containing attributes to IRMA app users, which they can then disclose to yourself or to others. Issuing attributes can enable IRMA app users and enrich the IRMA ecosystem, but comes with special responsibilities. Contrary to verifying IRMA attributes from the [IRMA app](irma-app.md) which can be done by anyone running an [IRMA server](irma-server.md), issuing to IRMA apps cannot be done without involvement from [the Privacy by Design Foundation](https://privacybydesign.foundation) and [SIDN](https://sidn.nl/irma), the developers of IRMA: registering your organization and the credentials you will be issuing is required. This includes signing a contract that among others requires you to properly protect your IRMA private key, as well as paying a yearly fee.
@@ -17,7 +17,7 @@ Generally, the process of becoming an IRMA issuer looks as follows. These steps 
 
 > Credentials within the `irma-demo` scheme are not meant for production application and actual personal data, since attributes within this scheme cannot be trusted: all private keys of all issuers under the `irma-demo` scheme are included in it, so that anyone can issue any `irma-demo` credential containing any attribute values.
 
-## Creating `irma-demo` issuer and credentials
+### Creating `irma-demo` issuer and credentials
 
 Within the scheme, all issuer and credential information is contained in a folder that schematically looks like the following.
 
@@ -49,7 +49,7 @@ Once your modifcations are complete, ensure the scheme is validly signed by runn
 
 You can then use your IRMA server to issue the new credentials to your IRMA app. Alternatively, after the `irma-demo` PR is merged, the new credentials can also be issued from their corresponding pages in the [attribute index](https://privacybydesign.foundation/attribute-index/en/) (only in the case of `irma-demo` credentials).
 
-### Using a locally modified `irma-demo` scheme
+#### Using a locally modified `irma-demo` scheme
 
 Instead of submitting a PR to the `irma-demo` scheme to us, it is also possible to modify a local copy of the `irma-demo` scheme, and embed that local copy in the IRMA server and a manually compiled IRMA app, as follows.
 
@@ -63,18 +63,18 @@ Instead of submitting a PR to the `irma-demo` scheme to us, it is also possible 
 
 If you use the IRMA server from step 3 to issue your credentials, then the IRMA app from step 4 will accept them. Note, however, that the standard App/Play Store versions of the IRMA app will not.
 
-## Creating `pbdf` issuer and credentials
+### Creating `pbdf` issuer and credentials
 
 After the development phase of your issuance application is finished and the issuer contract has been signed, your issuer and credentials can be moved to production as follows.
 
 1. Copy your issuer and its credentials from `irma-demo` to a local checkout of the production scheme, [`pbdf`](https://github.com/privacybydesign/pbdf-schememanager).
 2. Change all occurences of `irma-demo` within your issuer and credentials to `pbdf`; ensure the `Demo ` prefix is everywhere removed; and use actual logos for your issuer and credentials.
-3. Generate a new 2048 bit IRMA issuer private/public keypair; put the public key within your issuer folder in `PublicKeys/0.xml`; and keep your private key private.
+3. [Generate](#generating-irma-issuer-keys) a new 2048 bit IRMA issuer private/public keypair; put the public key within your issuer folder in `PublicKeys/0.xml`; and keep your private key private.
 4. Submit your changes to `pbdf` as a PR.
 
 Your PR will then be signed by us, and merged. As with `irma-demo`, your issuer and its credentials then become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server. Your credentials will also automatically appear in the [attribute index](https://privacybydesign.foundation/attribute-index/en/), but by contrast with `irma-demo` credentials, they cannot be issued from there.
 
-## Generating and refreshing IRMA issuer keys
+### Generating IRMA issuer keys
 
 Generating a new IRMA issuer private/public keypair is done with the [`irma`](irma-cli.md) command line tool:
 
@@ -93,6 +93,10 @@ Some notes:
   - Alternatively, after generating the keypair you can open the private and public keys in a text editor and set the `<Counter>` tag to the appropriate number.
 * If one of your credentials contains more than 10 attributes, then that amount of attributes *increased by 2* (to account for [the secret key and metadata attributes](overview.md#special-attributes)) must be passed to the `-a` or `--numattributes` flag, to ensure that the new public key supports the required amount of attributes.
 
+## Issuer maintenance
+
+Production IRMA issuer keypairs are valid for a year. Once a keypair expires it cannot be used anymore for issuance, so it is important that it is replaced by a fresh keypair before that time. Once a new public key has been included in the `pbdf` scheme, the corresponding private key can be included in your IRMA server configuration. After a restart it will use to the new private key.
+
 ### Submitting a new production public key
 
 The process for getting a new issuer public key included in the production `pbdf` scheme is as follows.
@@ -101,4 +105,3 @@ The process for getting a new issuer public key included in the production `pbdf
 2. Send the public keypair to the `pbdf` scheme manager, using a [PR](https://github.com/privacybydesign/pbdf-schememanager/compare), email or Slack.
 3. The scheme manager will contact you out-of-band to verify that the public key arrived intactly, by checking its SHA256 hash.
 4. If this check succeeds, your new key will be included in the scheme. You can then install the corresponding private key in your issuing IRMA server.
-
