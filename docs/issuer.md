@@ -17,7 +17,7 @@ Generally, the process of becoming an IRMA issuer looks as follows. These steps 
 
 > Credentials within the `irma-demo` scheme are not meant for production application and actual personal data, since attributes within this scheme cannot be trusted: all private keys of all issuers under the `irma-demo` scheme are included in it, so that anyone can issue any `irma-demo` credential containing any attribute values.
 
-### Creating `irma-demo` issuer and credentials
+### Creating an `irma-demo` issuer and credentials
 
 Within the scheme, all issuer and credential information is contained in a folder that schematically looks like the following.
 
@@ -63,7 +63,7 @@ Instead of submitting a PR to the `irma-demo` scheme to us, it is also possible 
 
 If you use the IRMA server from step 3 to issue your credentials, then the IRMA app from step 4 will accept them. Note, however, that the standard App/Play Store versions of the IRMA app will not.
 
-### Creating `pbdf` issuer and credentials
+### Creating a `pbdf` issuer and credentials
 
 After the development phase of your issuance application is finished and the issuer contract has been signed, your issuer and credentials can be moved to production as follows.
 
