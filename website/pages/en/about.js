@@ -47,7 +47,8 @@ function Help(props) {
           <header className="postHeader">
             <h1>About IRMA</h1>
           </header>
-          <p>IRMA is developed and maintained by the <a href="https://privacybydesign.foundation/">Privacy by Design Foundation</a>, and is <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software">free and open source</a>. See the Foundation's website for news about IRMA; how you can support IRMA; statistics on the Foundation's IRMA infrastructure; scientific publications related to IRMA; and more.</p>
+          <p>IRMA is developed and maintained by the <a href="https://privacybydesign.foundation/">Privacy by Design Foundation</a> and <a href="https://sidn.nl/en">SIDN</a>, and is <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software">free and open source</a>. See the Foundation's website for news about IRMA; how you can support IRMA; statistics on the Foundation's IRMA infrastructure; scientific publications related to IRMA; and more.</p>
+          <p>To contact us, join us on Slack (see below) or send an e-mail to <code>info at privacybydesign dot foundation</code>.</p>
           <ul>
             <li><a href="https://irma.app/">IRMA introduction for IRMA app users</a></li>
             <li><a href="https://privacybydesign.foundation/issuance/">IRMA attribute issuance</a></li>
