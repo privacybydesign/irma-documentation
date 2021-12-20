@@ -2,7 +2,7 @@
 title: Issuer guide
 ---
 
-Being an IRMA issuer allows you to issue credentials containing attributes to IRMA app users, which they can then disclose to yourself or to others. Issuing attributes can enable IRMA app users and enrich the IRMA ecosystem, but comes with special responsibilities. Contrary to verifying IRMA attributes from the [IRMA app](irma-app.md) which can be done by anyone running an [IRMA server](irma-server.md), issuing to IRMA apps cannot be done without involvement from [the Privacy by Design Foundation](https://privacybydesign.foundation) and [SIDN](https://sidn.nl/irma), the developers of IRMA: registering your organization and the credentials you will be issuing is required. This includes signing a contract that among others requires you to properly protect your IRMA private key, as well as paying a yearly fee.
+Being an IRMA issuer allows you to issue credentials containing attributes to IRMA app users, which they can then disclose to yourself or to others. Contrary to verifying IRMA attributes from the [IRMA app](irma-app.md) which can be done by anyone running an [IRMA server](irma-server.md), issuing to IRMA apps cannot be done without involvement from [the Privacy by Design Foundation](https://privacybydesign.foundation) and [SIDN](https://sidn.nl/irma), the developers of IRMA: registering your organization and the credentials you will be issuing is required. This includes signing a contract that among others requires you to properly protect your IRMA private key, as well as paying a yearly fee.
 
 This page documents some of the processes involved.
 
