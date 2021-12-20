@@ -45,7 +45,7 @@ Some notes about the `irma-demo` scheme:
 * Using the IRMA logo as `logo.png` for the issuer and credential type is fine.
 * For the private and public keypair, since no trust is associated to anything within `irma-demo`, using those of another issuer in `irma-demo` is fine (but generating a new keypair is fine too; see [below](#generating-and-refreshing-irma-issuer-keys)).
 
-Once your modifcations are complete, ensure the scheme is validly signed by running `irma scheme sign` in your irma-demo checkout, and submit your changes as a [PR](https://github.com/privacybydesign/irma-demo-schememanager/compare). Once the PR is merged, your issuer and its credentials become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server.
+Once your modifcations are complete, ensure the scheme is validly signed by running `irma scheme sign` in your irma-demo checkout, and submit your changes as a [PR](https://github.com/privacybydesign/irma-demo-schememanager/compare). Once the PR is merged, your demo issuer and its credentials become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server.
 
 You can then use your IRMA server to issue the new credentials to your IRMA app. Alternatively, after the `irma-demo` PR is merged, the new credentials can also be issued from their corresponding pages in the [attribute index](https://privacybydesign.foundation/attribute-index/en/) (only in the case of `irma-demo` credentials).
 
