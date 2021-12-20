@@ -72,7 +72,7 @@ After the development phase of your issuance application is finished and the iss
 3. [Generate](#generating-irma-issuer-keys) a new 2048 bit IRMA issuer private/public keypair; put the public key within your issuer folder in `PublicKeys/0.xml`; and keep your private key private.
 4. Submit your changes to `pbdf` as a PR.
 
-Your PR will then be signed by us, and merged. As with `irma-demo`, your issuer and its credentials then become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server. Your credentials will also automatically appear in the [attribute index](https://privacybydesign.foundation/attribute-index/en/), but by contrast with `irma-demo` credentials, they cannot be issued from there.
+Your PR will then be signed by us, and merged. As with `irma-demo`, your issuer and its credentials then become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server. Your credentials will also automatically appear in the [attribute index](https://privacybydesign.foundation/attribute-index/en/), but in contrast with `irma-demo` credentials, they cannot be issued from there.
 
 ### Generating IRMA issuer keys
 
