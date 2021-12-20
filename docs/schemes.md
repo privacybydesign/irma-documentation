@@ -60,7 +60,7 @@ IRMA schemes have the following nested structure: a scheme contains (multiple) i
 
 The `description.xml` of a credential type contains the definitions, including their identifiers, of the attributes contained within that credential type.
 
-These identifiers are used to refer to these entities within [IRMA session requests](session-requests.md), joined together using a dot `.` as separator. For example, [below](#credential-types) is shown the `description.xml` of the credential type `credentialtype-id` included in the directory tree above. This file contains an attribute whose identifier is `boolean-attr`. Then the following would be a valid IRMA disclosure request that requests an IRMA app user to disclose this attribute:
+These identifiers are used to refer to these entities within [IRMA session requests](session-requests.md), joined together using a dot `.` as separator. For example, the `description.xml` [below](#credential-types) shows the definition of the credential type `credentialtype-id` included in the directory tree above. This file contains an attribute whose identifier is `boolean-attr`. Then the following would be a valid IRMA disclosure request that requests an IRMA app user to disclose this attribute:
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--Session request (JSON)-->
