@@ -37,7 +37,7 @@ issuer-id
 └── logo.png
 ```
 
-To get started, it is easiest to use an existing folder of another issuer in `irma-demo` as base by duplicating it, and modifying its contents. In order to check correctness of your modifications, you can try to sign the scheme by running `irma scheme sign` in your `irma-demo` checkout, which will point out common mistakes. For more details about the contents of schemes, see the [IRMA scheme](schemes.md) page.
+To get started, it is easiest to use an existing folder of another issuer in `irma-demo` as base by duplicating it, and modifying its contents. In order to check correctness of your modifications, you can try to sign the scheme by running `irma scheme sign` in your `irma-demo` checkout, which will point out common mistakes. For more details about the contents of schemes, see the [IRMA schemes](schemes.md) page.
 
 Some notes about the `irma-demo` scheme:
 
