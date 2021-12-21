@@ -117,3 +117,43 @@ This will output something like the following:
 * The `sessionPtr` and `frontendRequest` are used by [`irma-frontend`](api-irma-frontend.md) to show an IRMA QR code or toggle to the IRMA app. Generally you [configure `irma-frontend`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client#usage) with an URL that returns the `sessionPtr` and `frontendRequest`; it will then start the session automatically.
 
 Instead of managing sessions with HTTP requests as shown here, [for certain languages](irma-backend.md) (currently Go and JavaScript) it is also possible to include an IRMA library and manage sessions using function invocations.
+
+## Issuing IRMA attributes
+
+This page mostly focuses on verifying, i.e. receiving IRMA attributes from IRMA apps and establishing their authenticity. Issuing attributes to IRMA apps can be done with the same software and with largely similar flows, but is more involved, because the identity of prospective issuers need to be verified and the contents and structure of the credentials to be issued needs to be established. This process is documented (among other things) in the [issuer guide](issuer.md).
+
+For experimenting and demoing, however, it is possible to issue [any of the existing credentials](https://privacybydesign.foundation/attribute-index/en/irma-demo.html) within the [`irma-demo` scheme](schemes.md). For example, if the `requestors` block in the [YAML example configuration](#configure-irma-server) of the IRMA server above would include permission to issue `irma-demo` attrbutes, as follows:
+
+```yaml
+requestors:
+  myapp:
+    auth_method: "token"
+    key: "mysecrettoken"
+    issue_perms:
+      - "irma-demo.*"
+```
+
+Then an issuance session for the credential used in the [example disclosure session](#perform-a-session) above can be started at the IRMA server as follows:
+
+```bash
+curl https://example.com/session \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -H "Authorization: mysecrettoken" \
+  -d '{
+        "@context": "https://irma.app/ld/request/issuance/v2",
+        "credentials": [
+          {
+            "credential": "irma-demo.MijnOverheid.ageLower",
+            "attributes": {
+              "over12": "yes",
+              "over16": "yes",
+              "over18": "yes",
+              "over21": "no"
+            }
+          }
+        ]
+      }'
+```
+
+To issue a demo credential of your own not already present in the `irma-demo` scheme, see the [issuer guide](issuer.md).
