@@ -5,6 +5,7 @@
       "getting-started"
     ],
     "New": [
+      "stateless",
       "revocation",
       "randomblind",
       "chained-sessions"
