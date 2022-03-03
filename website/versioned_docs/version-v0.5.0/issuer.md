@@ -104,6 +104,6 @@ Production IRMA issuer keypairs are valid for a year. Once a keypair expires it 
 The process for getting a new issuer public key included in the production `pbdf` scheme is as follows.
 
 1. Generate a new keypair as documented above.
-2. Send the public keypair to the `pbdf` scheme manager, using a [PR](https://github.com/privacybydesign/pbdf-schememanager/compare), email or Slack.
+2. Send the public key to the `pbdf` scheme manager, using a [PR](https://github.com/privacybydesign/pbdf-schememanager/compare), email or Slack.
 3. The scheme manager will contact you out-of-band to verify that the public key arrived intactly, by checking its SHA256 hash.
 4. If this check succeeds, your new key will be included in the scheme. You can then install the corresponding private key in your issuing IRMA server.
