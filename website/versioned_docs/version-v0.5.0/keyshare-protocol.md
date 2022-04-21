@@ -95,39 +95,25 @@ The email address is optional and may be absent. The `language` indicates the us
 
 ### Authentication
 
-During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done by sending the same hashed PIN `Base64(SHA256(salt, pin))\n` as during registration. If the PIN is valid, then the keyshare server returns a signed JWT containing the user's username, having an expiry date of 15 minutes. This JWT later serves as authentication token in the keyshare protocol, described below.
+During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done as follows. After computing the PIN as `Base64(SHA256(salt, pin))\n`, a message like the following is sent to the keyshare server at `POST /api/v1/user/verify/pin`:
 
-Below, the API endpoints of the keyshare server are described in the order they are called during the IRMA protocol.
+```json
+{
+    "id": "FVP1kMRcF2s",
+    "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n"
+}
+```
+If the PIN is correct for the specified user, then the user has successfully authenticated. The keyshare server then returns a signed JWT that is used as authentication in the rest of the protocol. This JWT has an expiry of 15 minutes. The signed message of this JWT is like the following:
 
-*   `POST /api/v1/user/isAuthorized`: The client posts the keyshare server's JWT from a previous IRMA session, who responds with
-
-    ```json
-    {
-        "status": status, 
-        "candidates": [ "pin" ]
-    }
-    ```
-    where status is either `"authorized"` or `"expired"`. (The `candidates` array lists the supported methods for authentication, which is currently only using PIN codes.) If the status is "authorized" then the keyshare protocol itself starts using `/api/v1/prove/getCommitments` described below. Else the user must enter her PIN, after which
-
-*   `POST /api/v1/user/verify/pin`: After computing the PIN again as `Base64(SHA256(salt, pin))\n`, a message like the following is sent to the keyshare server:
-
-    ```json
-    {
-        "id": "FVP1kMRcF2s",
-        "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n"
-    }
-    ```
-    If the PIN is correct for the specified user, then the user has successfully authenticated. The keyshare server then returns the signed JWT that is used as authentication in the rest of the protocol. The signed message of this JWT is like the following:
-
-    ```json
-    {
-        "iss": "name_of_keyshare_server",
-        "sub": "auth_tok",
-        "exp": 1523914956,
-        "user_id": "FVP1kMRcF2s",
-        "iat": 1523914056
-    }
-    ```
+```json
+{
+    "iss": "name_of_keyshare_server",
+    "sub": "auth_tok",
+    "exp": 1523914956,
+    "user_id": "FVP1kMRcF2s",
+    "iat": 1523914056
+}
+```
 
 ### The keyshare protocol
 
