@@ -103,7 +103,15 @@ During an IRMA session, authenticating to the keyshare server during the protoco
     "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n"
 }
 ```
-If the PIN is correct for the specified user, then the user has successfully authenticated. The keyshare server then returns a signed JWT that is used as authentication in the rest of the protocol. This JWT has an expiry of 15 minutes. The signed message of this JWT is like the following:
+If the PIN is correct for the specified user, then the user has successfully authenticated. The keyshare server then returns an object like the following:
+```json
+{
+    "status": "succes",
+    "message": "<authentication JWT>"
+}
+```
+
+Here, `success` indicates to the user that authentication was succesful. The `message` field contains a signed JWT that is used as authentication in the rest of the protocol. This JWT has an expiry of 15 minutes. The contents of this JWT is like the following:
 
 ```json
 {
@@ -166,6 +174,10 @@ When the user wants to change her IRMA PIN, she sends a message like the followi
 }
 ```
 
-The keyshare server then looks up the user given the specified `id`; checks if the `oldpin` is correct; and if so changes the user's PIN to the `newpin`.
+The keyshare server then looks up the user given the specified `id`, and checks if the `oldpin` is correct. If so it changes the user's PIN to the `newpin`, and responds with the following:
+```json
+{"status": "success"}
+```
+(That is, the same JSON message as `POST /api/v1/user/verify/pin` but without an authentication JWT).
 
 In addition to these API endpoints, the keyshare server exposes a number of other endpoints that are used by the [MyIRMA webclient](https://github.com/privacybydesign/irma_keyshare_webclient), which allows the IRMA user to manage her registration at the keyshare server. These endpoints are not documented here.
