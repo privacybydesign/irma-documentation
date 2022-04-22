@@ -152,4 +152,18 @@ This ends the involvement of the keyshare server in the IRMA session. In case of
 
 The structure of the message in which the client sends the keyshare server's signed response to the issuance session currently unfortunately supports at most one keyshare server simultaneously. This means that it is impossible for two (or more) issuers falling under two distinct scheme managers that  use distinct keyshare servers to both issue credential simultaneously to a client (i.e., within one IRMA session). Although this is an unlikely scenario, this will still be fixed in a future version of the protocol. Although all other issuance or disclosure sessions involving multiple keyshare server simultaneously are theoretically already possible, currently no IRMA client yet supports being registered to more than one keyshare server at once.
 
+### Changing the PIN
+
+When the user wants to change her IRMA PIN, she sends a message like the following to `POST /api/v1/user/change/pin`:
+
+```json
+{
+    "id": "FVP1kMRcF2s",
+    "oldpin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n",
+    "newpin": "IjBrTzN4YkNyV01LMTMzNmVLekkzS09LV1dvZ0diL29=\n"
+}
+```
+
+The keyshare server then looks up the user given the specified `id`; checks if the `oldpin` is correct; and if so changes the user's PIN to the `newpin`.
+
 In addition to these API endpoints, the keyshare server exposes a number of other endpoints that are used by the [MyIRMA webclient](https://github.com/privacybydesign/irma_keyshare_webclient), which allows the IRMA user to manage her registration at the keyshare server. These endpoints are not documented here.
