@@ -95,39 +95,33 @@ The email address is optional and may be absent. The `language` indicates the us
 
 ### Authentication
 
-During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done by sending the same hashed PIN `Base64(SHA256(salt, pin))\n` as during registration. If the PIN is valid, then the keyshare server returns a signed JWT containing the user's username, having an expiry date of 15 minutes. This JWT later serves as authentication token in the keyshare protocol, described below.
+During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done as follows. After computing the PIN as `Base64(SHA256(salt, pin))\n`, a message like the following is sent to the keyshare server at `POST /api/v1/user/verify/pin`:
 
-Below, the API endpoints of the keyshare server are described in the order they are called during the IRMA protocol.
+```json
+{
+    "id": "FVP1kMRcF2s",
+    "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n"
+}
+```
+If the PIN is correct for the specified user, then the user has successfully authenticated. The keyshare server then returns an object like the following:
+```json
+{
+    "status": "succes",
+    "message": "<authentication JWT>"
+}
+```
 
-*   `POST /api/v1/user/isAuthorized`: The client posts the keyshare server's JWT from a previous IRMA session, who responds with
+Here, `success` indicates to the user that authentication was succesful. The `message` field contains a signed JWT that is used as authentication in the rest of the protocol. This JWT has an expiry of 15 minutes. The contents of this JWT is like the following:
 
-    ```json
-    {
-        "status": status, 
-        "candidates": [ "pin" ]
-    }
-    ```
-    where status is either `"authorized"` or `"expired"`. (The `candidates` array lists the supported methods for authentication, which is currently only using PIN codes.) If the status is "authorized" then the keyshare protocol itself starts using `/api/v1/prove/getCommitments` described below. Else the user must enter her PIN, after which
-
-*   `POST /api/v1/user/verify/pin`: After computing the PIN again as `Base64(SHA256(salt, pin))\n`, a message like the following is sent to the keyshare server:
-
-    ```json
-    {
-        "id": "FVP1kMRcF2s",
-        "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n"
-    }
-    ```
-    If the PIN is correct for the specified user, then the user has successfully authenticated. The keyshare server then returns the signed JWT that is used as authentication in the rest of the protocol. The signed message of this JWT is like the following:
-
-    ```json
-    {
-        "iss": "name_of_keyshare_server",
-        "sub": "auth_tok",
-        "exp": 1523914956,
-        "user_id": "FVP1kMRcF2s",
-        "iat": 1523914056
-    }
-    ```
+```json
+{
+    "iss": "name_of_keyshare_server",
+    "sub": "auth_tok",
+    "exp": 1523914956,
+    "user_id": "FVP1kMRcF2s",
+    "iat": 1523914056
+}
+```
 
 ### The keyshare protocol
 
@@ -167,5 +161,23 @@ The keyshare server's API endpoints are the following.
 This ends the involvement of the keyshare server in the IRMA session. In case of attribute disclosures or attribute-based signatures, the client next merges the keyshare server's contributions `Pcommit` and `s_response` into its proof of knowledge of the secret key. In case of issuance this is skipped; instead the entire JWT from the final endpoint is sent to the issuer alongside the client's own proof of knowledge of its part of the secret key.
 
 The structure of the message in which the client sends the keyshare server's signed response to the issuance session currently unfortunately supports at most one keyshare server simultaneously. This means that it is impossible for two (or more) issuers falling under two distinct scheme managers that  use distinct keyshare servers to both issue credential simultaneously to a client (i.e., within one IRMA session). Although this is an unlikely scenario, this will still be fixed in a future version of the protocol. Although all other issuance or disclosure sessions involving multiple keyshare server simultaneously are theoretically already possible, currently no IRMA client yet supports being registered to more than one keyshare server at once.
+
+### Changing the PIN
+
+When the user wants to change her IRMA PIN, she sends a message like the following to `POST /api/v1/user/change/pin`:
+
+```json
+{
+    "id": "FVP1kMRcF2s",
+    "oldpin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n",
+    "newpin": "IjBrTzN4YkNyV01LMTMzNmVLekkzS09LV1dvZ0diL29=\n"
+}
+```
+
+The keyshare server then looks up the user given the specified `id`, and checks if the `oldpin` is correct. If so it changes the user's PIN to the `newpin`, and responds with the following:
+```json
+{"status": "success"}
+```
+(That is, the same JSON message as `POST /api/v1/user/verify/pin` but without an authentication JWT).
 
 In addition to these API endpoints, the keyshare server exposes a number of other endpoints that are used by the [MyIRMA webclient](https://github.com/privacybydesign/irma_keyshare_webclient), which allows the IRMA user to manage her registration at the keyshare server. These endpoints are not documented here.
