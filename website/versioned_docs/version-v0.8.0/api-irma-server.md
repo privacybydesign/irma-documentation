@@ -252,7 +252,7 @@ endpoint can only be used when the [session status](#get-irma-session-clienttoke
 The body of an options request should have the following structure:
 ```json
 {
-  "@context": "https://irma.app/ld/request/options/v1",
+  "@context": "https://irma.app/ld/request/frontendoptions/v1",
   "pairingMethod": "..."
 }
 ```
