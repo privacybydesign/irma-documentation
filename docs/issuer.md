@@ -97,6 +97,8 @@ Some notes:
 
 Production IRMA issuer keypairs are valid for a year. Once a keypair expires it cannot be used anymore for issuance, so it is important that it is replaced by a fresh keypair before that time. Once a new public key has been included in the `pbdf` scheme, the corresponding private key can be included in your IRMA server configuration. After a restart it will use to the new private key.
 
+Please note that although the old private key cannot be used for new credentials, you MUST still keep this private key private. Someone with access to the private key could otherwise forge credentials with a creation date set to a date in the past when the key was not yet expired.
+
 ### Submitting a new production public key
 
 The process for getting a new issuer public key included in the production `pbdf` scheme is as follows.
