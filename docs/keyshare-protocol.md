@@ -83,7 +83,7 @@ In this way, the issuer enforces that the user uses the help of the keyshare ser
 
 ### Registration
 
-When registering, the IRMA app signs the following message into a JWT with its ECDSA private key, and sends that to `/api/v1/client/register` at the keyshare server:
+When registering, the IRMA app signs the following message into a JWT with its ECDSA private key, and sends that to `/client/register` at the keyshare server:
 
 ```json
 {
@@ -98,7 +98,7 @@ The email address is optional and may be absent. The `language` indicates the us
 
 ### Authentication
 
-During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done as follows. First, the app retrieves a challenge from the keyshare server at `POST /api/v1/users/verify_start`. Next it computes the PIN as `Base64(SHA256(salt, pin))\n`, and using its ECDSA private key it signs the following message into a JWT, and sends that to the keyshare server at `POST /api/v1/user/verify/pin_challengeresponse`:
+During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done as follows. First, the app retrieves a challenge from the keyshare server at `POST /users/verify_start`. Next it computes the PIN as `Base64(SHA256(salt, pin))\n`, and using its ECDSA private key it signs the following message into a JWT, and sends that to the keyshare server at `POST /user/verify/pin_challengeresponse`:
 
 a message like the following
 
@@ -135,7 +135,7 @@ At the start of the keyshare protocol, the client needs to inform the keyshare s
 
 The keyshare server's API endpoints are the following.
 
-*   `POST /api/v1/prove/getCommitments`: The client sends a list of public key identifiers (e.g. `["irma-demo.IRMATube-1"]`) to the keyshare server (along with the authentication JWT described above in a HTTP header). If the user is authenticated and the public keys are known to the keyshare server, the keyshare server reacts with a commitment to its part of the secret key, for each of the specified public keys:
+*   `POST /prove/getCommitments`: The client sends a list of public key identifiers (e.g. `["irma-demo.IRMATube-1"]`) to the keyshare server (along with the authentication JWT described above in a HTTP header). If the user is authenticated and the public keys are known to the keyshare server, the keyshare server reacts with a commitment to its part of the secret key, for each of the specified public keys:
 
     ```json
     {
@@ -148,7 +148,7 @@ The keyshare server's API endpoints are the following.
     }
     ```
     Here `P ` $ = R^{m_k}\mod n$ and `Pcommit ` $=W_k$ is the commitment mentioned above, `Pcommit ` $= W_k = R^{w_k} \mod n$, with $R$ and $n$ coming from the second public key of the `irma-demo.IRMATube` issuer.
-*  `POST /api/v1/prove/getResponse`: after calculating the challenge, the client posts it to the keyshare server, who replies with a signed JWT with the following as content:
+*  `POST /prove/getResponse`: after calculating the challenge, the client posts it to the keyshare server, who replies with a signed JWT with the following as content:
 
     ```json
     {
@@ -170,7 +170,7 @@ The structure of the message in which the client sends the keyshare server's sig
 
 ### Changing the PIN
 
-When the user wants to change her IRMA PIN, using her ECDSA private key she signs the following message into a JWT, and sends that to `POST /api/v1/user/change/pin`:
+When the user wants to change her IRMA PIN, using her ECDSA private key she signs the following message into a JWT, and sends that to `POST /user/change/pin`:
 
 ```json
 {
@@ -184,6 +184,6 @@ The keyshare server then looks up the user given the specified `id`, and checks 
 ```json
 {"status": "success"}
 ```
-(That is, the same JSON message as `POST /api/v1/user/verify/pin` but without an authentication JWT).
+(That is, the same JSON message as `POST /user/verify/pin` but without an authentication JWT).
 
 In addition to these API endpoints, the keyshare server exposes a number of other endpoints that are used by the [MyIRMA webclient](https://github.com/privacybydesign/irma_keyshare_webclient), which allows the IRMA user to manage her registration at the keyshare server. These endpoints are not documented here.
