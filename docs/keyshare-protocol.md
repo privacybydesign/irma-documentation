@@ -24,7 +24,7 @@ The [IRMA mobile app](irma-app.md) allows users to obtain and disclose [IRMA att
 
 Each [IRMA scheme](schemes.md) decides whether or not it employs an IRMA keyshare server. If it does, then this keyshare server is involved in any IRMA session that involves attributes that fall under the scheme manager's responsibility.
 
-Upon app installation, the IRMA user *registers* to the keyshare servers of the installed scheme managers. At this point the user chooses her IRMA PIN code. The app additionally generates an ECDSA keypair, of which the public key is sent to the keyshare server, and the corresponding private key is stored exclusively in the phone's Secure Enclave (SE) or Trusted Execution Environment (TEE). Afterwards, whenever the user performs an IRMA session, the user must first enter her IRMA PIN code, as well as sign a challenge provided by the keyshare server using her ECDSA private key. Only if the PIN is correct and the challenge is correctly signed will the keyshare server allow the session to proceed.
+Upon app installation, the IRMA user *registers* to the keyshare servers of the installed scheme managers. At this point the user chooses her IRMA PIN code. The app additionally generates an ECDSA keypair, of which the public key is sent to the keyshare server, and the corresponding private key is stored exclusively in the phone's Secure Enclave (SE) or Trusted Execution Environment (TEE). Afterwards, whenever the user performs an IRMA session, the user must first enter her IRMA PIN code, after which her IRMA app signs a challenge provided by the keyshare server using its ECDSA private key. Only if the PIN is correct and the challenge is correctly signed will the keyshare server allow the session to proceed.
 
 ### Goals
 
