@@ -20,21 +20,21 @@ This document describes the goals and details of the IRMA keyshare protocol.
 
 ## Introduction
 
-The [IRMA mobile app](irma-app.md) allows users to obtain and disclose [IRMA attributes](overview.md#cryptographic-entities), as well as attach them to signed statements. Before such an IRMA session proceeds, the IRMA app may ask the user to enter her IRMA PIN code so that the [requestor](overview.md#participants) can be sure that it is indeed the attribute owner initiating the session (as opposed to, e.g., a thief of the user's phone). The verification of the correctness of the IRMA PIN code, and preventing the session from happening when it is not, is the responsibility of the [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server). In order to do this, it interacts with the IRMA app and possibly the IRMA API server in a protocol that we call the *keyshare protocol*. This protocol is documented here.
+The [IRMA mobile app](irma-app.md) allows users to obtain and disclose [IRMA attributes](overview.md#cryptographic-entities), as well as attach them to signed statements. Before such an IRMA session proceeds, the IRMA app may ask the user to enter her IRMA PIN code so that the [requestor](overview.md#participants) can be sure that it is indeed the attribute owner initiating the session (as opposed to, e.g., a thief of the user's phone). The verification of the correctness of the IRMA PIN code, and preventing the session from happening when it is not, is the responsibility of the [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server). In order to do this, it interacts with the IRMA app and possibly the IRMA server in a protocol that we call the *keyshare protocol*. This protocol is documented here.
 
 Each [IRMA scheme](schemes.md) decides whether or not it employs an IRMA keyshare server. If it does, then this keyshare server is involved in any IRMA session that involves attributes that fall under the scheme manager's responsibility.
 
-Upon app installation, the IRMA user *registers* to the keyshare servers of the installed scheme managers. At this point the user chooses her IRMA PIN code. Afterwards, whenever the user performs an IRMA session, the user must first enter her IRMA PIN code. Only if the PIN is correct will the keyshare server allow the session to proceed.
+Upon app installation, the IRMA user *registers* to the keyshare servers of the installed scheme managers. At this point the user chooses her IRMA PIN code. The app additionally generates an ECDSA keypair, of which the public key is sent to the keyshare server, and the corresponding private key is stored exclusively in the phone's Secure Enclave (SE) or Trusted Execution Environment (TEE). Afterwards, whenever the user performs an IRMA session, the user must first enter her IRMA PIN code, after which her IRMA app signs a challenge provided by the keyshare server using its ECDSA private key. Only if the PIN is correct and the challenge is correctly signed will the keyshare server allow the session to proceed.
 
 ### Goals
 
 The keyshare server must:
-- Authenticate a user as being the same person that registered to the keyshare server in the past, just before an IRMA session occurs,
+- Authenticate a user as being the same person that registered to the keyshare server in the past, just before an IRMA session occurs, using (1) a secret from the phone's SE/TEE and (2) the user's IRMA PIN;
 - Block the IRMA session from happening when this authentication fails,
 - Allow users to remotely block their IRMA app from performing future IRMA session in case of loss or theft of their phone. That is, the user can *revoke* her own attributes.
 - The keyshare server must not learn the values of any of the attributes of any user, and also not to whom the user discloses attributes.
 
-The latter two points imply that it is insufficient to verify the user's IRMA PIN code locally in the IRMA app, because the IRMA app should not be trusted: the user could create a malicious version that does not check the IRMA PIN. Instead we have chosen to modify the cryptography that is used in IRMA sessions in such a way that the keyshare server's contribution to it is necessary for the session to complete, so that the keyshare server can reliably block sessions from happening by refusing to cooperate.
+Consequentially, it is insufficient to verify the user's IRMA PIN code locally in the IRMA app, because otherwise a malicious actor could try to bruteforce the PIN of a user and thus gain access to her attributes. Instead we have chosen to modify the cryptography that is used in IRMA sessions in such a way that the keyshare server's contribution to it is necessary for the session to complete, so that the keyshare server can reliably block sessions from happening by refusing to cooperate, if the correct PIN is not entered. Additionally the keyshare server prevents bruteforce attempts on the user's PIN, by rejecting further PIN attempts if the user's PIN is entered incorrectly too many times.
 
 ### IRMA secret keys and keyshares
 
@@ -62,15 +62,21 @@ For these reasons this protocol is very well suited for our aims of making the k
 
 ## The protocol
 
+We now describe the IRMA keyshare protocol. The version of the keyshare protocol documented here is supported by the keyshare server since `v0.11.0` of `irmago`. The previous version of the protocol, which was largely the same but did not use ECDSA for device binding, is documented [here](/docs/v0.9.0/keyshare-protocol). The [IRMA app](app.md) always uses the latest keyshare protocol version that it knows of, but the keyshare server is backwards compatible: it understands both protocols.
+
 ### Overview
 
-We now describe the IRMA keyshare protocol at a high level. When the IRMA app runs for the first time, it registers to the keyshare server, by asking the user for the IRMA PIN that she wishes to use in future sessions, and optionally for her email address. It sends these to the keyshare server. The keyshare server then generates a random username for the user, which is automatically issued to the user as her first attribute. At this point registration is complete in the sense that the user can now receive and disclose attributes. If she entered her email address on registration a confirmation link is sent to it, and if the user clicks on it then the keyshare server issues an email address attribute to the user, and stores the email address.
+When the IRMA app runs for the first time, it first registers to the keyshare server as follows. It asks the user for the IRMA PIN that she wishes to use in future sessions, and optionally for her email address. Next, it computes the following cryptographic material:
+* An ECDSA keypair inside the phone's SE/TEE, which is later used for challenge-response authentication to the keyshare server.
+* A salt: 32 random bytes. Similar to password authentication, this is later used to send a *hashed salted* PIN, that is `SHA256(salt, PIN)`, to the keyshare server, instead of the PIN directly.
 
-When performing an IRMA session, the user and keyshare server use the protocol described above to compute a proof of knowledge of the sum $m = m_u + m_k$, with an important addition: when sending the response $s_k$, the keyshare server always includes a digital signature over this number. The keyshare server's public key with which these signatures can be verified is known to all IRMA participants.
+Using its ECDSA private key, it then signs the user's email address (if specified), the ECDSA public key, and the user's hashed salted PIN into a JWT, and sends this JWT to the keyshare server. The keyshare server then generates a random username for the user, which is automatically issued to the user as her first attribute. At this point registration is complete in the sense that the user can now receive and disclose attributes. If the user entered her email address a confirmation link is sent to it, which the user must click on to finalize the registration.
+
+When performing an IRMA session, the user and keyshare server use the protocol described above to compute a proof of knowledge of the sum $m = m_u + m_k$, with an important addition: when sending the response $s_k$, the keyshare server always includes a digital signature over this number. The keyshare server's public key with which these signatures can be verified is known to all IRMA participants through the [IRMA scheme](schemes.md).
 
 Now the IRMA protocol is modified as follows.
 
-* The user authenticates to the keyshare server, by entering her PIN in the IRMA app, which sends it along with the user's username at the keyshare server to the keyshare server. The keyshare server checks if the user is known and if the PIN is correct, and aborts if not.
+* The user authenticates to the keyshare server as follows: (1) the app retrieves a challenge from the keyshare server; (2) the user enters her PIN in the IRMA app; (3) using its ECDSA private key from the SE/TEE, the app signs the challenge, hashed salted PIN, and the user's username into a JWT; (4) it sends this JWT to the keyshere server. The keyshare server checks if the user is known, if the JWT validates against the public key with which she registered, and if the PIN is correct; and aborts if not.
 * When performing a disclosure or attribute-based signing session, the user engages in the protocol described above with the keyshare server to produce a proof of knowledge of the sum $m = m_u + m_k$, and sends this proof to the verifier.
 * When issuing the user does the same, except for computing and sending the sum $s + s_k$ in the final step of the protocol described above. Instead, the user sends $s$ and $s_k$, along with the keyshare server's signature over $s_k$, separately to the issuer. The issuer then checks the signature over $s_k$, and computes the sum $s + s_k$ which it uses for checking the proof of knowledge.
 
@@ -79,29 +85,33 @@ In this way, the issuer enforces that the user uses the help of the keyshare ser
 
 ### Registration
 
-When registering, the IRMA app POSTs a message like the one below to the to `/api/v1/client/register` at the keyshare server:
+When registering, the IRMA app signs the following message into a JWT with its ECDSA private key, and sends that to `/client/register` at the keyshare server:
 
 ```json
 {
     "email": "example@example.com",
     "language": "en",
     "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n",
+    "publickey": "User's ECDSA public key, base64-encoded"
 }
 ```
 
-The email address is optional and may be absent. The `language` indicates the user's preferred language, used for a confirmation mail if the email address is present. Lastly, the `pin` field is computed as `Base64(SHA256(salt, pin))\n` (the trailing newline is there for legacy purposes and will be removed in the future).
+The email address is optional and may be absent. The `language` indicates the user's preferred language, used for a confirmation mail if the email address is present. Lastly, the `pin` field is computed as `Base64(SHA256(salt, pin))\n` (the trailing newline is there for legacy purposes and will be removed in the future). Note that since the user is not yet known to the keyshare server, this message is self-signed; to validate it the public key will first need to be extracted from the JWT and parsed.
 
 ### Authentication
 
-During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done as follows. After computing the PIN as `Base64(SHA256(salt, pin))\n`, a message like the following is sent to the keyshare server at `POST /api/v1/user/verify/pin`:
+During an IRMA session, authenticating to the keyshare server during the protocol between the IRMA client and keyshare server is done as follows. First, the app retrieves a challenge from the keyshare server at `POST /users/verify_start`. Next it computes the PIN as `Base64(SHA256(salt, pin))\n`, and using its ECDSA private key it signs the following message into a JWT, and sends that to the keyshare server at `POST /user/verify/pin_challengeresponse`:
+
+a message like the following
 
 ```json
 {
     "id": "FVP1kMRcF2s",
-    "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n"
+    "pin": "0kO3xbCrWMK1336eKzI3KOKWWogGb/oW4xErUd5rwFI=\n",
+    "challenge": "the challenge retrieved earlier"
 }
 ```
-If the PIN is correct for the specified user, then the user has successfully authenticated. The keyshare server then returns an object like the following:
+If the JWT validates against the user's public key and the PIN is correct, then the user has successfully authenticated. The keyshare server then returns an object like the following:
 ```json
 {
     "status": "succes",
@@ -116,7 +126,7 @@ Here, `success` indicates to the user that authentication was succesful. The `me
     "iss": "name_of_keyshare_server",
     "sub": "auth_tok",
     "exp": 1523914956,
-    "user_id": "FVP1kMRcF2s",
+    "token_id": "a token identifying the user",
     "iat": 1523914056
 }
 ```
@@ -127,7 +137,7 @@ At the start of the keyshare protocol, the client needs to inform the keyshare s
 
 The keyshare server's API endpoints are the following.
 
-*   `POST /api/v1/prove/getCommitments`: The client sends a list of public key identifiers (e.g. `["irma-demo.IRMATube-1"]`) to the keyshare server (along with the authentication JWT described above in a HTTP header). If the user is authenticated and the public keys are known to the keyshare server, the keyshare server reacts with a commitment to its part of the secret key, for each of the specified public keys:
+*   `POST /prove/getCommitments`: The client sends a list of public key identifiers (e.g. `["irma-demo.IRMATube-1"]`) to the keyshare server (along with the authentication JWT described above in a HTTP header). If the user is authenticated and the public keys are known to the keyshare server, the keyshare server reacts with a commitment to its part of the secret key, for each of the specified public keys:
 
     ```json
     {
@@ -140,7 +150,7 @@ The keyshare server's API endpoints are the following.
     }
     ```
     Here `P ` $ = R^{m_k}\mod n$ and `Pcommit ` $=W_k$ is the commitment mentioned above, `Pcommit ` $= W_k = R^{w_k} \mod n$, with $R$ and $n$ coming from the second public key of the `irma-demo.IRMATube` issuer.
-*  `POST /api/v1/prove/getResponse`: after calculating the challenge, the client posts it to the keyshare server, who replies with a signed JWT with the following as content:
+*  `POST /prove/getResponse`: after calculating the challenge, the client posts it to the keyshare server, who replies with a signed JWT with the following as content:
 
     ```json
     {
@@ -162,7 +172,7 @@ The structure of the message in which the client sends the keyshare server's sig
 
 ### Changing the PIN
 
-When the user wants to change her IRMA PIN, she sends a message like the following to `POST /api/v1/user/change/pin`:
+When the user wants to change her IRMA PIN, using her ECDSA private key she signs the following message into a JWT, and sends that to `POST /user/change/pin`:
 
 ```json
 {
@@ -176,6 +186,6 @@ The keyshare server then looks up the user given the specified `id`, and checks 
 ```json
 {"status": "success"}
 ```
-(That is, the same JSON message as `POST /api/v1/user/verify/pin` but without an authentication JWT).
+(That is, the same JSON message as `POST /user/verify/pin` but without an authentication JWT).
 
 In addition to these API endpoints, the keyshare server exposes a number of other endpoints that are used by the [MyIRMA webclient](https://github.com/privacybydesign/irma_keyshare_webclient), which allows the IRMA user to manage her registration at the keyshare server. These endpoints are not documented here.
