@@ -16,8 +16,8 @@ participant "IRMA server" as server
 
 
 user -> browser: initiate session
-browser -> requestor: initiate session
-requestor -> server: <font color=#1D5B2A>**POST** /session/</font> (create session)
+browser -> requestor: <font color=#1D5B2A>**POST** /session/</font> (create session)
+requestor -> server: initiate session
 server <- server: set state to INITIALIZED
 server --> requestor: session pointer + requestor token + frontendAuth 
 requestor --> browser: session pointer (QR) + frontendAuth
