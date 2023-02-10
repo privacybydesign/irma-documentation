@@ -172,6 +172,18 @@ In development mode, when `production` is `false`, the defaults for `disclose_pe
 
 In session requests, the server can be asked to pass a [client return url](session-requests.md#client-return-url) to the IRMA app, which the app will open after completing the session for sessions that involve only one device. This feature is always enabled.
 
+### Session lifetime
+
+When a session is [started by the requestor](#starting-a-session), users have a limited amount of time to perform the session in their IRMA app. These lifetime constraints can be configured.
+
+By default, users have the maximum session lifetime to start the session in their IRMA app after it is started on the server. By default, this is set to 15 minutes. This global setting holds for all sessions on this server and can be changed in the configuration (see below). Per session, a custom timeout value can be chosen using the `timeout` option in the [extended session request](session-requests.md#extra-parameters).
+
+After a session is started by the user in the IRMA app, it has another full period of the maximum session lifetime to complete the session in their app. As mentioned above, this is 15 minutes by default. This part of the session lifetime is *not* affected by the `timeout` setting of the extended session request. The maximum session lifetime can be configured using the global `max_session_lifetime` option in the server configuration.
+
+When the user completes the session, the requestor has a limited amount of time to retrieve the session result from the server. By default, the lifetime of the session result on the server is 5 minutes. The session result lifetime can be configured using the global `session_result_lifetime` option in the server configuration.
+
+More information on how to configure global options for your server can be found [above](#configuring).
+
 ### Augmented client return urls
 
 The server can be configured to [augment the client return url](session-requests.md#augmenting-the-client-return-url) when requested. In order to enable this feature, the `augment_client_return_url` setting needs to be set to `true`.
