@@ -245,7 +245,7 @@ The server's verbosity can be increased by two degrees:
 * `-v` flag is given, or `verbosity` option set to `1`: includes `DEBUG` messages. Logs server configuration when starting the server, stack traces of errors, and more.
 * `-vv` flag is given, or `verbosity` option set to `2`: includes `TRACE` messages. Additionally includes dumps of all HTTP traffic from and to the server.
 
-> in its default mode, the server will not log attribute values (personal data). If the verbosity is increased, then attribute values may be logged. You should avoid doing this in production.
+> in its default mode, the server will not log untrusted user input and attribute values (personal data). If the verbosity is increased, sensitive or dangerous content may be logged. You should avoid doing this in production.
 
 The output is [structured](https://github.com/sirupsen/logrus#fields), putting certain recurring values in fields:
 ```text
