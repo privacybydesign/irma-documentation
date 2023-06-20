@@ -104,17 +104,19 @@ The addition of revocation to IRMA is designed to be backwards compatible: when 
 
 ### Scheme
 
-Revocation for a credential type is enabled in the scheme by (1) including at least one `RevocationServer` XML tag in its `description.xml`, and (2) including a *revocation attribute*:
+Revocation for a credential type is enabled in the scheme by (1) including at least one `RevocationServer` XML tag in its `description.xml`, and (2) including a separate `Attribute` with `revocation="true"` as content:
 ```xml
 <IssueSpecification version="4">
   <RevocationServers>
     <RevocationServer>http://example.com/</RevocationServer>
   </RevocationServers>
   <!-- ... -->
-  <Attributes>
+  <Attributes>  
+    <Attribute id="xyz" >
+      <!-- ... -->
+    </Attribute>
     <!-- ... -->
     <Attribute revocation="true" />
-    <!-- ... -->
   </Attributes>
 </IssueSpecification>
 ```
