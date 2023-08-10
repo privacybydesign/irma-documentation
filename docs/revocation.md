@@ -133,7 +133,7 @@ Revocation can be configured in the IRMA server configuration using a new `revoc
 ```json
 {
   "revocation_db": "host=127.0.0.1 port=5432 user=testuser dbname=test password='testpassword'",
-  "revocation_db_type": "mysql",
+  "revocation_db_type": "postgres",
   "no_auth": false,
   "revocation_settings": {
     "irma-demo.MijnOverheid.root": {
@@ -152,7 +152,29 @@ Revocation can be configured in the IRMA server configuration using a new `revoc
 ```
 
 Note the following:
-* A server running in revocation mode for any credential type requires a SQL database to be configured. In this database all revocation state will be stored. Currently MySQL and Postgres are supported.
+* A server running in revocation mode for any credential type requires a SQL database to be configured. In this database all revocation state will be stored.   
+  Current supported SQL databases:
+  * Postgres
+    ```json
+    {
+      "revocation_db": "host=127.0.0.1 port=5432 user=testuser dbname=test password='testpassword'",
+      "revocation_db_type": "postgres"
+    }
+    ```
+  * MySQL:
+    ```json
+    {
+      "revocation_db": "testuser:testpassword@tcp(127.0.0.1)/test",
+      "revocation_db_type": "mysql"
+    }
+    ```
+  * Microsoft SQL Server
+    ```json
+    {
+      "revocation_db": "sqlserver://testuser:test-Password@127.0.0.1:1433?database=test",
+      "revocation_db_type": "sqlserver"
+    }
+    ``` 
 * This configuration also grants permission to a requestor called `myapp` to issue and revoke `irma-demo.MijnOverheid.root` instances. Alternatively, if `no_auth` would be `true` then any requestor capable of reaching the server could issue and revoke instances (in production settings, such a server should not be publically reachable).
 
 For each credential type revocation settings may be specified in the `revocation_settings` block as above. The following specifies all possible options and their defaults.
