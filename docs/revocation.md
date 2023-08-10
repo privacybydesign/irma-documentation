@@ -170,7 +170,7 @@ Note the following:
     ```json
     {
       "revocation_db": "sqlserver://testuser:test-Password@127.0.0.1:1433?database=test",
-      "revocation_db_type": "mssql"
+      "revocation_db_type": "sqlserver"
     }
     ``` 
 * This configuration also grants permission to a requestor called `myapp` to issue and revoke `irma-demo.MijnOverheid.root` instances. Alternatively, if `no_auth` would be `true` then any requestor capable of reaching the server could issue and revoke instances (in production settings, such a server should not be publically reachable).
