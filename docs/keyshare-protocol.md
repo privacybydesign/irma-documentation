@@ -26,6 +26,8 @@ Each [IRMA scheme](schemes.md) decides whether or not it employs an IRMA keyshar
 
 Upon app installation, the IRMA user *registers* to the keyshare servers of the installed scheme managers. At this point the user chooses her IRMA PIN code. The app additionally generates an ECDSA keypair, of which the public key is sent to the keyshare server, and the corresponding private key is stored exclusively in the phone's Secure Enclave (SE) or Trusted Execution Environment (TEE). Afterwards, whenever the user performs an IRMA session, the user must first enter her IRMA PIN code, after which her IRMA app signs a challenge provided by the keyshare server using its ECDSA private key. Only if the PIN is correct and the challenge is correctly signed will the keyshare server allow the session to proceed.
 
+This page mentions the cryptographical mechanism, but with a focus on the implementation in IRMA. More details as well as a security proof of the keyshare protocol can be found [here](assets/keysharePaper.pdf).
+
 ### Goals
 
 The keyshare server must:
@@ -46,12 +48,14 @@ Thus each user has her own secret key, namely the integer that serves as the fir
 
 ### Splitting the secret key across the user and keyshare server
 
-As mentioned, in IRMA the secret key $m$ is always kept hidden from the verifier using [a zero-knowledge proof](zkp.md). Now let $m = m_u + m_k$ with $m_u$ only known to the user, $m_k$ only known to the keyshare server, and $m$ known to neither. We now describe how we can modify the zero-knowledge proof of the secret key in such a way that the user and keyshare server *jointly* prove knowledge of the number $m$, as follows. We refer to the diagram and use the notation of the [page on zero-knowledge proofs](zkp.md).
+As mentioned, in IRMA the secret key $m$ is always kept hidden from the verifier using [a zero-knowledge proof](zkp.md). Now let $m = m_u + m_k$ with $m_u$ only known to the user, $m_k$ only known to the keyshare server, and $m$ known to neither. We now describe how we can modify the zero-knowledge proof of the secret key in such a way that the user and keyshare server *jointly* prove knowledge of the number $m$, as follows. We refer to the diagram and use the notation of the [page on zero-knowledge proofs](zkp.md). Additionally, set $M = R^m$.
 
-* After step 2.2, the user asks the keyshare server to generate its own random $w_k$ and compute $W_k = R^{w_k}$. The keyshare server keeps $w_k$ hidden but sends $W_k$ to the user.
-* The user computes the challenge as $c = H(P, WW_k, \eta)$, and then sends $c$ to the keyshare server.
-* The keyshare server computes $s_k = cm_k + w_k$ and sends this number to the user.
-* Instead of sending $(c,s)$ to the verifier in step 2.5, the user sends $(c, s + s_k)$.
+* The user performs steps 2.i and 2.ii normally, generating a random number $w$ and computing the commitment $W = R^w$. Additionally, the user computes $h_W = H(W, P)$.
+* Between step 2.ii and step 2.iii, the user commits to $W$ and $P$ towards the keyshare server by sending $h_W$ to it. The keyshare server remembers $h_W$ for later, generates its own random $w_k$ and computes $W_k = R^{w_k}$. It sends $W_k$ back to the user (keeping $w_k$ hidden).
+* The user computes the challenge as $c = H(P, WW_k, \eta)$, and computes its response $s = cm + w$ as in step 2.iv.
+* Between step 2.iv and step 2.v, the user sends $\eta, s, P, W$ to the keyshare server.
+* Using this data, the keyshare server first verifies that the $h_W$ that it received earlier from the user equals $h_W = H(W, P)$. (This forces the user to use the same values of $W$ and $P$ throughout the protocol.) If that is the case, then next the keyshare server computes the exact same challenge $c = H(P, WW_k, \eta)$ as the user did, along with its own response, $s_k = cm_k + w_k$. The keyshare server sends $s + s_k$ to the user.
+* The user sends $(c, s + s_k)$ to the verifier as in step 2.v.
 
 The verifier then uses this tuple to verify the proof of knowledge as it normally would. If both the user and the keyshare server follow the protocol, then the verification equation $c = c'$ will hold, so that the verifier will accept. This is effectively a proof of knowledge of the sum $m = m_u + m_k$, in the sense that the messages going back and forth between the user and verifier have exactly the same structure as they would have if they were a proof of knowledge of $m$ - in fact, to the verifier an execution of this modified protocol is completely indistinguishable from a normal one without a keyshare server. Additionally, the protocol has the following properties:
 
@@ -62,7 +66,7 @@ For these reasons this protocol is very well suited for our aims of making the k
 
 ## The protocol
 
-We now describe the IRMA keyshare protocol. The version of the keyshare protocol documented here is supported by the keyshare server since `v0.11.0` of `irmago`. The previous version of the protocol, which was largely the same but did not use ECDSA for device binding, is documented [here](/docs/v0.9.0/keyshare-protocol). The [IRMA app](app.md) always uses the latest keyshare protocol version that it knows of, but the keyshare server is backwards compatible: it understands both protocols.
+We now describe the IRMA keyshare protocol. The version of the keyshare protocol documented here is supported by the keyshare server since `v0.14.0` of `irmago`. This is an improvement of an older version of the keyshare protocol, which is documented [here](/docs/v0.11.0/keyshare-protocol). The [IRMA app](app.md) always uses the latest keyshare protocol version that it knows of, but the keyshare server is backwards compatible: it also understands older protocol versions.
 
 ### Overview
 
@@ -78,7 +82,7 @@ Now the IRMA protocol is modified as follows.
 
 * The user authenticates to the keyshare server as follows: (1) the app retrieves a challenge from the keyshare server; (2) the user enters her PIN in the IRMA app; (3) using its ECDSA private key from the SE/TEE, the app signs the challenge, hashed salted PIN, and the user's username into a JWT; (4) it sends this JWT to the keyshere server. The keyshare server checks if the user is known, if the JWT validates against the public key with which she registered, and if the PIN is correct; and aborts if not.
 * When performing a disclosure or attribute-based signing session, the user engages in the protocol described above with the keyshare server to produce a proof of knowledge of the sum $m = m_u + m_k$, and sends this proof to the verifier.
-* When issuing the user does the same, except for computing and sending the sum $s + s_k$ in the final step of the protocol described above. Instead, the user sends $s$ and $s_k$, along with the keyshare server's signature over $s_k$, separately to the issuer. The issuer then checks the signature over $s_k$, and computes the sum $s + s_k$ which it uses for checking the proof of knowledge.
+* During issuance, in the final message of the keyshare server to the user in the keyshare protocol described above, the keyshare server includes a digital signature over the the pair $(c, s + s_k)$. When the user sends $(c, s + s_k)$ to the issuer it includes this signature. The issuer only proceeds with issuance if the keyshare server's signature over $(c, s + s_k)$ is valid.
 
 In this way, the issuer enforces that the user uses the help of the keyshare server in the issuance protocol, and that the resulting credential indeed has $m = m_u + m_k$ as its first attribute. Consequentially, the modified disclosure protocol as described in the second item will succeed, and as the keyshare server's contributions are not directly communicated from the keyshare server to the verifier but only to the user, the keyshare server never learns to whom the user is disclosing attributes.
 
