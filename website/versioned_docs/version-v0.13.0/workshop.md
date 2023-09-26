@@ -1,5 +1,7 @@
 ---
 title: May 22 IRMA Workshop
+id: version-v0.13.0-workshop
+original_id: workshop
 ---
 
 ## Resources

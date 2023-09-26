@@ -1,5 +1,7 @@
 ---
 title: What is IRMA?
+id: version-v0.13.0-what-is-irma
+original_id: what-is-irma
 ---
 
 IRMA is a set of free and open source software projects implementing the Idemix attribute-based credential scheme, allowing users to safely and securely authenticate themselves as privacy-preserving as the situation permits. Users receive digitally signed attributes from trusted issuer, storing them in their Yivi app, after which the user can selectively disclose attributes to others. Schematically:

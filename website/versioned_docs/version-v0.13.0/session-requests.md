@@ -1,5 +1,7 @@
 ---
 title: Session requests
+id: version-v0.13.0-session-requests
+original_id: session-requests
 ---
 
 <style>

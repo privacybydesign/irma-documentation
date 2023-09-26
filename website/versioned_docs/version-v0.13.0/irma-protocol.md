@@ -1,5 +1,7 @@
 ---
 title: IRMA protocol
+id: version-v0.13.0-irma-protocol
+original_id: irma-protocol
 ---
 
 During an IRMA session, the IRMA protocol is used by the [IRMA server](irma-server.md) and [Yivi app](yivi-app.md) to issue or verify attributes. The Yivi app sends and receives various data by invoking a number of HTTP endpoints of the IRMA server, making the session progress through a number of stages. This page documents those endpoints, the data being handled, and the states the session goes through.

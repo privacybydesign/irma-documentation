@@ -8,8 +8,8 @@ ParticipantBackgroundColor #004C92
 ParticipantFontColor white
 } 
 
-actor "IRMA app user" as user
-participant "IRMA app" as app
+actor "Yivi app user" as user
+participant "Yivi app" as app
 participant frontend as browser
 participant "requestor" as requestor
 participant "IRMA server" as server

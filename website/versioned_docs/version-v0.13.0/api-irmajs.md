@@ -1,5 +1,7 @@
 ---
 title: irmajs
+id: version-v0.13.0-irmajs
+original_id: irmajs
 ---
 
 > This concerns documentation of a deprecated library. Please use [`irma-frontend`](irma-frontend.md) instead. If you are looking for a library to manage your `irma server` using Node.js, you can use the JavaScript packages from [`irma-backend`](irma-backend.md).

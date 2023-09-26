@@ -1,5 +1,7 @@
 ---
 title: Email address
+id: version-v0.13.0-email
+original_id: email
 ---
 
 IRMA has a decentral architecture: anyone can start an [`irma server`](irma-server.md) and verify attributes, communicating directly with Yivi apps. This is an important and distinguishing feature contributing to IRMA's privacy features and trustworthiness, but also means that we as authors of the software have no natural update channel with which we can update all IRMA servers running within the ecosystem. We have to prevent that this leads to a fractured IRMA ecosystem with incompatible apps and servers, which would lead to bad user experience and hurt adoption.

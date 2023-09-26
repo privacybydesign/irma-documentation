@@ -1,5 +1,7 @@
 ---
 title: Keyshare protocol
+id: version-v0.13.0-keyshare-protocol
+original_id: keyshare-protocol
 ---
 
 <script type="text/x-mathjax-config">

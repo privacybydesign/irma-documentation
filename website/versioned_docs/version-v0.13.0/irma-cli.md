@@ -6,7 +6,7 @@ original_id: irma-cli
 
 `irma` is an IRMA Swiss knife in the form of a command line executable, supporting the following subcommands:
 
-* [`irma server`](irma-server.md): an IRMA server daemon allowing you to perform IRMA sessions with [IRMA apps](irma-app.md).
+* [`irma server`](irma-server.md): an IRMA server daemon allowing you to perform IRMA sessions with [Yivi apps](yivi-app.md).
 * `irma session`: Perform an IRMA disclosure, issuance or signature session, using the [builtin](irma-server-lib.md) IRMA server or a remote [`irma server`](irma-server.md)
 * [`irma scheme`](schemes.md#updating-and-signing-schemes-with-irma): Manage IRMA schemes, supporting downloading, updating, verifying, and signing schemes, and IRMA key generation
 * `irma request`: compose an IRMA session request

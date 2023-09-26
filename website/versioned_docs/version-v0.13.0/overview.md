@@ -1,5 +1,7 @@
 ---
 title: Technical overview
+id: version-v0.13.0-overview
+original_id: overview
 ---
 
 This document presents a technical overview of the IRMA project.

@@ -1,5 +1,7 @@
 ---
 title: "\"Condiscon\" session requests"
+id: version-v0.13.0-condiscon
+original_id: condiscon
 ---
 
 <style>

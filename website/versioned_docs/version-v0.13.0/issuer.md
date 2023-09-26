@@ -1,5 +1,7 @@
 ---
 title: Issuer guide
+id: version-v0.13.0-issuer
+original_id: issuer
 ---
 
 Being an IRMA issuer allows you to issue credentials containing attributes to Yivi app users, which they can then disclose to yourself or to others. Contrary to verifying IRMA attributes from the [Yivi app](yivi-app.md) which can be done by anyone running an [IRMA server](irma-server.md), issuing to Yivi apps cannot be done without involvement the developers of IRMA ([the Privacy by Design Foundation](https://privacybydesign.foundation) and [SIDN](https://sidn.nl/irma)): registering your organization and the credentials you will be issuing is required. As part of this registration process the identity of your organization is verified, and the contents and structure of the credentials that you will be issuing is finetuned for correctness and consistency with the rest of the IRMA ecosystem. This process includes signing a contract that among others requires you to properly protect your IRMA private key, as well as paying a yearly fee.
