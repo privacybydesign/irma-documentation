@@ -404,11 +404,11 @@ In this example, the client return url would be augmented to become `https://exa
 The host in the `sessionPtr` field of the [session package](api-irma-server.md#post-session) can be configured using the `host` option in the session request. This is useful when the IRMA server can be reached through multiple URLs. In this way, a single IRMA server can be used to serve multiple requestors, each with their own host name. The host name is being shown to the user in the Yivi app. The IRMA server will verify that the host name the Yivi app connects to matches the host name in the session request.
 
 ```json
-  {
-    "@context": "https://irma.app/ld/request/disclosure/v2",
-    "host": "irma.example.com",
-    "disclose": ...
-  }
+{
+  "@context": "https://irma.app/ld/request/disclosure/v2",
+  "host": "irma.example.com",
+  "disclose": ...
+}
 ```
 This leads to the following session package:
 ```json
