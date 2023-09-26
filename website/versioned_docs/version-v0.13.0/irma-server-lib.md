@@ -1,5 +1,7 @@
 ---
 title: irma server library
+id: version-v0.13.0-irma-server-lib
+original_id: irma-server-lib
 ---
 
 <a href="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver" class="godoc"><img src="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver?status.svg" alt="GoDoc"></a>

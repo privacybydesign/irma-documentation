@@ -6,10 +6,10 @@ original_id: getting-started
 
 This page shows how to get started with verifying or issuing IRMA attributes, using the following components:
 
- * [`irma server`](irma-server.md), a server that verifies or issues IRMA attributes to [IRMA apps](irma-app.md),
+ * [`irma server`](irma-server.md), a server that verifies or issues IRMA attributes to [Yivi apps](yivi-app.md),
  * [`irma-frontend`](irma-frontend.md), a JavaScript library for drawing the IRMA QR in your website, and handling IRMA session with the `irma server`.
 
-You should have the [IRMA app](irma-app.md) installed ([Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994)). If you want to compile from source instead of using prebuilt binaries, you should additionally have [Git](https://git-scm.com/), [Go](https://golang.org/doc/install), and [npm](https://docs.npmjs.com/cli/npm) installed.
+You should have the [Yivi app](yivi-app.md) installed ([Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994)). If you want to compile from source instead of using prebuilt binaries, you should additionally have [Git](https://git-scm.com/), [Go](https://golang.org/doc/install), and [npm](https://docs.npmjs.com/cli/npm) installed.
 
 
 ## Installing and running `irma server`
@@ -49,7 +49,7 @@ Given a running IRMA server (see above), you can perform a first IRMA session us
   IP=192.168.1.2 # Replace with your local IP address.
   docker run ghcr.io/privacybydesign/irma:latest session --server "http://$IP:8088" --disclose pbdf.pbdf.irmatube.type
   ```
-[IRMATube attributes](https://privacybydesign.foundation/attribute-index/en/pbdf.pbdf.irmatube.html) are available on the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube/) page. This will print a QR that you can scan with your IRMA app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
+[IRMATube attributes](https://privacybydesign.foundation/attribute-index/en/pbdf.pbdf.irmatube.html) are available on the [IRMATube demo](https://privacybydesign.foundation/demo/irmaTube/) page. This will print a QR that you can scan with your Yivi app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
 
 
 ## Installing an example webpage for `yivi-frontend`
@@ -83,7 +83,7 @@ A webpage demoing IRMA attribute issuance verification should now be available a
 
 ## Example configuration and IRMA session
 
-Generally, your IRMA server runs in your backend alongside a server application serving your frontend (website), with which the IRMA app user is interacting. Your server application starts and manages sessions at your IRMA server to verify or issue attributes (for example, when the user wants to log in). This can be setup as follows.
+Generally, your IRMA server runs in your backend alongside a server application serving your frontend (website), with which the Yivi app user is interacting. Your server application starts and manages sessions at your IRMA server to verify or issue attributes (for example, when the user wants to log in). This can be setup as follows.
 
 ### Configure `irma server`
 
@@ -135,13 +135,13 @@ This will output something like the following:
 ```
 
 * Use the `token` to [track the session status](api-irma-server.md#get-session-token-status), and to [get the session result](api-irma-server.md#get-session-token-result) after the session has finished.
-* The `sessionPtr` and `frontendRequest` are used by [`irma-frontend`](api-irma-frontend.md) to show an IRMA QR code or toggle to the IRMA app. Generally you [configure `irma-frontend`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client#usage) with an URL that returns the `sessionPtr` and `frontendRequest`; it will then start the session automatically.
+* The `sessionPtr` and `frontendRequest` are used by [`irma-frontend`](api-irma-frontend.md) to show an IRMA QR code or toggle to the Yivi app. Generally you [configure `irma-frontend`](https://github.com/privacybydesign/irma-frontend-packages/tree/master/plugins/irma-client#usage) with an URL that returns the `sessionPtr` and `frontendRequest`; it will then start the session automatically.
 
 Instead of managing sessions with HTTP requests as shown here, [for certain languages](irma-backend.md) (currently Go and JavaScript) it is also possible to include an IRMA library and manage sessions using function invocations.
 
 ## Issuing IRMA attributes
 
-This page mostly focuses on verifying, i.e. receiving IRMA attributes from IRMA apps and establishing their authenticity. Issuing attributes to IRMA apps can be done with the same software and with largely similar flows, but is more involved, because the identity of prospective issuers need to be verified and the contents and structure of the credentials to be issued needs to be established. This process is documented (among other things) in the [issuer guide](issuer.md).
+This page mostly focuses on verifying, i.e. receiving IRMA attributes from Yivi apps and establishing their authenticity. Issuing attributes to Yivi apps can be done with the same software and with largely similar flows, but is more involved, because the identity of prospective issuers need to be verified and the contents and structure of the credentials to be issued needs to be established. This process is documented (among other things) in the [issuer guide](issuer.md).
 
 For experimenting and demoing, however, it is possible to issue [any of the existing credentials](https://privacybydesign.foundation/attribute-index/en/irma-demo.html) within the [`irma-demo` scheme](schemes.md). For example, if the `requestors` block in the [YAML example configuration](#configure-irma-server) of the IRMA server above would include permission to issue `irma-demo` attrbutes, as follows:
 

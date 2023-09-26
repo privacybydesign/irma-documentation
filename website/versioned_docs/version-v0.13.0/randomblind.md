@@ -1,5 +1,7 @@
 ---
 title: Randomblind issuance
+id: version-v0.13.0-randomblind
+original_id: randomblind
 ---
 
 <script type="text/x-mathjax-config">

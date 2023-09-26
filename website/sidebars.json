@@ -20,7 +20,7 @@
       "issuer",
       "session-requests",
       "email",
-      "irma-app",
+      "yivi-app",
       "irmajs"
     ],
     "API reference": [
