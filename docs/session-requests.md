@@ -401,7 +401,7 @@ request.AugmentReturnURL = true
 In this example, the client return url would be augmented to become `https://example.com?token=0123456789abcdef`, where `0123456789abcdef` would be the server token of the session.
 
 ## Session host
-The host in the `sessionPtr` field of the [session package](api-irma-server.md#post-session) can be configured using the `host` option in the session request. This is useful when the IRMA server can be reached through multiple URLs. In this way, a single IRMA server can be used to serve multiple requestors, each with their own host name. The host name is being shown to the user in the Yivi app. The IRMA server will verify that the host name the Yivi app connects to matches the host name in the session request.
+The host in the `sessionPtr` field of the [session package](api-irma-server.md#post-session) can be configured using the `host` option in the session request. This is useful when the IRMA server can be reached through multiple URLs. In this way, a single IRMA server can be used to serve multiple requestors, each with their own hostname. The hostname is being shown to the user in the Yivi app. The IRMA server will verify that the hostname the Yivi app connects to matches the hostname in the session request.
 
 ```json
 {
@@ -425,7 +425,7 @@ This leads to the following session package:
 
 The `host` field is optional. If not set, the `url` from the server's [configuration](irma-server.md#configuring) will be used as-is. In this case, the IRMA server will not check which host the Yivi app connects to. The Yivi app on the other hand will check that the TLS certificate being used is correct.
 
-When you use `irma server`, you should explicitly specify [requestor permissions](irma-server.md#permissions) for this. Otherwise, only the host name from the `url` in the server's [configuration](irma-server.md#configuring) will be allowed. When you use the [IRMA server library](irma-server-lib.md), no permission restrictions are imposed. If you need restrictions, then you have to implement this yourself.
+When you use `irma server`, you should explicitly specify [requestor permissions](irma-server.md#permissions) for this. Otherwise, only the hostname from the `url` in the server's [configuration](irma-server.md#configuring) will be allowed. When you use the [IRMA server library](irma-server-lib.md), no permission restrictions are imposed. If you need restrictions, then you have to implement this yourself.
 
 ## Extra parameters
 For each API that accepts one of the above session request data types, the requestor can provide additional parameters to configure the session at the IRMA server, by providing an *extended session request* instead, as follows:
