@@ -271,6 +271,23 @@ request.Labels = map[int]irma.TranslatedString{
 
 In this way each disjunction can be given a optional label explaining to the user the purpose of the disjunction. It is recommended to only provide a label to explain something to the user that would otherwise not be obvious; for example, to request the user to send a work email address instead of a personal one. Repeating the credential or attribute name or description in labels is an antipattern.
 
+### Skip expiry check
+You can allow users to disclose expired instances of credentials. This is useful for [combined issuance-disclosure sessions](session-requests.md#issuance-requests) and [chained sessions](chained-sessions.md) if you only want to ensure that the user is still using the same device, and therefore the same [secret key](zkp.md), as during a previous issuance session.
+
+```json
+{
+  "@context": "https://irma.app/ld/request/disclosure/v2",
+  "disclose": [
+    [
+      [
+        { "type": "irma-demo.MijnOverheid.root.BSN", "value": "12345" }
+      ]
+    ]
+  ],
+  "skipExpiryCheck": [ "irma-demo.MijnOverheid.root" ]
+}
+```
+
 ## Attribute-based signature requests
 Attribute-based signature sessions are started with an [`irma.SignatureRequest`](https://godoc.org/github.com/privacybydesign/irmago#SignatureRequest), which are similar to disclosure requests:
 <!--DOCUSAURUS_CODE_TABS-->
