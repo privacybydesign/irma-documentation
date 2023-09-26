@@ -1,5 +1,7 @@
 ---
 title: Getting started
+id: version-v0.13.0-getting-started
+original_id: getting-started
 ---
 
 This page shows how to get started with verifying or issuing IRMA attributes, using the following components:

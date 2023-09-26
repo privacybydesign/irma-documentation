@@ -1,5 +1,7 @@
 ---
 title: irma command line tool
+id: version-v0.13.0-irma-cli
+original_id: irma-cli
 ---
 
 `irma` is an IRMA Swiss knife in the form of a command line executable, supporting the following subcommands:
