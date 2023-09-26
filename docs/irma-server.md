@@ -160,6 +160,19 @@ For each of the [three IRMA session types](what-is-irma.md#session-types) (attri
 ```
 This means that `myapp` is authorized to request `irma-demo.MijnOverheid.ageLower.over18` in disclosure session, and any attribute from `irma-demo.MijnOverheid.ageLower` in attribute-based signature sessions. Additionally `myapp` can issue `irma-demo.MijnOverheid.ageLower` instances. In each level wildcards are permitted (`irma-demo.MijnOverheid.ageLower.*`, `irma-demo.MijnOverheid.*`, `irma-demo.*`, `*`). Thus `"disclose_perms": [ "*" ]` allows the requestor to verify any attribute.
 
+To use the [`host` option](session-requests.md#session-host) in session requests, you need to specify which hosts the requestor may use. You can do this by specifying `host_perms`. You can use glob patterns to grant permissions for a range of hosts.
+
+```json
+  {
+    "requestors": {
+        "myapp": {
+            ...
+            "host_perms": ["*.example.com"]
+        }
+    }
+  }
+```
+
 ### Global permissions
 
 Global permissions can be applied to all requestors by using the global `disclose_perms`, `sign_perms` and `issue_perms` options. For each requestor, the effective set of permissions is the union of the permissions specified in its `requestors` map and the global permission set.
