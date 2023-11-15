@@ -1,0 +1,37 @@
+{
+  "version-v0.14.2-docs": {
+    "Intro": [
+      "version-v0.14.2-what-is-irma",
+      "version-v0.14.2-getting-started"
+    ],
+    "New": [
+      "version-v0.14.2-stateless",
+      "version-v0.14.2-revocation",
+      "version-v0.14.2-randomblind",
+      "version-v0.14.2-chained-sessions"
+    ],
+    "Guides": [
+      "version-v0.14.2-irma-cli",
+      "version-v0.14.2-irma-server",
+      "version-v0.14.2-irma-server-lib",
+      "version-v0.14.2-irma-backend",
+      "version-v0.14.2-yivi-frontend",
+      "version-v0.14.2-schemes",
+      "version-v0.14.2-issuer",
+      "version-v0.14.2-session-requests",
+      "version-v0.14.2-email",
+      "version-v0.14.2-yivi-app"
+    ],
+    "API reference": [
+      "version-v0.14.2-api-go",
+      "version-v0.14.2-api-irma-server",
+      "version-v0.14.2-api-yivi-frontend"
+    ],
+    "Documentation": [
+      "version-v0.14.2-overview",
+      "version-v0.14.2-irma-protocol",
+      "version-v0.14.2-zkp",
+      "version-v0.14.2-keyshare-protocol"
+    ]
+  }
+}
