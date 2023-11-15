@@ -244,4 +244,4 @@ Anyone can create their own IRMA scheme. At minimum the following must be done:
 * Define at least one credential type that this issuer will issue;
 * Compile a version of the Yivi app with this directory tree hardcoded in it;
 * Host an [`irma server`](irma-server.md) that will issue and verify your credential type (as this  server will issue credentials it must have a copy of the scheme directory tree, and the Idemix private key);
-* Create a website using [`irma-frontend`](irma-frontend.md) that will issue and verify instances of your credential type.
+* Create a website using [`yivi-frontend`](yivi-frontend.md) that will issue and verify instances of your credential type.

@@ -15,19 +15,17 @@
       "irma-server",
       "irma-server-lib",
       "irma-backend",
-      "irma-frontend",
+      "yivi-frontend",
       "schemes",
       "issuer",
       "session-requests",
       "email",
-      "yivi-app",
-      "irmajs"
+      "yivi-app"
     ],
     "API reference": [
       "api-go",
       "api-irma-server",
-      "api-irma-frontend",
-      "api-irmajs"
+      "api-yivi-frontend"
     ],
     "Documentation": [
       "overview",

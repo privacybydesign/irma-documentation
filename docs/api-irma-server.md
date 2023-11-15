@@ -9,8 +9,8 @@ irma server [options...]
 The API that this server offers consists of two parts:
 
 * [Endpoints under `/session`](#api-reference-requestor-endpoints) with which IRMA session requestors can start IRMA sessions, monitor their status and retrieve their result afterwards.
-* [Endpoints under `/irma`](#api-reference-irma-endpoints) for [frontend libraries](irma-frontend.md) and the [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[Yivi app](yivi-app.md).
-    * [Frontend endpoints under `/irma`](#api-reference-irma-frontend-endpoints) exclusively for [frontend libraries](irma-frontend.md).
+* [Endpoints under `/irma`](#api-reference-irma-endpoints) for [frontend libraries](yivi-frontend.md) and the [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[Yivi app](yivi-app.md).
+    * [Frontend endpoints under `/irma`](#api-reference-irma-frontend-endpoints) exclusively for [frontend libraries](yivi-frontend.md).
 
 ---
 ## API overview
@@ -59,7 +59,7 @@ If the request was successfully parsed, and authenticated if applicable, then th
   }
 }
 ```
-In the endpoints below, the `{requestorToken}` placeholder must be replaced with the above session `token`. The `sessionPtr` points to the IRMA session for the Yivi app user, and should be displayed as a QR for the user to scan, or encoded in a universal link for a mobile session, e.g. using [`irma-frontend`](api-irma-frontend.md).
+In the endpoints below, the `{requestorToken}` placeholder must be replaced with the above session `token`. The `sessionPtr` points to the IRMA session for the Yivi app user, and should be displayed as a QR for the user to scan, or encoded in a universal link for a mobile session, e.g. using [`yivi-frontend`](api-yivi-frontend.md).
 The final part of the `u` field in the `sessionPtr` is called the `clientToken`. The `clientToken` can be used to access the [public `/irma` endpoints](#api-reference-irma-endpoints) of the irma server.
 For accessing and using the [`/irma` frontend endpoints](#api-reference-irma-frontend-endpoints), you need the `frontendRequest`.
 
@@ -175,7 +175,7 @@ The `/irma` endpoints of your IRMA server have to be publicly reachable from the
 behind the `/irma` prefix are exclusively used by the
 [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[Yivi app](yivi-app.md).
 These endpoints are documented in full in the page on the [IRMA protocol](irma-protocol.md).
-The endpoints used by both the Yivi app and the [frontend libraries](irma-frontend.md) are documented below.
+The endpoints used by both the Yivi app and the [frontend libraries](yivi-frontend.md) are documented below.
 The endpoints exclusively meant for frontend libraries can be found below [in a separate section](#api-reference-irma-frontend-endpoints).
 
 ---
@@ -201,7 +201,7 @@ Please use the [frontend statusevents endpoint](#get-irma-session-clienttoken-fr
 ---
 
 ## API reference `/irma` frontend endpoints
-The frontend endpoints are exclusively meant for [frontend libraries](irma-frontend.md) to communicate with the IRMA server.
+The frontend endpoints are exclusively meant for [frontend libraries](yivi-frontend.md) to communicate with the IRMA server.
 Frontends need the information from the `frontendRequest` in order to use these endpoints. The `frontendRequest` is received
 along with the `sessionPtr` from the [`POST /session`](#post-session) requestor endpoint.
 Just like the [other `/irma` endpoints](#api-reference-irma-endpoints), the frontend endpoints of your IRMA server

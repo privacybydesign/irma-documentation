@@ -74,7 +74,7 @@ When the requestor creates the session, the IRMA server responds with a [session
 }
 ```
 
-The requestor takes the `sessionPtr` and `frontendRequest` from the session package and sends those to its [frontend](irma-frontend.md), which uses them to create a QR code or a universal link. The Yivi app then picks that up by either scanning the QR code (desktop flow) or clicking on the universal link (mobile flow).
+The requestor takes the `sessionPtr` and `frontendRequest` from the session package and sends those to its [frontend](yivi-frontend.md), which uses them to create a QR code or a universal link. The Yivi app then picks that up by either scanning the QR code (desktop flow) or clicking on the universal link (mobile flow).
 
 Next, there are two possibilities: the frontend either enables device pairing, or not. Pairing is only used in the desktop flow, i.e. when the frontend displays a QR code for the Yivi app to scan (and even then not necessarily in all cases; it can be disabled by the frontend). If device pairing is enabled, then after the Yivi app connects to the server (using the information in the QR code or the universal link) but before the Yivi app receives the session request, the user must enter a random 4-digit pairing code in the frontend, as protection against shoulder surfing (QR code stealing).
 
