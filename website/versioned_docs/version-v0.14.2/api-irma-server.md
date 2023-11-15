@@ -1,5 +1,7 @@
 ---
 title: irma server
+id: version-v0.14.2-api-irma-server
+original_id: api-irma-server
 ---
 
 ```shell
