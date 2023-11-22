@@ -42,9 +42,9 @@ Generate these using `java -jar path-to-plantuml.jar -tsvg *.puml` in docs/asset
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--Pairing disabled-->
-<img src="/docs/assets/session-no-pairing.svg">
+![Pairing disabled](/assets/session-no-pairing.svg)
 <!--Pairing enabled-->
-<img src="/docs/assets/session-pairing.svg">
+![Pairing enabled](/assets/session-pairing.svg)
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 ### Further reading

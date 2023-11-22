@@ -5,8 +5,8 @@ title: What is IRMA?
 IRMA is a set of free and open source software projects implementing the Idemix attribute-based credential scheme, allowing users to safely and securely authenticate themselves as privacy-preserving as the situation permits. Users receive digitally signed attributes from trusted issuer, storing them in their Yivi app, after which the user can selectively disclose attributes to others. Schematically:
 
 <div class="center">
-  <img src="/docs/assets/issuance.png" style="width: 40%; margin-right: 3em" alt="issuance-flow"/>
-  <img src="/docs/assets/disclosure.png" style="width: 40%;" alt="disclosure-flow" />
+  <img src="/assets/issuance.png" style="width: 40%; margin-right: 3em" alt="issuance-flow"/>
+  <img src="/assets/disclosure.png" style="width: 40%;" alt="disclosure-flow" />
 </div>
 
 Using the issuer's digital signature over the attributes the verifier can verify that the attributes were given to the user in the past, and that they have not been modified since.
@@ -53,8 +53,8 @@ In an IRMA session, the [Yivi mobile app](yivi-app.md) performs one of the follo
 This process is depicted schematically and explained in more detail in the [IRMA session flow](what-is-irma.md#irma-session-flow) chapter. For the user, after scanning the QR in his/her Yivi app a disclosure session generally looks like the following. (Attribute-based signature sessions and issuance sessions are identical in terms of their flow (scan qr, provide permission, success screen); only the graphical interface is different.)
 
 <div class="center" style="margin: 3em 0">
-  <img src="/docs/assets/disclose-permission.png" style="width:30%;margin-right:3em" alt="disclose-permission" />
-  <img src="/docs/assets/disclose-done.png" style="width:30%" alt="disclosure-done" />
+  <img src="/assets/disclose-permission.png" style="width:30%;margin-right:3em" alt="disclose-permission" />
+  <img src="/assets/disclose-done.png" style="width:30%" alt="disclosure-done" />
 </div>
 
 ## IRMA servers
