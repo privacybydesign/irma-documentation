@@ -10,6 +10,14 @@ This website was created with [Docusaurus](https://docusaurus.io/).
 
 # Get Started in 5 Minutes
 
+### Using Docker
+To build the website and run it inside a Docker container, use the following command:
+```sh
+$ docker-compose up
+```
+Afterwards the website is accessible via http://localhost:3000 in your browser.
+
+### For development
 1. Make sure all the dependencies for the website are installed:
 
 ```sh
