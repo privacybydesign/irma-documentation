@@ -7,8 +7,8 @@ original_id: chained-sessions
 Since version 6.1.0 of the [IRMA app](irma-app.md) and 0.8.0 of the [IRMA server](irma-server.md), multiple [IRMA sessions](what-is-irma.md#session-types) may be chained together by the requestor into a single flow. After the IRMA app user has started the first session (for example, by scanning a QR code), she then passes through multiple session screens, as shown here. In this example, the requestor uses a disclosure session to retrieve the user's name and then immediately afterwards issues that into a new credential.
 
 <div class="center" style="margin-bottom: 1em">
-  <img src="/docs/assets/chain-disclosure.png" style="width: 35%;" alt="disclosure-flow" />
-  <img src="/docs/assets/chain-issuance.png" style="width: 35%; margin-right: 3em" alt="issuance-flow"/>
+  <img src="/assets/chain-disclosure.png" style="width: 35%;" alt="disclosure-flow" />
+  <img src="/assets/chain-issuance.png" style="width: 35%; margin-right: 3em" alt="issuance-flow"/>
 </div>
 
 The IRMA server enables this by sending the session results of the intermediate sessions in the chain to a server chosen by the requestor, which can process the session results and respond with a session request for the next session in the chain.

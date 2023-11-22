@@ -24,7 +24,7 @@ const siteConfig = {
   title: 'IRMA docs', // Title for your website.
   tagline: 'Technical documentation of the IRMA project',
   url: 'https://irma.app', // Your website URL
-  baseUrl: '/docs/', // Base URL for your project
+  baseUrl: '/', // Base URL for your project
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
@@ -85,7 +85,7 @@ const siteConfig = {
 
   // Add custom scripts here that would be placed in <script> tags.
   scripts: [
-    '/docs/js/navhighlight.js'
+    '/js/navhighlight.js'
   ],
 
   scrollToTop: true,
