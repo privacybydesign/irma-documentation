@@ -1,5 +1,7 @@
 ---
 title: Stateless IRMA server
+id: version-v0.15.0-stateless
+original_id: stateless
 ---
 
 For each IRMA session the [IRMA server](irma-server.md) needs to keep track of the [session state](irma-protocol.md#the-session-state). 
