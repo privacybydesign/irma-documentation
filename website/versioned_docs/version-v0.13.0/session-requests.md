@@ -82,7 +82,7 @@ request.Disclose = irma.AttributeConDisCon{
 }
 ```
 <!--Yivi app-->
-<img src="/docs/assets/condiscon.png" class="ss" alt="condiscon" />
+<img src="/assets/condiscon.png" class="ss" alt="condiscon" />
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 This asks for a (demo) `BSN` attribute, as well as either `street`, `houseNumber` and `city` from `irma-demo.nijmegen.address`, or `address` and `city` from `irma-demo.idin.idin`. The three levels correspond to a *conjunction* of *disjunctions* of *conjunctions* of requested attributes, allowing verifiers to request multiple attribute sets from the user, offering choices for some or all of these sets.
@@ -236,7 +236,7 @@ request.Disclose = irma.AttributeConDisCon{
 }
 ```
 <!--Yivi app-->
-<img src="/docs/assets/optional-disjunction.png" class="ss" alt="optional-disjunction" />
+<img src="/assets/optional-disjunction.png" class="ss" alt="optional-disjunction" />
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 This can be useful when certain attributes are not required, so that if the user does not have them the session does not need to be aborted.
@@ -268,7 +268,7 @@ request.Labels = map[int]irma.TranslatedString{
 }
 ```
 <!--Yivi app-->
-<img src="/docs/assets/condiscon-label.png" class="ss" alt="condiscon-label" />
+<img src="/assets/condiscon-label.png" class="ss" alt="condiscon-label" />
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 In this way each disjunction can be given a optional label explaining to the user the purpose of the disjunction. It is recommended to only provide a label to explain something to the user that would otherwise not be obvious; for example, to request the user to send a work email address instead of a personal one. Repeating the credential or attribute name or description in labels is an antipattern.

@@ -38,7 +38,7 @@ we will explain how randomblind attributes can be used in digital elections.
 Randomblind issuance is enabled in the scheme by adding the `randomblind` XML
 attribute to an `Attribute` tag within the issue specification of a given
 credential.  For more information about schemes, see [this
-page](https://irma.app/docs/schemes/).  In the example below we enable this for
+page](/schemes).  In the example below we enable this for
 the second attribute in the credential. Any or all atributes in a credential
 type can be randomblind.
 
@@ -116,7 +116,7 @@ Idemix public key of the issuer. The issuance goes as follows:
   how the user's secret key remains secret during issuance. 
   The user computes the commitment $U = S^{v'} R_0^{m_0} R_r^{m_{r}'} \mod n$.
   Note that $m_0$ is always the user's secret key. This commitment is sent to
-  the issuer along with a [zero-knowledge proof](https://irma.app/docs/zkp/)
+  the issuer along with a [zero-knowledge proof](zkp)
   of $v', m_0$ and $m_{r}'$.
 
 - The issuer samples a random prime $e$.
@@ -179,7 +179,7 @@ attributes the following system can be realized:
    votes), the user must be uniquely identified in this stage.
 
 2. (Casting the vote). To vote, a user creates an [attribute-based
-   signature](https://irma.app/docs/overview/#attribute-based-signatures) on a
+   signature](overview/#attribute-based-signatures) on a
    "ballot" string, i.e., the user's choice using the randomblind attribute
    acquired in the previous step.  This signature, the choice and the attribute
    are then registered in a database at party B. The signature ensures

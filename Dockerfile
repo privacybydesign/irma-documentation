@@ -1,10 +1,11 @@
-FROM node:18
+FROM node:21 as build
 
 WORKDIR /app/website
 
-EXPOSE 3000 35729
 COPY ./docs /app/docs
 COPY ./website /app/website
-RUN yarn install
+RUN yarn install --immutable --immutable-cache --check-cache
+RUN yarn build
 
-CMD ["yarn", "start"]
+FROM joseluisq/static-web-server:latest
+COPY --from=build /app/website/build/irma-documentation /public

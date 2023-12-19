@@ -20,15 +20,15 @@ img.screenshot {
 }
 </style>
 
-<img src="/docs/assets/irmamobile/ios_pin.png" class="screenshot" alt="Screenshot of the IRMA app on iOS, showing the PIN screen" />
-<img src="/docs/assets/irmamobile/android_wallet.png" class="screenshot" alt="Screenshot of the IRMA app on Android, showing the wallet screen with three cards" />
-<img src="/docs/assets/irmamobile/ios_wallet_expanded.png" class="screenshot" alt="Screenshot of the IRMA app on iOS, showing the wallet screen with a card expanded" />
-<img src="/docs/assets/irmamobile/android_disclosure.png" class="screenshot" alt="Screenshot of the IRMA app on Android, showing the data disclosure screen" />
+<img src="/assets/irmamobile/ios_pin.png" class="screenshot" alt="Screenshot of the IRMA app on iOS, showing the PIN screen" />
+<img src="/assets/irmamobile/android_wallet.png" class="screenshot" alt="Screenshot of the IRMA app on Android, showing the wallet screen with three cards" />
+<img src="/assets/irmamobile/ios_wallet_expanded.png" class="screenshot" alt="Screenshot of the IRMA app on iOS, showing the wallet screen with a card expanded" />
+<img src="/assets/irmamobile/android_disclosure.png" class="screenshot" alt="Screenshot of the IRMA app on Android, showing the data disclosure screen" />
 
 The IRMA app allows users to receive and store digitally signed attributes from trusted issuers, after which they can be selectively disclosed to others. The app is essentially a GUI for the [`irmaclient`](https://github.com/privacybydesign/irmago/tree/master/irmaclient) Go package, which implements the client relative to the [IRMA server](irma-server.md). It is available in the iOS and Android app stores and may also be compiled from source.
 
-<a href="https://play.google.com/store/apps/details?id=org.irmacard.cardemu" target="_blank"><img src="/docs/assets/google-play-badge.png" alt="Play Store" class="badge" width="150"></a>
-<a href="https://itunes.apple.com/nl/app/irma-authentication/id1294092994" target="_blank"><img src="/docs/assets/app-store-badge.png" alt="Apple Store" class="badge" width="150"></a>
+<a href="https://play.google.com/store/apps/details?id=org.irmacard.cardemu" target="_blank"><img src="/assets/google-play-badge.png" alt="Play Store" class="badge" width="150"></a>
+<a href="https://itunes.apple.com/nl/app/irma-authentication/id1294092994" target="_blank"><img src="/assets/app-store-badge.png" alt="Apple Store" class="badge" width="150"></a>
 
 ## Source code
 

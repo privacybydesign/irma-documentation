@@ -121,7 +121,7 @@ The response may contain the following fields:
 * `signature`: The full attribute-based signature in case of `"signing"` sessions
 * `error`: Error message in case of failure
 
-If the session is not yet finished (that is, the session status is `INITIALIZED` or `CONNECTED`), then only the first three fields are populated. (For getting just the current session status, using [`GET /session/{token}/statusevents`](http://localhost:3000/docs/api-irma-server#get-session-token-statusevents) or [`GET /session/{token}/status`](http://localhost:3000/docs/api-irma-server#get-session-token-status) is preferred.)
+If the session is not yet finished (that is, the session status is `INITIALIZED` or `CONNECTED`), then only the first three fields are populated. (For getting just the current session status, using [`GET /session/{token}/statusevents`](api-irma-server#get-session-token-statusevents) or [`GET /session/{token}/status`](api-irma-server#get-session-token-status) is preferred.)
 
 This endpoint just fetches the session result, and works normally even if the session failed. If so, the `status`, `proofStatus` or `error` fields will indicate what happened. Be sure to check these fields when retrieving and handling the session result.
 
