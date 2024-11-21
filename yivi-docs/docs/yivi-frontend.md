@@ -12,7 +12,7 @@ web element or using a popup overlay in the browser.
 
 Using the default styling, the browser version will look like this:
 
-![Yivi frontend web element](assets/yivi-frontend-web.gif)
+![Yivi frontend web element](/img/yivi-frontend-web.gif)
 
 All packages are published on [npm](https://www.npmjs.com/) in `@privacybydesign` scoped packages.
 

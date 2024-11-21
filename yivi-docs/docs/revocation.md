@@ -2,20 +2,6 @@
 title: Revocation
 ---
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-      processEscapes: true
-    },
-    "HTML-CSS": { fonts: ["TeX"] }
-  });
-</script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
-
 Revocation adds to IRMA issuers the ability to revoke a credential that it previously issued to an [Yivi app](yivi-app.md), when the contained attributes are no longer accurate. This allows IRMA attribute verifiers to establish that the attributes it received are still factual, as otherwise the credential would have been revoked by the issuer.
 
 This page explains in detail how revocation is implemented in IRMA and what it means to requestors and app users, on three levels:
@@ -305,7 +291,7 @@ The IRMA issuer private key is $(p', q')$ where $p', q'$ are both [safe primes](
 The current accumulator is a number $\nu \in QR_n$. The first accumulator is randomly chosen by the issuer from $QR_n$. During issuance, the issuer
   1. generates a prime $e$,
   2. embeds the prime $e$ as an attribute within the credential being issued,
-  3. uses its private key to compute $u = \nu^{1/e\bmod pq}$, and sends the tuple $(u,e)$ to the app along with the credential,
+  <!-- 3. uses its private key to compute $u = \nu^{1/e\bmod pq}$, and sends the tuple $(u,e)$ to the app along with the credential, -->
   4. stores the number $e$ in a database for later revocation.
 
 ### Disclosure
@@ -320,7 +306,7 @@ The app includes the accumulator $\nu$ signed by the issuer against which it pro
 ### Revocation
 Henceforth, we label the current accumulator and witnesses with an index $i$, so the current accumulator value is $\nu_i$. If the issuer wants to revoke a credential it first looks up in its database the revocation attribute $\tilde{e}$ that it used for that credential (we use a tilde to distinguish this $\tilde{e}$ from the revocation attributes $e$ of other apps wanting to update their own (nonrevoked) witness, see below). Then it uses its private key to compute the new accumulator value as follows:
 
-<span style="padding-left: 3em"/> $\displaystyle \nu_{i+1} = \nu_{i}^{1/\tilde{e}\bmod pq}$
+<!-- <span style="padding-left: 3em"/> $\displaystyle \nu_{i+1} = \nu_{i}^{1/\tilde{e}\bmod pq}$ -->
 
 The update message consists of $(\nu_{i+1}, \tilde{e})$; the issuer signs this using its ECDSA private key and then offers it to others using an HTTP API. Apps and requestors only use update messages if it is validly signed, confirmed using the ECDSA public key of the issuer of the credential type.
 
@@ -330,8 +316,8 @@ Apps having a (nonrevoked) credential with witness $(u_i, e)$ (satisfying $u_i^{
 
 This is valid against the new accumulator $\nu_{i+1}$:
 
-<div style="padding-left: 3em; padding-bottom: 1em"/>
-$
+<!-- <div style="padding-left: 3em; padding-bottom: 1em"/>
+$$
   \begin{eqnarray*}
   u_{i+1}^{e}
   &=& (u_i^b\nu_{i+1}^a)^{e}
@@ -342,9 +328,9 @@ $
   &=& \nu_i^{1/\tilde{e}}
    = \nu_{i+1}
   \end{eqnarray*}
-$
-</div>
+$$
+</div> -->
 
-(The $\bmod n$ after each equality sign is implied.) The revoked credential having revocation attribute $\tilde{e}$ cannot use this algorithm and update message $(\nu_{i+1}, \tilde{e})$ to compute a new witness, as in this case there exist no integers $a, b$ such that $a\tilde{e} + b\tilde{e} = 1$. In fact, [one can prove that](http://static.cs.brown.edu/people/alysyans/papers/camlys02.pdf) knowing only $\nu_i$, $\nu_{i+1} = \nu_{i}^{1/\tilde{e}}$ and $\tilde{e}$, by the [Strong RSA assumption](https://en.wikipedia.org/wiki/Strong_RSA_assumption) which is used by both Idemix and the RSA-B accumulator scheme, *no* efficient algorithm can compute the correct witness $u_{i+1} = \nu_{i+1}^{1/\tilde{e}} = \nu_{i}^{1/\tilde{e}^2}$.
+<!-- (The $\bmod n$ after each equality sign is implied.) The revoked credential having revocation attribute $\tilde{e}$ cannot use this algorithm and update message $(\nu_{i+1}, \tilde{e})$ to compute a new witness, as in this case there exist no integers $a, b$ such that $a\tilde{e} + b\tilde{e} = 1$. In fact, [one can prove that](http://static.cs.brown.edu/people/alysyans/papers/camlys02.pdf) knowing only $\nu_i$, $\nu_{i+1} = \nu_{i}^{1/\tilde{e}}$ and $\tilde{e}$, by the [Strong RSA assumption](https://en.wikipedia.org/wiki/Strong_RSA_assumption) which is used by both Idemix and the RSA-B accumulator scheme, *no* efficient algorithm can compute the correct witness $u_{i+1} = \nu_{i+1}^{1/\tilde{e}} = \nu_{i}^{1/\tilde{e}^2}$. -->
 
 Thus the app owning the revoked credential has no way to compute a new witness on its own without the issuer private key. Since the app no longer posesses a valid witness, it can no longer prove that it does, i.e., construct a nonrevocation proof: the credential is revoked.

@@ -45,13 +45,13 @@ function Help(props) {
       <Container className="mainContainer documentContainer postContainer">
         <div className="post">
           <header className="postHeader">
-            <h1>About IRMA</h1>
+            <h1>About Yivi</h1>
           </header>
-          <p>IRMA is developed and maintained by the <a href="https://privacybydesign.foundation/">Privacy by Design Foundation</a> and <a href="https://sidn.nl/en">SIDN</a>, and is <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software">free and open source</a>. See the Foundation's website for news about IRMA; how you can support IRMA; statistics on the Foundation's IRMA infrastructure; scientific publications related to IRMA; and more.</p>
+          <p>Yivi is developed and maintained by the <a href="https://privacybydesign.foundation/">Privacy by Design Foundation</a> and <a href="https://caesar.nl">Caesar</a>, and is Apache 2.0 licensed open source software. See the Foundation's website for news about IRMA; how you can support IRMA; statistics on the Foundation's IRMA infrastructure; scientific publications related to IRMA; and more.</p>
           <p>To contact us, join us on Slack (see below) or send an e-mail to <code>info at privacybydesign dot foundation</code>.</p>
           <ul>
             <li><a href="https://yivi.app/">Introduction for Yivi app users</a></li>
-            <li><a href="https://privacybydesign.foundation/issuance/">IRMA attribute issuance</a></li>
+            <li><a href="https://privacybydesign.foundation/issuance/">Yivi attribute issuance</a></li>
           </ul>
           <GridBlock contents={supportLinks} layout="fourColumn" />
         </div>

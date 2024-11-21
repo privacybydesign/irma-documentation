@@ -2,20 +2,6 @@
 title: Zero-knowledge proofs
 ---
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-      processEscapes: true
-    },
-    "HTML-CSS": { fonts: ["TeX"] }
-  });
-</script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
-
 IRMA uses zero-knowledge proofs to prove that a number satisfies a certain property, without disclosing the number itself, in various situations. In particular:
 
 * When a user discloses part of the attributes of a credential, she hides the others using a zero-knowledge proof, with which she convinces the verifier that she possesses a valid issuer signature over all attributes from the credential, including the hidden ones.
