@@ -18,15 +18,15 @@ img.screenshot {
 }
 </style>
 
-<img src="/docs/assets/yivimobile/1.png" class="screenshot" alt="Screenshot of the Yivi app, showing the introduction screen" />
-<img src="/docs/assets/yivimobile/2.png" class="screenshot" alt="Screenshot of the Yivi app, showing the home screen" />
-<img src="/docs/assets/yivimobile/3.png" class="screenshot" alt="Screenshot of the Yivi app, showing the screen to collect missing data" />
-<img src="/docs/assets/yivimobile/4.png" class="screenshot" alt="Screenshot of the Yivi app, showing the data disclosure screen" />
+<img src="/assets/yivimobile/1.png" class="screenshot" alt="Screenshot of the Yivi app, showing the introduction screen" />
+<img src="/assets/yivimobile/2.png" class="screenshot" alt="Screenshot of the Yivi app, showing the home screen" />
+<img src="/assets/yivimobile/3.png" class="screenshot" alt="Screenshot of the Yivi app, showing the screen to collect missing data" />
+<img src="/assets/yivimobile/4.png" class="screenshot" alt="Screenshot of the Yivi app, showing the data disclosure screen" />
 
 The Yivi app allows users to receive and store digitally signed attributes from trusted issuers, after which they can be selectively disclosed to others. The app is essentially a GUI for the [`irmaclient`](https://github.com/privacybydesign/irmago/tree/master/irmaclient) Go package, which implements the client relative to the [IRMA server](irma-server.md). It is available in the iOS and Android app stores and may also be compiled from source.
 
-<a href="https://play.google.com/store/apps/details?id=org.irmacard.cardemu" target="_blank"><img src="/docs/assets/google-play-badge.png" alt="Play Store" class="badge" width="150"></a>
-<a href="https://itunes.apple.com/nl/app/irma-authentication/id1294092994" target="_blank"><img src="/docs/assets/app-store-badge.png" alt="Apple Store" class="badge" width="150"></a>
+<a href="https://play.google.com/store/apps/details?id=org.irmacard.cardemu" target="_blank"><img src="/assets/google-play-badge.png" alt="Play Store" class="badge" width="150"></a>
+<a href="https://itunes.apple.com/nl/app/irma-authentication/id1294092994" target="_blank"><img src="/assets/app-store-badge.png" alt="Apple Store" class="badge" width="150"></a>
 
 ## Source code
 
