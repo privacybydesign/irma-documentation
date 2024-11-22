@@ -312,11 +312,10 @@ The update message consists of $(\nu_{i+1}, \tilde{e})$; the issuer signs this u
 
 Apps having a (nonrevoked) credential with witness $(u_i, e)$ (satisfying $u_i^{e} = \nu_i$) first compute the numbers $a, b$ which are such that $ae + b\tilde{e} = 1$, using the [Extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm), and then they update their witness as follows:
 
-<span style="padding-left: 3em"/> $\displaystyle u_{i+1} = u_i^b\nu_{i+1}^a$
+$\displaystyle u_{i+1} = u_i^b\nu_{i+1}^a$
 
 This is valid against the new accumulator $\nu_{i+1}$:
 
-<!-- <div style="padding-left: 3em; padding-bottom: 1em"/>
 $$
   \begin{eqnarray*}
   u_{i+1}^{e}
@@ -329,8 +328,7 @@ $$
    = \nu_{i+1}
   \end{eqnarray*}
 $$
-</div> -->
 
-<!-- (The $\bmod n$ after each equality sign is implied.) The revoked credential having revocation attribute $\tilde{e}$ cannot use this algorithm and update message $(\nu_{i+1}, \tilde{e})$ to compute a new witness, as in this case there exist no integers $a, b$ such that $a\tilde{e} + b\tilde{e} = 1$. In fact, [one can prove that](http://static.cs.brown.edu/people/alysyans/papers/camlys02.pdf) knowing only $\nu_i$, $\nu_{i+1} = \nu_{i}^{1/\tilde{e}}$ and $\tilde{e}$, by the [Strong RSA assumption](https://en.wikipedia.org/wiki/Strong_RSA_assumption) which is used by both Idemix and the RSA-B accumulator scheme, *no* efficient algorithm can compute the correct witness $u_{i+1} = \nu_{i+1}^{1/\tilde{e}} = \nu_{i}^{1/\tilde{e}^2}$. -->
+(The $\bmod n$ after each equality sign is implied.) The revoked credential having revocation attribute $\tilde{e}$ cannot use this algorithm and update message $(\nu_{i+1}, \tilde{e})$ to compute a new witness, as in this case there exist no integers $a, b$ such that $a\tilde{e} + b\tilde{e} = 1$. In fact, [one can prove that](http://static.cs.brown.edu/people/alysyans/papers/camlys02.pdf) knowing only $\nu_i$, $\nu_{i+1} = \nu_{i}^{1/\tilde{e}}$ and $\tilde{e}$, by the [Strong RSA assumption](https://en.wikipedia.org/wiki/Strong_RSA_assumption) which is used by both Idemix and the RSA-B accumulator scheme, *no* efficient algorithm can compute the correct witness $u_{i+1} = \nu_{i+1}^{1/\tilde{e}} = \nu_{i}^{1/\tilde{e}^2}$.
 
 Thus the app owning the revoked credential has no way to compute a new witness on its own without the issuer private key. Since the app no longer posesses a valid witness, it can no longer prove that it does, i.e., construct a nonrevocation proof: the credential is revoked.

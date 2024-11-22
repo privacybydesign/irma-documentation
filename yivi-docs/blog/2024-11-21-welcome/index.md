@@ -1,6 +1,6 @@
 ---
 slug: vision, roadmap
-title: Caesar Groep to continue development of Yivi: Our Vision and Roadmap
+title: Caesar Groep to continue development of Yivi - Our Vision and Roadmap
 authors: [dibranmulder]
 tags: [yivi, vision, roadmap]
 ---

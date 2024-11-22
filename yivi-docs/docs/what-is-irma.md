@@ -7,12 +7,12 @@ IRMA is a set of free and open source software projects implementing the Idemix 
 <div className="center">
   <img 
     src="/img/issuance.png" 
-    style={{ width: '40%', marginRight: '3em' }} 
+    style={{ width: '30%', marginRight: '3em' }} 
     alt="issuance-flow" 
   />
   <img 
     src="/img/disclosure.png" 
-    style={{ width: '40%' }} 
+    style={{ width: '30%' }} 
     alt="disclosure-flow" 
   />
 </div>
