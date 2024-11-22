@@ -45,7 +45,7 @@ tls-auth-clients no
 
 It is also possible to disable TLS altogether for connections to Redis, using the `redis-no-tls` option.
 
-> In production, always using TLS for Redis is recommended. If you disable TLS, be sure to run your Redis server in an internal network protected against unauthorized access.
+> **⚠️ Warning:** In production, always using TLS for Redis is recommended. If you disable TLS, be sure to run your Redis server in an internal network protected against unauthorized access.
 
 ### Using multiple Redis instances
 The IRMA server supports Redis in Sentinel mode, which allows you to use multiple Redis instances in a failover configuration. For data consistency, we currently require at least 1 replica to be present. This means that you need a minimum of 2 replicas for high availability. Please check the [configuration options](irma-server.md#stateless-mode) for more information about this mode.

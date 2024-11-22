@@ -7,6 +7,8 @@ tags: [yivi, vision, roadmap]
 
 We are excited to announce that Caesar Groep will be continuing the development of Yivi. Yivi is a groundbreaking ID-Wallet that empowers users with privacy-first, secure, and user-friendly solutions. Our mission is to build upon the excellent foundation already laid and innovate further to ensure Yivi remains at the forefront of digital identity technology.
 
+<!-- truncate -->
+
 Here’s what you can expect as we embark on this journey together:
 
 # Short-Term Roadmap: Laying a Solid Foundation

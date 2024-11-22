@@ -31,29 +31,6 @@ const config: Config = {
     locales: ['en'],
   },
 
-  plugins: [
-    function mathjaxPlugin(context, options) {
-      return {
-        name: 'docusaurus-mathjax',
-        injectHtmlTags() {
-          return {
-            headTags: [
-              {
-                tagName: 'script',
-                attributes: {
-                  type: 'text/javascript',
-                  id: 'MathJax-script',
-                  async: true,
-                  src: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
-                },
-              },
-            ],
-          };
-        },
-      };
-    },
-  ],
-
   presets: [
     [
 

@@ -21,6 +21,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Intro',
+      collapsed: false,
       items: [
         'what-is-irma',
         'getting-started',
@@ -29,6 +30,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'New',
+      collapsed: false,
       items: [
         'stateless',
         'revocation',
@@ -39,6 +41,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Guides',
+      collapsed: false,
       items: [
         'irma-cli',
         'irma-server',
@@ -55,6 +58,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'API reference',
+      collapsed: false,
       items: [
         'api-go',
         'api-irma-server',
@@ -64,6 +68,7 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Documentation',
+      collapsed: false,
       items: [
         'overview',
         'irma-protocol',

@@ -26,6 +26,7 @@ Computing a nonrevocation proof for a credential is much more expensive than jus
 
 In the papers linked to above (and generally in the scientific literature on revocation), the party that is able to revoke credentials is called the **revocation authority**, which is not necessarily the same as the party that issues credentials. Within IRMA we have decided to endow the issuer with this responsibility, i.e. the issuer is also the revocation authority for revocation-enabled credential types, because conceptually and technically this simplifies many details.
 
+> **⚠️ Note:**
 > In the remainder of this post when we refer to the requestor, issuer, or verifier, we generally refer to the IRMA server software implementing APIs for those parties. The term "IRMA server" itself refers to the following variants of the IRMA server:
 > * The [`irma server`](irma-server.md) daemon.
 > * The [`irmaserver` Go library](irma-server-lib.md).
@@ -306,27 +307,26 @@ The app includes the accumulator $\nu$ signed by the issuer against which it pro
 ### Revocation
 Henceforth, we label the current accumulator and witnesses with an index $i$, so the current accumulator value is $\nu_i$. If the issuer wants to revoke a credential it first looks up in its database the revocation attribute $\tilde{e}$ that it used for that credential (we use a tilde to distinguish this $\tilde{e}$ from the revocation attributes $e$ of other apps wanting to update their own (nonrevoked) witness, see below). Then it uses its private key to compute the new accumulator value as follows:
 
-<!-- <span style="padding-left: 3em"/> $\displaystyle \nu_{i+1} = \nu_{i}^{1/\tilde{e}\bmod pq}$ -->
+$$
+\nu_{i+1} = \nu_{i}^{1/\tilde{e}\bmod pq}
+$$
 
 The update message consists of $(\nu_{i+1}, \tilde{e})$; the issuer signs this using its ECDSA private key and then offers it to others using an HTTP API. Apps and requestors only use update messages if it is validly signed, confirmed using the ECDSA public key of the issuer of the credential type.
 
 Apps having a (nonrevoked) credential with witness $(u_i, e)$ (satisfying $u_i^{e} = \nu_i$) first compute the numbers $a, b$ which are such that $ae + b\tilde{e} = 1$, using the [Extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm), and then they update their witness as follows:
 
-$\displaystyle u_{i+1} = u_i^b\nu_{i+1}^a$
+$$
+u_{i+1} = u_i^b\nu_{i+1}^a
+$$
 
 This is valid against the new accumulator $\nu_{i+1}$:
 
 $$
-  \begin{eqnarray*}
-  u_{i+1}^{e}
-  &=& (u_i^b\nu_{i+1}^a)^{e}
-   = u_i^{be}\nu_{i+1}^{ae} \\
-  &=& \nu_i^{b}\nu_{i}^{ae/\tilde{e}}
-   = (\nu_i^{b\tilde{e}}\nu_{i}^{ae})^{1/\tilde{e}}
-   = (\nu_i^{b\tilde{e}+ae})^{1/\tilde{e}} \\
-  &=& \nu_i^{1/\tilde{e}}
-   = \nu_{i+1}
-  \end{eqnarray*}
+\begin{align*}
+u_{i+1}^{e} &= (u_i^b\nu_{i+1}^a)^{e} = u_i^{be}\nu_{i+1}^{ae} \\
+            &= \nu_i^{b}\nu_{i}^{ae/\tilde{e}} = (\nu_i^{b\tilde{e}}\nu_{i}^{ae})^{1/\tilde{e}} = (\nu_i^{b\tilde{e}+ae})^{1/\tilde{e}} \\ 
+            &= \nu_i^{1/\tilde{e}} = \nu_{i+1}
+\end{align*}
 $$
 
 (The $\bmod n$ after each equality sign is implied.) The revoked credential having revocation attribute $\tilde{e}$ cannot use this algorithm and update message $(\nu_{i+1}, \tilde{e})$ to compute a new witness, as in this case there exist no integers $a, b$ such that $a\tilde{e} + b\tilde{e} = 1$. In fact, [one can prove that](http://static.cs.brown.edu/people/alysyans/papers/camlys02.pdf) knowing only $\nu_i$, $\nu_{i+1} = \nu_{i}^{1/\tilde{e}}$ and $\tilde{e}$, by the [Strong RSA assumption](https://en.wikipedia.org/wiki/Strong_RSA_assumption) which is used by both Idemix and the RSA-B accumulator scheme, *no* efficient algorithm can compute the correct witness $u_{i+1} = \nu_{i+1}^{1/\tilde{e}} = \nu_{i}^{1/\tilde{e}^2}$.
