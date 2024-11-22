@@ -98,8 +98,16 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'What is Yivi',
+              to: '/docs/what-is-irma',
+            },
+            {
+              label: 'Getting started',
+              to: '/docs/getting-started',
+            },
+            {
+              label: 'Technical overview',
+              to: '/docs/overview',
             },
           ],
         },
@@ -107,16 +115,12 @@ const config: Config = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'GitHub',
+              href: 'https://github.com/orgs/privacybydesign',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'LinkedIn',
+              href: 'https://www.linkedin.com/company/yivi-app',
             },
           ],
         },
@@ -127,14 +131,19 @@ const config: Config = {
               label: 'Blog',
               to: '/blog',
             },
+
             {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'Privacy By Design',
+              href: 'https://privacybydesign.foundation/',
+            },
+            {
+              label: 'Caesar Groep',
+              href: 'https://caesar.nl',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Yivi, Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
