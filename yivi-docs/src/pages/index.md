@@ -10,11 +10,11 @@ Built on cutting-edge technology and a commitment to user-centric design, Yivi e
 
 ## 📄 Explore the Documentation
 Dive into the Yivi documentation to get started, learn about its features, and understand how to integrate it into your projects.
-[👉 Read the Documentation](docs/getting-started)
+[👉 Read the Documentation](/getting-started)
 
 ## 📰 Visit Our Blog
 Stay updated on the latest developments, use cases, and insights about Yivi.
-👉 Read the Blog
+[👉 Read the Blog[/blog]
 
 ## 🤝 Authors & Contributors
 Yivi is brought to life by a dedicated team of authors and contributors. You can find them on [Github](https://github.com/orgs/privacybydesign/people)

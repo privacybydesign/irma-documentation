@@ -83,7 +83,7 @@ Apart from exposing an API that is used by the [Yivi app](yivi-app.md) during IR
 Currently the following IRMA servers exist:
 
 * The `irma server` command of the [`irma`](irma-cli.md) binary: a standalone daemon exposing its requestor API as HTTP endpoints. [Documentation](irma-server.md); [API reference](api-irma-server.md).
-* The `irmaserver` Go library, exposing a HTTP server that handles IRMA sessions with the Yivi app, and Go functions for starting and managing IRMA sessions. [Documentation](irma-server-lib.mdrary); [API reference](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver).
+* The `irmaserver` Go library, exposing a HTTP server that handles IRMA sessions with the Yivi app, and Go functions for starting and managing IRMA sessions. [Documentation](irma-server-lib.md); [API reference](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver).
 * The now deprecated [`irma_api_server`](https://github.com/privacybydesign/irma_api_server).
 
 ## About this documentation

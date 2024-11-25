@@ -5,12 +5,12 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'Yivi docs',
+  tagline: 'Privacy first ID-wallet',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://docs.yivi.app',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -37,6 +37,7 @@ const config: Config = {
       'classic',
       {
         docs: {
+          routeBasePath: "/",
           remarkPlugins: [require('remark-math')],
           rehypePlugins: [require('rehype-katex')],
           sidebarPath: './sidebars.ts',
@@ -85,10 +86,15 @@ const config: Config = {
         },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
+          href: 'https://privacybydesign.foundation/attribute-index/en/',
+          label: 'Attribute Index',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/privacybydesign',
           label: 'GitHub',
           position: 'right',
-        },
+        }
       ],
     },
     footer: {
@@ -99,15 +105,15 @@ const config: Config = {
           items: [
             {
               label: 'What is Yivi',
-              to: '/docs/what-is-irma',
+              to: '/what-is-irma',
             },
             {
               label: 'Getting started',
-              to: '/docs/getting-started',
+              to: '/getting-started',
             },
             {
               label: 'Technical overview',
-              to: '/docs/overview',
+              to: '/overview',
             },
           ],
         },

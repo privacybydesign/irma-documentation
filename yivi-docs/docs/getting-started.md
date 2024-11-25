@@ -103,7 +103,7 @@ requestors:
     key: "mysecrettoken"
 ```
 
-* You may want to [restrict permissions](irma-server.md/#permissions) to verify or issue specific attributes, globally or per requestor.
+* You may want to [restrict permissions](/irma-server/#permissions) to verify or issue specific attributes, globally or per requestor.
 * The server can be made into a daemon on most Linux systems [using a systemd unit file](irma-server.md#running-as-daemon).
 * Another common setup is to have a reverse proxy between the IRMA server and the internet, which handles TLS instead and forwards traffic on `https://example.com/irma/` to the IRMA server.
 

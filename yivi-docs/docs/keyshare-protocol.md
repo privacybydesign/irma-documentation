@@ -48,7 +48,7 @@ For these reasons this protocol is very well suited for our aims of making the k
 
 ## The protocol
 
-We now describe the IRMA keyshare protocol. The version of the keyshare protocol documented here is supported by the keyshare server since `v0.11.0` of `irmago`. The previous version of the protocol, which was largely the same but did not use ECDSA for device binding, is documented [here](/v0.9.0/keyshare-protocol). The [Yivi app](yivi-app.md) always uses the latest keyshare protocol version that it knows of, but the keyshare server is backwards compatible: it understands both protocols.
+We now describe the IRMA keyshare protocol. The version of the keyshare protocol documented here is supported by the keyshare server since `v0.11.0` of `irmago`. The previous version of the protocol, which was largely the same but did not use ECDSA for device binding, is documented [here](https://irma.app/docs/v0.9.0/keyshare-protocol/). The [Yivi app](yivi-app.md) always uses the latest keyshare protocol version that it knows of, but the keyshare server is backwards compatible: it understands both protocols.
 
 ### Overview
 
