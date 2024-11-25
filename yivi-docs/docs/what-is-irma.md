@@ -1,8 +1,12 @@
 ---
-title: What is IRMA?
+title: What is Yivi?
 ---
 
-IRMA is a set of free and open source software projects implementing the Idemix attribute-based credential scheme, allowing users to safely and securely authenticate themselves as privacy-preserving as the situation permits. Users receive digitally signed attributes from trusted issuer, storing them in their Yivi app, after which the user can selectively disclose attributes to others. Schematically:
+Yivi is a set of open source software project implementing the Idemix attribute-based credential scheme, allowing users to safely and securely authenticate themselves as privacy-preserving as the situation permits. Users receive digitally signed attributes from trusted issuer, storing them in their Yivi app, after which the user can selectively disclose attributes to others.
+
+Yivi's roots lie within Radboud University. Back in the day, its code name was IRMA, which stands for "I Reveal My Attributes." IRMA was later rebranded as Yivi, but many technical dependencies, such as the protocol and repositories, continue to bear the name IRMA.
+
+Schematically:
 
 <div className="center">
   <img 
