@@ -1,0 +1,50 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #e2001a;
+  --ifm-color-primary-dark: #cc0017;
+  --ifm-color-primary-darker: #b30014;
+  --ifm-color-primary-darkest: #990011;
+  --ifm-color-primary-light: #ff3345;
+  --ifm-color-primary-lighter: #ff6670;
+  --ifm-color-primary-lightest: #ff99a0;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #ff3345;
+  --ifm-color-primary-dark: #e2001a;
+  --ifm-color-primary-darker: #cc0017;
+  --ifm-color-primary-darkest: #b30014;
+  --ifm-color-primary-light: #ff6670;
+  --ifm-color-primary-lighter: #ff99a0;
+  --ifm-color-primary-lightest: #ffccd0;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+img.ss {
+  padding: 0.3em 0;
+  max-width: 15em;
+  margin-left: unset;
+  margin-right: unset;
+}
+
+img.badge {
+  max-width: 15em;
+  display: inline;
+  margin-left: unset;
+  margin-right: unset;
+}
+img.screenshot {
+  max-width: 23%;
+  width: 23%;
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
