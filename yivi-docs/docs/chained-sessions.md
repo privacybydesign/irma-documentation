@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 ---
 title: Chained sessions
 ---
@@ -131,33 +134,35 @@ func writeError(w http.ResponseWriter, msg string) {
 
 The session chain can then be started by sending the following session request to our IRMA server.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Extended session request (JSON)-->
-```jsonc
-{
-    "nextSession": {
-        "url": "https://example.com"
-    },
-    "request": {
-        "@context": "https://irma.app/ld/request/disclosure/v2",
-        "disclose": [[[ "irma-demo.gemeente.personalData.fullname" ]]]
-    }
-}
-```
-<!--Extended session request (Go)-->
-```go
-irma.ServiceProviderRequest{
-	RequestorBaseRequest: irma.RequestorBaseRequest{
-		NextSession: &irma.NextSessionData{
-			URL: "https://example.com",
+<Tabs>
+  <TabItem value="json" label="Extended session request (JSON)" default>
+  	```jsonc
+		{
+		"nextSession": {
+			"url": "https://example.com"
 		},
-	},
-	Request: irma.NewDisclosureRequest(
-		irma.NewAttributeTypeIdentifier("irma-demo.gemeente.personalData.fullname"),
-	),
-}
-```
-<!--END_DOCUSAURUS_CODE_TABS-->
+		"request": {
+			"@context": "https://irma.app/ld/request/disclosure/v2",
+			"disclose": [[[ "irma-demo.gemeente.personalData.fullname" ]]]
+		}
+	}
+	```
+  </TabItem>
+  <TabItem value="go" label="Extended session request (Go)">
+    ```go
+	irma.ServiceProviderRequest{
+		RequestorBaseRequest: irma.RequestorBaseRequest{
+			NextSession: &irma.NextSessionData{
+				URL: "https://example.com",
+			},
+		},
+		Request: irma.NewDisclosureRequest(
+			irma.NewAttributeTypeIdentifier("irma-demo.gemeente.personalData.fullname"),
+		),
+	}
+	```
+  </TabItem>
+</Tabs>
 
 After the user discloses the `irma-demo.gemeente.personalData.fullname` attribute, the IRMA server POSTs it to `https://example.com`. Our Go server responds to the IRMA server with the `issuanceRequest` found near the end of the program. Next, the IRMA server immediately starts this issuance session with the user's Yivi app, resulting in the screenshots shown on top of this page.
 
