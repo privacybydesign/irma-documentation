@@ -292,7 +292,7 @@ The IRMA issuer private key is $(p', q')$ where $p', q'$ are both [safe primes](
 The current accumulator is a number $\nu \in QR_n$. The first accumulator is randomly chosen by the issuer from $QR_n$. During issuance, the issuer
   1. generates a prime $e$,
   2. embeds the prime $e$ as an attribute within the credential being issued,
-  <!-- 3. uses its private key to compute $u = \nu^{1/e\bmod pq}$, and sends the tuple $(u,e)$ to the app along with the credential, -->
+  3. uses its private key to compute $u = \nu^{1/e\bmod pq}$, and sends the tuple $(u,e)$ to the app along with the credential,
   4. stores the number $e$ in a database for later revocation.
 
 ### Disclosure

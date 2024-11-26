@@ -100,7 +100,7 @@ Idemix public key of the issuer. The issuance goes as follows:
   the index $r$ of the randomblind attribute.
   This so-called *share* of the attribute remains secret, similar to
   how the user's secret key remains secret during issuance. 
-  <!-- The user computes the commitment $U = S^{v'} R_0^{m_0} R_r^{m_{r}'} \mod n$. -->
+  The user computes the commitment $U = S^{v'} R_0^{m_0} R_r^{m_{r}'} \mod n$.
   Note that $m_0$ is always the user's secret key. This commitment is sent to
   the issuer along with a [zero-knowledge proof](zkp)
   of $v', m_0$ and $m_{r}'$.
@@ -109,9 +109,9 @@ Idemix public key of the issuer. The issuance goes as follows:
   The issuer also samples $v''$ and $m_{r}''$ (also 255 bits) at random.
   Next, the issuer computes 
 
-  <!-- $$
+  $$
     A = \Bigg(\frac{Z}{U S^{v''} R_{1}^{m_1} \dots \ R_{r}^{m_r''} \dots \ R_{n}^{m_n}}\Bigg)^{1/e}
-  $$ -->
+  $$
 
   For every attribute that is tagged randomblind, the issuer includes its share
   of the attribute in the exponent (in this case, only for index $r$).  For
