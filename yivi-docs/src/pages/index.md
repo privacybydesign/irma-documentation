@@ -14,7 +14,7 @@ Dive into the Yivi documentation to get started, learn about its features, and u
 
 ## 📰 Visit Our Blog
 Stay updated on the latest developments, use cases, and insights about Yivi.
-[👉 Read the Blog[/blog]
+[👉 Read the Blog](/blog)
 
 ## 🤝 Authors & Contributors
 Yivi is brought to life by a dedicated team of authors and contributors. You can find them on [Github](https://github.com/orgs/privacybydesign/people)
