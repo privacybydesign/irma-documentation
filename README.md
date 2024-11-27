@@ -1,3 +1,3 @@
-# IRMA technical documentation
+# Yivi technical documentation
 
-This is the source of the IRMA technical documentation website. [Build and edit instructions](website).
+This is the source of the Yivi technical documentation website. [Build and edit instructions](website).
