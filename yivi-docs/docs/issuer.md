@@ -91,7 +91,7 @@ Some notes:
   - By specifying it explicitly using the `-c` or `--counter` flag.
   - By running `irma issuer keygen` within your issuer folder in the scheme; it will then infer the appropriate counter using the public keys already present in the `PublicKeys` folder.
   - Alternatively, after generating the keypair you can open the private and public keys in a text editor and set the `<Counter>` tag to the appropriate number.
-* If one of your credentials contains more than 10 attributes, then that amount of attributes *increased by 2* (to account for [the secret key and metadata attributes](overview.md#special-attributes)) must be passed to the `-a` or `--numattributes` flag, to ensure that the new public key supports the required amount of attributes.
+* If one of your credentials contains more than 10 attributes, then that amount of attributes *increased by 2* (to account for [the secret key and metadata attributes](technical-overview.md#special-attributes)) must be passed to the `-a` or `--numattributes` flag, to ensure that the new public key supports the required amount of attributes.
 
 ## Issuer maintenance
 

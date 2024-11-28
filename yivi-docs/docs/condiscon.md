@@ -2,8 +2,8 @@
 title: "\"Condiscon\" session requests"
 ---
 
-This page introduces *condiscon*: a new IRMA feature allowing IRMA [verifiers and signature requestors](overview.md#participants) to express the attributes they need with much more flexibility, using a new format for the [session request](session-requests.md) with which sessions are started at the IRMA server. This affects:
-- [Requestors](overview.md#participants) using an [`irma server`](irma-server.md) or the [`irmaserver` library](irma-server-lib.md), as they need to convert their session request to the new condiscon format.
+This page introduces *condiscon*: a new IRMA feature allowing IRMA [verifiers and signature requestors](technical-overview.md#participants) to express the attributes they need with much more flexibility, using a new format for the [session request](session-requests.md) with which sessions are started at the IRMA server. This affects:
+- [Requestors](technical-overview.md#participants) using an [`irma server`](irma-server.md) or the [`irmaserver` library](irma-server-lib.md), as they need to convert their session request to the new condiscon format.
 - The [`irma` command](irma-cli.md) including [`irma server`](irma-server.md) (`0.3.0` and up supports condiscon).
 - The [Yivi app](yivi-app.md) (a condiscon-compatible version will soon be released in the beta channel).
 
@@ -91,7 +91,7 @@ In this disclosure request, the user is asked for her (demo) BSN, and for her `s
 
 In the session request above (see the second tab) we call the three JSON lists that contain strings *inner conjunctions* (distinguishing them from the *outer conjunctions*, that contain not attribute but disjunctions). Asking for multiple attributes within such an inner conjunctions of a session request is subject to the following rules:
 
-- When attributes coming from multiple credential types occur in an inner conjunction, at most one of them may be a non-[singleton](overview.md#singletons).
+- When attributes coming from multiple credential types occur in an inner conjunction, at most one of them may be a non-[singleton](technical-overview.md#singletons).
 - If some of the attributes occuring in the inner conjunction come from the same credential type, then the attributes that the user sends must come from the same credential instance: it is not allowed to mix attributes coming from distinct instances of that credential type. (The Yivi app automatically only offers candidate sets as choices to the user that satisfy this property.)
 
 For example, consider the following condiscon session request:

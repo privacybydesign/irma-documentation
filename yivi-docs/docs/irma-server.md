@@ -4,7 +4,7 @@ title: irma server
 
 
 `irma server` is an IRMA server executable (daemon) allowing you to perform IRMA sessions with
-[Yivi apps](yivi-app.md). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an Yivi app on behalf of a [requestor](overview.md#participants) (the application wishing to verify or issue attributes). It exposes the following:
+[Yivi apps](yivi-app.md). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an Yivi app on behalf of a [requestor](technical-overview.md#participants) (the application wishing to verify or issue attributes). It exposes the following:
  * HTTP endpoints under `/irma`, used by the Yivi app during IRMA sessions
  * a JSON API under `/sessions` for requestors, allowing them to request the server to verify or issue attributes.
 

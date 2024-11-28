@@ -54,13 +54,13 @@ Generate these using `java -jar path-to-plantuml.jar -tsvg *.puml` in docs/asset
 
 ### Further reading
 
-This page is concerned only with the IRMA protocol. For more technical information on IRMA in general, as well as explanations and definitions of some of the terms mentioned in this page, see the [technical overview](overview.md).
+This page is concerned only with the IRMA protocol. For more technical information on IRMA in general, as well as explanations and definitions of some of the terms mentioned in this page, see the [technical overview](technical-overview.md).
 
-This page does not deal with the cryptographic contents of the messages being passed nor how they achieve [IRMA's security properties](overview.md#irma-security-properties), only with how and when they are passed. IRMA being an implementation of the Idemix attribute-based credential scheme, details on the cryptographic contents and mechanisms of the messages  may be found in the [Idemix specification](https://dominoweb.draco.res.ibm.com/reports/rz3730_revised.pdf) and in the [paper introducing Idemix](https://cs.brown.edu/people/alysyans/papers/camlys02b.pdf) by Camenisch and Lysyanskaya.
+This page does not deal with the cryptographic contents of the messages being passed nor how they achieve [IRMA's security properties](technical-overview.md#irma-security-properties), only with how and when they are passed. IRMA being an implementation of the Idemix attribute-based credential scheme, details on the cryptographic contents and mechanisms of the messages  may be found in the [Idemix specification](https://dominoweb.draco.res.ibm.com/reports/rz3730_revised.pdf) and in the [paper introducing Idemix](https://cs.brown.edu/people/alysyans/papers/camlys02b.pdf) by Camenisch and Lysyanskaya.
 
 ## Session creation
 
-The [requestor](overview.md#participants) creates a session by sending a [session request](session-requests.md) for one of the three supported [session types](what-is-yivi.md#session-types) to the [`POST /session`](api-irma-server.md#post-session) endpoint of the `irma server`, or by invoking the [`StartSession()`](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver#Server.StartSession) function of the `irmaserver` Go library. If the IRMA server accepts the session (i.e., the session request is valid and the requestor is authorized to start sessions), the session is created and its state is set to [`INITIALIZED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusInitialized). This means that the IRMA server is waiting for the first HTTP request of the Yivi app, documented below.
+The [requestor](technical-overview.md#participants) creates a session by sending a [session request](session-requests.md) for one of the three supported [session types](what-is-yivi.md#session-types) to the [`POST /session`](api-irma-server.md#post-session) endpoint of the `irma server`, or by invoking the [`StartSession()`](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver#Server.StartSession) function of the `irmaserver` Go library. If the IRMA server accepts the session (i.e., the session request is valid and the requestor is authorized to start sessions), the session is created and its state is set to [`INITIALIZED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusInitialized). This means that the IRMA server is waiting for the first HTTP request of the Yivi app, documented below.
 
 When the requestor creates the session, the IRMA server responds with a [session package](api-irma-server.md#post-session). For example:
 
@@ -234,7 +234,7 @@ i.Rsh(i, 1)
 fmt.Println(string(i.Bytes()))
 ```
 
-Note that attribute `1` is the [metadata attribute](overview.md#the-metadata-attribute), containing among others the credential type and the expiry date of the credential in a custom encoding. This attribute is always disclosed. The above snippet will not output anything sensible for metadata attributes, but instead the [`irma` command line tool](irma-cli.md) can be used as follows.
+Note that attribute `1` is the [metadata attribute](technical-overview.md#the-metadata-attribute), containing among others the credential type and the expiry date of the credential in a custom encoding. This attribute is always disclosed. The above snippet will not output anything sensible for metadata attributes, but instead the [`irma` command line tool](irma-cli.md) can be used as follows.
 
 ```text
 $ irma meta "AwAKhwAaAAXZZxdMn4TvQ6F/mVxWb6a7"
@@ -322,7 +322,7 @@ The app POSTs an [`irma.IssueCommitmentMessage` instance](https://pkg.go.dev/git
 }
 ```
 
-The `combinedProofs` array contains, for each credential being issued within the session (one in this example), a [zero-knowledge proof](zkp.md) of the Yivi app's secret key (which will become [the first attribute](overview.md#the-secret-key-attribute) of the credential(s) being issued). In addition, in case of [combined disclosure-issuance sessions](session-requests.md#issuance-requests) this array will also contain [`gabi.ProofD`](https://pkg.go.dev/github.com/privacybydesign/gabi#ProofD) instances, like the `proofs` array in [disclosure sessions](irma-protocol.md#disclosure-post-irma-session-clienttoken-proofs).
+The `combinedProofs` array contains, for each credential being issued within the session (one in this example), a [zero-knowledge proof](zkp.md) of the Yivi app's secret key (which will become [the first attribute](technical-overview.md#the-secret-key-attribute) of the credential(s) being issued). In addition, in case of [combined disclosure-issuance sessions](session-requests.md#issuance-requests) this array will also contain [`gabi.ProofD`](https://pkg.go.dev/github.com/privacybydesign/gabi#ProofD) instances, like the `proofs` array in [disclosure sessions](irma-protocol.md#disclosure-post-irma-session-clienttoken-proofs).
 
 When responding to this HTTP request (see below) with its signature(s) over the attributes, the IRMA server includes a zero-knowledge proof of its own, proving that it correctly constructed its signatures. The `n_2` field contains the nonce over which the issuer is to construct that zero-knowledge proof (c.f. the `nonce` in the session request, see [above](irma-protocol.md#get-irma-session-clienttoken-request)).
 

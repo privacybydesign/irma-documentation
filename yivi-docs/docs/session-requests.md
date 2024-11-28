@@ -83,7 +83,7 @@ All of the attribute types (i.e., the string values) contained in the request mu
 ### Multiple credential types within inner conjunctions
 In the request above we call the three JSON lists that contain strings *inner conjunctions* (distinguishing them from the *outer conjunctions*, that contain not attribute but disjunctions). Asking for multiple attributes within such an inner conjunctions of a session request is subject to the following rules:
 
-- When attributes coming from multiple credential types occur in an inner conjunction, at most one of them may be a non-[singleton](overview.md#singletons).
+- When attributes coming from multiple credential types occur in an inner conjunction, at most one of them may be a non-[singleton](technical-overview.md#singletons).
 - If some of the attributes occuring in the inner conjunction come from the same credential type, then the attributes that the user sends must come from the same credential instance: it is not allowed to mix attributes coming from distinct instances of that credential type. (The Yivi app automatically only offers candidate sets as choices to the user that satisfy this property.)
 
 For example, consider the following session request:
@@ -342,7 +342,7 @@ request.Labels = map[int]irma.TranslatedString{} // optional
 ```
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-Per credential in the `credentials` array the `validity` is optional; if skipped it is assigned the default value of 6 months. If present, the validity is always rounded down to the [nearest epoch boundary](overview.md#special-attributes), which is one week (60 * 60 * 24 * 7  = 604800 seconds).
+Per credential in the `credentials` array the `validity` is optional; if skipped it is assigned the default value of 6 months. If present, the validity is always rounded down to the [nearest epoch boundary](technical-overview.md#special-attributes), which is one week (60 * 60 * 24 * 7  = 604800 seconds).
 
 Attributes marked as `optional` in the containing credential type ([example](https://github.com/privacybydesign/irma-demo-schememanager/blob/482ba298ee038ea43bd0cf8017567a844be0919e/MijnOverheid/Issues/fullName/description.xml#L54)) may be skipped in the `attributes` map. This issues [the `null` value](#null-attributes) to these attributes.
 
