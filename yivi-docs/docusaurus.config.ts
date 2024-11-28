@@ -113,7 +113,7 @@ const config: Config = {
             },
             {
               label: 'Technical overview',
-              to: '/overview',
+              to: '/technical-overview',
             },
           ],
         },
