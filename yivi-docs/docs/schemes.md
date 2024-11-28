@@ -62,21 +62,22 @@ The `description.xml` of a credential type contains the definitions, including t
 
 These identifiers are used to refer to these entities within [IRMA session requests](session-requests.md), joined together using a dot `.` as separator. For example, the `description.xml` [below](#credential-types) shows the definition of the credential type `credentialtype-id` included in the directory tree above. This file contains an attribute whose identifier, as defined by the `id` XML attribute, is `boolean-attr`. Then the following would be a valid IRMA disclosure request that requests an Yivi app user to disclose this attribute:
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Session request (JSON)-->
-```json
-{
-  "@context": "https://irma.app/ld/request/disclosure/v2",
-  "disclose": [[[ "scheme-id.issuer-id.credentialtype-id.boolean-attr" ]]]
-}
-```
-<!--Session request (Go)-->
-```golang
-irma.NewDisclosureRequest(irma.NewAttributeTypeIdentifier(
-    "scheme-id.issuer-id.credentialtype-id.boolean-attr",
-))
-```
-<!--END_DOCUSAURUS_CODE_TABS-->
+<Tabs>
+  <TabItem value="json" label="Extended session request (JSON)" default>
+    ```json
+    {
+    "@context": "https://irma.app/ld/request/disclosure/v2",
+    "disclose": [[[ "scheme-id.issuer-id.credentialtype-id.boolean-attr" ]]]
+    }
+  </TabItem>
+  <TabItem value="go" label="Session request (Go)">
+    ```golang
+    irma.NewDisclosureRequest(irma.NewAttributeTypeIdentifier(
+        "scheme-id.issuer-id.credentialtype-id.boolean-attr",
+    ))
+    ```
+  </TabItem>
+</Tabs>
 
 IRMA identifiers may not themselves contain dots. Generally, only alphanumeric characters and the dash `-`are used.
 

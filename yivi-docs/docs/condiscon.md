@@ -2,6 +2,9 @@
 title: "\"Condiscon\" session requests"
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 This page introduces *condiscon*: a new IRMA feature allowing IRMA [verifiers and signature requestors](technical-overview.md#participants) to express the attributes they need with much more flexibility, using a new format for the [session request](session-requests.md) with which sessions are started at the IRMA server. This affects:
 - [Requestors](technical-overview.md#participants) using an [`irma server`](irma-server.md) or the [`irmaserver` library](irma-server-lib.md), as they need to convert their session request to the new condiscon format.
 - The [`irma` command](irma-cli.md) including [`irma server`](irma-server.md) (`0.3.0` and up supports condiscon).
@@ -13,37 +16,37 @@ Below we describe the new session format, explaining the new features that it br
 
 An [IRMA disclosure session](what-is-yivi.md#session-types) is started by a verifier submitting a [*session request*](session-requests.md) to an IRMA server, listing the attributes that it requires, offering the user a choice between multiple options for some or all of these attributes. That is, IRMA supports requesting the user for a [*conjunction*](https://en.wikipedia.org/wiki/Logical_conjunction) of [*disjunctions*](https://en.wikipedia.org/wiki/Logical_disjunction) of attributes. In the (new) Yivi app, this looks as follows.
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Yivi app-->
-<img src="/img/pre-condiscon.png" class="ss" alt="pre-condiscon" />
-<!--Session request (old format, JSON)-->
-```json
-{
-  "type": "disclosing",
-  "content": [{
-    "label": "Address",
-    "attributes": [
-      "irma-demo.nijmegen.address.street",
-      "irma-demo.idin.idin.address"
-    ]
-  },
+<Tabs>
+  <TabItem value="yivi" label="Yivi App">
+  <img src="/img/pre-condiscon.png" class="ss" alt="pre-condiscon" />
+  </TabItem>
+  <TabItem value="json" label="Session request (old format, JSON)">
+  ```json
   {
-    "label": "City",
-    "attributes": [
-      "irma-demo.nijmegen.address.city",
-      "irma-demo.idin.idin.city"
-    ]
-  }]
-}
-```
-<!--END_DOCUSAURUS_CODE_TABS-->
+    "type": "disclosing",
+    "content": [{
+      "label": "Address",
+      "attributes": [
+        "irma-demo.nijmegen.address.street",
+        "irma-demo.idin.idin.address"
+      ]
+    },
+    {
+      "label": "City",
+      "attributes": [
+        "irma-demo.nijmegen.address.city",
+        "irma-demo.idin.idin.city"
+      ]
+    }]
+  }
+  ```
+  </TabItem>
+</Tabs>
 
 "Condiscon", standing for conjunction of disjunctions *of conjunctions* of attributes adds one extra level to this in the session request format: now verifiers can request multiple attribute *sets* from the user, offering the user multiple choices for some or all of the sets:
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Yivi app-->
-<img src="/img/condiscon.png" class="ss" alt="condiscon" />
-<!--Session request (condiscon, JSON)-->
+<Tabs>
+  <TabItem value="json" label="Session request (condiscon, JSON)" default>
 ```json
 {
   "@context": "https://irma.app/ld/request/disclosure/v2",
@@ -65,7 +68,8 @@ An [IRMA disclosure session](what-is-yivi.md#session-types) is started by a veri
   ]
 }
 ```
-<!--Session request (condiscon, Go)-->
+  </TabItem>
+  <TabItem value="go" label="Session request (condiscon, Go)">
 ```golang
 request := irma.NewDisclosureRequest()
 request.Disclose = irma.AttributeConDisCon{
@@ -85,7 +89,11 @@ request.Disclose = irma.AttributeConDisCon{
 	},
 }
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+  </TabItem>
+  <TabItem value="app" label="Yivi App">
+    <img src="/img/condiscon.png" class="ss" alt="condiscon" />
+  </TabItem>
+</Tabs>
 
 In this disclosure request, the user is asked for her (demo) BSN, and for her `street`, `houseNumber` and `city` attribute from the `irma-demo.nijmegen.address` credential type. For the latter three the user has one other option which is not currently shown in the screenshot (but it is present in the session request).
 
@@ -95,8 +103,9 @@ In the session request above (see the second tab) we call the three JSON lists t
 - If some of the attributes occuring in the inner conjunction come from the same credential type, then the attributes that the user sends must come from the same credential instance: it is not allowed to mix attributes coming from distinct instances of that credential type. (The Yivi app automatically only offers candidate sets as choices to the user that satisfy this property.)
 
 For example, consider the following condiscon session request:
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Session request (JSON)-->
+
+<Tabs>
+  <TabItem value="json" label="Session request (JSON)" default>
 ```json
 {
   "@context": "https://irma.app/ld/request/disclosure/v2",
@@ -110,7 +119,8 @@ For example, consider the following condiscon session request:
   ]
 }
 ```
-<!--Session request (Go)-->
+  </TabItem>
+  <TabItem value="go" label="Session request (Go)">
 ```golang
 request := irma.NewDisclosureRequest()
 request.Disclose = irma.AttributeConDisCon{
@@ -122,7 +132,8 @@ request.Disclose = irma.AttributeConDisCon{
 	},
 }
 ```
-<!--END_DOCUSAURUS_CODE_TABS-->
+  </TabItem>
+</Tabs>
 
 Supposing that the user has two instances of `pbdf.pbdf.diploma` whose `degree` and `institute` attributes are `(degree 1, institute 1)` and `(degree 2, institute 2)`, this means that the user can choose only either `(degree 1, institute 1)` or `(degree 2, institute 2)`, and not `(degree 1, institute 2)` or `(degree 2, institute 1)`. (If desired it would be possible to give the user those options by asking for the two attributes in two *outer* conjunctions instead of within an *inner* conjunction.)
 
@@ -133,9 +144,10 @@ When combining multiple credential types within a disjunction these restrictions
 As before, the verifier can indicate in the session request that it requires specific values for one or more of the requested attributes. In addition, the new condiscon versions of the Yivi app and server include the following new features.
 
 - **Optional disjunctions**: Now that inner conjunctions can be of any length (instead of just 1 as it previously was), verifiers can mark a disjunction as *optional* by specifying an empty inner conjunction `[]` as one of its candidates, indicating that by disclosing nothing this disjunction is satisfied:
-  <!--DOCUSAURUS_CODE_TABS-->
-  <!--Session request (JSON)-->
-  ```json
+
+<Tabs>
+  <TabItem value="json" label="Session request (JSON)" default>
+```json
   {
     "@context": "https://irma.app/ld/request/disclosure/v2",
     "disclose": [
@@ -146,18 +158,21 @@ As before, the verifier can indicate in the session request that it requires spe
     ]
   }
   ```
-  <!--Session request (Go)-->
-  ```golang
-  request := irma.NewDisclosureRequest()
-  request.Disclose = irma.AttributeConDisCon{
-    irma.AttributeDisCon{
-      irma.AttributeCon{},
-      irma.AttributeCon{irma.NewAttributeRequest("pbdf.pbdf.diploma.degree")},
-    },
-  }
-  ```
-<!--END_DOCUSAURUS_CODE_TABS-->
-  This can be useful when certain attributes would be useful but not required, so that their absence does not abort the IRMA session.
+  </TabItem>
+  <TabItem value="go" label="Session request (Go)">
+```golang
+request := irma.NewDisclosureRequest()
+request.Disclose = irma.AttributeConDisCon{
+  irma.AttributeDisCon{
+    irma.AttributeCon{},
+    irma.AttributeCon{irma.NewAttributeRequest("pbdf.pbdf.diploma.degree")},
+  },
+}
+```
+  </TabItem>
+</Tabs>
+
+This can be useful when certain attributes would be useful but not required, so that their absence does not abort the IRMA session.
 
 - **Null attributes**: Attributes that were skipped by the issuer during issuance, assigning them the `null` value, can now be requested and disclosed normally. The verifier receives the JSON value `null` instead of a (string) attribute value. (Previously such null attributes would have caused the Yivi app to abort the session, considering them "absent" and thus the request unsatisfiable. This made it impractical to request an optional attribute along with other attributes.)
 - **Disjunction labels** are now optional. They often only repeated the requested credential or attribute names (mainly because they were required); this is now discouraged. Instead, labels should only be used to explain something to the user that would otherwise not be obvious (e.g, to request the user to send a work email address instead of a personal one).
@@ -181,4 +196,3 @@ For attribute-based signatures, the condiscon version of the IRMA software bring
 This is fixed in the condiscon versions of IRMA by committing to the attribute structure (i.e. disclosed vs. non-disclosed attributes) during generation and verification of the attribute-based signature in a new way, that is automatically compatible with future attribute additions to the credential type.
 
 Previously generated IRMA attribute-based signatures remain valid (as long as no new attributes are added to their credential types). However, the new Yivi app always uses the fixed signature generation algorithm which the pre-condiscon version of the IRMA server does not support. For that reasons, if you use attribute-based signatures your IRMA server(s) will need to be updated before the new Yivi app is released (probably some weeks from now).
-
