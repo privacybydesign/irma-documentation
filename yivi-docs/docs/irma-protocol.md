@@ -2,6 +2,9 @@
 title: IRMA protocol
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 During an IRMA session, the IRMA protocol is used by the [IRMA server](irma-server.md) and [Yivi app](yivi-app.md) to issue or verify attributes. The Yivi app sends and receives various data by invoking a number of HTTP endpoints of the IRMA server, making the session progress through a number of stages. This page documents those endpoints, the data being handled, and the states the session goes through.
 
 ## Introduction
@@ -40,12 +43,14 @@ The following sequence diagrams showing an IRMA session in the happy flow, witho
 Generate these using `java -jar path-to-plantuml.jar -tsvg *.puml` in docs/assets. E.g. if the PlantUML extension is installed in VSCode: `java -jar ~/.vscode/extensions/jebbs.plantuml-2.15.1/plantuml.jar -tsvg *.puml`
 -->
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Pairing disabled-->
-![Pairing disabled](/img/session-no-pairing.svg)
-<!--Pairing enabled-->
-![Pairing enabled](/img/session-pairing.svg)
-<!--END_DOCUSAURUS_CODE_TABS-->
+<Tabs>
+  <TabItem value="pairing" label="Pairing enabled" default>
+    ![Pairing enabled](/img/session-pairing.svg)    
+  </TabItem>
+  <TabItem value="pairing-disabled" label="Pairing disabled">
+    ![Pairing disabled](/img/session-no-pairing.svg)    
+  </TabItem>
+</Tabs>
 
 ### Further reading
 
@@ -92,45 +97,47 @@ X-Irma-Maxprotocolversion: 2.8
 
 The server responds with an [`irma.ClientSessionRequest` instance](https://pkg.go.dev/github.com/privacybydesign/irmago#ClientSessionRequest), containing the protocol version that it chooses (the highest protocol version supported by both itself and by the app), the pairing code if device pairing is enabled, or the session request if not. For example:
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Pairing enabled-->
-```json
-{
-  "@context": "https://irma.app/ld/request/client/v1",
-  "protocolVersion": "2.8",
-  "options": {
-    "@context": "https://irma.app/ld/options/v1",
-    "pairingMethod": "pin",
-    "pairingCode": "1761"
-  }
-}
-```
-<!--Pairing disabled-->
-```json
-{
-  "@context": "https://irma.app/ld/request/client/v1",
-  "protocolVersion": "2.8",
-  "options": {
-    "@context": "https://irma.app/ld/options/v1",
-    "pairingMethod": "none"
-  },
-  "request": {
-    "@context": "https://irma.app/ld/request/disclosure/v2",
-    "context": "AQ==",
-    "nonce": "Il2FiK8uCIApjzkWeRouSQ==",
-    "protocolVersion": "2.8",
-    "devMode": true,
-    "disclose": [
-      [
-        [
-          "pbdf.pbdf.irmatube.type"
+<Tabs>
+  <TabItem value="pairing" label="Pairing enabled" default>
+    ```json
+    {
+      "@context": "https://irma.app/ld/request/client/v1",
+      "protocolVersion": "2.8",
+      "options": {
+        "@context": "https://irma.app/ld/options/v1",
+        "pairingMethod": "pin",
+        "pairingCode": "1761"
+      }
+    }
+    ```
+  </TabItem>
+  <TabItem value="pairing-disabled" label="Pairing disabled">
+    ```json
+    {
+      "@context": "https://irma.app/ld/request/client/v1",
+      "protocolVersion": "2.8",
+      "options": {
+        "@context": "https://irma.app/ld/options/v1",
+        "pairingMethod": "none"
+      },
+      "request": {
+        "@context": "https://irma.app/ld/request/disclosure/v2",
+        "context": "AQ==",
+        "nonce": "Il2FiK8uCIApjzkWeRouSQ==",
+        "protocolVersion": "2.8",
+        "devMode": true,
+        "disclose": [
+          [
+            [
+              "pbdf.pbdf.irmatube.type"
+            ]
+          ]
         ]
-      ]
-    ]
-  }
-}
-```
-<!--END_DOCUSAURUS_CODE_TABS-->
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
 
 If device pairing is disabled, then the session state is set to [`CONNECTED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusConnected). Otherwise the session state is set to [`PAIRING`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusPairing). In that case the Yivi app shows the `pairingCode` in the response above in its GUI, and instructs the user to type that into the frontend. It uses [`/irma/session/{clientToken}/statusevents`](api-irma-server.md#get-irma-session-clienttoken-statusevents) or polls to [`/irma/session/{clientToken}/status`](api-irma-server.md#get-irma-session-clienttoken-status) to keep track of the session status. After the user enters the pairing code into the frontend, the frontend invokes the [`POST /irma/session/{clientToken}/frontend/pairingcompleted` endpoint](api-irma-server.md#post-irma-session-clienttoken-frontend-pairingcompleted), triggering the IRMA server to switch the session status to `CONNECTED`. When that happens the Yivi app notices through a server-sent event or through its polling, after which it invokes the below endpoint to retrieve the session request.
 
