@@ -49,7 +49,7 @@ Integrate IRMA attribute verification in your own website or application, for ex
 
 * Use case 1: Instead of logging in with username/passwords, users can register and then login at your website by showing their IRMA email address attribute ([index](https://privacybydesign.foundation/attribute-index/en/pbdf.pbdf.email.html), [issuance](https://privacybydesign.foundation/issuance/email/), [info](https://privacybydesign.foundation/issuance-email/)).
 * Use case 2: Auto-fill an HTML form in your website by asking the user to disclose IRMA attributes, as in [this demo](https://privacybydesign.foundation/demo/adres/).
-* Use case 3: Ask your users to provide, for example, consent to receive ads per email, with an [attribute-based signature](what-is-irma.md#session-types).
+* Use case 3: Ask your users to provide, for example, consent to receive ads per email, with an [attribute-based signature](what-is-yivi.md#session-types).
 * Use case 4 (experimental): if you develop an iOS or Android app, start an IRMA session from within your app using these libraries: [iOS](https://github.com/privacybydesign/irmaios), [Android](https://github.com/privacybydesign/irmaandroid).
 
 ## Advanced/take home exercises

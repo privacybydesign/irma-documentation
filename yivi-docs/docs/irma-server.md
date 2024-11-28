@@ -147,10 +147,10 @@ Assuming the URL of the `irma server` is `http://example.com`, the session confi
 }
 ```
 
-Only static [disclosure or attribute-based signature sessions](what-is-irma.md#session-types) are supported.
+Only static [disclosure or attribute-based signature sessions](what-is-yivi.md#session-types) are supported.
 
 ### Permissions
-For each of the [three IRMA session types](what-is-irma.md#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
+For each of the [three IRMA session types](what-is-yivi.md#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
 ```json
 {
     "requestors": {

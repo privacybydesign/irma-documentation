@@ -23,7 +23,7 @@ const sidebars: SidebarsConfig = {
       label: 'Intro',
       collapsed: false,
       items: [
-        'what-is-irma',
+        'what-is-yivi',
         'getting-started',
       ],
     },

@@ -11,7 +11,7 @@ Below we describe the new session format, explaining the new features that it br
 
 ## New session request format
 
-An [IRMA disclosure session](what-is-irma.md#session-types) is started by a verifier submitting a [*session request*](session-requests.md) to an IRMA server, listing the attributes that it requires, offering the user a choice between multiple options for some or all of these attributes. That is, IRMA supports requesting the user for a [*conjunction*](https://en.wikipedia.org/wiki/Logical_conjunction) of [*disjunctions*](https://en.wikipedia.org/wiki/Logical_disjunction) of attributes. In the (new) Yivi app, this looks as follows.
+An [IRMA disclosure session](what-is-yivi.md#session-types) is started by a verifier submitting a [*session request*](session-requests.md) to an IRMA server, listing the attributes that it requires, offering the user a choice between multiple options for some or all of these attributes. That is, IRMA supports requesting the user for a [*conjunction*](https://en.wikipedia.org/wiki/Logical_conjunction) of [*disjunctions*](https://en.wikipedia.org/wiki/Logical_disjunction) of attributes. In the (new) Yivi app, this looks as follows.
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--Yivi app-->

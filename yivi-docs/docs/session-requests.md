@@ -2,17 +2,17 @@
 title: Session requests
 ---
 
-Each [IRMA server](what-is-irma.md#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [Yivi app](yivi-app.md) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
+Each [IRMA server](what-is-yivi.md#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [Yivi app](yivi-app.md) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
 
 * The [`POST /session`](api-irma-server.md#post-session) endpoint from [`irma server`](irma-server.md).
 * The [`StartSession()` function](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
 * The [`startSession()` function](api-irmajs.md#startsession) of `irmajs`.
 
-For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-irma.md#irma-session-flow).
+For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-yivi.md#irma-session-flow).
 
 ## Session request data types
 
-For each of the [three IRMA session types](what-is-irma.md#session-types), we define a *session request* data type: an object whose JSON representation contains at least a [JSON-LD `@context`](https://w3c.github.io/json-ld-syntax/#the-context) key identifying which message type it is, and extra keys specific to the session type. The following three `@context` values identify disclosure, attribute-based signature, and issuance session requests respectively:
+For each of the [three IRMA session types](what-is-yivi.md#session-types), we define a *session request* data type: an object whose JSON representation contains at least a [JSON-LD `@context`](https://w3c.github.io/json-ld-syntax/#the-context) key identifying which message type it is, and extra keys specific to the session type. The following three `@context` values identify disclosure, attribute-based signature, and issuance session requests respectively:
 
 * `"@context": "https://irma.app/ld/request/disclosure/v2"`
 * `"@context": "https://irma.app/ld/request/signature/v2"`
@@ -478,7 +478,7 @@ Below you can find an overview of all extra parameters and their default value.
 More information about session lifetimes and timeouts can be found in the [IRMA server documentation](irma-server.md#session-lifetime).
 
 ## JWTs: signed session requests
-The IRMA API server or [`irma server`](irma-server.md) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). The form of the JWT depends on the [session type](what-is-irma.md#session-types). An example requesting [IRMATube](https://privacybydesign.foundation/demo/irmaTube) attributes::
+The IRMA API server or [`irma server`](irma-server.md) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). The form of the JWT depends on the [session type](what-is-yivi.md#session-types). An example requesting [IRMATube](https://privacybydesign.foundation/demo/irmaTube) attributes::
 ```
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImlybWF0dWJlIn0.eyJpYXQiOjE1NjQ2NTczNzUsInN1YiI6InZlcmlmaWNhdGlvbl9yZXF1ZXN0Iiwic3ByZXF1ZXN0Ijp7InJlcXVlc3QiOnsiQGNvbnRleHQiOiJodHRwczovL2lybWEuYXBwL2xkL3JlcXVlc3QvZGlzY2xvc3VyZS92MiIsImRpc2Nsb3NlIjpbW1sicGJkZi5wYmRmLmlybWF0dWJlLnR5cGUiXV0sW1sicGJkZi5wYmRmLmFnZUxpbWl0cy5vdmVyMTIiXSxbInBiZGYuZ2VtZWVudGUucGVyc29uYWxEYXRhLm92ZXIxMiJdXV19fX0.lW9mqjrLkoahDP6Fcw_9mH5hlfl1tq5qp3W3ga0Nrd_j0NXFj-6ngqHVXEV1zhC_OkVH4LN8fMBAgN8nqaFWgEdQvrCuB7-ynuBVjLR-QU272Ym86zLEWYggAkbZ5KY40MpTxU1dgFMucG7fyAESic04OribWOCVxstAMsM28yCxvzkBMCOSjFEe3abcg_N6VvQnLn3LgZP_UrxQmQsh4DK7mBjW04LesLG1vjcliyhDGUb52FHOP_NAsG7G2FvIgojPzALlPrpTMu5p8a95wc5CGR791wybmh0F8kDdwZWAU0W2FjlX5bNPsyXN8AxRVWaRmWoGrGsQhy_sKEf8lg
 ```
