@@ -2,6 +2,9 @@
 title: IRMA schemes
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 In IRMA, every party ([Yivi apps](yivi-app.md), [IRMA servers](what-is-yivi.md#irma-servers), [requestors](technical-overview.md#participants)) must be aware of existing [credential types](technical-overview.md#credential-types), attribute names, and the [issuers](technical-overview.md#issuers) and their public keys. All such information is contained in IRMA *schemes*. It is the task of the *scheme manager* to determine and distribute this information to all parties, in the form of a directory structure [such as this one](https://github.com/privacybydesign/pbdf-schememanager), which contains:
 
 * All information about all issuers that fall under this scheme including their logos,

@@ -42,6 +42,7 @@ const sidebars: SidebarsConfig = {
         'schemes',
         'issuer',
         'session-requests',
+        'condiscon',
         'email',
         'stateless',
         'revocation',
