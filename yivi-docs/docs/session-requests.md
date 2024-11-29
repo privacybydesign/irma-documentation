@@ -248,40 +248,6 @@ request.Disclose = irma.AttributeConDisCon{
 
 This can be useful when certain attributes are not required, so that if the user does not have them the session does not need to be aborted.
 
-### Disjunction labels
-
-Per disjunction a *label* can be specified, which is shown in the Yivi app when the user is asked for permission to disclose attributes. For example, the session request from [above](#disclosure-requests) could be augmented with a label for the second disjunction as follows:
-
-<Tabs>
-  <TabItem value="json" label="Session request (JSON)">
-```json
-{
-  "@context": "https://irma.app/ld/request/disclosure/v2",
-  "disclose": [
-    [ ... ],
-    [ ... ]
-  ],
-  "labels": {
-    "1": { "en": "Work address", "nl": "Werk adres" }
-  }
-}
-```
-  </TabItem>
-  <TabItem value="go" label="Session request (Go)">
-```go
-request := irma.NewDisclosureRequest()
-request.Labels = map[int]irma.TranslatedString{
-	1: {"en": "Work address", "nl": "Werk adres"},
-}
-```
-  </TabItem>
-  <TabItem value="app" label="Yivi App">
-<img src="/img/condiscon-label.png" class="ss" alt="condiscon-label" />
-  </TabItem>
-</Tabs>
-
-In this way each disjunction can be given a optional label explaining to the user the purpose of the disjunction. It is recommended to only provide a label to explain something to the user that would otherwise not be obvious; for example, to request the user to send a work email address instead of a personal one. Repeating the credential or attribute name or description in labels is an antipattern.
-
 ### Skip expiry check
 You can allow users to disclose expired instances of credentials. This is useful for [combined issuance-disclosure sessions](session-requests.md#issuance-requests) and [chained sessions](chained-sessions.md) if you only want to ensure that the user is still using the same device, and therefore the same [secret key](zkp.md), as during a previous issuance session.
 
