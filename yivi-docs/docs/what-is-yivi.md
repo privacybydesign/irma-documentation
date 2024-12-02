@@ -8,7 +8,7 @@ Yivi's roots lie within Radboud University. Back in the day, its code name was I
 
 Schematically:
 
-<div className="center">
+<div className="center" style={{ textAlign: "center"}}>
   <img 
     src="/img/issuance.png" 
     style={{ width: '30%', marginRight: '3em' }} 
