@@ -2,6 +2,9 @@
 title: IRMA protocol
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 During an IRMA session, the IRMA protocol is used by the [IRMA server](irma-server.md) and [Yivi app](yivi-app.md) to issue or verify attributes. The Yivi app sends and receives various data by invoking a number of HTTP endpoints of the IRMA server, making the session progress through a number of stages. This page documents those endpoints, the data being handled, and the states the session goes through.
 
 ## Introduction
@@ -40,22 +43,24 @@ The following sequence diagrams showing an IRMA session in the happy flow, witho
 Generate these using `java -jar path-to-plantuml.jar -tsvg *.puml` in docs/assets. E.g. if the PlantUML extension is installed in VSCode: `java -jar ~/.vscode/extensions/jebbs.plantuml-2.15.1/plantuml.jar -tsvg *.puml`
 -->
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Pairing disabled-->
-![Pairing disabled](/img/session-no-pairing.svg)
-<!--Pairing enabled-->
-![Pairing enabled](/img/session-pairing.svg)
-<!--END_DOCUSAURUS_CODE_TABS-->
+<Tabs>
+  <TabItem value="pairing" label="Pairing enabled" default>
+    ![Pairing enabled](/img/session-pairing.svg)    
+  </TabItem>
+  <TabItem value="pairing-disabled" label="Pairing disabled">
+    ![Pairing disabled](/img/session-no-pairing.svg)    
+  </TabItem>
+</Tabs>
 
 ### Further reading
 
-This page is concerned only with the IRMA protocol. For more technical information on IRMA in general, as well as explanations and definitions of some of the terms mentioned in this page, see the [technical overview](overview.md).
+This page is concerned only with the IRMA protocol. For more technical information on IRMA in general, as well as explanations and definitions of some of the terms mentioned in this page, see the [technical overview](technical-overview.md).
 
-This page does not deal with the cryptographic contents of the messages being passed nor how they achieve [IRMA's security properties](overview.md#irma-security-properties), only with how and when they are passed. IRMA being an implementation of the Idemix attribute-based credential scheme, details on the cryptographic contents and mechanisms of the messages  may be found in the [Idemix specification](https://dominoweb.draco.res.ibm.com/reports/rz3730_revised.pdf) and in the [paper introducing Idemix](https://cs.brown.edu/people/alysyans/papers/camlys02b.pdf) by Camenisch and Lysyanskaya.
+This page does not deal with the cryptographic contents of the messages being passed nor how they achieve [IRMA's security properties](technical-overview.md#irma-security-properties), only with how and when they are passed. IRMA being an implementation of the Idemix attribute-based credential scheme, details on the cryptographic contents and mechanisms of the messages  may be found in the [Idemix specification](https://dominoweb.draco.res.ibm.com/reports/rz3730_revised.pdf) and in the [paper introducing Idemix](https://cs.brown.edu/people/alysyans/papers/camlys02b.pdf) by Camenisch and Lysyanskaya.
 
 ## Session creation
 
-The [requestor](overview.md#participants) creates a session by sending a [session request](session-requests.md) for one of the three supported [session types](what-is-irma.md#session-types) to the [`POST /session`](api-irma-server.md#post-session) endpoint of the `irma server`, or by invoking the [`StartSession()`](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver#Server.StartSession) function of the `irmaserver` Go library. If the IRMA server accepts the session (i.e., the session request is valid and the requestor is authorized to start sessions), the session is created and its state is set to [`INITIALIZED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusInitialized). This means that the IRMA server is waiting for the first HTTP request of the Yivi app, documented below.
+The [requestor](technical-overview.md#participants) creates a session by sending a [session request](session-requests.md) for one of the three supported [session types](what-is-yivi.md#session-types) to the [`POST /session`](api-irma-server.md#post-session) endpoint of the `irma server`, or by invoking the [`StartSession()`](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver#Server.StartSession) function of the `irmaserver` Go library. If the IRMA server accepts the session (i.e., the session request is valid and the requestor is authorized to start sessions), the session is created and its state is set to [`INITIALIZED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusInitialized). This means that the IRMA server is waiting for the first HTTP request of the Yivi app, documented below.
 
 When the requestor creates the session, the IRMA server responds with a [session package](api-irma-server.md#post-session). For example:
 
@@ -92,45 +97,47 @@ X-Irma-Maxprotocolversion: 2.8
 
 The server responds with an [`irma.ClientSessionRequest` instance](https://pkg.go.dev/github.com/privacybydesign/irmago#ClientSessionRequest), containing the protocol version that it chooses (the highest protocol version supported by both itself and by the app), the pairing code if device pairing is enabled, or the session request if not. For example:
 
-<!--DOCUSAURUS_CODE_TABS-->
-<!--Pairing enabled-->
-```json
-{
-  "@context": "https://irma.app/ld/request/client/v1",
-  "protocolVersion": "2.8",
-  "options": {
-    "@context": "https://irma.app/ld/options/v1",
-    "pairingMethod": "pin",
-    "pairingCode": "1761"
-  }
-}
-```
-<!--Pairing disabled-->
-```json
-{
-  "@context": "https://irma.app/ld/request/client/v1",
-  "protocolVersion": "2.8",
-  "options": {
-    "@context": "https://irma.app/ld/options/v1",
-    "pairingMethod": "none"
-  },
-  "request": {
-    "@context": "https://irma.app/ld/request/disclosure/v2",
-    "context": "AQ==",
-    "nonce": "Il2FiK8uCIApjzkWeRouSQ==",
-    "protocolVersion": "2.8",
-    "devMode": true,
-    "disclose": [
-      [
-        [
-          "pbdf.pbdf.irmatube.type"
+<Tabs>
+  <TabItem value="pairing" label="Pairing enabled" default>
+    ```json
+    {
+      "@context": "https://irma.app/ld/request/client/v1",
+      "protocolVersion": "2.8",
+      "options": {
+        "@context": "https://irma.app/ld/options/v1",
+        "pairingMethod": "pin",
+        "pairingCode": "1761"
+      }
+    }
+    ```
+  </TabItem>
+  <TabItem value="pairing-disabled" label="Pairing disabled">
+    ```json
+    {
+      "@context": "https://irma.app/ld/request/client/v1",
+      "protocolVersion": "2.8",
+      "options": {
+        "@context": "https://irma.app/ld/options/v1",
+        "pairingMethod": "none"
+      },
+      "request": {
+        "@context": "https://irma.app/ld/request/disclosure/v2",
+        "context": "AQ==",
+        "nonce": "Il2FiK8uCIApjzkWeRouSQ==",
+        "protocolVersion": "2.8",
+        "devMode": true,
+        "disclose": [
+          [
+            [
+              "pbdf.pbdf.irmatube.type"
+            ]
+          ]
         ]
-      ]
-    ]
-  }
-}
-```
-<!--END_DOCUSAURUS_CODE_TABS-->
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
 
 If device pairing is disabled, then the session state is set to [`CONNECTED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusConnected). Otherwise the session state is set to [`PAIRING`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusPairing). In that case the Yivi app shows the `pairingCode` in the response above in its GUI, and instructs the user to type that into the frontend. It uses [`/irma/session/{clientToken}/statusevents`](api-irma-server.md#get-irma-session-clienttoken-statusevents) or polls to [`/irma/session/{clientToken}/status`](api-irma-server.md#get-irma-session-clienttoken-status) to keep track of the session status. After the user enters the pairing code into the frontend, the frontend invokes the [`POST /irma/session/{clientToken}/frontend/pairingcompleted` endpoint](api-irma-server.md#post-irma-session-clienttoken-frontend-pairingcompleted), triggering the IRMA server to switch the session status to `CONNECTED`. When that happens the Yivi app notices through a server-sent event or through its polling, after which it invokes the below endpoint to retrieve the session request.
 
@@ -227,7 +234,7 @@ i.Rsh(i, 1)
 fmt.Println(string(i.Bytes()))
 ```
 
-Note that attribute `1` is the [metadata attribute](overview.md#the-metadata-attribute), containing among others the credential type and the expiry date of the credential in a custom encoding. This attribute is always disclosed. The above snippet will not output anything sensible for metadata attributes, but instead the [`irma` command line tool](irma-cli.md) can be used as follows.
+Note that attribute `1` is the [metadata attribute](technical-overview.md#the-metadata-attribute), containing among others the credential type and the expiry date of the credential in a custom encoding. This attribute is always disclosed. The above snippet will not output anything sensible for metadata attributes, but instead the [`irma` command line tool](irma-cli.md) can be used as follows.
 
 ```text
 $ irma meta "AwAKhwAaAAXZZxdMn4TvQ6F/mVxWb6a7"
@@ -315,7 +322,7 @@ The app POSTs an [`irma.IssueCommitmentMessage` instance](https://pkg.go.dev/git
 }
 ```
 
-The `combinedProofs` array contains, for each credential being issued within the session (one in this example), a [zero-knowledge proof](zkp.md) of the Yivi app's secret key (which will become [the first attribute](overview.md#the-secret-key-attribute) of the credential(s) being issued). In addition, in case of [combined disclosure-issuance sessions](session-requests.md#issuance-requests) this array will also contain [`gabi.ProofD`](https://pkg.go.dev/github.com/privacybydesign/gabi#ProofD) instances, like the `proofs` array in [disclosure sessions](irma-protocol.md#disclosure-post-irma-session-clienttoken-proofs).
+The `combinedProofs` array contains, for each credential being issued within the session (one in this example), a [zero-knowledge proof](zkp.md) of the Yivi app's secret key (which will become [the first attribute](technical-overview.md#the-secret-key-attribute) of the credential(s) being issued). In addition, in case of [combined disclosure-issuance sessions](session-requests.md#issuance-requests) this array will also contain [`gabi.ProofD`](https://pkg.go.dev/github.com/privacybydesign/gabi#ProofD) instances, like the `proofs` array in [disclosure sessions](irma-protocol.md#disclosure-post-irma-session-clienttoken-proofs).
 
 When responding to this HTTP request (see below) with its signature(s) over the attributes, the IRMA server includes a zero-knowledge proof of its own, proving that it correctly constructed its signatures. The `n_2` field contains the nonce over which the issuer is to construct that zero-knowledge proof (c.f. the `nonce` in the session request, see [above](irma-protocol.md#get-irma-session-clienttoken-request)).
 

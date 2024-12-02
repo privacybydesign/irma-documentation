@@ -11,7 +11,7 @@ This page explains in detail how revocation is implemented in IRMA and what it m
 
 ## Overview
 
-Revocation in IRMA is an implementation of the RSA-B scheme from ["Accumulators with applications to anonymity-preserving revocation"](https://eprint.iacr.org/2017/043.pdf) by Baldimtsi et al, which in turn is based on ["Dynamic accumulators and application to efficient revocation of anonymous credentials"](http://static.cs.brown.edu/people/alysyans/papers/camlys02.pdf) by Camenisch et al. Using this scheme the app can prove nonrevocation of its credential in zero-knowledge, preserving [unlinkability of multiple disclosures](overview.md#irma-security-properties) of the attributes within the credential.
+Revocation in IRMA is an implementation of the RSA-B scheme from ["Accumulators with applications to anonymity-preserving revocation"](https://eprint.iacr.org/2017/043.pdf) by Baldimtsi et al, which in turn is based on ["Dynamic accumulators and application to efficient revocation of anonymous credentials"](http://static.cs.brown.edu/people/alysyans/papers/camlys02.pdf) by Camenisch et al. Using this scheme the app can prove nonrevocation of its credential in zero-knowledge, preserving [unlinkability of multiple disclosures](technical-overview.md#irma-security-properties) of the attributes within the credential.
 
 In IRMA, revocation is enabled per credential type in the IRMA scheme. If so, when properly configured (more on that [below](#revocation-settings)) the issuer's IRMA server will issue revocation-enabled credentials of that type. During disclosures the Yivi app can then prove nonrevocation (but it will only do so if explicitly asked for by the requestor).
 

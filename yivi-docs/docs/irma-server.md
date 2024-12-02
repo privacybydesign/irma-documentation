@@ -4,7 +4,7 @@ title: irma server
 
 
 `irma server` is an IRMA server executable (daemon) allowing you to perform IRMA sessions with
-[Yivi apps](yivi-app.md). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an Yivi app on behalf of a [requestor](overview.md#participants) (the application wishing to verify or issue attributes). It exposes the following:
+[Yivi apps](yivi-app.md). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an Yivi app on behalf of a [requestor](technical-overview.md#participants) (the application wishing to verify or issue attributes). It exposes the following:
  * HTTP endpoints under `/irma`, used by the Yivi app during IRMA sessions
  * a JSON API under `/sessions` for requestors, allowing them to request the server to verify or issue attributes.
 
@@ -147,10 +147,10 @@ Assuming the URL of the `irma server` is `http://example.com`, the session confi
 }
 ```
 
-Only static [disclosure or attribute-based signature sessions](what-is-irma.md#session-types) are supported.
+Only static [disclosure or attribute-based signature sessions](what-is-yivi.md#session-types) are supported.
 
 ### Permissions
-For each of the [three IRMA session types](what-is-irma.md#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
+For each of the [three IRMA session types](what-is-yivi.md#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
 ```json
 {
     "requestors": {

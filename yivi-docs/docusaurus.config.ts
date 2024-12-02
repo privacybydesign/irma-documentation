@@ -105,7 +105,7 @@ const config: Config = {
           items: [
             {
               label: 'What is Yivi',
-              to: '/what-is-irma',
+              to: '/what-is-yivi',
             },
             {
               label: 'Getting started',
@@ -113,7 +113,7 @@ const config: Config = {
             },
             {
               label: 'Technical overview',
-              to: '/overview',
+              to: '/technical-overview',
             },
           ],
         },

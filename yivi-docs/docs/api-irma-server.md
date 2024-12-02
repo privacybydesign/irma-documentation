@@ -130,7 +130,7 @@ Get the [session result](https://godoc.org/github.com/privacybydesign/irmago/ser
 The response may contain the following fields:
 * `token`: Requestor token
 * `status`: Current [session status](#get-session-requestortoken-status)
-* `type`: [Session type](what-is-irma.md#session-types): one of `"disclosing"`, `"signing"`, or `"issuing"`
+* `type`: [Session type](what-is-yivi.md#session-types): one of `"disclosing"`, `"signing"`, or `"issuing"`
 * `proofStatus`: One of the package level [irma.ProofStatus](https://godoc.org/github.com/privacybydesign/irmago#pkg-constants) constants, indicating the cryptographic validity of the attributes and proofs of knowledge:
    * `"VALID"`: proofs are valid
    * `"INVALID"`: proofs are invalid

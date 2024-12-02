@@ -165,7 +165,7 @@ attributes the following system can be realized:
    votes), the user must be uniquely identified in this stage.
 
 2. (Casting the vote). To vote, a user creates an [attribute-based
-   signature](overview/#attribute-based-signatures) on a
+   signature](technical-overview/#attribute-based-signatures) on a
    "ballot" string, i.e., the user's choice using the randomblind attribute
    acquired in the previous step.  This signature, the choice and the attribute
    are then registered in a database at party B. The signature ensures

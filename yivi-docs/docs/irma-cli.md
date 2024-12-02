@@ -1,5 +1,5 @@
 ---
-title: irma command line tool
+title: irma cli
 ---
 
 `irma` is an IRMA Swiss knife in the form of a command line executable, supporting the following subcommands:

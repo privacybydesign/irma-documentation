@@ -4,7 +4,7 @@ title: IRMA backend packages
 
 [`irma-backend-packages`](https://github.com/privacybydesign/irma-backend-packages/)
 is a collection of libraries in multiple programming languages assuming the role
-of the [IRMA server](what-is-irma.md#irma-servers) in the IRMA protocol, allowing you to integrate IRMA in the backend
+of the [IRMA server](what-is-yivi.md#irma-servers) in the IRMA protocol, allowing you to integrate IRMA in the backend
 of your application. In particular, these libraries allow you to do the following:
 
  * Starting IRMA sessions using a session request or a JWT at the IRMA server

@@ -20,27 +20,18 @@ const sidebars: SidebarsConfig = {
   documentationSidebar: [
     {
       type: 'category',
-      label: 'Intro',
+      label: 'Overview',
       collapsed: false,
       items: [
-        'what-is-irma',
+        'what-is-yivi',
         'getting-started',
+        'technical-overview',
+        'yivi-app'
       ],
     },
     {
       type: 'category',
-      label: 'New',
-      collapsed: false,
-      items: [
-        'stateless',
-        'revocation',
-        'randomblind',
-        'chained-sessions',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Guides',
+      label: 'Concepts',
       collapsed: false,
       items: [
         'irma-cli',
@@ -51,8 +42,12 @@ const sidebars: SidebarsConfig = {
         'schemes',
         'issuer',
         'session-requests',
+        'condiscon',
         'email',
-        'yivi-app',
+        'stateless',
+        'revocation',
+        'randomblind',
+        'chained-sessions'
       ],
     },
     {
@@ -67,10 +62,10 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Documentation',
+      label: 'Background',
       collapsed: false,
       items: [
-        'overview',
+        
         'irma-protocol',
         'zkp',
         'keyshare-protocol',
