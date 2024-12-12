@@ -11,14 +11,26 @@ As we approach the end of 2024, our team is working hard to deliver as much prog
 
 <!-- truncate -->
 
-## Email Templates
-In Yivi, the user is the central focus, and that is about more than just privacy. The look and feel for all interactions 
+## Visual changes
+In Yivi, the user is the central focus, and that is about more than just privacy. 
+The look and feel for all interactions 
 between the user and the Yivi ecosystem should be welcoming and user-friendly. 
-That's why we've improved the verification emails users receive when adding their email address to their wallet, by giving it the Yivi look and feel. 
-The changes are live on [https://email-issuer.staging.yivi.app](https://email-issuer.staging.yivi.app), so you can try it out for yourself!
+
+### Demos redesign
+In the transition from Irma to Yivi, some components of the ecosystem had yet to receive a visual update. 
+One of these is the [demos page](https://demos.staging.yivi.app).
+As of now the demos page has been updated with the Yivi look and feel.
+
+### New email templates
+When users add their email using our [email-issuer](https://email-issuer.staging.yivi.app), they receive an email containing a link they can use to verify their email (are you still following?).
+
+This email used to be plain and boring, but not anymore!
+
+We've improved the verification emails by adding the Yivi look.
+The changes are live on [email-issuer.staging.yivi.app](https://email-issuer.staging.yivi.app), so you can try it out for yourself!
 
 
-## Stateless SMS Issuer
+## Stateless SMS issuer
 As mentioned in the [roadmap blog](vision,%20roadmap), we switched to Kubernetes for a robust and stable infrastructure. Part of the benefits of Kubernetes is the ability
 to run multiple instances of the same server simultaniously, allowing for high availability and little downtime.
 When Kubernetes gets a request it will automatically pick one of these servers to send the request to. Subsequent calls to the same hostname could end up
@@ -38,7 +50,7 @@ We did this by putting state access in the Java code behind interfaces and makin
 one for in-memory and one for Redis.
 This allows us to keep backwards compatibility while adding this new stateless property as opt-in.
 
-## Moving to Production Environment
+## Moving to a production environment
 As the completion of the staging environment nears, we've started work on the production environment.
 
 ### Secrets to Scaleway
