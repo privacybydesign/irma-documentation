@@ -8,3 +8,13 @@ dibranmulder:
     x: dibranmulder
     github: dibranmulder
     linkedin: dibranmulder
+
+saravahdatipour:
+  name: Sara Vahdati Pour
+  title: Developer @ Caesar Groep
+  url: https://github.com/saravahdatipour
+  image_url: https://github.com/saravahdatipour.png
+  page: true
+  socials:
+    github: saravahdatipour
+    linkedin: saravahdatipour

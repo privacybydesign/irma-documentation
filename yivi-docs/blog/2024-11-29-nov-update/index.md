@@ -2,10 +2,10 @@
 slug: vision, roadmap, progress
 title: November update
 authors: [dibranmulder]
-tags: [yivi, roadmap]
+tags: [yivi, roadmap, update]
 ---
 
-He all, I thought it would be nice to update you on our progress. Our dedicated team started the development and operations of Yivi effectively on the 1st of November. The existing code base (70+ repositories) is quite large, and the learning curve is rather steep, however I think we are making great progress. We touched a lot of components already and are making great progress.
+He all, I thought it would be nice to update you on our progress. Our dedicated team started the development and operations of Yivi effectively on the 1st of November. The existing code base (70+ repositories) is quite large, and the learning curve is rather steep, however I think we are making great progress. We touched a lot of components already and we are learning as we go.
 
 As told during the Yivi meetup we have a roadmap ahead of us containing 3 epics, namely: Cloud Migration, Development and eIDAS2.0. I will update our progress on each of them.
 
