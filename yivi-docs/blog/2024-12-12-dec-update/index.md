@@ -61,28 +61,25 @@ one for in-memory and one for Redis. This allows us to keep backwards compatibil
 As the completion of the staging environment nears, we've started working on the production environment.
 
 ### Better Secret management
-In order to have a safe and trustworthy Yivi, it's critical that credentials are kept secret.
-Cloud infrastructure and secrets require a well thought process.
-We selected mature tooling on secret management which allows for multiple scenarios, including CI/CD pipelines must not be able to read them, the cluster must be able to reference to them.
-In the future we want to incorporate HSM's.
+For Yivi to remain safe and trustworthy, we must carefully manage our credentials and secrets. We’ve selected mature tooling for secret management to handle multiple scenarios. For instance, CI/CD pipelines should not be able to read secrets directly, while our Kubernetes cluster must be able to reference them. We’re also considering incorporating Hardware Security Modules (HSMs) in the future to further strengthen our security posture.
 
 ### Deployment using GitHub Actions
-Up until now we've been deploying our staging environment by hand. In production we maintain a least privilege policy, meaning no contributor should have default access to our production cluster, containing several issuers, the key share server and other components. Having no access except in case of emergencies includes that deployments to production have to be automatically, 
+Until now, deployments to our staging environment have been handled manually. In production, we follow a least-privilege policy, meaning contributors don’t have default access to our production cluster. To maintain this, deployments must be automatic and controlled.
 
-include: increases quality by adding testing, less mistakes, 4 eyes principle when deploying, etc.
+By leveraging GitHub Actions for deployments, we’ll ensure:
+
+- Higher quality through automated testing
+- Fewer human errors
+- A “four-eyes” principle for increased security and accountability
 
 ## Closing 2024
-This year has been an important one for Yivi. 
-The transition from SIDN to Caesar Groep has began, and what a start it was.
-We're thrilled to see the renewed interest in Yivi and the opportunities that come with it!
+This year has been an important one for Yivi. The transition from SIDN to Caesar Groep has begun, and what a start it was. We’re thrilled to see the renewed interest in Yivi and the opportunities that come with it.
 
-Thank you all for being a part of the Yivi community. This concludes the December update. 
-Feel free to contact us with any questions or remarks.
+Thank you all for being a part of the Yivi community. This concludes the December update. Feel free to contact us with any questions or remarks.
 
-We will see you next month with the next update, and for now, merry Christmas and a happy new year!
+We will see you next month with the next update. For now, we wish you a merry Christmas and a happy new year!
 
-Kind regards, 
+Kind regards,
 
 Dibran, Sara, Wouter, Martijn, Jasper, Leon, Ivar, and Sietse.
-
 The Yivi team
