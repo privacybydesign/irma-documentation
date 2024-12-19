@@ -19,7 +19,7 @@ To highlight our progress, here is a list of services running on our staging env
 - https://is.staging.yivi.app
 - https://my.staging.yivi.app/
 - https://keyshare.staging.yivi.app
-- https://emailissuer.staging.yivi.app/
+- https://email-issuer.staging.yivi.app/
 - https://sms-issuer.staging.yivi.app/en/
 - https://docs.staging.yivi.app
 - https://connect.staging.yivi.app/saml-bridge
