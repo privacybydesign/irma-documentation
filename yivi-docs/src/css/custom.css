@@ -35,6 +35,13 @@ img.ss {
   margin-right: unset;
 }
 
+img.mm {
+  padding: 0.3em 0;
+  max-width: 25em;
+  margin-left: unset;
+  margin-right: unset;
+}
+
 img.badge {
   max-width: 15em;
   display: inline;
@@ -47,4 +54,11 @@ img.screenshot {
   display: inline;
   margin: 0;
   padding: 0;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
 }
