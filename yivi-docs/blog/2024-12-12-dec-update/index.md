@@ -35,7 +35,9 @@ In the transition from IRMA to Yivi, some components of the ecosystem had yet to
 ### New email templates
 When users add their email address using our [email-issuer](https://email-issuer.staging.yivi.app), they receive an email containing a link with which they can verify their email address. We received feedback that first of all the email is send from `noreply@sidn.nl` while people expect `noreply@yivi.app` to be the sender, secondly the email template is very minimalistic which doesn't improve the trust people have this is not a phishing/spam mail. We therefore improved the verification emails by adding the Yivi look and feel. Also, we created a button and an `explicit` URL which people can click on or copy to their browsers. Better informing them to which website they are navigating. This is considered a better security practice. 
 
-<img src="/img/new-mail-template.png" class="mm" alt="" />
+<div class="center-container">
+    <img src="/img/new-mail-template.png" class="mm" alt="" />
+</div>
 
 The changes are live on our staging issuer [email-issuer.staging.yivi.app](https://email-issuer.staging.yivi.app), which is our internal testing environment but open to the public. We expect these changes to come live early next year. This is part of the migration from SIDN to Caesar Groep. We will shut down `https://sidnemailissuer.yiviconnect.nl/uitgifte/email/` and use `https://email-issuer.staging.yivi.app` instead. We will also change the sender of the email from `noreply@sidn.nl` to `noreply@yivi.app`. We tested the new mail layout on Outlook Desktop, Web and mobile clients, both Office365 as well as outlook.com, Gmail web and mobile clients and lastly the Mail app on macOS. If there are any issues with the new mailings, please let us know.
 
