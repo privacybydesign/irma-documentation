@@ -23,3 +23,6 @@ docker compose up
 ## Release
 To release a new version run the Github action located [here](https://github.com/privacybydesign/irma-documentation/actions/workflows/delivery.yml). This will push a new Docker build to Github packages:
 https://github.com/privacybydesign/irma-documentation/pkgs/container/irma-documentation
+
+### Note on delivery.yml pipeline behavior
+When the `delivery.yml` pipeline is run from the master branch, it will use the latest tag. If the pipeline is not run from the master branch, it will use the staging tag.
