@@ -46,7 +46,7 @@ Right now, the demo environments are available at https://privacybydesign.founda
 This migration will make it easier to maintain and expand the demos while ensuring proper Yivi branding. By bringing the demos under the Yivi domain, this transition will enhance user experience and support the continued growth of the platform.
 
 ## Atumd server
-The Atumd server will be moved, which is important for everyone using attribute based signatures within Yivi. The scheme will include a new URL for the Atumd server, and we will ensure it also retains the existing keys for backward compatibility. If you using attribute based signatures and are relying on this in production, please send us an email at `support@yivi.app`.
+The Atumd server will be moved, which is important for everyone using attribute based signatures within Yivi. The scheme will include a new URL for the Atumd server, and we will ensure it also retains the existing keys for backward compatibility. If you are using attribute based signatures and are relying on this in production, please send us an email at `support@yivi.app`.
 
 ## Email issuer
 As mentioned earlier, we are making improvements to the email experience by upgrading the look and feel of our communications. In addition to these visual enhancements, we will be switching to a new email address for all outgoing mail. The updated address will be `noreply@mail.yivi.app`, replacing the current `noreply@sidn.nl`. This change ensures alignment with Yivi branding and improves consistency across our communication channels. Please update any filters or settings that rely on the old email address to accommodate this change.
