@@ -7,7 +7,7 @@ tags: [yivi, migration]
 
 In our effort to invest in the long-term sustainability of Yivi, we are migrating all Yivi components, including core components, away from SIDN to our reliable hosting environment. Along the way, we are addressing technical debt and implementing improvements where possible.
 
-Additionally, we are collaborating with the Privacy By Design Foundation to migrate components from their servers to our reliable hosting. Caesar Groep is taking charge to ensure the foundation no longer runs critical components essential to the Yivi ecosystem.
+Additionally, we are collaborating with the Privacy By Design Foundation to migrate components from their servers to our hosting environment. Caesar Groep is taking charge to ensure the foundation no longer runs critical components essential to the Yivi ecosystem.
 
 This blog post outlines the migration's impact. If you are affected in any way or have questions, feel free to contact us.
 
@@ -46,7 +46,7 @@ Right now, the demo environments are available at https://privacybydesign.founda
 This migration will make it easier to maintain and expand the demos while ensuring proper Yivi branding. By bringing the demos under the Yivi domain, this transition will enhance user experience and support the continued growth of the platform.
 
 ## Atumd server
-The Atumd server will be moved, which is important for everyone using attribute based signatures within Yivi. The scheme will include a new URL for the Atumd server, and we will ensure it also retains the existing keys for backward compatibility. If you are using attribute based signatures and are relying on this in production, please send us an email at `support@yivi.app`.
+The Atumd server will be moved, which is important for everyone using attribute based signatures within Yivi. The scheme will include a new URL for the Atumd server, and we will ensure it also retains the existing keys for backward compatibility. If you're using attribute based signatures and are relying on this in production, please send us an email at `support@yivi.app`.
 
 ## Email issuer
 As mentioned earlier, we are making improvements to the email experience by upgrading the look and feel of our communications. In addition to these visual enhancements, we will be switching to a new email address for all outgoing mail. The updated address will be `noreply@mail.yivi.app`, replacing the current `noreply@sidn.nl`. This change ensures alignment with Yivi branding and improves consistency across our communication channels. Please update any filters or settings that rely on the old email address to accommodate this change.
@@ -54,10 +54,10 @@ As mentioned earlier, we are making improvements to the email experience by upgr
 ## SMS issuer
 We will continue using our trusted SMS provider, CM, to send SMS messages to end users. Since we are retaining the same SMS platform, no changes or disruptions are expected. Users can rely on the same dependable service without any additional actions required.
 
-## IDIN issuer
+## iDIN issuer
 The iDIN issuer is undergoing a visual upgrade to better reflect the Yivi branding, replacing the previous IRMA-themed interface. This ensures a seamless and consistent user experience that aligns with Yivi's identity. The changes are purely cosmetic, and no functionality will be affected.
 
-## Yiviconnect
+## YiviConnect
 YiviConnect will be migrated to a new hosting environment with backward compatibility to minimize disruptions. We will take proactive measures to ensure a smooth transition by directly contacting organizations and partners that rely heavily on this service. Our goal is to address any concerns early and reduce the impact of this migration on day-to-day operations. If your organization uses YiviConnect extensively, rest assured that we are committed to supporting you throughout the process.
 
 ## Keyshare Server
