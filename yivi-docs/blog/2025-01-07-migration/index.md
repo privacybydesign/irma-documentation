@@ -1,5 +1,5 @@
 ---
-slug: 2024-januari-migration
+slug: 2025-januari-migration
 title: Migration announcement
 authors: [dibranmulder]
 tags: [yivi, migration]
