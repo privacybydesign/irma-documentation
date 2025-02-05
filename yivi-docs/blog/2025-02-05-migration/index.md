@@ -1,5 +1,5 @@
 ---
-slug: 2025-januari-migration
+slug: 2025-february-migration
 title: Migration announcement
 authors: [dibranmulder]
 tags: [yivi, migration]
@@ -18,18 +18,19 @@ The table below lists the resources being migrated, their old and new locations,
 
 | **Resource**          | **Old Location**                                           | **New Location**                      | **Migration Date**   |
 |-----------------------|------------------------------------------------------------|---------------------------------------|----------------------|
-| **Mail**              | `yivi@caesar.nl` and `noreply@sidn.nl`                     | `support@yivi.app` and `noreply@mail.yivi.app`| ✅ Done     |
-| **SMS Issuer**        | https://sidnsmsissuer.yiviconnect.nl/issuance/sms          | https://sms-issuer.yivi.app           | ✅ Done             |
-| **Email Issuer**      | https://sidnemailissuer.yiviconnect.nl/issuance/email      | https://email-issuer.yivi.app         | ✅ Done             |
-| **Attribute Index**      | https://privacybydesign.foundation/attribute-index/en/  | https://attributeindex.yivi.app       | January 2024         |
-| **YiviTube Demo**     | https://privacybydesign.foundation/demo/irmaTube/          | https://yivitube.yivi.app             | January 2024         |
-| **General Demos**     | https://privacybydesign.foundation/demo/                   | https://demos.yivi.app                | January 2024         |
-| **Atumd Server**      | https://irma.sidn.nl/atumd/                                | https://atumd.yivi.app                | January 2024         |
-| **iDIN Issuer**       | https://privacybydesign.foundation/uitgifte/idin/          | https://idin-issuer.yivi.app          | January 2024         |
-| **Angrygames Demo**   | URL remains unchanged                                  | URL remains unchanged           | January 2024         |
-| **Scheme**            | https://privacybydesign.foundation/schememanager/pbdf/description.xml | https://scheme.yivi.app/pbdf/description.xml | February 2024         |
-| **YiviConnect**       | URL remains unchanged                                      | URL remains unchanged                 | February 2024 |
-| **Keyshare Server**   | https://irma.sidn.nl/tomcat/irma_keyshare_server/api/v1    | https://keyshare.staging.yivi.app/api/v1 | March 2024 |
+| **Mail**              | `yivi@caesar.nl` and `noreply@sidn.nl`                     | `support@yivi.app` and `noreply@mail.yivi.app`| ✅ Ready     |
+| **SMS Issuer**        | https://sidnsmsissuer.yiviconnect.nl/issuance/sms          | https://sms-issuer.yivi.app           | ✅ Ready             |
+| **Email Issuer**      | https://sidnemailissuer.yiviconnect.nl/issuance/email      | https://email-issuer.yivi.app         | ✅ Ready             |
+| **iDIN Issuer**       | https://privacybydesign.foundation/uitgifte/idin/          | https://idin-issuer.yivi.app          | ✅ Ready         |
+| **Attribute Index**   | https://privacybydesign.foundation/attribute-index/en/     | https://attribute-index.yivi.app      | 🚀 Deploying      |
+| **Atumd Server**      | https://irma.sidn.nl/atumd/                                | https://atumd.yivi.app                | ✅ Ready         |
+| **Scheme**            | https://privacybydesign.foundation/schememanager/pbdf      | https://scheme.yivi.app/pbdf          | ✅ Ready          |
+| **Docs**              | https://irma.app/docs                                      | https://docs.yivi.app                 | ✅ Ready |
+| **Demos**             | https://privacybydesign.foundation/demo/                   | https://demos.yivi.app                | 🚀 Deploying         |
+| **YiviConnect**       | URL remains unchanged                                      | URL remains unchanged                 | February 2025 |
+| **open.yivi.app**     | URL remains unchanged                                      | URL remains unchanged                 | February 2025 |
+| **Keyshare Server**   | https://irma.sidn.nl/tomcat/irma_keyshare_server           | https://keyshare.yivi.app             | March 2025 |
+| **MyYivi**            | URL remains unchanged                                      | URL remains unchanged                 | March 2025 |
 
 ---
 <!-- truncate -->
