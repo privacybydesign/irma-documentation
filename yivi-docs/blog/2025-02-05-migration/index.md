@@ -1,6 +1,6 @@
 ---
 slug: 2025-february-migration
-title: Migration announcement
+title: January update - Migration announcement
 authors: [dibranmulder]
 tags: [yivi, migration]
 ---
