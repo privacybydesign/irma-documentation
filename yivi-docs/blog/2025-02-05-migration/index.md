@@ -24,7 +24,7 @@ The table below lists the resources being migrated, their old and new locations,
 | **iDIN Issuer**       | https://privacybydesign.foundation/uitgifte/idin/          | https://idin-issuer.yivi.app          | ✅ Ready         |
 | **Attribute Index**   | https://privacybydesign.foundation/attribute-index/en/     | https://attribute-index.yivi.app      | 🚀 Deploying      |
 | **Atumd Server**      | https://irma.sidn.nl/atumd/                                | https://atumd.yivi.app                | ✅ Ready         |
-| **Scheme**            | https://privacybydesign.foundation/schememanager/pbdf      | https://scheme.yivi.app/pbdf          | ✅ Ready          |
+| **Scheme**            | https://privacybydesign.foundation/schememanager/pbdf      | https://schemes.yivi.app/pbdf          | ✅ Ready          |
 | **Docs**              | https://irma.app/docs                                      | https://docs.yivi.app                 | ✅ Ready |
 | **Demos**             | https://privacybydesign.foundation/demo/                   | https://demos.yivi.app                | 🚀 Deploying         |
 | **YiviConnect**       | URL remains unchanged                                      | URL remains unchanged                 | February 2025 |
