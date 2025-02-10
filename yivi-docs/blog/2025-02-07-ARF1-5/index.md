@@ -40,15 +40,16 @@ Each chapter introduces refinements and new considerations that could shape Yivi
 > 1. The EUDI Wallet Trust Mark
 
 ### 2.3 Attribute Exchange Mechanism using Attestations
-`Section 2.3 Attribute Exchange Mechanism using Attestations` is a key update. Its the introduction of data portability rights within the European Digital Identity Wallet (EUDI Wallet) framework. In previous versions, users were primarily able to store and manage their attributes and attestations. However, the latest changes in Section 2.3 now explicitly state that users can **backup** their attributes, attestations, and configurations.
+`Section 2.3 Attribute Exchange Mechanism using Attestations` is a key update. It's the introduction of data portability rights within the European Digital Identity Wallet (EUDI Wallet) framework. In previous versions, users were primarily able to store and manage their attributes and attestations. However, the latest changes in Section 2.3 now explicitly state that users can **backup** their attributes, attestations, and configurations.
 
 :::tip[Yivi impact]
-This is a significant additional requirement for Wallet providers, additionally is raises research questions like how to deal with the device binding of attestations.
+This is a significant additional requirement for Wallet providers, additionally it raises research questions like how to deal with the device binding of attestations.
 :::
 
 ### 2.5.3 Other use cases
-`Section 2.5.3 Other use cases` introduces a new use case for an Electronic Health Insurance Card (EHIC) has been introduced, highlighting the expansion of the EUDI Wallet’s scope into healthcare and insurance related identity verification.
+`Section 2.5.3 Other use cases` introduces a new use case for an Electronic Health Insurance Card (EHIC), highlighting the expansion of the EUDI Wallet’s scope into healthcare and insurance related identity verification.
 
+> Section 2.5.3.5 Social Security: 
 > Electronic Health Insurance Card (“EHIC”) This is a free card that provides every citizen with access to medically necessary government-provided healthcare during a temporary stay in one of the 27 EU countries, Iceland, Liechtenstein, Norway, and Switzerland, under the same conditions and at the same cost (free in some countries) as persons insured in that country. This includes, for example, services related to chronic or existing illnesses, as well as in connection with pregnancy and childbirth.
 
 ### 3.1 EUDI wallet ecosystem - Introduction
