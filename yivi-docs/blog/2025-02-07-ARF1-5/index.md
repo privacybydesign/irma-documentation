@@ -80,7 +80,7 @@ This ensures that we can keep our own trust scheme next to the EUDI-Wallet Trust
 
 ### 3.17 Access Certificate Authorities
 `Section 3.17 Access Certificate Authorities` introduces the role of `Access Certificate Authority`. It's separated from the Trusted List Provider role. The Trust model described in `Section 6` also states that it operated by the Member State. We interpret this in such as way that existing infrastructure such as PKIo can be used for this.
-f
+
 > 6.1 Scope: This conceptual trust model may be implemented with slight variations across Member States, such as adopting one or multiple Certification Authorities or leveraging existing entities that already fulfill this role.
 
 :::tip[Yivi impact]
