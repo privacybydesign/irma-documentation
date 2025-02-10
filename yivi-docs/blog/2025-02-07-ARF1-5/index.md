@@ -25,11 +25,12 @@ Each chapter introduces refinements and new considerations that could shape Yivi
 ### 1.5 Scope
 `Section 1.5 Scope` reinforces the role of the EUDI Wallet ecosystem within the broader European Digital Identity Regulation. The document references key implementing acts that formalize various aspects of interoperability, security, and privacy. Vice versa the implementing acts mentioned reference the ARF strengthening the legal status of the Architecure Refence Framework. The following implementing acts are referenced:
 
-- [CIR 2024/2977](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2977) - regarding PID and EAA
-- [CIR 2024/2979](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202402979) - regarding integrity and core functionalities
-- [CIR 2024/2980](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202402980) - regarding ecosystem notifications
-- [CIR 2024/2981](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202402981) - regarding certification of Wallet Solutions
-- [CIR 2024/2982](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202402982) - regarding protocols and interfaces.
+> Section 1.5 Scope
+> - [CIR 2024/2977](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2977) - regarding PID and EAA
+> - [CIR 2024/2979](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202402979) - regarding integrity and core functionalities
+> - [CIR 2024/2980](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202402980) - regarding ecosystem notifications
+> - [CIR 2024/2981](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202402981) - regarding certification of Wallet Solutions
+> - [CIR 2024/2982](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202402982) - regarding protocols and interfaces.
 
 ### 1.6 Additional topics
 `Section 1.6 Additional topics` is a new chapter in the ARF. It introduces a range of additional topics that are still under discussion. The outcomes of these discussions could significantly influence future iterations of the framework. While several topics have been identified, Yivi is particularly focused on those that align with its core principles of privacy, security, and user-centric identity management. Below, we delve briefly into the key areas that are of interest to Yivi and explore their potential implications.
@@ -118,19 +119,17 @@ Although Wallet Instance activation was already part of ARF 1.4 Section 6.5.3, T
 :::
 
 ### 6.6.3.3 Wallet Unit allows User to verify that Relying Party does not request more attributes than it registered
-`Section 6.6.3.3 Wallet Unit allows User to verify that Relying Party does not request more attributes than it registered` introduces arguably one of the most anticipated features namely Relying Party attribute registration. It states that Relying parties such specify which attributes they request users to disclose and to which purpose. 
-
-In the Access Certificate Authority should have a relying party registrar in which also is stated with attributes may be requested by the relying party and to which purpose. 
+`Section 6.6.3.3 Wallet Unit allows User to verify that Relying Party does not request more attributes than it registered` introduces arguably one of the most anticipated features namely Relying Party attribute registration. It states that Relying parties must specify which attributes they request users to disclose and to which purpose, this will be administered in the Relying Party Registrar.
 
 > [ANEX 2 - Topic 6](https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/latest/annexes/annex-2/annex-2-high-level-requirements/#a236-topic-6-relying-party-authentication-and-user-approval)
 A Relying Party SHOULD communicate in the request which attributes are needed for which purpose (use case, service), if this is supported by the protocol used for communication with the Wallet Unit. Notes: - This could be done, for instance, by grouping the attributes and describing the use case, service, or purpose of each group. - The purpose of this recommendation is that a Relying Party makes clear to the User what the intended use, the service being accessed, or the specific purpose is of each requested attribute. 
 
 :::tip[Yivi impact]
-Yivi's Trusted Verifier/Pretty Verifier roadmap is aligned with Relying Party attribute registration, this is a much needed change to protect users for disclosing to much information.
+Yivi's Trusted Verifier/Pretty Verifier roadmap is aligned with Relying Party attribute registration, this is a much needed change to protect users from disclosing too much information.
 :::
 
 ### 7.4.3.5 Risks and mitigation measures related to User privacy
-`Section 7.4.3.5 Risks and mitigation measures related to User privacy` identifies the risks which are stated in the [Cryptographers' Feedback on the EU Digital Identity’s ARF](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/issues/200) and which we fully subscribe too. It mentions major privacy features which the current ARF lacks, namely:
+`Section 7.4.3.5 Risks and mitigation measures related to User privacy` identifies the risks stated in the [Cryptographers' Feedback on the EU Digital Identity’s ARF](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/issues/200) and which we fully subscribe too. It mentions major privacy features which the current ARF lacks, namely:
 - Attestation Provider linkability.
 - Relying Party linkability
 
