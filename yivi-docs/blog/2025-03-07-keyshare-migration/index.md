@@ -23,7 +23,7 @@ To ensure a seamless transition, we have prepared the following steps:
 ## Expected Impact
 There is no expected impact regarding the Yivi App update on the 11th of March.
 
-There is approximately 1 hour of downtime  **expected downtime** for users in the night of the 17th-18th of March
+There is approximately 1 hour of **expected downtime** for users in the night of the 17th-18th of March
 Users will receive errors when entering the pin in Yivi.
 
 ## What can you do?
