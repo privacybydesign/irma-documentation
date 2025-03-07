@@ -1,5 +1,5 @@
 ---
-slug: 2025-arf-1-5
+slug: 2025-keyshare-migration
 title: 📢 Important notice Keyshare server migration
 authors: [dibranmulder]
 tags: [yivi, migration]
@@ -17,7 +17,7 @@ To ensure a seamless transition, we have prepared the following steps:
 - Final Migration - March 18th, 2025
   - At 01:00 CET, the SIDN Keyshare Server will be shut down.
   - The Keyshare database will be migrated to our new infrastructure.
-  - The reverse proxy at `https://keyshare.yivi.app` will be removed, and the new Keyshare Server will be brought online.
+  - The reverse proxy at `https://keyshare.yivi.app` will be removed and traffic will be routed to , and the new Keyshare Server will be brought online.
   - The DNS for `irma.sidn.nl` will be updated to redirect users who have not yet updated their app to the new environment.
 
 ## Expected Impact
