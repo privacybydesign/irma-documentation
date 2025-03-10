@@ -59,7 +59,7 @@ Requirements include:
 - Support for large text
 - And more
 
-A complete overview can be found [here](https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2&levels=aaa).
+A complete overview can be found [here](https://www.w3.org/WAI/WCAG22/quickref/?versions=2.1&levels=aaa).
 
 We plan to adhere to these standards by assessing our current state and make improvements accordingly.
 Recently we've improved our screen reader support by adding better descriptions and hiding some distracting items from the screen reader [with this pull request](https://github.com/privacybydesign/irmamobile/pull/310).
