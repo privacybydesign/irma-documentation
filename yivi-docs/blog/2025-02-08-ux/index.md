@@ -1,3 +1,11 @@
+---
+slug: ux-improvements
+title: User experience improvements in Yivi
+authors: [wouterensink, jaspervanderlinden]
+tags: [yivi, ux, roadmap, accessibility]
+---
+
+
 # Yivi UX Plans
 One of the main goals for Yivi is to become the worlds most user friendly identity wallet.
 We've already done a lot to help this cause, like allowing the user to directly start issuing missing credentials while they're trying to dislose so they
@@ -26,14 +34,13 @@ Things like consistent color, fonts and styling combined with fluid animations i
 
 
 ## Our plans for the near future
-There are four UX improvements that we want to work on over the next couple of months.
-These are:
+There are four UX improvements that we want to work on over the next couple of months:
 - Getting compliant with European Accessibility Act
 - QR code scanner button on the login page
 - Easier card organisation and navigation
 - Brand extensions
 
-Let's look at them one by one.
+Let's have a look at each of them.
 
 ### Getting compliant with European Accessibility Act (EAA)
 The EAA is a directive that aims to improve the functioning of the internal market for accessible products and services,
@@ -52,8 +59,10 @@ Requirements include:
 - Support for large text
 - And more
 
+A complete overview can be found [here](https://www.w3.org/WAI/WCAG22/quickref/?versions=2.2&levels=aaa).
+
 We plan to adhere to these standards by assessing our current state and make improvements accordingly.
-Recently we've improved our screen reader support by adding better descriptions and hiding some distracting items from the screen reader.
+Recently we've improved our screen reader support by adding better descriptions and hiding some distracting items from the screen reader [with this pull request](https://github.com/privacybydesign/irmamobile/pull/310).
 
 Automatic tests will be introduced to make sure our Flutter code adhears to the touch target and contrast ratio requirements set by WCAG.
 
@@ -68,15 +77,17 @@ For banking apps that would most likely be transfering money.
 
 Our plan is for Yivi to also support this flow. 
 The user can quickly scan a QR code by pressing the button on the login page 
-and then enter the pin afterwards to go ahead with the issuance or disclosure.
+and then enter the pin afterwards to continue with the issuance or disclosure.
+
+Progress on this feature can be followed [here](https://github.com/privacybydesign/irmamobile/pull/327).
 
 
 ### Easier card organisation and navigation
-We've received feedback from some of our users that the navigation and organisation of the cards inside the wallet.
+We've received feedback from some of our users that the navigation and organisation of the cards inside the wallet is not optimal.
 Right now there's just a list of cards, categorized based on the Category field in the scheme and nothing more.
-There's no way to sort, organize or navigate these cards. You can just scroll a list.
+There's no way to sort, organize or navigate these cards.
 
-When a user has just a few credentials this is not a big issue, but when the list gets larger, finding the card you're looking for becomes harder and harder.
+When a user has just a few credentials this is not a big issue, but when the list grows larger, finding the card you're looking for becomes harder and harder.
 
 To solve this problem, we're planning to make the list editable and add search functionality.
 Editable means the user will be able to select, move and delete credentials.
@@ -93,7 +104,7 @@ The credential containing your ID information could for example look like your a
 We do need to consider what this means for usability, as the cards will most likely be taller than they are now and that could make the list a lot longer.
 
 The card image itself could contain some of your personal data in the form of some kind of SVG template.
-We need to keep in mind for this that not all of your data may fit on the card itself and not everyone will be able to read those details from the image
+We need to keep in mind that not all of your data may fit on the card itself and not everyone will be able to read those details from the image
 itself.
 
 As for the technology, we're considering using the SD-JWT VC SVG template system as a basis.

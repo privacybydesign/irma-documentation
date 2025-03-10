@@ -28,3 +28,13 @@ wouterensink:
   socials:
     github: w-ensink
     linkedin: wouter-ensink-748b65191
+
+jaspervanderlinden:
+  name: Jasper van der Linden
+  title: Developer @ Caesar Groep
+  url: https://github.com/jappe999
+  image_url: https://github.com/jappe999.png
+  page: true
+  socials:
+    github: jappe999
+    linkedin: jasper-van-der-linden
