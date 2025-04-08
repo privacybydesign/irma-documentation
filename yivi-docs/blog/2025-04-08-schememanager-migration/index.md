@@ -1,7 +1,7 @@
 ---
 slug: 2025-schememanager-migration
 title: Schememanager Migration Announcement
-authors: [kamphuisem]
+authors: [martijnkamphuis]
 tags: [yivi, schememanager, migration, announcement]
 ---
 
