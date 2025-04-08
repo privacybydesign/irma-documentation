@@ -38,3 +38,13 @@ jaspervanderlinden:
   socials:
     github: jappe999
     linkedin: jasper-van-der-linden
+
+martijnkamphuis:
+  name: Martijn Kamphuis
+  title: Lead Developer @ Caesar Groep
+  url: https://github.com/kamphuisem
+  image_url: https://github.com/kamphuisem.png
+  page: true
+  socials:
+    github: kamphuisem
+    linkedin: kamphuisem
