@@ -25,7 +25,7 @@ The complete timeline of this change will look like this:
 Because of the change in URL and IP, we ask you to take the steps written out below.
 
 ### 1. Add whitelisted domain/IP-addresses
-If your organization uses firewalls with whitelisted domains and/or IP-addresses for outbound traffic, please add the domain and/or IP-addresses below. In case you are not sure if this is the case for you, please contact your network administrator. If you are sure you don’t need whitelisting, you can skip this step.
+If your organization uses firewalls with whitelisted domains and/or IP-addresses for outbound traffic, please add the domain and/or IP-addresses below. If you are not sure if this is the case for you, please contact your network administrator. If you are sure you don’t need whitelisting, you can skip this step.
 Please make sure to have both settings active before upgrading the IRMA-server. Once the updated IRMA-server is running steadily for a while, you can remove the old settings.
 
 |  | Old settings | New settings |
