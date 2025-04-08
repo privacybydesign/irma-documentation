@@ -1,11 +1,11 @@
 ---
 slug: 2025-schememanager-migration
-title: Schememanager Migration Announcement
+title: Scheme manager Migration Announcement
 authors: [martijnkamphuis]
 tags: [yivi, schememanager, migration, announcement]
 ---
 
-# Schememanager migration announcement
+# Schemem anager migration announcement
 
 We would like to inform our community of an upcoming change with regards to the Yivi/IRMA scheme manager.
 This change will impact every IRMA-server currently running. Please read below for further details.
