@@ -5,7 +5,14 @@ authors: [martijnkamphuis]
 tags: [yivi, schememanager, migration, announcement]
 ---
 
-# Schemem anager migration announcement
+# Update 15-04-2025
+We want to inform you about a slight change in the planning, with the following impact for IRMA-server administrators:
+
+- 30-04-2025: The scheme URL inside the scheme itself will be updated. If automatic scheme update is enabled on your server, this will automatically switch your server to use the new URL.
+- **If you are behind a firewall, please make sure the new domain and/or IP is whitelisted before April 30th and keep the old Privacy By Design domain and/or IP whitelisted until at least May 14th.**
+
+
+# Scheme manager migration announcement
 
 We would like to inform our community of an upcoming change with regards to the Yivi/IRMA scheme manager.
 This change will impact every IRMA-server currently running. Please read below for further details.
