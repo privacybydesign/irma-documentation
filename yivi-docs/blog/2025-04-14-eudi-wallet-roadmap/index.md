@@ -1,19 +1,24 @@
 ---
 slug: 2025-eudi-wallet-roadmap
-title: EUDI wallet roadmap
+title: Yivi’s Strategic Roadmap to EUDI-Wallet Compliance
 authors: [dibranmulder]
 tags: [yivi, eudi]
 ---
 
-Yivi is committed to becoming an EUDI-wallet, not because the technical choices of the [Architectural Reference Framework (ARF)](https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/latest/) are in line with our principles but because we believe that the wide user adoption of ID-Wallets has to pushed from legislation perspective. And therefore, we have to comply with the legislation to ultimately fulfill our mission which is, with Yivi you are: `In charge of your digital data`, we provide technology that is `Privacy First`. 
+As we enter a pivotal phase in digital identity development across Europe, **Yivi is committed to becoming a compliant EUDI-wallet**. This strategic decision is driven by a broader vision: to ensure that privacy-first identity solutions remain viable in a landscape increasingly shaped by regulation and standardization.
 
-Yivi is committed to stay privacy first, we think that from the ground up privacy should be respected and implemented. The current developments in the EUDI wallet ecosystem are step forwards in terms of European autonomy and self sovereignty of users, but lacks key privacy features, such as: `issuer unlinkability` and `relying party, which is a shame. We are closely following the [Topic G: Zero Knowledge Proof discussion](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/discussions/408) in the ARF. We are content with the fact that the issue is being addressed but we are quite skeptical of the outcome and moreover with the timeline of the outcome.
+Our mission has always been clear: **with Yivi, you are in charge of your digital data**. And while regulatory alignment with eIDAS 2.0 and the EUDI-wallet may challenge some of our architectural preferences, it is a necessary step to bring privacy-preserving identity to the masses.
 
-## Current state of Yivi
+## Privacy by design, still at the core
+Yivi was built from the ground up to respect user privacy. The emergence of the EUDI-wallet framework is a positive step for digital autonomy and self sovereignty of users. However, we are concerned about the current lack of native support for core privacy mechanisms such as **issuer unlinkability** and **relying party unlinkability**.
+
+We are actively engaged in community discussions like [Topic G on Zero Knowledge Proofs](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/discussions/408), which highlight the limitations of the current specifications. While we appreciate that these topics are on the agenda, we remain cautious about both the timeline and the effectiveness of proposed solutions.
+
+## Yivi Today: A Mature Ecosystem
 Yivi is a set of open source software project implementing the Idemix attribute-based credential scheme, allowing users to safely and securely authenticate themselves as privacy-preserving as the situation permits. Users receive digitally signed attributes from trusted issuers, storing them in their Yivi app, after which the user can selectively disclose attributes to others. 
 
 Yivi is more than just a mobile app, in fact we have all the software to build up an ID-Wallet ecosystem, much like the ARF prescribes. Obviously, some components are missing but Yivi got quite some production-grade technology, such as:
-- an implementation of the Idemix signature scheme.
+- an implementation of the Idemix credential scheme.
 - an open and transparent implementation of a Trust Scheme.
 - an implementation of a proprietary `IRMA` protocol for issuance and selective disclosure, respecting core features such as: `selective disclosure`, `issuance`, `revocation based on accumulators` and that with respect to core privacy features such as: `issuer unlinkability` and `relying party unlinkability`. 
 - a set of `open-source` software tooling to host `Attestation Providers (Issuers)` and `Relying Parties (Verifiers)`.
@@ -21,8 +26,8 @@ Yivi is more than just a mobile app, in fact we have all the software to build u
 
 As you can see Yivi is and was its time way ahead but now has come the time that we should allign with the broader European ecosystem. We believe our work in the past decade was fundamental to the new way of attribute-based credential thinking.
 
-## Challenges
-The current implementation of Yivi has several challenges that hinder it from wider usage in the European context. We should work on interoperability and adopt industry standards. Our Idemix signature scheme has challenges such as that its not Eliptic Curve based and it lacks hardware binding support.
+## Key Challenges Ahead
+Despite our maturity, there are significant gaps to bridge to achieve full EUDI-wallet compliance. We should work on interoperability and adopt industry standards. Our Idemix credential scheme has challenges such as that its not Eliptic Curve based and it lacks hardware binding support.
 
 :::note
 Yivi should be able to adopt new credential schemes, such as BBS# or Post Quantum implementations of Zero Knowledge Proof credential schemes.
@@ -48,7 +53,7 @@ There have been modifications of BBS+ such as BBS# that make BBS Anonymous Crede
 However, there is a long road ahead of integrating these signature schemes within the ARF, but we greatly support the work Orange has been doing.
 
 ## Vision - The road ahead
-We took some time so that the ARF and according standards became less volatile. Aligning to the ARF and accompanying standards that are very much still in development is a risky move. You might end up making the required investment twice. We now believe that the ecosystem is working towards a first stable interoperable profile. This gives us the certainty to start aligning Yivi with industry standards.
+We have intentionally waited for the ARF and related standards to stabilize. Premature adoption would have resulted in duplicated investment. Now, with a more concrete and interoperable profile emerging we think the time is ready to act. 
 
 :::note[Vision]
 Yivi has to become `crypto agile`, in the sense that Yivi supports multiple credential schemes, protocols and credential formats. We think this is the right move ahead, we `preserve our privacy first implementation` and make Yivi `compatible with EUDI-wallet standards`. It allows us to innovate together with academia on for instance Post Quantum ZKP, Digital voting, Digital watermarking, etc.
@@ -93,6 +98,11 @@ The following topics will also be applied to the Yivi trust scheme:
 Next to that the following topics require more research
 - Wallet Instance and Wallet Unit lifecycle and the Wallet Provider.
 - Device binding 
+
+## Conclusion Privacy First, Future Ready
+Our journey toward EUDI-wallet compliance is a long-term commitment. It is not merely about ticking regulatory checkboxes; it’s about preserving the right to privacy in a digitized European society. Yivi will continue to lead by example—through open innovation, ethical technology, and a relentless pursuit of user empowerment.
+
+By becoming crypto-agile and aligning with emerging European standards, we reaffirm our founding belief: Digital identity should not come at the cost of privacy.
 
 ## References
 
