@@ -24,22 +24,22 @@ Yivi is more than just a mobile app, in fact we have all the software to build u
 - a set of `open-source` software tooling to host `Attestation Providers (Issuers)` and `Relying Parties (Verifiers)`.
 - a multi-platform, multi-language, accessible mobile App.
 
-As you can see Yivi is and was its time way ahead but now has come the time that we should allign with the broader European ecosystem. We believe our work in the past decade was fundamental to the new way of attribute-based credential thinking.
+As you can see Yivi is and was way ahead of its time, but now has come the time that we should allign with the broader European ecosystem. We believe our work in the past decade was fundamental to the new way of attribute-based credential thinking.
 
 ## Key Challenges Ahead
-Despite our maturity, there are significant gaps to bridge to achieve full EUDI-wallet compliance. We should work on interoperability and adopt industry standards. Our Idemix credential scheme has challenges such as that its not Eliptic Curve based and it lacks hardware binding support.
+Despite our maturity, there are significant gaps to bridge to achieve full EUDI-wallet compliance. We should work on interoperability and adopt industry standards. Our Idemix credential scheme has challenges such as that its not Elliptic Curve based and it lacks hardware binding support.
 
 :::note
-Yivi should be able to adopt new credential schemes, such as BBS# or Post Quantum implementations of Zero Knowledge Proof credential schemes.
+Yivi should be able to adopt new credential schemes, such as BBS+ or Post Quantum implementations of Zero Knowledge Proof credential schemes.
 :::
 
-Yivi builds upon our own [IRMA protocol](http://localhost:3000/irma-protocol), we build this because there were no alternatives and no standards available, however reality caught up with us and now protocols like [OpenID for Verifiable Presentations](https://openid.github.io/OpenID4VP/openid-4-verifiable-presentations-wg-draft.html) and [OpenID for Verifiable Credential Issuance](https://openid.github.io/OpenID4VCI/openid-4-verifiable-credential-issuance-wg-draft.html) are now approaching a first stable version.
+Yivi builds upon our own [IRMA protocol](/irma-protocol), we build this because there were no alternatives and no standards available, however reality caught up with us and now protocols like [OpenID for Verifiable Presentations](https://openid.github.io/OpenID4VP/openid-4-verifiable-presentations-wg-draft.html) and [OpenID for Verifiable Credential Issuance](https://openid.github.io/OpenID4VCI/openid-4-verifiable-credential-issuance-wg-draft.html) are now approaching a first stable version.
 
 :::note
 Yivi should be able to use industry standard protocols to improve interoperability.
 :::
 
-Yivi's has an open trust scheme, with the Privacy By Design Foundatation as trust anchor. Yivi users should be able to use other trust schemes as well, in such as way that credentials from multiple trust schemes can be used to selectively disclose information.
+Yivi's has an open-source trust scheme, with the Privacy By Design Foundatation as trust anchor. Yivi users should be able to use other trust schemes as well, in such as way that credentials from multiple trust schemes can be used to selectively disclose information.
 
 :::note
 Yivi should be able to be part of the Dutch EDI-stelsel, which will provide PID en PUB EAA credentials.
@@ -48,7 +48,7 @@ Yivi should be able to be part of the Dutch EDI-stelsel, which will provide PID 
 ## Europe should make the right move
 We think that the adoption of BBS+ signature schemes need more attention, we acknowledge the fact that hardware binding of these signature schemes within Trusted Execution Environments or HSM's.
 
-There have been modifications of BBS+ such as BBS# that make BBS Anonymous Credentials eIDAS 2.0 Compliant. Lots of effort is put into this from the Orange Innovations. Essentially BBS# [Ora2024] is a modification of BBS+ allowing group signatures and selective disclosure based on ECDSA.
+There have been modifications of BBS+ such as BBS# that make BBS Anonymous Credentials eIDAS 2.0 Compliant. Lots of effort is put into this from [Orange Open Source](https://opensource.orange.com/en/open-source-orange/). Essentially BBS# [Ora2024] is a modification of BBS+ allowing group signatures and selective disclosure based on ECDSA.
 
 However, there is a long road ahead of integrating these signature schemes within the ARF, but we greatly support the work Orange has been doing.
 
@@ -73,16 +73,7 @@ Idemix credentials are very closely related to [AnonCreds credential formats](ht
 
 Since `OpenID for Verifiable Presentations - draft 26` removed DIF Presentation Exchange as a query language we will focus on DCQL as a query language. 
 
-We break this epic up in the following sub tasks:
-
-- Get a basic disclosure of a SD-JWT VC credential with ECDSA working over OpenID4VP to EU verifier.
-- Disclose SD-JWT VC using Golang to EU verifier
-- Write the Yivi App side of the protocol out in Golang and integrate in `irmago`.
-- Build OpenID4VP verifier server in Go
-- Make the verifier send Idemix DCQL queries to wallet and accept valid Idemix responses
-- Make the Yivi App send Idemix credentials for Idemix DCQL requests
-
-### 2. Support for ES256 signatures over OpenId4VCI.
+### 2. Support for ECDSA signatures over OpenId4VCI.
 The second milestone should enable us to issue non Zero Knowledge Proof credential to Yivi. This is needed because our long-term goal is to enable users to issue at least their PID credential to Yivi, next to that we see lots of government bodies exploring the possibility of issuing data themselves, such as `annual income`, `student status`, `working status`, etc.
 
 Our current assumption is that these governmental bodies will leverage batch issuance of ES256 signatures to preserve some sort of privacy, but hopefully in the future they will also support privacy first credential schemes such as BBS#.
