@@ -55,6 +55,10 @@ However, there is a long road ahead of integrating these signature schemes withi
 ## Vision - The road ahead
 We have intentionally waited for the ARF and related standards to stabilize. Premature adoption would have resulted in duplicated investment. Now, with a more concrete and interoperable profile emerging we think the time is ready to act. 
 
+<div class="center-container">
+    <img src="/img/vision.png" alt="Yivi's vision" />
+</div>
+
 :::note[Vision]
 Yivi has to become `crypto agile`, in the sense that Yivi supports multiple credential schemes, protocols and credential formats. We think this is the right move ahead, we `preserve our privacy first implementation` and make Yivi `compatible with EUDI-wallet standards`. It allows us to innovate together with academia on for instance Post Quantum ZKP, Digital voting, Digital watermarking, etc.
 :::
