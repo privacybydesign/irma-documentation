@@ -17,6 +17,11 @@ After a successful payment, the following information is extracted and issued as
 
 This credential can then be used in any Yivi-enabled service that needs proof of bank account ownership, such as financial onboarding, gig-economy platforms, or trusted peer-to-peer transactions.
 
+<div class="center-container">
+    <img src="/img/iban-portrait.png" class="ss" alt="IBAN credential" />
+</div>
+
+
 ## Backed by CM’s IBAN Verification
 Yivi’s IBAN issuer is powered by [CM.com's IBAN Verification service](https://knowledgecenter.cm.com/kc/what-is-iban-verification-and-how-does-it-work), a reliable and widely-used system for verifying account ownership via a €0.01 transfer. CM ensures that the account details are validated and returned in a privacy-respecting way, fitting seamlessly into Yivi’s selective disclosure model.
 
