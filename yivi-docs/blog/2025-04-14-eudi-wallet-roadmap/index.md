@@ -50,7 +50,7 @@ Yivi should be able to be part of the Dutch EDI-stelsel, which will provide PID 
 :::
 
 ## Europe should make the right move
-We think that the adoption of BBS+ signature schemes need more attention. We acknowledge the fact that hardware binding of these signature schemes within Trusted Execution Environments or HSM's.
+We think that the adoption of BBS+ signature schemes need more attention. We acknowledge the fact that hardware binding of these signature schemes within Trusted Execution Environments or HSM's is a challenge, but workarounds are available.
 
 There have been modifications of BBS+ such as BBS# that make BBS Anonymous Credentials eIDAS 2.0 Compliant. Lots of effort is put into this from [Orange Open Source](https://opensource.orange.com/en/open-source-orange/). Essentially [BBS#](https://github.com/user-attachments/files/19198669/The_BBS_Sharp_Protocol.pdf) is a modification of BBS+ allowing group signatures and selective disclosure based on ECDSA.
 
