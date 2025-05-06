@@ -1,12 +1,21 @@
 name: Delivery
 
-on: 
-  # Allow triggering pushing to GHCR manually.
-  workflow_dispatch:
+on:
+  pull_request:
+    types: [synchronize, opened, reopened]
+  push:
+    branches: [master]
+  release:
+    # Note: a current limitation is that when a release is edited after publication, then the Docker tags are not automatically updated.
+    types: [published]
+  schedule:
+    # Run every monday on 9:00 in the morning (UTC).
+    - cron: '0 9 * * 0'
 
 permissions:
   contents: write
   packages: write
+  security-events: write
 
 jobs:
   publish-docker-image:
@@ -15,25 +24,60 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check whether this event is the HEAD of master
+        continue-on-error: true
+        id: is-head-master
+        run: git rev-parse HEAD | grep -x ${{ github.sha }}
+        shell: bash
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            type=raw,value=${{ github.ref == 'refs/heads/master' && 'latest' || 'staging' }}
+            type=semver,pattern={{major}}.{{minor}}.{{patch}}
+            type=edge,enable=${{ steps.is-head-master.outcome == 'success' }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}      
-      
-      - name: Build container and push to GitHub Container Registry
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build container and export to local Docker
         uses: docker/build-push-action@v5
         with:
           context: .
+          load: true
+          tags: local/irma-documentation:scan
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Scan Image
+        uses: anchore/scan-action@v3
+        id: scan
+        with:
+          image: local/irma-documentation:scan
+          only-fixed: true
+          fail-build: true
+          severity-cutoff: critical
+          output-format: sarif
+
+      - name: Upload Anchore scan SARIF report
+        uses: github/codeql-action/upload-sarif@v3
+        if: ${{ !cancelled() }}
+        with:
+          sarif_file: ${{ steps.scan.outputs.sarif }}
+
+      - name: Push image to GitHub Container Registry
+        uses: docker/build-push-action@v5
+        if: ${{ github.event_name == 'release' || github.event_name == 'push' }}
+        with:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
