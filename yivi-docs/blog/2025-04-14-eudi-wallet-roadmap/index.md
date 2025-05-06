@@ -71,28 +71,38 @@ In our continued efforts we will maintain our core principles which are:
 - We will `never ask users to pay` for the App.
 - We will stand for `ethical usage` of Yivi.
 
-### 1. Disclose Idemix credentials over OpenID4VP.
+### 1. Disclose SD-JWT VC credentials over OpenID4VP.
+Our first milestone is to enable the disclosure of SD-JWT VC credentials using the OpenID for Verifiable Presentations (OpenID4VP) protocol. This is a key step in becoming interoperable with the broader EUDI-wallet ecosystem. OpenID4VP is designed as a flexible carrier for multiple credential formats, and we believe it will ultimately support Idemix-based credentials as well—especially given its close relation to [AnonCreds](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-anoncreds).
 
-Idemix credentials are very closely related to [AnonCreds credential formats](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-anoncreds). We aim to introduce our own credential format on top of OpenID4VP, this is a first milestone, which improves interoperability with Relying Parties in the ecosystem. To improve interoperability we will investigate the required effort of integrating with existing verifiers of the EUDI-wallet open source projects. In this way we make it fully transparent what changes are required to interoperate with Yivi.
+In fact, Yivi aims to introduce its own credential format over OpenID4VP. While Idemix remains central to our stack, we will also embrace SD-JWT VCs and eventually other formats. Issuance in the early phases will still be handled via the IRMA protocol, with enhancements including:
 
-Since `OpenID for Verifiable Presentations - draft 26` removed DIF Presentation Exchange as a query language we will focus on DCQL as a query language. 
+- Same-device and cross-device disclosure flows
+- Key binding support using Yivi’s keyshare server
 
-### 2. Support for ECDSA signatures over OpenId4VCI.
-The second milestone should enable us to issue non Zero Knowledge Proof credential to Yivi. This is needed because our long-term goal is to enable users to issue at least their PID credential to Yivi. Next to that we see lots of government bodies exploring the possibility of issuing data themselves, such as `annual income`, `student status`, `working status`, etc.
+This approach allows us to retain Yivi’s strengths while offering compatibility with modern standards.
 
-Our current assumption is that these governmental bodies will leverage batch issuance of ECDSA signatures to preserve some sort of privacy, but hopefully in the future they will also support privacy first credential schemes such as BBS+.
+
+### 2. Issue SD-JWT VC credentials over OpenID4VCI
+Once disclosure is in place, the next step is standardizing issuance. We will adopt OpenID for Verifiable Credential Issuance (OpenID4VCI) to enable issuance of SD-JWT VCs in line with Dutch and European expectations.
+
+This will be essential for integrating with emerging national and sectoral ecosystems, such as:
+
+- The Dutch PID Provider
+- PuB EAA issuers like the KVK, Belastingdienst, and others
+
+While IRMA will remain the initial method for issuance, we will build bridges to support new flows and allow identity brokers to mediate across formats. Yivi must support multiple issuance standards to remain relevant and inclusive.
 
 ### 3. Multi trust scheme support
-The third milestone will be alligning Yivi with the EUDI trust model. This will encompass a lot of things, but we are closely following the [NL Public Reference Wallet](https://github.com/MinBZK/nl-wallet) and keeping track of their choices. We do not have a detailed plan of approach yet, but we will be actively researching the following topics:
+The third milestone is the integration of multiple trust schemes. Currently, Yivi operates under the trust scheme of the Privacy by Design Foundation. But in a European context, users must be able to present credentials from various ecosystems—public and private—without friction.
 
-The following topics will also be applied to the Yivi trust scheme:
-- Relying Party registration.
-- Attribute registration for Relying parties.
-- Relying Party authentication using X509 certificates
+To do this, we’ll begin aligning with the EUDI trust model, closely observing the architectural direction of the [NL Public Reference Wallet](https://github.com/MinBZK/nl-wallet). Topics under research include:
 
-Next to that the following topics require more research
-- Wallet Instance and Wallet Unit lifecycle and the Wallet Provider.
-- Device binding 
+- Relying Party (RP) registration and attribute catalog publishing
+- RP authentication using X.509 certificates
+- Lifecycle management of wallet instances and binding to specific devices
+- Compatibility with Dutch and EU-level schemes, including integration with EDI-stelsel for PID and PuB credentials
+
+Trust scheme pluralism is critical to maintaining Yivi’s openness, and we will ensure that users can fluidly operate across ecosystems while remaining in full control of their data.
 
 ## Conclusion: Privacy First, Future Ready
 Our journey toward EUDI-wallet compliance is a long-term commitment. It is not merely about ticking regulatory checkboxes rather it's about preserving the right to privacy in a digitized European society. Yivi will continue to lead by example—through open innovation, ethical technology, and a relentless pursuit of user empowerment.
