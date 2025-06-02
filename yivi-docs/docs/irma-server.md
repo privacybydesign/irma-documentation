@@ -275,6 +275,15 @@ Outputting JSON is enabled with the `log-json` option:
 {"action":"disclosing","level":"info","msg":"Session started","session":"WdypvSs97JTotpfl1Dtd","time":"2019-02-28T20:51:09+01:00"}
 ```
 
+### Issuing SD-JWTs
+
+As of version 1.9, IRMA server offers an option to issue SD-JWT credentials to the Yivi app over the IRMA protocol, alongside the standard IRMA credentials. This feature can easily be enabled by configuring an ECDSA private key in configuration. Simply add `sdjwt_issuance.sdjwt_privkey`  (or the `_file` equivalent), specifying a ECSA private key in PEM format.
+
+```yaml
+sdjwt_issuance:
+    sdjwt_privkey_file: "/<path>/<to>/<ECDSA-private-key>.pem
+```
+
 ## Running as daemon
 
 On most Linux systems, the `irma server` can be made into an automatically started daemon as follows:
