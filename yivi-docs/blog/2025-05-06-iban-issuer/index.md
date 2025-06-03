@@ -1,6 +1,6 @@
 ---
 slug: 2025-iban-issuer
-title: Yivi’s adds an IBAN issuer
+title: Yivi adds an IBAN issuer
 authors: [dibranmulder]
 tags: [yivi, iban]
 ---
