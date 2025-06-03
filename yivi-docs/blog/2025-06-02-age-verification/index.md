@@ -18,53 +18,50 @@ To build the age verification app, the Commission launched a [public tender](htt
 While the Commission's choice of a well-established vendor is understandable from a risk-management perspective, it comes at a cost. In its requirements, the tender explicitly asked for experience with selective disclosure and zero-knowledge proofs (ZKPs)—advanced techniques to verify attributes (like age) without exposing identities. Solutions like Yivi are built around these principles. Yet their lack of size and formal certifications ruled them out in advance. The result: a conservative implementation that checks the technical boxes, but fails to raise the bar on privacy.
 
 ## A first look at the App
-!!Describe that we took a first look at the developed Android application. 
+[The Android version of the Age Verification App](https://github.com/eu-digital-identity-wallet/av-app-android-wallet-ui) provides our first hands-on insight, as an iOS counterpart is not yet publicly available. Under the hood, the Android app heavily reuses components from the EUDI Wallet ecosystem. In fact, the codebase is a fork of the official EUDI Android Wallet reference application, built on the Architecture Reference Framework (ARF). This means the app consumes the EUDI Wallet Core SDK and integrates modular libraries for issuing credentials and verifying presentations. Essentially, the consortium didn’t start from scratch but repurposed the existing digital identity wallet architecture (Wallet Core, Issuer, Verifier modules, etc.), tweaking it for the specific use case of age attestation.
 
 :::warning
-> !!Describe that The iOS App has not been developed or is not open sourced yet.
+The iOS version of the Age Verification App has not been developed or is not open sourced yet.
 :::
 
-### Technical
-!!It reuses EU Digital Identity Wallet componenets such as the
-- [EUDIW Wallet Core](https://github.com/eu-digital-identity-wallet/eudi-lib-android-wallet-core)
-- [EUDIW Issuer](https://github.com/eu-digital-identity-wallet/eudi-srv-web-issuing-eudiw-py)
-- [EUDIW Verifier](https://github.com/eu-digital-identity-wallet/eudi-web-verifier)
+Being based on the EUDI reference wallet, the app benefits from an established architecture—but also inherits its complexity. Early interoperability testing suggests quite some instability and immature areas in the EU’s implementation. This isn’t surprising: the solution’s architecture is multi-layered and involves multiple programming languages and frameworks. Moreover, the standards it implements are still evolving. The app currently follows draft specifications for credential exchange, such as OpenID4VP draft 23, and OpenID4VCI draft 14 for issuance – versions that are already outdated as these specs continue to mature. With such a layered setup and moving targets in standards, bugs and inconsistencies were inevitable. Indeed, the project itself labels this release as a "foundational prototype" not ready for production use. The code comes with clear warnings about possible errors, missing features, and reduced security/privacy assurances in this initial version. All of this underscores that while the core concept works, it’s far from a polished, stable product in its current state.
 
+<div class="center-container">
+    <img src="/img/av-eudi/comparison_with_eudiw.png" class="ll" alt="comparison eudi wallet" />
+</div>
 
-!!This android app is forked from EUDI Android Wallet reference application. 
-https://github.com/eu-digital-identity-wallet/eudi-app-android-wallet-ui
+On a positive note, the Android app is reasonably accessible in terms of device support. It runs on Android devices as old as API level 28 (Android 9 Pie, circa 2018), which means a wide range of smartphones – even some 5+ years old – can use it. This broad compatibility is important for an EU-wide tool. However, the app’s reliance on older draft standards may limit interoperability with newer or alternative wallets unless updates are made. Our testing with Yivi revealed integration challenges, hinting that the Commission’s wallet components are not yet fully spec-compliant or robust when interacting with non-official wallets. These findings point to a need for further refinement: streamlining the architecture, consolidating layers, and tracking spec updates to improve stability. The Commission and its developers are likely aware of these issues – the open-source project invites feedback and explicitly notes that many features will evolve before any real-world deployment.
 
-!!As Yivi is adopting industry standards to comply with EUDI-Wallet standards we have tried to interop with the EU Digital Identity Wallet componenets, including the issuer and verifier software. We had a bad experiences with the stability and maturity of these software components, because its such a layered approach with several components written in various programming languages and evolving specification the EUDI-Wallet components barely interop with eachother. Each subproject is in a different stage.
+## Requesting a Proof of Age
+One of the first questions for any age verification system is: **How does a user actually obtain an age credential?** According to the technical documentation, the app should ultimately support a mix of methods to request and generate a proof of age. These include: 
 
-!!Android support from Android API level 28 / Android 9 (August 2018)
-!!Old implemetations of specs, such as: OpenID4VP draft 23 - presentation exchange doesn't exist anymore is replaced with DCQL.
-!!Its far from a production state.
+- National eID schemes – e.g. using your country’s electronic identity (online ID card or digital ID login) to confirm your age.
+Document-based verification – scanning a physical ID document (passport, driver’s license, national ID card) via the app to extract and confirm your date of birth.
+- Open banking / bank KYC – leveraging your bank or payment provider (which has done Know-Your-Customer identity checks) to attest that you are over a certain age. For instance, linking the age-check app to a banking app that can confirm you’re an adult.
+- Mobile network SIM authentication – using mobile operator data (since getting a SIM card often requires age identification) to issue an age attribute.
+- Third-party attestations – other avenues like notaries or certified age-proof providers could issue an attestation of age.
 
-### Requesting a Proof of Age
-!! There are goign to be several age attestation providers, with different level of assurances. These are very memberstate specific. The app does not support Document-Based Verification yet. There is not noation eID scheme (In the Netherlands) yet. So the only way is existing databases with the use of DigiD or KYC processes of banks or mobile networks. 
+<div class="center-container">
+    <img src="/img/av-eudi/general_architecture.png" class="ll" alt="requesting a proof of age" />
+</div>
 
-!! In the Netherlands and across Europe Yivi can be used instead of this App because we have all the workings in place. We even have a
+This sounds comprehensive, but the current beta falls short of covering all these. As of now, the only fully implemented method is the eID-based flow. In practice, that means a user must authenticate with a supported national digital identity provider to retrieve an age credential. If your country issues citizen eIDs or has an eIDAS-notified scheme, the app can redirect you to that system for login, and then receive proof of your date of birth or an "Over 18" attribute. However, almost no EU country currently has a usable national eID for this purpose. The Netherlands, for instance, has no notified eID scheme under eIDAS yet. In such cases, the Age Verifcation app has no government-issued ID to tap into.
 
-> The user requests a Proof of Age from a designated issuer (Age Attestation Provider), which will issue it after verifying the user’s identity at a level of assurance equivalent to "substantial" or "high" pursuant to Commission Implementing Regulation (EU) 2015/1502 through the following methods: 
-> - Notified or national eID schemes
-> - Leveraging existing databases: Identity verification is conducted through recognised and well-established processes already in use for > personal identification under national or Union law, such as National identity providers covering the level of assurance.
-> - Know Your Customer (KYC) procedures employed by banks or the identity verification methods used for issuing SIM cards by Mobile Network Operators.
-> - Document-Based Verification: Confirming the user’s age using official identification documents such as electronic ID cards, passports, or other government-issued credentials. The link between the document and the user should be verified.
+The lack of document scanning or other alternatives is a glaring gap, considering that the tender specs explicitly call for support of physical ID cards and open-banking methods. Those features simply haven’t been built yet in this prototype. As a result, many users would have no way to get an age proof with the current app. The developers acknowledge this limitation: additional issuance methods beyond the initial eID route are slated for future releases.
 
-https://github.com/eu-digital-identity-wallet/av-doc-technical-specification/blob/main/docs/architecture-and-technical-specifications.md#231-activation-of-the-app
-
-### UX
-!! German and English only.
-!! UX is very minimalistic, looks really bad.
+It’s worth contrasting this with Yivi, a homegrown European alternative that is already operational in production environments. Yivi is a privacy-by-design identity wallet that can issue and share age attestations today. It supports multiple verification methods that the EU app is still missing. For instance, a Dutch user can use Yivi to pull personal data from their municipality records via DigiD and instantly get a verified date of birth – enabling an "over 18" proof without storing anything centrally. Yivi also supports bank-mediated verification and other attributes through its open ecosystem. In short, the technology to privately prove one’s age exists and is being used in practice. This raises a key point: the Commission’s solution, while commendably emphasizing privacy, is essentially catching up to approaches already pioneered by privacy-first identity tools. The hope is that as the EU app expands to support document scans and bank IDs, it will do so in a way that’s interoperable – so that proven solutions like Yivi or others could plug in or be recognized as legitimate age verification providers in the ecosystem.
 
 ## Whitelabel implementation by Memberstates and Age Verification App Providers
-!! Memberstates have to bring it to production, but are already struggling with the EUDI-wallet timelines.
-!! Who are the Age Verification App Providers they are talking about? Why is this not Yivi? 
+The European Commission’s plan is not to directly publish one app for all EU citizens, but to offer a white-label solution that Member States (or their appointed providers) will customize and deploy. The open-source code and technical specs have been published as a toolbox, and now governments or authorized parties in each country are expected to take it from beta to production. In theory, this means each Member State would add their branding, language, and integrate their national eID systems or databases, then release the app to their residents. This distributed implementation strategy respects national differences – each country can adapt the age verification app to "its national circumstances"
+, as well as integrate with whatever local ID infrastructure is available. However, here lies a challenge: many Member States are behind schedule on even the broader EUDI Wallet rollout, let alone this niche age-checker. The EUDI Wallet is only mandated by 2026 and is still under design debate. Few countries have advanced digital ID apps ready now, expecting them to implement the Age Verification App in 2025 may be optimistic.
 
-> The Age Verification application will be delivered as a white label application, that can be adapted to national requirements, such as branding. Member States and other Age Verification App Providers will extend to make the solution full in production, deploy, publish and operate the Age Verification solution including the mobile applications and the back-end services.
-https://github.com/eu-digital-identity-wallet/av-doc-technical-specification/blob/main/docs/architecture-and-technical-specifications.md#31-white-label-application
+<div class="center-container">
+    <img src="/img/av-eudi/screenshot.jpeg" class="ss" alt="Screenshot of Age verification app" />
+</div>
 
-### A missed opportunity for privacy by design
+So, who will actually provide and run these apps? In some cases, governments might build and operate them via internal digital agencies. In others, they might outsource to companies – the Age Verification App Providers in practice. The term "Age Verification App Provider" isn’t formally defined in public docs, but we can infer it means any entity (public or private) that stands up an instance of the age-check app for users. Given the tight timeline and technical complexity, we might see countries piggyback on existing digital identity providers or national partners. For instance, a country without a ready eID might enlist a bank consortium or telecom companies to issue age credentials (since banks and mobile operators have KYC data on citizens).
+
+## A missed opportunity for privacy by design
 [The developed Android application](https://github.com/eu-digital-identity-wallet/av-app-android-wallet-ui) does not use Zero-Knowledge Proofs, despite being mentioned in the tender as a specification. Instead, it falls back on more conventional mechanisms like hashed attributes and batch issuance—where age attestations are issued in large batches to reduce traceability. This may provide some unlinkability, but it’s far from the level of privacy that ZKPs offer.
 
 And that’s a missed opportunity. The EU presents itself as a global leader in privacy—think of the GDPR—and the new eIDAS 2.0 regulation explicitly mandates selective data disclosure and unlinkability as foundational principles. In public debates on digital rights, there is growing concern over surveillance. The age verification app could have been a flagship example of how the EU protects children without undermining civil liberties. Unfortunately, in its current form, it falls short of that ambition.
@@ -74,15 +71,13 @@ And that’s a missed opportunity. The EU presents itself as a global leader in 
 ## Yivi: A Privacy-First European Alternative
 This is where Yivi enters the picture. Yivi is an open-source identity wallet developed in the Netherlands. It’s already capable of issuing and verifying selective attributes like "age over 18" based on the user’s control. Yivi supports issuer and relying party unlinkability, selective disclosure, and user consent by design. In short, it's a working proof that privacy and utility can coexist.
 
-!!Yivi is also actively preparing for EUDI-wallet interoperability. It aims to support emerging standards while preserving its privacy-by-default philosophy. That’s exactly the kind of crypto-agile architecture the EU should be promoting. 
+Yivi is also actively preparing for interoperability with the upcoming European Digital Identity (EUDI) Wallet. It is aligning with emerging technical standards such as the eIDAS 2.0 architecture, while staying true to its privacy-by-default design. This forward-looking approach makes Yivi a strong candidate for crypto-agile, modular identity frameworks—exactly the kind of architecture the EU should be fostering. Supporting projects like Yivi ensures that Europe doesn't just follow but leads in the development of citizen-friendly digital identity.
 
-!!The argument of not using ZKP identity schemes is often based on the secure hardware discussion, but with "substantial" level of assurances this argument does not hold up anymore. Also the mentoined providers of the Proof of Age verification are not bound to use HSM's at all. 
+A common argument against privacy-preserving identity schemes such as those based on zero-knowledge proofs (ZKPs) is the supposed reliance on secure hardware like Hardware Security Modules (HSMs). However, this objection loses relevance at the "substantial" assurance level defined under eIDAS. In this category, the use of HSMs is not a strict requirement, and the practical deployment of credential issuers—such as those offering Proof of Age—does not necessarily involve them. This opens the door for lightweight, software-based implementations that still meet the regulatory bar, without compromising user privacy or accessibility.
 
 Rather than sidelining such innovation, the EU should engage and integrate these ideas during the next development phases. Let this “temporary” app be a learning platform—not the final form. Involve developers, privacy watchdogs, and user representatives early. Evaluate usability, fix real-world challenges (e.g., sharing of age credentials among teens), and evolve the system based on that feedback. Only then can we build a solution that inspires confidence rather than skepticism.
 
-## Looking Ahead: You have to get it right
-By 2026, the full EUDI wallet will be rolled out across Europe. Age verification will likely be the first public-facing use case. That makes it even more crucial to get it right. A poorly implemented system could fuel backlash and erode public trust in digital identity.
+## Conclusion
+In conclusion, while the European Commission’s Age Verification App reflects a commendable intent to protect minors online while respecting privacy, its current trajectory appears unrealistic. The core requirement — Proof of Age Attestation Providers — is not yet fulfilled, and with Member States already struggling to meet EUDI Wallet deadlines, this initiative risks adding unmanageable pressure. Though the political will is evident and the bar for assurance has been lowered to accelerate adoption, the infrastructure simply isn’t there. Without viable providers and operational frameworks, the timeline is not feasible.
 
-Policymakers must find the right balance between protecting minors and safeguarding civil liberties. That balance requires treating privacy not as a checkbox, but as a non-negotiable principle. Europe already made this choice on paper—now it must live up to it in practice. The current app is a step forward, but we can and should be more ambitious.
-
-A positive but critical recommendation: use this pilot to upgrade privacy capabilities as soon as possible. Recognize the pioneers like Yivi, who’ve paved the way. Invest in anonymous, secure age verification that respects European values. That way, we can protect our children without betraying our principles—and build a digital Europe we’re proud of.
+In contrast, Yivi offers a proven, privacy-respecting solution that’s already operational in the Netherlands and can be readily adapted for use across Europe. Rather than pushing a fragile and overly ambitious prototype, the Commission would do well to consider building on working implementations like Yivi to deliver on its goals more effectively and sustainably.
