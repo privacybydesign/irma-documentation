@@ -53,7 +53,7 @@ If a JWT private key is not installed, then the boolean `--allow-unsigned-callba
 
 ## Example
 
-In this example, we use an IRMA disclosure request to retrieve the user's name, and then issue that into a new credential, as shown in the two screenshots on top of this page. A live demo very similar to this may be found [here](https://privacybydesign.foundation/demo/irmaTubePremium).
+In this example, we use an IRMA disclosure request to retrieve the user's name, and then issue that into a new credential, as shown in the two screenshots on top of this page. A live demo very similar to this may be found [here](https://demos.yivi.app/demos/irmaTubePremium/index.en.html).
 
 First, we deploy the following Go program at `https://example.com`. This program unmarshals the request body into a session result, takes the discloed attribute from it, and returns an issuance request containing that attribute.
 

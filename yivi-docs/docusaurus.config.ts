@@ -87,7 +87,7 @@ const config: Config = {
         },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://privacybydesign.foundation/attribute-index/en/',
+          href: 'https://attribute-index.yivi.app/en/',
           label: 'Attribute Index',
           position: 'right',
         },

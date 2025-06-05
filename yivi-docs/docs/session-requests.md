@@ -81,7 +81,7 @@ Disclosure sessions are started with an [`irma.DisclosureRequest`](https://godoc
 
 This asks for a (demo) `BSN` attribute, as well as either `street`, `houseNumber` and `city` from `irma-demo.nijmegen.address`, or `address` and `city` from `irma-demo.idin.idin`. The three levels correspond to a *conjunction* of *disjunctions* of *conjunctions* of requested attributes, allowing verifiers to request multiple attribute sets from the user, offering choices for some or all of these sets.
 
-All of the attribute types (i.e., the string values) contained in the request must exist in their scheme ([`irma-demo`](https://github.com/privacybydesign/irma-demo-schememanager) in the example above). For the `irma-demo` and `pbdf` schemes, an index of existing attribute types that can be requested can be found [here](https://privacybydesign.foundation/attribute-index/en/).
+All of the attribute types (i.e., the string values) contained in the request must exist in their scheme ([`irma-demo`](https://github.com/privacybydesign/irma-demo-schememanager) in the example above). For the `irma-demo` and `pbdf` schemes, an index of existing attribute types that can be requested can be found [here](https://attribute-index.yivi.app/en/).
 
 > Attributes can be disclosed to the requestor in any of the three session types: in issuance sessions issuance proceeds only if the user discloses the required attributes just before issuance, and in attribute-based signature sessions the requested attributes are attached to the resulting attribute-based signature. Thus the `disclose` and `labels` fields introduced above can also occur in issuance or attribute-based signature session requests (see below).
 
@@ -478,7 +478,7 @@ Below you can find an overview of all extra parameters and their default value.
 More information about session lifetimes and timeouts can be found in the [IRMA server documentation](irma-server.md#session-lifetime).
 
 ## JWTs: signed session requests
-The IRMA API server or [`irma server`](irma-server.md) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). The form of the JWT depends on the [session type](what-is-yivi.md#session-types). An example requesting [IRMATube](https://privacybydesign.foundation/demo/irmaTube) attributes::
+The IRMA API server or [`irma server`](irma-server.md) can be configured such that it only accepts session requests that have been digitally signed in the form of a [JWT](https://jwt.io). The form of the JWT depends on the [session type](what-is-yivi.md#session-types). An example requesting [YiviTube](https://yivitube.yivi.app/) attributes::
 ```
 eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImlybWF0dWJlIn0.eyJpYXQiOjE1NjQ2NTczNzUsInN1YiI6InZlcmlmaWNhdGlvbl9yZXF1ZXN0Iiwic3ByZXF1ZXN0Ijp7InJlcXVlc3QiOnsiQGNvbnRleHQiOiJodHRwczovL2lybWEuYXBwL2xkL3JlcXVlc3QvZGlzY2xvc3VyZS92MiIsImRpc2Nsb3NlIjpbW1sicGJkZi5wYmRmLmlybWF0dWJlLnR5cGUiXV0sW1sicGJkZi5wYmRmLmFnZUxpbWl0cy5vdmVyMTIiXSxbInBiZGYuZ2VtZWVudGUucGVyc29uYWxEYXRhLm92ZXIxMiJdXV19fX0.lW9mqjrLkoahDP6Fcw_9mH5hlfl1tq5qp3W3ga0Nrd_j0NXFj-6ngqHVXEV1zhC_OkVH4LN8fMBAgN8nqaFWgEdQvrCuB7-ynuBVjLR-QU272Ym86zLEWYggAkbZ5KY40MpTxU1dgFMucG7fyAESic04OribWOCVxstAMsM28yCxvzkBMCOSjFEe3abcg_N6VvQnLn3LgZP_UrxQmQsh4DK7mBjW04LesLG1vjcliyhDGUb52FHOP_NAsG7G2FvIgojPzALlPrpTMu5p8a95wc5CGR791wybmh0F8kDdwZWAU0W2FjlX5bNPsyXN8AxRVWaRmWoGrGsQhy_sKEf8lg
 ```
