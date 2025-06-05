@@ -219,8 +219,7 @@ Most IRMA software components automatically use the following two schemes:
 * [`pbdf`](https://github.com/privacybydesign/pbdf-schememanager): the production scheme of the [Privacy by Design Foundation](https://privacybydesign.foundation/).
 * [`irma-demo`](https://github.com/privacybydesign/irma-demo-schememanager): exclusively for development, demoing and experimenting, as the scheme private key and all issuer private keys are included.
 
-The [Privacy by Design Foundation](https://privacybydesign.foundation/), which develops IRMA and issues a basic set of attributes, is the scheme manager of these two schemes. New issuers wishing to issue attributes under the `pbdf` scheme, or existing issuers wishing to issue new credential types, can [ask](https://privacybydesign.foundation/people#developers) the Foundation to be included in these schemes.
-For more information on this process, see the [issuer documentation page](issuer.md).
+The [Privacy by Design Foundation](https://privacybydesign.foundation/), which develops IRMA and issues a basic set of attributes, is the scheme manager of these two schemes. New issuers wishing to issue attributes under the `pbdf` scheme, or existing issuers wishing to issue new credential types, can [ask](https://yivi.app/for_developers/) the Foundation to be included in these schemes. For more information on this process, see the [issuer documentation page](issuer.md).
 
 These two schemes are hardcoded into the [Yivi app](yivi-app.md), and if an [`irma`](irma-cli.md) subcommand that requires schemes is run for the first time, these two schemes are downloaded to a default location on disk (`~/.local/share/irma/irma_configuration` on Linux/macOS). It is always possible to use other schemes in conjunction with these two, or without them, either by making a custom build of the Yivi app, or by passing the appropriate options to the `irma` subcommands (see the `--help` messages).
 

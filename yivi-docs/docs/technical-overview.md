@@ -50,7 +50,7 @@ In addition to attribute disclosure, users can also attach their attributes to m
 
 ## Credential types
 
-In IRMA, each credential is an instance of a *credential type*. A credential type specifies (among other things) how many attributes its instances have, what their names are, and by which issuer instances of this credential type are issued. Credential types are not shared between issuers: even if two issuers would issue two credential types with the same name and with the same amount of attributes having the same names, they still are distinct credential types. On [Github](https://github.com/privacybydesign/pbdf-schememanager/blob/master/pbdf/Issues/irmatube/description.xml) an example of such a credential type is available, defining the "IRMATube" credential type which is issued and verified in [this IRMA demo](https://privacybydesign.foundation/demo/irmaTube/). Schematically, an instance of such a credential type would look as follows.
+In IRMA, each credential is an instance of a *credential type*. A credential type specifies (among other things) how many attributes its instances have, what their names are, and by which issuer instances of this credential type are issued. Credential types are not shared between issuers: even if two issuers would issue two credential types with the same name and with the same amount of attributes having the same names, they still are distinct credential types. On [Github](https://github.com/privacybydesign/pbdf-schememanager/blob/master/pbdf/Issues/irmatube/description.xml) an example of such a credential type is available, defining the "IRMATube" credential type which is issued and verified in [this IRMA demo](https://yivitube.yivi.app/). Schematically, an instance of such a credential type would look as follows.
 
 | Attribute name | Attribute value |
 | -------------- | --------------- |
@@ -61,7 +61,7 @@ In this table, the right column are the attribute values which are stored and si
 
 ### Singletons
 
-A credential type can be marked as a *singleton* by the scheme manager. If so the Yivi app will store at most one instance of this credential type simultaneously, and receiving a new one would overwrite any older instance. (Example:  [`pbdf.nijmegen.bsn`](https://privacybydesign.foundation/attribute-index/en/pbdf.nijmegen.bsn.html)) If a credential type is not a singleton (example: [`pbdf.pbdf.diploma`](https://privacybydesign.foundation/attribute-index/en/pbdf.pbdf.diploma.html)), then the user can have any number of instances of that credential type in her Yivi app.
+A credential type can be marked as a *singleton* by the scheme manager. If so the Yivi app will store at most one instance of this credential type simultaneously, and receiving a new one would overwrite any older instance. (Example:  [`pbdf.nijmegen.bsn`](https://attribute-index.yivi.app/en/pbdf.nijmegen.bsn.html) If a credential type is not a singleton (example: [`pbdf.pbdf.diploma`](https://attribute-index.yivi.app/en/pbdf.pbdf.diploma.html), then the user can have any number of instances of that credential type in her Yivi app.
 
 ### Special attributes
 
@@ -92,9 +92,9 @@ IRMA schemes are documented on the [Schemes](schemes.md) page.
 
 Each IRMA issuer has an Idemix private key, which it must keep secret as it is used when issuing credentials, and a corresponding public key which is distributed to attribute verifiers and Yivi apps in the IRMA scheme. An issuer may issue multiple credential types (and a scheme may contain many issuers).
 
-Issuers cannot independently create credential types and start issuing them to Yivi app users: the credential type must first be included in an [IRMA scheme](schemes.md) by the scheme manager. In case of the default scheme `pbdf` of the Yivi app, this is the [Privacy by Design Foundation](https://privacybydesign.foundation/issuance/).
+Issuers cannot independently create credential types and start issuing them to Yivi app users: the credential type must first be included in an [IRMA scheme](schemes.md) by the scheme manager. In case of the default scheme `pbdf` of the Yivi app, this is the Privacy by Design Foundation.
 
-When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, this is documented on the [Privacy by Design Foundation website](https://privacybydesign.foundation/issuance/).
+When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, this is documented in the [attribute index](https://attribute-index.yivi.app/en/pbdf.html). 
 
 ## IRMA PIN codes using the keyshare server
 
@@ -128,7 +128,7 @@ Additionally, the keyshare server comes with a small website on which users can,
 
 As the keyshare server's contribution to the proof of knowledge of the secret key is passed to the verifier through the Yivi app instead of directly from the keyshare server to the verifier, the keyshare server does not know to whom attributes are being disclosed. In fact, the only thing it learns is which issuer (and which Idemix public keys) are involved; it does not get to see which attributes are being disclosed nor their values, nor which attributes are kept hidden, nor how many attributes from how many credentials. The transaction log that the user sees in the keyshare server's website is correspondingly bare.
 
-Summarizing, the keyshare server increases the binding between the attributes and the user through the PIN code and through the option of revocation in case of loss or theft, at the cost of a decrease in the decentral nature of IRMA and in some of the privacy guarantees. In order to keep the privacy cost as low as possible, using various cryptographic means we have tried to keep the amount of information that the keyshare server learns about the participants as small as possible. Although we are still looking at ways to make the keyshare server still more privacy-friendly, at the Privacy by Design Foundation we believe that this tradeoff is already worth it. Thus, the `pbdf` scheme indeed uses a keyshare server (towards users we call it ["MyIRMA"](https://privacybydesign.foundation/myirma/)).
+Summarizing, the keyshare server increases the binding between the attributes and the user through the PIN code and through the option of revocation in case of loss or theft, at the cost of a decrease in the decentral nature of IRMA and in some of the privacy guarantees. In order to keep the privacy cost as low as possible, using various cryptographic means we have tried to keep the amount of information that the keyshare server learns about the participants as small as possible. Although we are still looking at ways to make the keyshare server still more privacy-friendly, at the Privacy by Design Foundation we believe that this tradeoff is already worth it. Thus, the `pbdf` scheme indeed uses a keyshare server (towards users we call it ["MyYivi"](https://my.yivi.app/)).
 
 Each scheme manager can decide for itself whether or not to use a keyshare server in its scheme. Currently, however, due to a limitation in the IRMA protocol only one keyshare server can be involved simultaneously in IRMA sessions. This will be solved in future new versions of the Yivi app and the IRMA API server.
 
@@ -146,7 +146,7 @@ IRMA attribute-based signatures can be used in any case where conventional (digi
 
 Technically, IRMA attribute-based signatures are very similar to disclosure proofs. As mentioned earlier IRMA disclosures use a challenge-response protocol: the verifier generates a random number called the nonce and sends it to the Yivi app, whose response has to take this nonce into account in a precise fashion (this is achieved using the [Fiat-Shamir heuristic](https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic)). More precisely, the disclosure proof is a digital signature on the nonce that was used; if the nonce was freshly generated then the verifier can be sure that the attribute owner is actually present instead of replaying an earlier or eavesdropped disclosure proof. An IRMA attribute-based signature is the same except that not a nonce but an actual message is signed (or rather its SHA256 hash).
 
-Currently IRMA only supports creating attribute-based signatures on strings, although we plan to support other types of documents as well. They can be created using [irmajs](https://github.com/privacybydesign/irmajs) and verified using [IRMA servers](what-is-yivi.md#irma-servers) almost the same as disclosure proofs. An online demo is available on the [website of the Foundation](https://privacybydesign.foundation/demo/ondertekenen/).
+Currently IRMA only supports creating attribute-based signatures on strings, although we plan to support other types of documents as well. They can be created using [irmajs](https://github.com/privacybydesign/irmajs) and verified using [IRMA servers](what-is-yivi.md#irma-servers) almost the same as disclosure proofs. An online demo is available on the [demo website](https://demos.yivi.app/demos/signature/index.en.html).
 
 ## IRMA security properties
 
@@ -172,11 +172,3 @@ Currently IRMA only supports creating attribute-based signatures on strings, alt
   When a user discloses IRMA attributes to a verifier, the attributes are sent directly from the user to the verifier without passing through any central party.
 
 It must be mentioned that these properties only hold assuming that our software contains no bugs that break these properties. For this reason all of the IRMA software is open source so that anyone can verify its correctness. We encourage anyone to inspect the IRMA source code, and inform us of any errors that might lessen security or other aspects of the functionality.
-
-## Other resources
-
-* Website of the [Privacy by Design Foundation](http://privacybydesign.foundation/), the creators and maintainers of IRMA
-  * An [introduction to IRMA](https://privacybydesign.foundation/irma-start/) for Yivi app users
-  * A general and more complete [introduction to IRMA](https://privacybydesign.foundation/irma-explanation/)
-  * [Live IRMA demos](https://privacybydesign.foundation/demo-en/)
-* The Android and iOS [Yivi apps](https://privacybydesign.foundation/download-en/)

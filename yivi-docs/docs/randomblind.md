@@ -54,7 +54,7 @@ We explain in detail how this comes to pass in the next section.
 
 As a concrete example we use the
 "Demo Voting Card" credential type, see [this page in the attribute
-index](https://privacybydesign.foundation/attribute-index/en/irma-demo.stemmen.stempas.html#irma-demo.stemmen.stempas.election).
+index](https://attribute-index.yivi.app/en/irma-demo.stemmen.stempas.html#irma-demo.stemmen.stempas.election).
 Even though the credential contains five attributes, the issuer must only give
 four concrete values to construct the credential. For example, a requestor can
 start an issuance session to issue such a credential using the following
@@ -89,9 +89,8 @@ the protocol can be extended straightforwardly to issue multiple randomblind
 attributes.
 
 The following requires a bit of background regarding Camenisch-Lysyanskaya (CL)
-signatures.  A short summary can be found
-[here](https://privacybydesign.foundation/pdf/Idemix_overview.pdf).  A more
-extensive description of the Idemix specification can be found
+signatures.  A short summary can be found [here](/files/Idemix_overview.pdf). 
+A moreextensive description of the Idemix specification can be found
 [here](https://dominoweb.draco.res.ibm.com/reports/rz3730_revised.pdf).
 
 In the following, the variables $R, S$ and $Z$ are public parameters defined by the

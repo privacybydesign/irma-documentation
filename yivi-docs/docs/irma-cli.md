@@ -52,7 +52,7 @@ $ irma session --server http://localhost:8088 --authmethod token --key mytoken -
 
 Download an IRMA scheme and then verify its authenticity:
 ```shell
-$ irma scheme download . https://privacybydesign.foundation/schememanager/irma-demo
+$ irma scheme download . https://schemes.yivi.app/irma-demo
 $ irma scheme verify irma-demo
 Verifying scheme irma-demo
 

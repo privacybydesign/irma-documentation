@@ -10,5 +10,5 @@ Inspired by the approach of Let's Encrypt, each of the [IRMA server](what-is-yiv
 
  * If you provide your email address it will exclusively be used by the Foundation for the above purpose.
  * It will be very low volume (on average perhaps one email per several months).
- * If you have provided your email address in the past and wish to be unsubscribed, please email [the Foundation](https://privacybydesign.foundation/contact-en/).
- * See also the Foundation's [privacy policy](https://privacybydesign.foundation/privacy-policy-en/).
+ * If you have provided your email address in the past and wish to be unsubscribed, please contact Yivi's support team at [support@yivi.app](mailto:support@yivi.app).
+ * See also Yivi's [privacy policy](https://yivi.app/privacy/).
