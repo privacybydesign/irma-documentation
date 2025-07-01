@@ -1,6 +1,6 @@
 ---
 slug: 2025-juni-post-mortem
-title: Post-mortem of the June 29th and 30th 2025
+title: Post-mortem of the June 29th and 30th 2025 incident
 authors: [dibranmulder]
 tags: [yivi, ios, post-mortem]
 ---
@@ -27,7 +27,7 @@ Users that had the Yivi app installed prior to the incident were probably not af
 
 
 ## Customer impact
-The incident affected a small number of iOS users who were unable to open the Yivi app, in a same deice flow, due to the Universal Links issue. The impact was limited to users who installed the app after the domain migration and to users of who's iOS rechecked the site association file after the migration. We have no reason to believe that it affected a large number of existing Yivi iOS users. According to our `keyshare server registrations`, the number of affected users, that installed the Yivi app in the time window mentoined above, was about `78 users` including Android users, which is a small percentage of our total user base.
+The incident affected a small number of iOS users who were unable to open the Yivi app, in a same deice flow, due to the Universal Links issue. The impact was limited to users who installed the app after the domain migration and to users of who's iOS rechecked the site association file after the migration. We have no reason to believe that it affected a large number of existing Yivi iOS users. According to our `keyshare server registrations`, the number of affected users, that installed the Yivi app in the time window mentioned above, was about `78 users` including Android users, which is a small percentage of our total user base.
 
 ## Root cause and mitigation
 As part of our efforts to improve the Yivi app, we migrated the domain `irma.app` to `yivi.app`. This migration was intended to provide a more consistent branding experience for our users and to gain control over all domains originally maintained by `SIDN`. However, the migration inadvertently caused an issue with the Universal Links feature on iOS devices, which do not support forwarding for Universal Links.
