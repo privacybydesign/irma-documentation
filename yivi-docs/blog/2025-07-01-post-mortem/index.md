@@ -71,5 +71,5 @@ Affected users can decide to reinstall the Yivi app from the App Store, which wi
 
 ## Next steps
 1. **Reevaluate domain migration strategy**: We will review our domain migration strategy to ensure that future migrations do not cause similar issues with Universal Links or other features.
-2. **Review App integrations**: We will review the integration of the Yivi app with Universal Links on both iOS and Android devices to ensure that it is robust.
+2. **Review App integrations**: We will review the integration of the Yivi app with Universal Links and QR intents on both iOS and Android devices to ensure that it is robust and has fallbacks in place for any potential issues.
 
