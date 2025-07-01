@@ -1,14 +1,14 @@
 ---
 slug: 2025-juni-post-mortem
-title: Post-mortem of the June 30th 2025
+title: Post-mortem of the June 29th and 30th 2025
 authors: [dibranmulder]
 tags: [yivi, ios, post-mortem]
 ---
 
-According to our mission, we are committed to transparency and accountability. This post-mortem is part of that commitment, detailing the events surrounding the issue with the Yivi App on iOS on June 30th, 2025.
+According to our mission, we are committed to transparency and accountability. This post-mortem is part of that commitment, detailing the events surrounding the issue with the Yivi App on iOS on June 29th and 30th 2025.
 
 ## Summary of the impact
-Some iOS users of the Yivi app were unable to open their Yivi app on June 30th, 2025, due to an issue with the Universal Links feature. This issue was caused by a domain migration of `irma.app`, resulting traffic to be redirected from `irma.app` to `yivi.app`. iOS devices however do not support redirection for Universal Links, which led to the app being unable to open Universal Links. This issue was resolved by changing the `irma.app` domain back to its original server.
+Some iOS users of the Yivi app were unable to open their Yivi app on June 29th and 30th, 2025, due to an issue with the Universal Links feature. This issue was caused by a domain migration of `irma.app`, resulting traffic to be redirected from `irma.app` to `yivi.app`. iOS devices however do not support redirection for Universal Links, which led to the app being unable to open Universal Links. This issue was resolved by changing the `irma.app` domain back to its original server.
 
 Users that had the Yivi app installed prior to the incident were probably not affected, as the app was still able to open. However, users who installed the app after the domain migration were unable to open it due to the Universal Links issue.
 
@@ -27,7 +27,7 @@ Users that had the Yivi app installed prior to the incident were probably not af
 
 
 ## Customer impact
-The incident affected a small number of iOS users who were unable to open the Yivi app due to the Universal Links issue. The impact was limited to users who installed the app after the domain migration, as existing installations were not affected. According to our `keyshare server registrations`, the number of affected users was about `78 users` including Android users, which is a small percentage of our total user base.
+The incident affected a small number of iOS users who were unable to open the Yivi app, in a same deice flow, due to the Universal Links issue. The impact was limited to users who installed the app after the domain migration and to users of who's iOS rechecked the site association file after the migration. We have no reason to believe that it affected a large number of existing Yivi iOS users. According to our `keyshare server registrations`, the number of affected users, that installed the Yivi app in the time window mentoined above, was about `78 users` including Android users, which is a small percentage of our total user base.
 
 ## Root cause and mitigation
 As part of our efforts to improve the Yivi app, we migrated the domain `irma.app` to `yivi.app`. This migration was intended to provide a more consistent branding experience for our users and to gain control over all domains originally maintained by `SIDN`. However, the migration inadvertently caused an issue with the Universal Links feature on iOS devices, which do not support forwarding for Universal Links.
@@ -71,4 +71,5 @@ Affected users can decide to reinstall the Yivi app from the App Store, which wi
 
 ## Next steps
 1. **Reevaluate domain migration strategy**: We will review our domain migration strategy to ensure that future migrations do not cause similar issues with Universal Links or other features.
-2. **Standardize Universal Links**: We will standardize the use of Universal Links across all platforms to ensure a consistent user experience and to prevent issues with redirects in the future.
+2. **Review App integrations**: We will review the integration of the Yivi app with Universal Links on both iOS and Android devices to ensure that it is robust.
+
