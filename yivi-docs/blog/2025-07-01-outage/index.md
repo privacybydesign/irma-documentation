@@ -12,5 +12,5 @@ Unfortunately, this means that the Yivi app is currently unable to validate pinc
 For real-time updates from our cloud provider, you can follow Scaleway’s status page:
 👉 https://status.scaleway.com
 
-We sincerely apologize for the inconvenience and appreciate your patience while we work through this.
+We sincerely apologize for the inconvenience and appreciate your patience while we close monitor this.
 
