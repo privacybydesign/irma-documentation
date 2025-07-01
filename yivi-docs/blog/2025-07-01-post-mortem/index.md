@@ -5,7 +5,7 @@ authors: [dibranmulder]
 tags: [yivi, ios, post-mortem]
 ---
 
-According to our mission, we are committed to transparency and accountability. This post-mortem is part of that commitment, detailing the events surrounding the issue with the Yivi App on iOS on June 29th and 30th 2025.
+According to our mission, we are committed to transparency and accountability. This post-mortem is part of that commitment, detailing the events surrounding the issue with the Yivi app on iOS on June 29th and 30th 2025.
 
 ## Summary of the impact
 Some iOS users of the Yivi app were unable to open their Yivi app on June 29th and 30th, 2025, due to an issue with the Universal Links feature. This issue was caused by a domain migration of `irma.app`, resulting traffic to be redirected from `irma.app` to `yivi.app`. iOS devices however do not support redirection for Universal Links, which led to the app being unable to open Universal Links. This issue was resolved by changing the `irma.app` domain back to its original server.
