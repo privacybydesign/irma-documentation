@@ -39,8 +39,7 @@ The Universal Links feature allows the Yivi app to open directly from links in t
 
 [Link to Apple's documentation](https://developer.apple.com/documentation/xcode/supporting-associated-domains#:~:text=and%20with%20no-,redirects,-.)
 
-The reason it was not breaking Android devices is that Android does not require the associated domain file to be hosted without redirects. Android uses a different mechanism for handling Universal Links, which allows it to work even if the domain is redirected.
-Also our Yivi frontend packages code was not using the `irma.app` domain for Android devices, but instead used an intent link that does not require the associated domain file to be hosted without redirects.
+The reason it was not breaking Android devices is that Android uses a different mechanism for handling Universal Links, which doesn't rely on the `irma.app` domain, as can be seen in our Yivi frontend packages code, its  not using the `irma.app` domain for Android devices, but instead used an intent link that does not require the associated domain file to be hosted without redirects.
 
 [Yivi frontend packages code](https://github.com/privacybydesign/yivi-frontend-packages/blob/da76c44b0698563bc95c66c3552c2cb914747ec0/plugins/yivi-client/state-client.js#L296)
 ```js
