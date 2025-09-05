@@ -10,7 +10,7 @@ Our mission is to make Yivi the most privacy and user friendly wallet out there.
 ## EUDI wallet and verifiable credentials
 This summer we put tremendous effort in adopting industry standards for verifiable credentials. We are about to release our first version with OpenID4VP support, using batch issued credentials.
 
-In contrast to other wallets that have very technical user interfaces, we aim to provide a more user-friendly experience. This is especially important for scenarios where users need to obtain multiple credentials in various formats, such as in the EUDI wallet.
+In contrast to other wallets that have very technical user interfaces, we aim to provide a more user-friendly experience. This is especially important for scenarios where users need to obtain multiple credentials in various formats, such as in an EUDI wallet.
 
 ## Batch issuance
 One of the first challenges we faced is that many services do not support privacy preserving credential formats such as Idemix. Instead, they use more common formats such as SD-JWT VC and W3C VC. These formats do not have the same level of privacy protection as Idemix, which can be a problem for users who value their privacy.
@@ -26,7 +26,7 @@ Batch issuance is **not needed** when using Idemix credentials. Since Idemix is 
 :::
 
 ### Expiry vs maximum usage
-One of the main UX challenges with batch issuance is that credentials have a maximum usage limit. This means that a credential can only be used a certain number of times before it expires. This is different from our privacy first Idemix credentials, which typically have an expiry date, based on the validity of the underlying data.
+One of the main UX challenges with batch issuance is that a credential is effectively represented by a batch of identical one-time-use copies. Each copy can only be used once, and when the batch is exhausted, the credential as a whole is considered expired, even if the underlying data itself would still be valid. This is very different from our privacy-first Idemix credentials, which expire based on the actual validity period of the underlying data rather than on the depletion of a usage batch.
 
 Having both an expiry date and a maximum usage limit can be confusing for users. For example, if a user has a credential that expires in one year but can only be used five times, they may not understand why they cannot use it after five uses, even though it is still valid. The concept of maximum usage is something a user should not be bothered with, but in the current state of the art, it is unavoidable.
 
