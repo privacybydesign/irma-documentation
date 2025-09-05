@@ -13,7 +13,7 @@ This summer we put tremendous effort in adopting industry standards for verifiab
 In contrast to other wallets that have very technical user interfaces, we aim to provide a more user-friendly experience. This is especially important for scenarios where users need to obtain multiple credentials in various formats, such as in the EUDI wallet.
 
 ## Batch issuance
-One of the first challenges we faced is that many services do not support privacy preserving credential formats such as Idemix. Instead, they use more common formats such as SD-JWTs or W3C VCs. These formats do not have the same level of privacy protection as Idemix, which can be a problem for users who value their privacy.
+One of the first challenges we faced is that many services do not support privacy preserving credential formats such as Idemix. Instead, they use more common formats such as SD-JWT VC and W3C VC. These formats do not have the same level of privacy protection as Idemix, which can be a problem for users who value their privacy.
 
 Batch issuance is a stopgap to mitigate the lack of privacy features of ordinary credential formats. Usage of these credentials typically leaves a cryptographic trail that can be used to track users across different services. 
 
@@ -47,19 +47,15 @@ Without careful UX design, users could easily run into situations where:
 
 This can quickly lead to frustration, especially in scenarios where citizens are expected to interact with multiple services from different providers.
 
-Our approach in Yivi is to **embrace crypto agility**:  
-- Whenever possible, we will issue credentials in **all supported formats** at once.  
-- The wallet will abstract away the complexity, presenting users with a single, unified credential view.  
+Our approach in Yivi is to **embrace crypto agility**:
+- Whenever possible, we will issue credentials in **all supported formats** at once.
+- The wallet will abstract away, as much complexity as possible, presenting users with a single, unified credential view.  
 - Behind the scenes, Yivi ensures that the correct format is presented to the relying party, without requiring user intervention.  
 
-To further support clarity, the wallet will offer **visual indicators** so that advanced users can see which credential type is being used (Idemix, SD-JWT, W3C VC, or mdoc). However, for most users, the complexity will remain hidden, allowing them to simply “use their credential” without worrying about formats or cryptography.
+To further support clarity, we are thinking about adding visual indicators in the wallet so that advanced users can see which credential type is being used (Idemix, SD-JWT, W3C VC, or mdoc). However, for most users, the complexity will remain hidden, allowing them to simply “use their credential” without worrying about formats or cryptography.
 
 :::warning
-We urge the community to adopt the same approach, to reduce the complexity for users.
-:::
-
-:::tip
-This design is not final and may change in the future. We welcome feedback and suggestions from the community.
+This design is not final and we will probably change it in the future. We welcome feedback and suggestions from the community.
 :::
 
 Below an image with visual indicators, showing the privacy first Idemix credential, SD-JWTs with a maximum usage, and the ISO mdoc credentials with a maximum usage.
@@ -80,14 +76,19 @@ Most credential ecosystems rely on schemas: predefined structures that describe 
 For newer credential formats like SD-JWT Verifiable Credentials and ISO mdoc, the situation is less straightforward.
 
 #### SD-JWT and ISO mdoc: structure vs presentation
-SD-JWT VCs are technically very flexible, since each disclosure can be selective and minimal. From a UX perspective, however, the wallet has little guidance on how to present each claim. Without schema-level hints, an attribute may appear as plain text, even if it would be more meaningful as a date, an image (such as a passport photo), or a simple yes/no switch. There is also no standard mechanism for multi-lingual labels or hints, making it difficult for wallets to provide localized experiences. Finally, the format lacks the concept of a credential description page prior to issuance, leaving users without a clear preview of what they are about to store.
+SD-JWT VCs are technically very flexible, since each disclosure can be selective and minimal. From a UX perspective, however, the wallet has little guidance on how to present each claim. Without schema-level hints, an attribute may appear as plain text, even if it would be more meaningful as a date, an image (such as a passport photo), or a simple yes/no switch.
 
-ISO mdoc takes a different approach, offering more structure with a well-defined set of namespaces and data element types. Each element includes typing information (such as date, boolean, or portrait), which gives wallets stronger guidance for rendering. Yet the format only has limited support for multi-linguality: ISO defines fixed data elements but does not provide rich, multi-language labels or explanatory hints as Yivi does. Moreover, issuance flows are tightly coupled to the relying party’s process, leaving no standardized way for a wallet to present a user-friendly preview before issuance.
+There is work in the SD-JWT VC spec on display metadata, which could provide wallets with presentation hints similar to Yivi’s trust schema. However, this is not widely implemented yet—in practice, most deployments (including ours) still rely on schemas to drive UX. Another relevant source of metadata is the OpenID4VCI metadata published in the issuer’s `.well-known` endpoint (e.g. `/.well-known/jwt-vc-issuer`), which can inform wallets about issuance details and supported credential types.
+
+A further challenge with SD-JWT is that any embedded images or larger data elements (such as logos, icons, or photos) are repeated for every credential instance. In batch issuance scenarios, this multiplies both the storage footprint and the request size, which can quickly become inefficient.
+
+ISO mdoc takes a different approach, offering more structure with a well-defined set of namespaces and data element types. Each element includes typing information (such as `date`, `boolean`, or `portrait`), which gives wallets stronger guidance for rendering. Yet the format only has limited support for multi-linguality: ISO defines fixed data elements but does not provide rich, multi-language labels or explanatory hints as Yivi does. Moreover, issuance flows are tightly coupled to the relying party’s process, leaving no standardized way for a wallet to present a user-friendly preview before issuance.
 
 #### Comparing UX capabilities
 By contrast, the Yivi trust schema goes well beyond simple structure. It enriches attributes with labels, hints, icons, and multi-language support, ensuring they are always presented in the user’s preferred language. Yivi also includes a credential description page before issuance, so users can see what will be added to their wallet with clear explanations and consent. On top of that, it offers a credential store: a curated list of credentials that users can initiate issuance for directly from the wallet, rather than only reacting to a service request.
 
-In short, SD-JWT provides maximum protocol flexibility but no UX guidance, ISO mdoc offers strong typing but weak user-facing context, while Yivi’s trust schema delivers a full-stack UX solution—covering structure, presentation, language, issuance previews, and proactive credential discovery.
+In short, SD-JWT provides maximum protocol flexibility but limited UX guidance (with emerging but underused metadata extensions), ISO mdoc offers strong typing but weak user-facing context, while Yivi’s trust schema delivers a full-stack UX solution—covering structure, presentation, language, issuance previews, and proactive credential discovery.
+
 ### The deeper issue: missing guided flows
 
 A second, more profound issue emerges when a service requests a credential that is **not part of any defined schema**. In such cases:  
