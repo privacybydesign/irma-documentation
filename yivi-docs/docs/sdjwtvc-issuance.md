@@ -66,8 +66,8 @@ You can pick one of three methods to set the paths to these directories:
   {
     // other config stuff...
     "sdjwtvc": {
-      "issuer_certificates_path": "<path_to_certs>",
-      "issuer_private_keys_path": "<path_to_keys>"
+      "issuer_certificates_dir": "<path_to_certs>",
+      "issuer_private_keys_dir": "<path_to_keys>"
     }
   }
   ```
@@ -81,8 +81,8 @@ You can pick one of three methods to set the paths to these directories:
   You can also pass the paths to the IRMA server directly when invoking it by using command line arguments:
 
 ```bash
-irma server --sdjwtvc-issuer-certificates-path="<path_to_certs>" \
-            --sdjwtvc-issuer-private-keys-path="<path_to_keys>"
+irma server --sdjwtvc-issuer-certificates-dir="<path_to_certs>" \
+            --sdjwtvc-issuer-private-keys-dir="<path_to_keys>"
 ```
 </details>
 
@@ -93,8 +93,8 @@ irma server --sdjwtvc-issuer-certificates-path="<path_to_certs>" \
   The last option is to define then via environment variables. The IRMA server will pick up on these automatically:
 
 ```bash
-export IRMASERVER_SDJWTVC_ISSUER_CERTIFICATES_PATH="<path_to_certs>"
-export IRMASERVER_SDJWTVC_ISSUER_PRIVATE_KEYS_PATH="<path_to_keys>"
+export IRMASERVER_SDJWTVC_ISSUER_CERTIFICATES_DIR="<path_to_certs>"
+export IRMASERVER_SDJWTVC_ISSUER_PRIVATE_KEYS_DIR="<path_to_keys>"
 irma server
 ```
 </details>
