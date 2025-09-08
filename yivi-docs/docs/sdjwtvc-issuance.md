@@ -1,4 +1,7 @@
-# Issuing SD-JWT VC over IRMA
+---
+title: Issuing SD-JWT VC over IRMA
+---
+
 During the transition to become a Crypto Agile EUDI compliant wallet,
 it was decided that Yivi would first implemented the OpenID4VP protocol the SD-JWT VC credential format.
 
@@ -7,7 +10,9 @@ It was therefore decided to extend the IRMA protocol to allow it to issue SD-JWT
 
 This feature is opt-in and requires an issuer certificate.
 
-NOTE: SD-JWT VC and OpenID4VP support are currently experimental. We don't recommend depending on it for now.
+:::warning
+SD-JWT VC and OpenID4VP support in Yivi are currently experimental. We don't recommend depending on it for now.
+:::
 
 ## Issuer certificates
 You can contact the Yivi team via [support@yivi.app](mailto:support@yivi.app) to obtain a certificate.
@@ -16,9 +21,9 @@ In order to get a certificate you also need to be a regular Idemix issuer presen
 
 ## Enabling SD-JWT VC issuance
 Once an issuer certificate is obtained, the changes needed to support SD-JWT VC issuance in addition to Idemix is quite small.
-- Update your IRMA server
-- Update the IRMA server configuration
-- Update the issuance request
+1) Update your IRMA server
+2) Update the IRMA server configuration
+3) Update the issuance request
 
 ### Step 1: Update your IRMA server
 First and foremost you should update your IRMA server to version `0.19` or higher.
@@ -32,7 +37,10 @@ Now that you have a SD-JWT VC compatible IRMA server, you need to add two settin
 Since both file types use the `.pem` extension and we want to allow setting different file permissions for keys vs certificates,
 these go in different directories.
 
-**The filenames should correspond with the issuer identifier as defined in the scheme.**
+:::note 
+The filenames should correspond with the issuer identifier as defined in the scheme.
+:::
+
 This would result in a directory structure that looks something like this:
 ```
 ├── certs
@@ -45,38 +53,47 @@ This would result in a directory structure that looks something like this:
 
 You can pick one of three methods to set the paths to these directories:
 
-#### Using `config.json`
-```json
-{
-  "requestors": {
-    "sms_issuer": {
-      "auth_method": "publickey",
-      "key_file": "/mnt/requestor-pubkeys/pub.pem",
-      "issue_perms": [
-        "pbdf-staging.sidn-pbdf.mobilenumber"
-      ]
+<details>
+  <summary>
+    Option 1: Using `config.json`
+  </summary>
+  Add a couple of fields to the config json file passed into the IRMA server via the `--config` flag/argument:
+  ```json
+  {
+    // other config stuff...
+    "sdjwtvc": {
+      "issuer_certificates_path": "<path_to_certs>",
+      "issuer_private_keys_path": "<path_to_keys>"
     }
-  },
-  "sdjwtvc": {
-    "issuer_certificates_path": "<path_to_certs>",
-    "issuer_private_keys_path": "<path_to_keys>"
   }
-}
+  ```
+</details>
 
-```
 
-#### Using command line parameters/arguments
+<details> 
+  <summary>
+    Option 2: Using command line parameters/arguments
+  </summary>
+  You can also pass the paths to the IRMA server directly when invoking it by using command line arguments:
+
 ```bash
 irma server --sdjwtvc-issuer-certificates-path="<path_to_certs>" \
             --sdjwtvc-issuer-private-keys-path="<path_to_keys>"
 ```
+</details>
 
-#### Using environment variables
+<details>
+  <summary>
+    Option 3: Using environment variables
+  </summary>
+  The last option is to define then via environment variables. The IRMA server will pick up on these automatically:
+
 ```bash
 export IRMASERVER_SDJWTVC_ISSUER_CERTIFICATES_PATH="<path_to_certs>"
 export IRMASERVER_SDJWTVC_ISSUER_PRIVATE_KEYS_PATH="<path_to_keys>"
 irma server
 ```
+</details>
 
 ### Step 3: Update issuance session request
 In order to also issue SD-JWT VCs, they need to be explicitly requested from the IRMA server in the issuance request.
@@ -139,7 +156,7 @@ issuanceRequest := irma.NewIssuanceRequest([]*irma.CredentialRequest{
       "email": "test@example.com",
       "domain": "example.com"
     },
-    SdJwtBatchSize: irma.DefaultSdJwtIssueAmount, // optionally replace by other value
+    SdJwtBatchSize: irma.DefaultSdJwtIssueAmount, // optionally replace by another value
   },
 })
 ```
