@@ -2,6 +2,10 @@
 title: Issuing SD-JWT VC over IRMA
 ---
 
+:::info
+SD-JWT VC issuance is only supported by Yivi app version `7.9.0` and later and `irmago` version `0.19` and later.
+:::
+
 During the transition to become a Crypto Agile EUDI compliant wallet,
 it was decided that Yivi would first implemented the OpenID4VP protocol the SD-JWT VC credential format.
 
@@ -20,7 +24,7 @@ In order to get a certificate you also need to be a regular Idemix issuer presen
 
 
 ## Enabling SD-JWT VC issuance
-Once an issuer certificate is obtained, the changes needed to support SD-JWT VC issuance in addition to Idemix is quite small.
+Once an issuer certificate is obtained, the changes needed to support SD-JWT VC issuance in addition to Idemix are quite small.
 1) Update your IRMA server
 2) Update the IRMA server configuration
 3) Update the issuance request
