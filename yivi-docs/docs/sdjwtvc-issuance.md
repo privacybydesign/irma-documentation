@@ -18,21 +18,26 @@ This feature is opt-in and requires an issuer certificate.
 SD-JWT VC and OpenID4VP support in Yivi are currently experimental. We don't recommend depending on it for now.
 :::
 
-## Issuer certificates
+
+## Enabling SD-JWT VC issuance
+1) Obtain issuer certificate
+2) Update IRMA server
+3) Update IRMA server configuration
+4) Update issuance request
+
+### Step 1: Obtain issuer certificate
+In order to issue an SD-JWT VC credential that the Yivi app accepts, you need to be on our Trust List.
+This means you need to obtain an issuer certificate.
+This certificate contains rights about what credentials and attributes you're allowed to issue,
+as well as some metadata about your company.
 You can contact the Yivi team via [support@yivi.app](mailto:support@yivi.app) to obtain a certificate.
 In order to get a certificate you also need to be a regular Idemix issuer present in one of our schemes.
 
-
-## Enabling SD-JWT VC issuance
+### Step 2: Update IRMA server
 Once an issuer certificate is obtained, the changes needed to support SD-JWT VC issuance in addition to Idemix are quite small.
-1) Update your IRMA server
-2) Update the IRMA server configuration
-3) Update the issuance request
-
-### Step 1: Update your IRMA server
 First and foremost you should update your IRMA server to version `0.19` or higher.
 
-### Step 2: Update IRMA server configuration
+### Step 3: Update IRMA server configuration
 Now that you have a SD-JWT VC compatible IRMA server, you need to add two settings to the configuration.
 
 - A path to the SD-JWT VC issuer certificates directory
@@ -86,6 +91,7 @@ irma server --sdjwtvc-issuer-certificates-dir="<path_to_certs>" \
 ```
 </details>
 
+
 <details>
   <summary>
     Option 3: Using environment variables
@@ -99,7 +105,8 @@ irma server
 ```
 </details>
 
-### Step 3: Update issuance session request
+
+### Step 4: Update issuance session request
 In order to also issue SD-JWT VCs, they need to be explicitly requested from the IRMA server in the issuance request.
 A normal issuance request requesting two credentials would look something like this:
 ```json
@@ -151,6 +158,13 @@ field with a value representing the batch size for the given credential:
 
 This will issue `irma-demo.sidn-pbdf.mobilenumber` in a batch of 50 and `irma-demo.sidn-pbdf.email` in a batch of 100 instances.
 
+:::info
+SD-JWT VCs are issued in batches because the credential format doesn't provide the same privacy properties as Yivi's Idemix credentials.
+SD-JWTs are trackable by default because hashes and holder binding keys stay the same for each time it's disclosed.
+In order to maintain multi-show unlinkability we have to show a different instance of the credential each time.
+This also means that after showing all instances in the batch the credential needs to be obtained again.
+:::
+
 If you're using `irmago` to create an issuance request for you, we recommend doing something like this:
 ```go
 issuanceRequest := irma.NewIssuanceRequest([]*irma.CredentialRequest{
@@ -164,3 +178,6 @@ issuanceRequest := irma.NewIssuanceRequest([]*irma.CredentialRequest{
   },
 })
 ```
+
+Credentials in the issuance request that don't specify the `sdJwtBatchSize` field will not get an SD-JWT issued.
+Older Yivi apps and IRMA servers will ignore the whole SD-JWT issuance system and still work with Idemix only.
