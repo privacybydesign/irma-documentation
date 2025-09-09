@@ -9,7 +9,7 @@ SD-JWT VC issuance is only supported by Yivi app version `7.9.0` and later and `
 ## Why it exists
 
 During the transition to become a Crypto Agile EUDI compliant wallet,
-it was decided that Yivi would first implemented the OpenID4VP protocol the SD-JWT VC credential format.
+we decided that the Yivi app would first implement the OpenID4VP protocol with the SD-JWT VC credential format.
 
 Since OpenID4VP is only meant for disclosures, there would be no way to get SD-JWT VCs into the Yivi app.
 It was therefore decided to extend the IRMA protocol to allow it to issue SD-JWT VC credentials together with our existing Idemix ones.
