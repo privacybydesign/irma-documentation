@@ -22,6 +22,9 @@ SD-JWT VC and OpenID4VP support in Yivi are currently experimental. We don't rec
 
 
 ## Enabling SD-JWT VC issuance
+If you're an existing Yivi issuer the process of enabling SD-JWT VC issuance is pretty straight forward.
+It consists of four steps:
+
 1) Obtain issuer certificate
 2) Update IRMA server
 3) Update IRMA server configuration
