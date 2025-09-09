@@ -112,34 +112,36 @@ For reference, it's equivalent to the following condiscon:
 
 ```json
 {
-    "credentials": [
-        {
-            "id": "email-id",
-            "format": "dc+sd-jwt",
-            "meta": {
-                "vct_values": ["pbdf.sidn-pbdf.email"]
+    "dcql_query": {
+        "credentials": [
+            {
+                "id": "email-id",
+                "format": "dc+sd-jwt",
+                "meta": {
+                    "vct_values": ["pbdf.sidn-pbdf.email"]
+                },
+                "claims": [
+                    { "id": "em", "path": ["email"] },
+                    { "id": "do", "path": ["domain"] }
+                ]
             },
-            "claims": [
-                { "id": "em", "path": ["email"] },
-                { "id": "do", "path": ["domain"] }
-            ]
-        },
-        {
-            "id": "phone-id",
-            "format": "dc+sd-jwt",
-            "meta": {
-                "vct_values": ["pbdf.sidn-pbdf.mobilenumber"]
-            },
-            "claims": [
-                { "id": "mn", "path": ["mobilenumber"] }
-            ]
-        }
-    ],
-    "credential_sets": [
-        {
-            "options": [["email-id"], ["phone-id"]]
-        }
-    ]
+            {
+                "id": "phone-id",
+                "format": "dc+sd-jwt",
+                "meta": {
+                    "vct_values": ["pbdf.sidn-pbdf.mobilenumber"]
+                },
+                "claims": [
+                    { "id": "mn", "path": ["mobilenumber"] }
+                ]
+            }
+        ],
+        "credential_sets": [
+            {
+                "options": [["email-id"], ["phone-id"]]
+            }
+        ]
+    }
 }
 ```
 This query requests either the email credential or the mobilenumber credential.
