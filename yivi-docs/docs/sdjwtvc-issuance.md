@@ -12,7 +12,7 @@ During the transition to become a Crypto Agile EUDI compliant wallet,
 we decided that the Yivi app would first implement the OpenID4VP protocol with the SD-JWT VC credential format.
 
 Since OpenID4VP is only meant for disclosures, there would be no way to get SD-JWT VCs into the Yivi app.
-It was therefore decided to extend the IRMA protocol to allow it to issue SD-JWT VC credentials together with our existing Idemix ones.
+We therefore decided to extend the IRMA protocol to allow it to issue SD-JWT VC credentials together with our existing Idemix ones.
 
 Enabling support is opt-in for existing Yivi issuers, and will be explained in detail in this article.
 
