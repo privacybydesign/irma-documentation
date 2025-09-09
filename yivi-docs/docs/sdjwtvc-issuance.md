@@ -6,13 +6,15 @@ title: Issuing SD-JWT VC over IRMA
 SD-JWT VC issuance is only supported by Yivi app version `7.9.0` and later and `irmago` version `0.19` and later.
 :::
 
+## Why it exists
+
 During the transition to become a Crypto Agile EUDI compliant wallet,
 it was decided that Yivi would first implemented the OpenID4VP protocol the SD-JWT VC credential format.
 
 Since OpenID4VP is only meant for disclosures, there would be no way to get SD-JWT VCs into the Yivi app.
 It was therefore decided to extend the IRMA protocol to allow it to issue SD-JWT VC credentials together with our existing Idemix ones.
 
-This feature is opt-in and requires an issuer certificate.
+Enabling support is opt-in for existing Yivi issuers, and will be explained in detail in this article.
 
 :::warning
 SD-JWT VC and OpenID4VP support in Yivi are currently experimental. We don't recommend depending on it for now.
@@ -162,7 +164,7 @@ This will issue `irma-demo.sidn-pbdf.mobilenumber` in a batch of 50 and `irma-de
 SD-JWT VCs are issued in batches because the credential format doesn't provide the same privacy properties as Yivi's Idemix credentials.
 SD-JWTs are trackable by default because hashes and holder binding keys stay the same for each time it's disclosed.
 In order to maintain multi-show unlinkability we have to show a different instance of the credential each time.
-This also means that after showing all instances in the batch the credential needs to be obtained again.
+This also means that after showing all instances in the batch the credential needs to be reobtained.
 :::
 
 If you're using `irmago` to create an issuance request for you, we recommend doing something like this:
