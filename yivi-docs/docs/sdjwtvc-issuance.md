@@ -14,7 +14,7 @@ we decided that the Yivi app would first implement the OpenID4VP protocol with t
 Since OpenID4VP is only meant for disclosures, there would be no way to get SD-JWT VCs into the Yivi app.
 We therefore decided to extend the IRMA protocol to allow it to issue SD-JWT VC credentials together with our existing Idemix ones.
 
-Enabling support is opt-in for existing Yivi issuers, and will be explained in detail in this article.
+Enabling SD-JWT VC support is opt-in for existing Yivi issuers, and will be explained in detail in this article.
 
 :::warning
 SD-JWT VC and OpenID4VP support in Yivi are currently experimental. We don't recommend depending on it for now.
@@ -29,7 +29,7 @@ SD-JWT VC and OpenID4VP support in Yivi are currently experimental. We don't rec
 
 ### Step 1: Obtain issuer certificate
 In order to issue an SD-JWT VC credential that the Yivi app accepts, you need to be on our Trust List.
-This means you need to obtain an issuer certificate.
+This means you need to obtain an issuer certificate. 
 This certificate contains rights about what credentials and attributes you're allowed to issue,
 as well as some metadata about your company.
 You can contact the Yivi team via [support@yivi.app](mailto:support@yivi.app) to obtain a certificate.
@@ -98,7 +98,7 @@ irma server --sdjwtvc-issuer-certificates-dir="<path_to_certs>" \
   <summary>
     Option 3: Using environment variables
   </summary>
-  The last option is to define then via environment variables. The IRMA server will pick up on these automatically:
+  The last option is to define them via environment variables. The IRMA server will pick up on these automatically:
 
 ```bash
 export IRMASERVER_SDJWTVC_ISSUER_CERTIFICATES_DIR="<path_to_certs>"
@@ -135,6 +135,8 @@ A normal issuance request requesting two credentials would look something like t
 To also issue the SD-JWT VC version alongside the Idemix version, just add the `sdJwtBatchSize` 
 field with a value representing the batch size for the given credential:
 
+
+
 ```json
 {
   "@context": "https://irma.app/ld/request/issuance/v2",
@@ -166,6 +168,7 @@ SD-JWTs are trackable by default because hashes and holder binding keys stay the
 In order to maintain multi-show unlinkability we have to show a different instance of the credential each time.
 This also means that after showing all instances in the batch the credential needs to be reobtained.
 :::
+
 
 If you're using `irmago` to create an issuance request for you, we recommend doing something like this:
 ```go
