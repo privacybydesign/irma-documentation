@@ -1,35 +1,100 @@
 ---
-slug: 2025-ux-crypto-agile-wallet
-title: "Yivi adds Passport credentials - call for testing and feedback"
+slug: 2025-passport-callout
+title: "BETA release Yivi Passport credentials - call for testing and feedback"
 authors: [dibranmulder]
 tags: [yivi, passport]
 ---
 
-We are excited to announce that Yivi now supports Passport credentials! This new feature allows users to store and manage their digital passports securely within the Yivi wallet, enhancing convenience and accessibility for travelers. With this new feature, Yivi broadens its potential userbase to a truly international audience.
+We are excited to announce the **BETA release of Yivi Passport credentials!**  
+This new feature allows users to securely store and manage their digital passports within the Yivi wallet, enhancing convenience and accessibility for travelers. With this release, Yivi expands its reach to a truly international audience.
+
+:::warning
+Passport credentials are currently in **BETA**, this means its only available upon request. We have tested thoroughly with Dutch passports, but have not yet conducted extensive testing with other nationalities.
+:::
+
+## Why Passport credentials?
+Passport credentials fill a critical gap on the road to EUDI wallets. While PID providers will take time to become available, people need a trusted way to prove their identity today. Yivi already offers high-quality personal data for Dutch citizens, but we also want to support an international audience.  
+
+Passports are the most widely accepted form of identification worldwide, making them a natural bridge. They also enable powerful, privacy-preserving use cases—such as open-source, age-verification flows—where only the minimum necessary information is shared.
 
 ## How does it work?
-With the support of the [NLnet Foundation](https://nlnet.nl/), we have integrated support for Machine Readable Travel Documents (MRTDs) into Yivi. This means that users can now add their digital passports to the Yivi wallet by scanning the Machine Readable Zone (MRZ) of their physical passports, followed by reading the NFC chip of the passport with their phone. The passport data is then validated (Passive Authentication) against the Dutch and German government-issued Masterlists of trusted passport issuers to ensure authenticity. On top of that we also have implemented Active Authentication measures to further enhance security.
+With support from the [NLnet Foundation](https://nlnet.nl/), we have integrated Machine Readable Travel Document (MRTD) support into Yivi.  
 
-## Whats available now?
-The following `open source` components are now available for testing and feedback:
+Users can now add their digital passports to the Yivi wallet by:
+1. Scanning the Machine Readable Zone (MRZ) of their physical passport.  
+2. Reading the NFC chip of the passport with their phone.  
 
-- An example App for scanning and reading passports
-- A Beta Yivi wallet version with support for storing and managing Passport credentials
-- An API for validating Passport credentials against government-issued Masterlists
-- OpenID4VP integration with Yivi for using Passport credentials in verifiable presentations, including a demo.
+The passport data is then validated through **Passive Authentication** against Dutch and German government-issued Masterlists of trusted passport issuers. In addition, **Active Authentication** is implemented to further strengthen security.
 
-The version we release now can be used both with SD-JWT and Idemix credentials, both over the OpenID4VP- and the IRMA-protocol. In the near future we will also work on supporting OpenID4VCI, so that the passport credentials can be issued to a wider range of applications. For now the SD-JWT and Idemix support relies on our IRMA protocol integration. 
+## What’s available now?
+The following **open source** components are ready for testing and feedback:
 
-We strongly recommend using the Idemix version of the passport credentials, as it offers enhanced privacy features. Especially in the context of Age Verification, the Idemix version ensures that only the necessary information is shared, exposure is unlinkable and minimizes tracability.
+- [Example app for scanning and reading passports](https://github.com/privacybydesign/vcmrtd)  
+- A **Beta Yivi wallet version** with support for storing and managing Passport credentials (available on request)  
+- [API for validating Passport credentials against government-issued Masterlists](https://github.com/privacybydesign/go-passport-issuer)  
+- [OpenID4VP integration with Yivi for using Passport credentials in verifiable presentations, including a demo](https://verifier.openid4vc.staging.yivi.app/)  
+
+This release supports both **SD-JWT** and **Idemix credentials**, available via the **OpenID4VP** and the **IRMA protocol**. Support for **OpenID4VCI** is planned, enabling passport credentials to be issued to a wider range of applications.  
+
+We **strongly recommend** using the Idemix version of the passport credentials, as it offers enhanced privacy. Especially for **Age Verification**, Idemix ensures that only the required information is shared, data exposure is unlinkable, and traceability is minimized.
+
+## Screenshots
+<div class="center-container">
+    <img src="/img/passport/image-5.png" class="ss" alt="Yivi app UX design for batch issuance" />
+    <img src="/img/passport/image-4.png" class="ss" alt="Yivi app UX design for scanning MRZ" />
+    <img src="/img/passport/image-3.png" class="ss" alt="Yivi app UX design for NFC reading" />
+</div>
+
+<div class="center-container">
+    <img src="/img/passport/image-2.png" class="ss" alt="Yivi app UX design for credential overview" />
+    <img src="/img/passport/image-1.png" class="ss" alt="Yivi app UX design for age verification flow" />
+    <img src="/img/passport/image.png" class="ss" alt="Yivi app UX design for presentation sharing" />
+</div>
+
+## Example DCQL query for requesting Passport credentials
+To demonstrate how to request a Passport credential using OpenID4VP, we have set up a demo verifier at https://verifier.openid4vc.staging.yivi.app/, below is a sample DCQL query that can be used to request a Passport credential.
+```json
+{
+    "type": "vp_token",
+    "dcql_query": {
+        "credentials": [
+            {
+                "id": "mobilenumber",
+                "format": "dc+sd-jwt",
+                "meta": {
+                    "vct_values": [
+                        "pbdf-staging.pbdf.passport"
+                    ]
+                },
+                "claims": [
+                    {
+                        "path": [
+                            "isEuCitizen"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "nonce": "nonce",
+    "jar_mode": "by_reference",
+    "request_uri_method": "post",
+    "issuer_chain": "-----BEGIN CERTIFICATE-----\nMIICbTCCAhSgAwIBAgIUX8STjkv3TRF5UBstXlp4ILHy2h0wCgYIKoZIzj0EAwQw\nRjELMAkGA1UEBhMCTkwxDTALBgNVBAoMBFlpdmkxKDAmBgNVBAMMH1lpdmkgU3Rh\nZ2luZyBSZXF1ZXN0b3JzIFJvb3QgQ0EwHhcNMjUwODEyMTUwODA1WhcNNDAwODA4\nMTUwODA0WjBMMQswCQYDVQQGEwJOTDENMAsGA1UECgwEWWl2aTEuMCwGA1UEAwwl\nWWl2aSBTdGFnaW5nIEF0dGVzdGF0aW9uIFByb3ZpZGVycyBDQTBZMBMGByqGSM49\nAgEGCCqGSM49AwEHA0IABMDTwj6APykJnBdr0sCO8LpkULpbXFOBWV47hKKsJHsa\nCVMarjLCYU3CV57UdklHSlMrtm7vfoDpYn4BvUv00UqjgdkwgdYwEgYDVR0TAQH/\nBAgwBgEB/wIBADAfBgNVHSMEGDAWgBRjtHvVs5rhDnC0L2AUi+7ncyXe1jBwBgNV\nHR8EaTBnMGWgY6Bhhl9odHRwczovL2NhLnN0YWdpbmcueWl2aS5hcHAvZWpiY2Ev\ncHVibGljd2ViL2NybHMvc2VhcmNoLmNnaT9pSGFzaD1rRkNPdDhOTGhKOGcwV3FN\nQW5sJTJCdm9OMlJ1WTAdBgNVHQ4EFgQUEjcBLRMmQGBJO0h04IL5Jwha1rEwDgYD\nVR0PAQH/BAQDAgGGMAoGCCqGSM49BAMEA0cAMEQCIDEaWIs4uSm8KVQe+fy0EndE\nTaj1ayt6dUgKQY/xZBO3AiAPYGwRlZMzbeCTFQ2ORLJiSowRtXzbmXpNDSyvtn7e\nDw==\n-----END CERTIFICATE-----"
+}
+```
 
 ## Open source development
-We believe in the power of open source and community collaboration. The development of the Passport credentials feature is no exception. We invite developers, researchers, and enthusiasts to contribute to the Yivi project on GitHub. Your feedback, bug reports, and feature requests are invaluable in helping us improve the platform.
+We believe in the power of open source and community collaboration. The development of Passport credentials is no exception.  
+
+We invite developers, researchers, and enthusiasts to contribute to the Yivi project on GitHub. Your feedback, bug reports, and feature requests are invaluable in helping us improve the platform.
 
 Join us in making Yivi the best it can be!
 
 ## Call for testing and feedback
-We are currently in the Beta phase of this new feature and are actively seeking feedback from users and developers. If you have a digital passport and are interested in testing the new Passport credentials feature in Yivi, please reach out to us. Your insights and experiences will help us refine and enhance the functionality.
+We are currently in the **BETA phase** of this feature and are actively seeking feedback from users and developers.  
 
-[Slack](https://irmacard.slack.com/)
-[Github](https://github.com/privacybydesign)
-[Email](mailto:support@yivi.app)
+If you have a digital passport and are interested in testing the new Passport credentials in Yivi, please reach out to us. Your insights will help refine and improve the functionality.
+
+- [Slack](https://irmacard.slack.com/)  
+- [GitHub](https://github.com/privacybydesign)  
+- [Email](mailto:support@yivi.app)
