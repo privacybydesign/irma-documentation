@@ -34,7 +34,7 @@ The following **open source** components are ready for testing and feedback:
 - [API for validating Passport credentials against government-issued Masterlists](https://github.com/privacybydesign/go-passport-issuer)  
 - [OpenID4VP integration with Yivi for using Passport credentials in verifiable presentations, including a demo](https://verifier.openid4vc.staging.yivi.app/)  
 
-This release supports both **SD-JWT** and **Idemix credentials**, available via the **OpenID4VP** and the **IRMA protocol**. Support for **OpenID4VCI** is planned, enabling passport credentials to be issued to a wider range of applications.  
+This release supports both **SD-JWT VC** and **Idemix credentials**, available via the **OpenID4VP** and the **IRMA protocol**. Support for **OpenID4VCI** is planned, enabling passport credentials to be issued to a wider range of applications.  
 
 We **strongly recommend** using the Idemix version of the passport credentials, as it offers enhanced privacy. Especially for **Age Verification**, Idemix ensures that only the required information is shared, data exposure is unlinkable, and traceability is minimized.
 
@@ -52,7 +52,7 @@ We **strongly recommend** using the Idemix version of the passport credentials, 
 </div>
 
 ## Example DCQL query for requesting Passport credentials
-To demonstrate how to request a Passport credential using OpenID4VP, we have set up a demo verifier at https://verifier.openid4vc.staging.yivi.app/, below is a sample DCQL query that can be used to request a Passport credential.
+To demonstrate how to request a Passport credential using OpenID4VP, we have set up a demo verifier at https://verifier.openid4vc.staging.yivi.app/ using the [Verifier Endpoint of the European Comission](https://github.com/eu-digital-identity-wallet/eudi-srv-web-verifier-endpoint-23220-4-kt) to showcase interoperability, below is a sample DCQL query that can be used to request a Passport credential.
 ```json
 {
     "type": "vp_token",
@@ -68,6 +68,7 @@ To demonstrate how to request a Passport credential using OpenID4VP, we have set
                 },
                 "claims": [
                     {
+                        "id": "eu",
                         "path": [
                             "isEuCitizen"
                         ]
