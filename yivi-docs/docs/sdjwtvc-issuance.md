@@ -3,7 +3,7 @@ title: Issuing SD-JWT VC over IRMA
 ---
 
 :::info
-SD-JWT VC issuance is only supported by Yivi app version `7.9.0` and later and `irmago` version `0.19` and later.
+SD-JWT VC issuance is only supported by Yivi app version `7.10.0` and later and `irmago` version `0.19` and later.
 :::
 
 ## Why it exists
