@@ -6,7 +6,7 @@ Yivi started its transition to become a Crypto Agile EUDI compliant wallet.
 We decided that the first step of this transition would be to
 add support for the OpenID4VP protocol and the SD-JWT VC credential format.
 
-Starting with `irmago` version `0.19` and version `7.9.0` of the Yivi app it is
+Starting with `irmago` version `0.19` and version `7.10.0` of the Yivi app it is
 possible to issue SD-JWT VCs together with Idemix over the IRMA protocol and disclose SD-JWT VCs over OpenID4VP.
 
 
