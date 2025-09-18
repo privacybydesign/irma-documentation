@@ -14,7 +14,7 @@ Trusted Verifier is a way for relying parties to be verified and trusted by Yivi
 
 ## Why Trusted Verifier?
 The introduction of Trusted Verifier is a significant milestone in our journey towards creating a secure and trustworthy digital identity ecosystem. By implementing this feature, we aim to:
-1. **Enhance Security**: Ensure that only verified and trusted verifiers can request and receive verifiable credentials, reducing the risk of fraud, unauthorized access and phishing attacks.
+1. **Enhance Security**: Ensure that users are correctly informed about the trustworthiness of the verifiers they interact with. Reducing the risk of fraud, unauthorized access and phishing attacks.
 2. **Building a sustainable ecosystem**: By vetting and approving verifiers, we can create a more reliable and trustworthy ecosystem for digital identity verification, which is essential for the long-term success of the Yivi project.
 
 Issueing verifiable credentials is a responsibility that we take seriously, it also comes with a cost. For instance issuing a mobile phone credential requires an SMS to be sent to the user, which has a cost. By implementing Trusted Verifier, we can ensure that the parties that are requesting and receiving verifiable credentials cover the costs associated with issuing these credentials. This will help us to sustain the Yivi project in the long term.
