@@ -10,6 +10,13 @@ const config: Config = {
   title: "Yivi docs",
   tagline: "Privacy first ID-wallet",
   favicon: "img/favicon.ico",
+  scripts: [
+    {
+      src: "https://static.cloudflareinsights.com/beacon.min.js",
+      defer: true,
+      "data-cf-beacon": '{"token": "6777c449784149a096de0ea8fd04c85b"}',
+    },
+  ],
 
   // Set the production url of your site here
   url: "https://docs.yivi.app",
