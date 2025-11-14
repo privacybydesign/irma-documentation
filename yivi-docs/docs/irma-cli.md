@@ -14,23 +14,7 @@ Pass `-h` or `--help` to any of these subcommands to see usage details and examp
 
 ## Installation
 
-Preferably, you should build `irma` from source, but we also provided binary releases built by GitHub Actions.
-
-### Compiling from source
-
-```shell
-go install github.com/privacybydesign/irmago/irma@latest
-```
-
-### Using the binary release
-
-You can download the precompiled `irmago` binaries from [GitHub](https://github.com/privacybydesign/irmago/releases/latest). Choose the binary for your OS and architecture (most likely amd64). Rename the file to `/usr/local/bin/irma` to have it available in your PATH.
-
-### Using Docker
-
-```shell
-docker pull ghcr.io/privacybydesign/irma:latest
-```
+See the [Getting started guide](getting-started.md#installing-irma-server).
 
 ## Examples
 
