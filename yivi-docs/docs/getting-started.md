@@ -92,7 +92,7 @@ npm run build
 
 ## Perform browser IRMA session
 
-(Re)start your `irma server`, configuring it such that it statically hosts the `yivi-frontend` example webpage we just built:
+(Re)start your `irma server`, configuring it such that it statically hosts the `yivi-frontend` example webpage we just built with the commands below. Change `~` to the actual folder you have downloaded `yivi-frontend-packages` to.
 <Tabs groupId="installation">
   <TabItem value="binary" label="Binary" default>
     ```shell
@@ -122,7 +122,7 @@ In production, it is generally best to [authenticate incoming session requests](
 
 ```yaml title="config.yml"
 production: true
-email: "example@example.com"  # see https://irma.app/docs/email
+email: "example@example.com"  # see https://docs.yivi.app/email/
 
 port: 443
 url: "https://example.com/irma/"
