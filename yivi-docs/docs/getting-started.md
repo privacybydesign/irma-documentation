@@ -120,7 +120,7 @@ Generally, your IRMA server runs in your backend alongside a server application 
 
 In production, it is generally best to [authenticate incoming session requests](irma-server.md#requestor-authentication) from your application. The following is an example production configuration file ([in YAML](irma-server.md#configuring)) for the `irma server` (start with `irma server -c /path/to/config.yml`) that will accept [session requests](session-requests.md) if they include a `Authorization: mysecrettoken` HTTP header.
 
-```yaml
+```yaml title="config.yml"
 production: true
 email: "example@example.com"  # see https://irma.app/docs/email
 
