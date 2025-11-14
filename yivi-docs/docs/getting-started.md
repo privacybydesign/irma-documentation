@@ -56,7 +56,7 @@ Download the `yivi-frontend-packages` source code, as [zip](https://github.com/p
 git clone https://github.com/privacybydesign/yivi-frontend-packages && cd yivi-frontend-packages
 ```
 
-Examples for the browser and for nodejs are included in the `examples` folder. In this guide we will use the `yivi-frontend` example for browsers to realize the example webpage. This example has to be installed first.
+Examples for the browser and for Node.js are included in the `examples` folder. In this guide we will use the `yivi-frontend` example for browsers to realize the example webpage. This example has to be installed first.
 ```shell
 cd examples/browser/yivi-frontend/
 npm install
@@ -81,11 +81,11 @@ A webpage demoing IRMA attribute issuance verification should now be available a
 
 ## Example configuration and IRMA session
 
-Generally, your IRMA server runs in your backend alongside a server application serving your frontend (website), with which the Yivi app user is interacting. Your server application starts and manages sessions at your IRMA server to verify or issue attributes (for example, when the user wants to log in). This can be setup as follows.
+Generally, your IRMA server runs in your backend alongside a server application serving your frontend (website), with which the Yivi app user is interacting. Your server application starts and manages sessions at your IRMA server to verify or issue attributes (for example, when the user wants to log in). This can be set up as follows.
 
 ### Configure `irma server`
 
-In production it is generally best to [authenticate incoming session requests](irma-server.md#requestor-authentication) from your application. The following is an example production configuration file ([in YAML](irma-server.md#configuring)) for the `irma server` (start with `irma server -c /path/to/config.yml`) that will accept [session requests](session-requests.md) if they include a `Authorization: mysecrettoken` HTTP header.
+In production, it is generally best to [authenticate incoming session requests](irma-server.md#requestor-authentication) from your application. The following is an example production configuration file ([in YAML](irma-server.md#configuring)) for the `irma server` (start with `irma server -c /path/to/config.yml`) that will accept [session requests](session-requests.md) if they include a `Authorization: mysecrettoken` HTTP header.
 
 ```yaml
 production: true
@@ -133,7 +133,7 @@ This will output something like the following:
 ```
 
 * Use the `token` to [track the session status](api-irma-server.md#get-session-token-status), and to [get the session result](api-irma-server.md#get-session-token-result) after the session has finished.
-* The `sessionPtr` and `frontendRequest` are used by [`yivi-frontend`](api-yivi-frontend.md) to show an Yivi QR code or toggle to the Yivi app. Generally you [configure `yivi-frontend`](https://github.com/privacybydesign/yivi-frontend-packages/tree/master/plugins/yivi-client#usage) with an URL that returns the `sessionPtr` and `frontendRequest`; it will then start the session automatically.
+* The `sessionPtr` and `frontendRequest` are used by [`yivi-frontend`](api-yivi-frontend.md) to show a Yivi QR code or toggle to the Yivi app. Generally you [configure `yivi-frontend`](https://github.com/privacybydesign/yivi-frontend-packages/tree/master/plugins/yivi-client#usage) with a URL that returns the `sessionPtr` and `frontendRequest`; it will then start the session automatically.
 
 Instead of managing sessions with HTTP requests as shown here, [for certain languages](irma-backend.md) (currently Go and JavaScript) it is also possible to include an IRMA library and manage sessions using function invocations.
 
