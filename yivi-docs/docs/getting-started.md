@@ -11,7 +11,7 @@ You should have the [Yivi app](yivi-app.md) installed ([Android](https://play.go
 
 
 ## Installing and running `irma server`
-You can install the `irma` command line tool in the following two ways.
+You can install the `irma` command line tool in the following three ways.
 
 * **Download prebuilt binary**: From [GitHub](https://github.com/privacybydesign/irmago/releases/latest). Choose the binary for your OS and architecture (most likely amd64). Rename the file to `/usr/local/bin/irma` to have it available in your PATH.
 * **Compile and install from source** as follows:
