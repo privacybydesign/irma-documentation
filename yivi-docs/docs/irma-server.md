@@ -283,7 +283,7 @@ On most Linux systems, the `irma server` can be made into an automatically start
     ```ini
     [Unit]
     Description=IRMA server
-    Documentation=https://irma.app/docs/irma-server
+    Documentation=https://docs.yivi.app/irma-server
     Requires=network.target
 
     [Service]

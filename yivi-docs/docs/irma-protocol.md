@@ -236,8 +236,11 @@ fmt.Println(string(i.Bytes()))
 
 Note that attribute `1` is the [metadata attribute](technical-overview.md#the-metadata-attribute), containing among others the credential type and the expiry date of the credential in a custom encoding. This attribute is always disclosed. The above snippet will not output anything sensible for metadata attributes, but instead the [`irma` command line tool](irma-cli.md) can be used as follows.
 
+```shell
+irma meta "AwAKhwAaAAXZZxdMn4TvQ6F/mVxWb6a7"
+```
+Returns:
 ```text
-$ irma meta "AwAKhwAaAAXZZxdMn4TvQ6F/mVxWb6a7"
 Identifier      : pbdf.pbdf.irmatube
 Signed          : 2021-08-26 02:00:00 +0200 CEST
 Expires         : 2022-02-24 01:00:00 +0100 CET
