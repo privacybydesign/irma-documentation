@@ -2,6 +2,9 @@
 title: irma cli
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 `irma` is an IRMA Swiss knife in the form of a command line executable, supporting the following subcommands:
 
 * [`irma server`](irma-server.md): an IRMA server daemon allowing you to perform IRMA sessions with [Yivi apps](yivi-app.md).
@@ -19,20 +22,25 @@ See the [Getting started guide](getting-started.md#installing-irma-server).
 ## Examples
 
 Perform IRMA sessions on the command line. By default, this starts a IRMA server specfically for one session on port 48680, prints the QR, and prints session results when the session is done:
-```shell
-irma session --disclose pbdf.nijmegen.personalData.fullname
-irma session --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
-irma session --noqr --request '{"type":"disclosing","content":[{"label":"BSN","attributes":["irma-demo.MijnOverheid.ageLower.over18"]}]}'
-irma session --server http://localhost:8088 --authmethod token --key mytoken --disclose irma-demo.MijnOverheid.ageLower.over18
-```
 
-> If you run using Docker, then the commands look a bit different.
-> ```shell
-> docker run -p 48680:48680 ghcr.io/privacybydesign/irma:latest session --url "http://$IP:48680" --disclose pbdf.nijmegen.personalData.fullname
-> docker run -p 48680:48680 ghcr.io/privacybydesign/irma:latest session --url "http://$IP:48680" --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
-> docker run -p 48680:48680 ghcr.io/privacybydesign/irma:latest session --url "http://$IP:48680" --noqr --request '{"type":"disclosing","content":[{"label":"BSN","attributes":["irma-demo.MijnOverheid.ageLower.over18"]}]}'
-> docker run ghcr.io/privacybydesign/irma:latest session --server "http://$IP:8088" --authmethod token --key mytoken --disclose irma-demo.MijnOverheid.ageLower.over18
-> ```
+<Tabs groupId="installation">
+  <TabItem value="binary" label="Binary" default>
+    ```shell
+    irma session --disclose pbdf.nijmegen.personalData.fullname
+    irma session --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
+    irma session --noqr --request '{"type":"disclosing","content":[{"label":"BSN","attributes":["irma-demo.MijnOverheid.ageLower.over18"]}]}'
+    irma session --server http://localhost:8088 --authmethod token --key mytoken --disclose irma-demo.MijnOverheid.ageLower.over18
+    ```
+  </TabItem>
+  <TabItem value="docker" label="Docker">
+    ```shell
+    docker run -p 48680:48680 ghcr.io/privacybydesign/irma:latest session --url "http://$IP:48680" --disclose pbdf.nijmegen.personalData.fullname
+    docker run -p 48680:48680 ghcr.io/privacybydesign/irma:latest session --url "http://$IP:48680" --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
+    docker run -p 48680:48680 ghcr.io/privacybydesign/irma:latest session --url "http://$IP:48680" --noqr --request '{"type":"disclosing","content":[{"label":"BSN","attributes":["irma-demo.MijnOverheid.ageLower.over18"]}]}'
+    docker run ghcr.io/privacybydesign/irma:latest session --server "http://$IP:8088" --authmethod token --key mytoken --disclose irma-demo.MijnOverheid.ageLower.over18
+    ```
+  </TabItem>
+</Tabs>
 
 Download an IRMA scheme and then verify its authenticity:
 ```shell
