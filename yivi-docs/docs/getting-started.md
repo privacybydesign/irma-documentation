@@ -54,7 +54,12 @@ After installing the `irma` binary, start the server (with increased verbosity b
 Run `irma server -h` to see configuration options. In order to verify your configuration, run `irma server check -v`. General documentation can be found on the [irma server](irma-server.md) page, API documentation of HTTP endpoints can be found on the [api irma server](api-irma-server.md) page.
 
 ## Perform a command line IRMA session
-Given a running IRMA server (see [above](#running-irma-server)), you can perform a first IRMA session using your server on the command line as follows:
+Given:
+1. a running IRMA server (see [above](#running-irma-server))
+2. the Yivi app with [developer mode](yivi-app.md#developer-mode) turned on
+3. the devices with the Yivi app and IRMA server on the same network
+
+you can perform a first IRMA session using your server on the command line as follows:
 
 <Tabs groupId="installation">
   <TabItem value="binary" label="Binary" default>
