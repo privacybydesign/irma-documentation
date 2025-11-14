@@ -103,7 +103,7 @@ npm run build
 </Tabs>
 A webpage demoing IRMA attribute issuance verification should now be available at http://localhost:8088.
 
-> **⚠️ Warning:** Open the browser console and the console running `irma server` to see various log messages and possibly error messages as the IRMA session proceeds.
+> **ℹ️ Tip:** Open the browser console and the console running `irma server` to see various log messages and possibly error messages as the IRMA session proceeds.
 
 ## Example configuration and IRMA session
 
