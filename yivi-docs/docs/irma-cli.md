@@ -20,10 +20,10 @@ See the [Getting started guide](getting-started.md#installing-irma-server).
 
 Perform IRMA sessions on the command line. By default, this starts a IRMA server specfically for one session on port 48680, prints the QR, and prints session results when the session is done:
 ```shell
-$ irma session --disclose pbdf.nijmegen.personalData.fullname
-$ irma session --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
-$ irma session --noqr --request '{"type":"disclosing","content":[{"label":"BSN","attributes":["irma-demo.MijnOverheid.ageLower.over18"]}]}'
-$ irma session --server http://localhost:8088 --authmethod token --key mytoken --disclose irma-demo.MijnOverheid.ageLower.over18
+irma session --disclose pbdf.nijmegen.personalData.fullname
+irma session --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
+irma session --noqr --request '{"type":"disclosing","content":[{"label":"BSN","attributes":["irma-demo.MijnOverheid.ageLower.over18"]}]}'
+irma session --server http://localhost:8088 --authmethod token --key mytoken --disclose irma-demo.MijnOverheid.ageLower.over18
 ```
 
 > If you run using Docker, then the commands look a bit different.
@@ -36,8 +36,11 @@ $ irma session --server http://localhost:8088 --authmethod token --key mytoken -
 
 Download an IRMA scheme and then verify its authenticity:
 ```shell
-$ irma scheme download . https://schemes.yivi.app/irma-demo
-$ irma scheme verify irma-demo
+irma scheme download . https://schemes.yivi.app/irma-demo
+irma scheme verify irma-demo
+```
+This should result in:
+```text
 Verifying scheme irma-demo
 
 Verification was successful.
@@ -45,9 +48,12 @@ Verification was successful.
 
 Generate an IRMA issuer private-public keypair (of 2048 bits and supporting a maximum of 10 attributes):
 ```shell
-$ cd irma-demo/MijnIssuer
-$ irma scheme issuer keygen # takes a while
-$ ls PublicKeys PrivateKeys
+cd irma-demo/MijnIssuer
+irma scheme issuer keygen # takes a while
+ls PublicKeys PrivateKeys
+```
+This should result in:
+```text
 PrivateKeys:
 0.xml
 
@@ -57,10 +63,13 @@ PublicKeys:
 
 Sign an IRMA scheme after having made modifications:
 ```shell
-$ cd irma-demo
+cd irma-demo
 # Make modifications (e.g. add a public key to an issuer with irma scheme issuer keygen)
-$ irma scheme sign
-$ irma scheme verify
+irma scheme sign
+irma scheme verify
+```
+
+```text
 Verifying scheme irma-demo
 
 Verification was successful.
