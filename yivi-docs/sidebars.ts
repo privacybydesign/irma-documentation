@@ -63,6 +63,12 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: ["irma-protocol", "zkp", "keyshare-protocol"],
     },
+    {
+      type: "category",
+      label: "EUDI",
+      collapsed: false,
+      items: ["crypto-agile-introduction", "sdjwtvc-issuance"],
+    },
   ],
 };
 
