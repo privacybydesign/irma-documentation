@@ -16,13 +16,8 @@ We therefore decided to extend the IRMA protocol to allow it to issue SD-JWT VC 
 
 Enabling SD-JWT VC support is opt-in for existing Yivi issuers, and will be explained in detail in this article.
 
-:::warning
-SD-JWT VC and OpenID4VP support in Yivi are currently experimental. We don't recommend depending on it for now.
-:::
-
-
 ## Enabling SD-JWT VC issuance
-If you're an existing Yivi issuer the process of enabling SD-JWT VC issuance is pretty straight forward.
+If you're an existing Yivi issuer, the process of enabling SD-JWT VC issuance is pretty straightforward.
 It consists of four steps:
 
 1) Obtain issuer certificate
@@ -32,15 +27,15 @@ It consists of four steps:
 
 ### Step 1: Obtain issuer certificate
 In order to issue an SD-JWT VC credential that the Yivi app accepts, you need to be on our Trust List.
-This means you need to obtain an issuer certificate. 
+This means you need to obtain an issuer certificate.
 This certificate contains rights about what credentials and attributes you're allowed to issue,
 as well as some metadata about your company.
 You can contact the Yivi team via [support@yivi.app](mailto:support@yivi.app) to obtain a certificate.
-In order to get a certificate you also need to be a regular Idemix issuer present in one of our schemes.
+In order to get a certificate, you also need to be a regular Idemix issuer present in one of our [schemes](schemes.md).
 
 <details>
   <summary>
-    Script to generate Issuer Certitficate Signing Request
+    Script to generate Issuer Certificate Signing Request
   </summary>
 
 ```sh
@@ -99,10 +94,10 @@ openssl req -config $ISSUER_HOST.cfg -new -key pkcs8.key -out $ISSUER_HOST.csr
 
 ### Step 2: Update IRMA server
 Once an issuer certificate is obtained, the changes needed to support SD-JWT VC issuance in addition to Idemix are quite small.
-First and foremost you should update your IRMA server to version `0.19` or higher.
+First and foremost, you should update your [IRMA server](irma-server.md) to version `0.19` or higher.
 
 ### Step 3: Update IRMA server configuration
-Now that you have a SD-JWT VC compatible IRMA server, you need to add two settings to the configuration.
+Now that you have an SD-JWT VC compatible IRMA server, you need to add two settings to the configuration.
 
 - A path to the SD-JWT VC issuer certificates directory
 - A path to the SD-JWT VC issuer private keys directory
@@ -171,7 +166,7 @@ irma server
 
 
 ### Step 4: Update issuance session request
-In order to also issue SD-JWT VCs, they need to be explicitly requested from the IRMA server in the issuance request.
+In order to also issue SD-JWT VCs, they need to be explicitly requested from the IRMA server in the [issuance request](session-requests.md#issuance-requests).
 A normal issuance request requesting two credentials would look something like this:
 ```json
 {
@@ -226,9 +221,9 @@ This will issue `irma-demo.sidn-pbdf.mobilenumber` in a batch of 50 and `irma-de
 
 :::info
 SD-JWT VCs are issued in batches because the credential format doesn't provide the same privacy properties as Yivi's Idemix credentials.
-SD-JWTs are trackable by default because hashes and holder binding keys stay the same for each time it's disclosed.
-In order to maintain multi-show unlinkability we have to show a different instance of the credential each time.
-This also means that after showing all instances in the batch the credential needs to be reobtained.
+SD-JWTs are trackable by default because hashes and holder binding keys stay the same each time they're disclosed.
+In order to maintain multi-show unlinkability, we have to show a different instance of the credential each time.
+This also means that after showing all instances in the batch, the credential needs to be reobtained.
 :::
 
 
@@ -246,5 +241,14 @@ issuanceRequest := irma.NewIssuanceRequest([]*irma.CredentialRequest{
 })
 ```
 
-Credentials in the issuance request that don't specify the `sdJwtBatchSize` field will not get an SD-JWT issued.
-Older Yivi apps and IRMA servers will ignore the whole SD-JWT issuance system and still work with Idemix only.
+Credentials in the issuance request that don't specify the `sdJwtBatchSize` field will not have an SD-JWT issued.
+Older Yivi apps and IRMA servers will ignore the entire SD-JWT issuance system and still work with Idemix only.
+
+## Related documentation
+
+For more information on related topics, see:
+
+- [Issuer guide](issuer.md) - General guide for becoming a Yivi issuer
+- [Session requests](session-requests.md) - Detailed documentation on IRMA session requests
+- [IRMA schemes](schemes.md) - Information about IRMA schemes and issuer registration
+- [IRMA server](irma-server.md) - Documentation on configuring and running the IRMA server
