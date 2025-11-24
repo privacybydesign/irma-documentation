@@ -48,33 +48,45 @@ Yivi builds upon our own [IRMA protocol](irma-protocol.md), which we built becau
 
 Becoming crypto agile is a multi-year effort. It will be a long-term investment which will significantly increase the interoperability of Yivi and thereby increase its usability for organizations. We have set the following milestones as a first step towards becoming a crypto agile and EUDI-wallet compliant ID-wallet.
 
-### 1. Disclose SD-JWT VC credentials over OpenID4VP
+### 1. Issue SD-JWT VC credentials over the IRMA protocol
 
-Our first milestone is to enable the disclosure of SD-JWT VC credentials using the OpenID for Verifiable Presentations (OpenID4VP) protocol. This is a key step in becoming interoperable with the broader EUDI-wallet ecosystem. OpenID4VP is designed as a flexible carrier for multiple credential formats, and we believe it will ultimately support Idemix-based credentials as well—especially given its close relation to [AnonCreds](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-anoncreds).
+Our first milestone is to enable the issuance of SD-JWT VC credentials using our existing IRMA protocol. This pragmatic approach allows us to introduce SD-JWT VCs into the Yivi ecosystem without waiting for full OpenID4VCI implementation. By extending the IRMA protocol to support both Idemix and SD-JWT VC credentials, existing Yivi issuers can gradually adopt the new credential format.
 
-Yivi aims to introduce its own credential format over OpenID4VP. While Idemix remains central to our stack, we will also embrace SD-JWT VCs and eventually other formats. Issuance in the early phases will still be handled via the IRMA protocol, with enhancements including:
+This milestone includes:
+
+- Extending the IRMA protocol to issue SD-JWT VCs alongside Idemix credentials
+- Implementing batch issuance to maintain privacy properties
+- Supporting issuer certificates and trust list integration
+- Enabling opt-in SD-JWT VC support for existing issuers
+
+For detailed instructions on how to enable SD-JWT VC issuance, see our [SD-JWT VC Issuance guide](sdjwtvc-issuance.md).
+
+### 2. Disclose SD-JWT VC credentials over OpenID4VP
+
+The second milestone is to enable the disclosure of SD-JWT VC credentials using the OpenID for Verifiable Presentations (OpenID4VP) protocol. This is a crucial step in becoming interoperable with the broader EUDI-wallet ecosystem. OpenID4VP is designed as a flexible carrier for multiple credential formats, and we believe it will ultimately support Idemix-based credentials as well—especially given its close relation to [AnonCreds](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-anoncreds).
+
+Yivi aims to introduce its own credential format over OpenID4VP. While Idemix remains central to our stack, we will also embrace SD-JWT VCs and eventually other formats. This milestone includes:
 
 - Same-device and cross-device disclosure flows
 - Key binding support using Yivi's keyshare server
+- Support for multiple credential formats over OpenID4VP
 
 This approach allows us to retain Yivi's strengths while offering compatibility with modern standards.
 
-### 2. Issue SD-JWT VC credentials over OpenID4VCI
+### 3. Issue SD-JWT VC credentials over OpenID4VCI
 
-Once disclosure is in place, the next step is standardizing issuance. We will adopt OpenID for Verifiable Credential Issuance (OpenID4VCI) to enable issuance of SD-JWT VCs in line with Dutch and European expectations.
+The third milestone is standardizing issuance using industry protocols. We will adopt OpenID for Verifiable Credential Issuance (OpenID4VCI) to enable issuance of SD-JWT VCs in line with Dutch and European expectations.
 
 This will be essential for integrating with emerging national and sectoral ecosystems, such as:
 
 - The Dutch PID Provider
 - PuB EAA issuers like the KVK, Belastingdienst, and others
 
-While IRMA will remain the initial method for issuance, we will build bridges to support new flows and allow identity brokers to mediate across formats. Yivi must support multiple issuance standards to remain relevant and inclusive.
+While IRMA will continue to be supported, we will build bridges to support new flows and allow identity brokers to mediate across formats. Yivi must support multiple issuance standards to remain relevant and inclusive.
 
-For more details on how to issue SD-JWT VCs using the IRMA protocol, see our [SD-JWT VC Issuance guide](sdjwtvc-issuance.md).
+### 4. Multi-trust scheme support
 
-### 3. Multi-trust scheme support
-
-The third milestone is the integration of multiple trust schemes. Currently, Yivi operates under the trust scheme of the Privacy by Design Foundation. But in a European context, users must be able to present credentials from various ecosystems—public and private—without friction.
+The fourth milestone is the integration of multiple trust schemes. Currently, Yivi operates under the trust scheme of the Privacy by Design Foundation. But in a European context, users must be able to present credentials from various ecosystems—public and private—without friction.
 
 To do this, we'll begin aligning with the EUDI trust model, closely observing the architectural direction of the [NL Public Reference Wallet](https://github.com/MinBZK/nl-wallet). Topics under research include:
 
