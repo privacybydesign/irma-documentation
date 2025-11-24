@@ -67,7 +67,7 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "EUDI",
       collapsed: false,
-      items: ["sdjwtvc-issuance"],
+      items: ["crypto-agile-introduction", "sdjwtvc-issuance"],
     },
   ],
 };
