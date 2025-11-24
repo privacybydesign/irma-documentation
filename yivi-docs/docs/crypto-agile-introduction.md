@@ -12,7 +12,7 @@ Our mission has always been clear: **with Yivi, you are in charge of your digita
 
 Crypto agility refers to the ability of a digital identity system to support multiple cryptographic schemes, protocols, and credential formats. For Yivi, this means:
 
-- Supporting multiple credential schemes (Idemix, SD-JWT VC, Idemix, and future post-quantum implementations)
+- Supporting multiple credential formats (SD-JWT VC, Idemix, and future post-quantum implementations)
 - Implementing industry-standard protocols (OpenID4VP, OpenID4VCI) alongside our existing IRMA protocol
 - Enabling interoperability with various trust schemes and ecosystems
 
@@ -50,6 +50,10 @@ Becoming crypto agile is a multi-year effort. It will be a long-term investment 
 
 ### 1. Issue SD-JWT VC credentials over the IRMA protocol
 
+:::tip Operational
+This milestone is operational and available in Yivi app version 7.10.0+ and irmago version 0.19+.
+:::
+
 Our first milestone is to enable the issuance of SD-JWT VC credentials using our existing IRMA protocol. This pragmatic approach allows us to introduce SD-JWT VCs into the Yivi ecosystem without waiting for full OpenID4VCI implementation. By extending the IRMA protocol to support both Idemix and SD-JWT VC credentials, existing Yivi issuers can gradually adopt the new credential format.
 
 This milestone includes:
@@ -63,6 +67,10 @@ For detailed instructions on how to enable SD-JWT VC issuance, see our [SD-JWT V
 
 ### 2. Disclose SD-JWT VC credentials over OpenID4VP
 
+:::tip Operational
+This milestone is operational and available in Yivi app version 7.10.0+ and irmago version 0.19+.
+:::
+
 The second milestone is to enable the disclosure of SD-JWT VC credentials using the OpenID for Verifiable Presentations (OpenID4VP) protocol. This is a crucial step in becoming interoperable with the broader EUDI-wallet ecosystem. OpenID4VP is designed as a flexible carrier for multiple credential formats, and we believe it will ultimately support Idemix-based credentials as well—especially given its close relation to [AnonCreds](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-anoncreds).
 
 Yivi aims to introduce its own credential format over OpenID4VP. While Idemix remains central to our stack, we will also embrace SD-JWT VCs and eventually other formats. This milestone includes:
@@ -75,6 +83,10 @@ This approach allows us to retain Yivi's strengths while offering compatibility 
 
 ### 3. Issue SD-JWT VC credentials over OpenID4VCI
 
+:::note Under Development
+This milestone is currently under development.
+:::
+
 The third milestone is standardizing issuance using industry protocols. We will adopt OpenID for Verifiable Credential Issuance (OpenID4VCI) to enable issuance of SD-JWT VCs in line with Dutch and European expectations.
 
 This will be essential for integrating with emerging national and sectoral ecosystems, such as:
@@ -85,6 +97,10 @@ This will be essential for integrating with emerging national and sectoral ecosy
 While IRMA will continue to be supported, we will build bridges to support new flows and allow identity brokers to mediate across formats. Yivi must support multiple issuance standards to remain relevant and inclusive.
 
 ### 4. Multi-trust scheme support
+
+:::note Under Development
+This milestone is currently under development.
+:::
 
 The fourth milestone is the integration of multiple trust schemes. Currently, Yivi operates under the trust scheme of the Privacy by Design Foundation. But in a European context, users must be able to present credentials from various ecosystems—public and private—without friction.
 
@@ -121,8 +137,8 @@ By becoming crypto-agile and aligning with emerging European standards, we reaff
 
 ## References
 
-- [OpenID for Verifiable Presentations - Editor's draft](https://openid.github.io/OpenID4VP/openid-4-verifiable-presentations-wg-draft.html)
-- [OpenID for Verifiable Credential Issuance - Editor's draft](https://openid.github.io/OpenID4VCI/openid-4-verifiable-credential-issuance-wg-draft.html)
+- [OpenID for Verifiable Presentations - Version 1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
+- [OpenID for Verifiable Credential Issuance - Version 1.0](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
 - [OpenID4VC High Assurance Interoperability Profile](https://openid.net/specs/openid4vc-high-assurance-interoperability-profile-1_0-03.html)
 - [SD-JWT-based Verifiable Credentials (SD-JWT VC)](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/)
 - [Topic G: Zero Knowledge Proof #408](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/discussions/408)
