@@ -7,7 +7,7 @@ tags: [yivi, openid4vp, eudi, sdjwtvc]
 
 A few months ago, we announced our plans to become an EUDI wallet while still retaining our original privacy-by-design technology.
 
-Since that announcement, we've come a long way, and today it's time to announce the release of the first major step towards true [crypto agility](/docs/crypto-agile-introduction): the support for the OpenID4VP protocol and the SD-JWT VC credential format in the Yivi app.
+Since that announcement, we've come a long way, and today it's time to announce the release of the first major step towards true [crypto agility](/crypto-agile-introduction): the support for the OpenID4VP protocol and the SD-JWT VC credential format in the Yivi app.
 In this blog, we'll dive into how we did this and what it means for you.
 
 ## EUDI Technology
@@ -26,7 +26,7 @@ Since a single protocol can only either issue or verify, we knew we would get in
 have credentials without being able to share them, or we would be able to share them without being able to actually obtain them.
 A classic chicken and egg problem.
 
-To get around this problem, we decided to start with OpenID4VP for disclosures and extend our existing [IRMA protocol](/docs/irma-protocol) to be able to issue SD-JWT VCs in addition to our existing Idemix format.
+To get around this problem, we decided to start with OpenID4VP for disclosures and extend our existing [IRMA protocol](/irma-protocol) to be able to issue SD-JWT VCs in addition to our existing Idemix format.
 
 A nice additional benefit for this is that we can stick close to our existing scheme for now,
 which makes adapting the app a much more gradual process.
@@ -62,7 +62,7 @@ We kept the API that `irmamobile` uses to talk to `irmaclient` as unchanged as p
 
 Inside of this shell, we started building an OpenID4VP client.
 This client is compatible with the existing interfaces that the app relies on for handling session interactions.
-As long as we stick to our current [scheme](/docs/schemes), this will work well, but it will need a significant refactor when we eventually accept credentials outside of our scheme.
+As long as we stick to our current [scheme](/schemes), this will work well, but it will need a significant refactor when we eventually accept credentials outside of our scheme.
 
 When a new session URL is received by the client, it will forward it either to the existing IRMA client or the new OpenID4VP client based on the type of session.
 
@@ -93,7 +93,7 @@ This has far-reaching consequences for the user experience, which is something w
 
 
 ## The Yivi app
-For our users, not a lot will change in terms of how the [Yivi app](/docs/yivi-app) works.
+For our users, not a lot will change in terms of how the Yivi app works.
 This is intentional, as we wanted to stay close to our easy-to-understand interface.
 The issuance and disclosure flows, including the ability to do issuance during disclosure, remain unchanged.
 
@@ -119,14 +119,14 @@ This leaves us with only two UX downsides:
 2. The app doesn't show a decreased number after SD-JWT is shared
 
 ## Becoming an SD-JWT VC issuer
-If you're already an [issuer](/docs/issuer) using an IRMA server in the Yivi ecosystem, you can become an SD-JWT VC issuer with some minor modifications.
+If you're already an [issuer](/issuer) using an IRMA server in the Yivi ecosystem, you can become an SD-JWT VC issuer with some minor modifications.
 First of all, you'll need to obtain an X.509 certificate that is on our Trust List.
 
-This certificate is on an issuer basis, as defined in our [scheme](/docs/schemes).
+This certificate is on an issuer basis, as defined in our [scheme](/schemes).
 This means you can use it to issue the same credentials you already can with your existing Idemix private key.
 
-After you obtained a certificate, you need to upgrade your [IRMA server](/docs/irma-server) to version `0.19` or higher.
-More details on how to set it up can be found in the [SD-JWT VC Issuance guide](/docs/sdjwtvc-issuance).
+After you obtained a certificate, you need to upgrade your [IRMA server](/irma-server) to version `0.19` or higher.
+More details on how to set it up can be found in the [SD-JWT VC Issuance guide](/sdjwtvc-issuance).
 
 ## Becoming an OpenID4VP verifier
 We are compatible with a subset of the OpenID4VP standard version 1.0.
@@ -143,8 +143,8 @@ More details about what features we support and how to set it up can be found in
 
 
 ## Next up: OpenID4VCI
-Now that OpenID4VP is done, our journey to become a [crypto-agile](/docs/crypto-agile-introduction) EUDI-compatible wallet has officially started.
+Now that OpenID4VP is done, our journey to become a [crypto-agile](/crypto-agile-introduction) EUDI-compatible wallet has officially started.
 Our next step is to implement the issuance side of the system: the OpenID4VCI protocol.
 
 ## Wrap up
-As we've seen today, Yivi is well on its way to becoming crypto-agile. For more information about our roadmap, see our [Crypto Agile Introduction](/docs/crypto-agile-introduction).
+As we've seen today, Yivi is well on its way to becoming crypto-agile. For more information about our roadmap, see our [Crypto Agile Introduction](/crypto-agile-introduction).
