@@ -40,6 +40,18 @@ const config: Config = {
     locales: ["en"],
   },
 
+  plugins: [
+      [
+          "@cmfcmf/docusaurus-search-local",
+          {
+            // Whether to also index the titles of the parent categories in the sidebar of a doc page
+            indexDocSidebarParentCategories: 2,
+            // Includes parent categories path in search result
+            includeParentCategoriesInPageTitle: true
+          }
+      ]
+  ],
+
   presets: [
     [
       "classic",
