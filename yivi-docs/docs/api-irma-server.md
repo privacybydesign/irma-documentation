@@ -15,9 +15,6 @@ The API that this server offers consists of two parts:
 ---
 ## API overview
 
-:::toc
-:::
-
 ---
 
 For each of these endpoints, if the HTTP status code indicates that the request was not successful (i.e. not in the 2xx range), then the server returns an [`irma.RemoteError`](https://godoc.org/github.com/privacybydesign/irmago#RemoteError) instance. For example, attempting to [retrieve the session result](#get-session-requestortoken-result) of an unknown session returns:
