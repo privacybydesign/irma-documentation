@@ -1,5 +1,5 @@
 ---
-slug: 2025-keyshare-migration
+slug: 2025-keyshare-migration-done
 title: Yivi Keyshare Server Migration Completed
 authors: [dibranmulder]
 tags: [yivi, migration]
