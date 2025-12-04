@@ -7,6 +7,8 @@ tags: [yivi, iban]
 
 We’re excited to introduce a new feature in Yivi: IBAN Issuance via verified iDEAL payments. This addition brings secure, self-sovereign proof of bank account ownership right into the hands of Yivi users.
 
+<!-- truncate -->
+
 ## How it works
 The IBAN issuer enables users to receive a verifiable credential containing their bank account information, simply by completing a €0.01 iDEAL transaction. This small payment serves as proof of account ownership.
 

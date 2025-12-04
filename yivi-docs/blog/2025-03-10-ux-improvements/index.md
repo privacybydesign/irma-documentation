@@ -13,6 +13,8 @@ stay in the flow.
 
 In this blog we'll look ahead at some of the plans we have for the near future to improve the user experience.
 
+<!-- truncate -->
+
 ## Our four values for UX
 To keep our goals clear and keep an eye on the usefulness of new features, we've written down our main values for the UX.
 These values are:

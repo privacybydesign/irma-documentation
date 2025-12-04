@@ -7,6 +7,8 @@ tags: [yivi, eudi]
 
 Our mission is to make Yivi the most privacy and user friendly wallet out there. In line with this mission we developed our crypto agile vision, allowing users to use different cryptographic technologies in a seamless way. As part of this vision, we want to support verifiable credentials, which are becoming increasingly popular in the digital identity space.
 
+<!-- truncate -->
+
 ## EUDI wallet and verifiable credentials
 This summer we put tremendous effort in adopting industry standards for verifiable credentials. We are about to release our first version with OpenID4VP support, using batch issued credentials.
 

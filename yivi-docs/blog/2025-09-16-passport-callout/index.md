@@ -8,6 +8,8 @@ tags: [yivi, passport]
 We are excited to announce the **BETA release of Yivi Passport credentials!**  
 This new feature allows users to securely store and manage their digital passports within the Yivi wallet, enhancing convenience and accessibility for travelers. With this release, Yivi expands its reach to a truly international audience.
 
+<!-- truncate -->
+
 :::warning
 Passport credentials are currently in **BETA**, this means its only available upon request. We have tested thoroughly with Dutch passports, but have not yet conducted extensive testing with other nationalities.
 :::
