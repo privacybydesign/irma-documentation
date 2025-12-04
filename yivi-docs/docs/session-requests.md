@@ -9,7 +9,7 @@ Each [IRMA server](what-is-yivi.md#irma-servers) exposes APIs for creating IRMA 
 
 * The [`POST /session`](api-irma-server.md#post-session) endpoint from [`irma server`](irma-server.md).
 * The [`StartSession()` function](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
-* The [`startSession()` function](api-irmajs.md#startsession) of `irmajs`.
+* The [`session.start` attribute](https://github.com/privacybydesign/yivi-frontend-packages/blob/master/plugins/yivi-client/README.md#session) of [`Yivi client`](/yivi-frontend#available-plugins-for-yivi-core).
 
 For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-yivi.md#irma-session-flow).
 
