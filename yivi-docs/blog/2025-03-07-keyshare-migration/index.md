@@ -7,6 +7,8 @@ tags: [yivi, migration]
 
 In the night of March 17th to 18th, 2025, at 01:00 CET, we will complete the final phase of the migration from SIDN to Caesar Groep. The last two components that require temporary downtime are the Keyshare Server and MyYivi. These systems play a crucial role in Yivi's authentication and identity management services, and we want to ensure a smooth transition with minimal disruption.
 
+<!-- truncate -->
+
 ## Migration Plan
 To ensure a seamless transition, we have prepared the following steps:
 

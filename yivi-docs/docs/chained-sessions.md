@@ -28,7 +28,7 @@ This page documents how this feature works.
 
 ## The `nextSession` URL
 
-An [extended session request](session-requests.md#extra-parameters) may now contain a `nextSession` object which must contain a `url` field. If so, then at the end of the session (i.e., after the user has agreed to perform the session in the session screen of the Yivi app), the IRMA server will POST the [session result](https://pkg.go.dev/github.com/privacybydesign/irmago/server#SessionResult) in JSON (as returned by the [`/result` endpoint](api-irma-server#get-session-requestortoken-result)) to that `url`. The server at that `url` must then respond with one of the following:
+An [extended session request](session-requests.md#extra-parameters) may now contain a `nextSession` object which must contain a `url` field. If so, then at the end of the session (i.e., after the user has agreed to perform the session in the session screen of the Yivi app), the IRMA server will POST the [session result](https://pkg.go.dev/github.com/privacybydesign/irmago/server#SessionResult) in JSON (as returned by the [`/result` endpoint](/api-irma-server#get-sessionrequestortokenresult)) to that `url`. The server at that `url` must then respond with one of the following:
 
 * a new (extended) session request in JSON, which may depend on the received session result;
 * HTTP 204, signifying that there is no next session to be performed. In this case, no further sessions take place and the flow stops normally.
@@ -39,7 +39,7 @@ The session request returned by the server at the `nextSession` URL may itself c
 
 ## Signing POSTed session results
 
-If a [JWT private key is installed in the IRMA server](irma-server.md#signed-jwt-session-results), then instead of POSTing plain JSON session results (as returned by the [`/result` endpoint](api-irma-server#get-session-requestortoken-result)) to the `nextSession` URL, the server will POST a session result JWT signed with the private key (as returned by the [`/result-jwt` endpoint](api-irma-server.md#get-session-requestortoken-result-jwt)) to the `nextSession` URL. The server at that URL can verify the JWT using the corresponding public key to authenticate the request as coming from the expected IRMA server.
+If a [JWT private key is installed in the IRMA server](irma-server.md#signed-jwt-session-results), then instead of POSTing plain JSON session results (as returned by the [`/result` endpoint](api-irma-server#get-sessionrequestortokenresult)) to the `nextSession` URL, the server will POST a session result JWT signed with the private key (as returned by the [`/result-jwt` endpoint](api-irma-server.md#get-sessionrequestortokenresult-jwt)) to the `nextSession` URL. The server at that URL can verify the JWT using the corresponding public key to authenticate the request as coming from the expected IRMA server.
 
 If a JWT private key is not installed, then the boolean `--allow-unsigned-callbacks` option must be passed to the IRMA server before chained sessions may be used, to explicitly enable POSTing unsigned session results. Otherwise, the server will reject session requests containing a `nextSession` object.
 

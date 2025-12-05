@@ -31,7 +31,7 @@ At any time after its creation an IRMA session is in a particular [session state
 At any time, the session may move from one of the first three states to any of the following states:
 
 * `TIMEOUT`: the session has been in one of the first three states longer than a timeout (configurable in the IRMA server, by default 5 minutes).
-* `CANCELLED`: the session was cancelled [by the Yivi app](#cancelling-delete-irma-session-clienttoken), [the requestor or by the frontend](api-irma-server.md#delete-session-requestortoken); or an error occurred.
+* `CANCELLED`: the session was cancelled [by the Yivi app](#cancelling-delete-irmasessionclienttoken), [the requestor or by the frontend](api-irma-server.md#delete-sessionrequestortoken); or an error occurred.
 
 Of these states, `DONE`, `TIMEOUT` and `CANCELLED` are final states: no valid state transition exists from these to any other state.
 
@@ -139,7 +139,7 @@ The server responds with an [`irma.ClientSessionRequest` instance](https://pkg.g
   </TabItem>
 </Tabs>
 
-If device pairing is disabled, then the session state is set to [`CONNECTED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusConnected). Otherwise the session state is set to [`PAIRING`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusPairing). In that case the Yivi app shows the `pairingCode` in the response above in its GUI, and instructs the user to type that into the frontend. It uses [`/irma/session/{clientToken}/statusevents`](api-irma-server.md#get-irma-session-clienttoken-statusevents) or polls to [`/irma/session/{clientToken}/status`](api-irma-server.md#get-irma-session-clienttoken-status) to keep track of the session status. After the user enters the pairing code into the frontend, the frontend invokes the [`POST /irma/session/{clientToken}/frontend/pairingcompleted` endpoint](api-irma-server.md#post-irma-session-clienttoken-frontend-pairingcompleted), triggering the IRMA server to switch the session status to `CONNECTED`. When that happens the Yivi app notices through a server-sent event or through its polling, after which it invokes the below endpoint to retrieve the session request.
+If device pairing is disabled, then the session state is set to [`CONNECTED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusConnected). Otherwise the session state is set to [`PAIRING`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusPairing). In that case the Yivi app shows the `pairingCode` in the response above in its GUI, and instructs the user to type that into the frontend. It uses [`/irma/session/{clientToken}/statusevents`](api-irma-server.md#get-irmasessionclienttokenstatusevents) or polls to [`/irma/session/{clientToken}/status`](api-irma-server.md#get-irmasessionclienttokenstatus) to keep track of the session status. After the user enters the pairing code into the frontend, the frontend invokes the [`POST /irma/session/{clientToken}/frontend/pairingcompleted` endpoint](api-irma-server.md#post-irmasessionclienttokenfrontendpairingcompleted), triggering the IRMA server to switch the session status to `CONNECTED`. When that happens the Yivi app notices through a server-sent event or through its polling, after which it invokes the below endpoint to retrieve the session request.
 
 ### `GET /irma/session/{clientToken}/request`
 
@@ -175,7 +175,7 @@ After receiving the session request, the following happens.
 
 * The Yivi app compares the requested attributes (if any) in the session request against its store to decide if it currently has them in possession, and computes a list of options containing attributes for the user to choose from that will satisfy the requestor, according to the session request.
 * The app presents those options as well as information about the requestor to the user, asking her to either choose from the options and proceed with the session, or to abort.
-* If the user decides to proceed with the session, then based on the user's choices of attributes to be disclosed the Yivi app computes the appropriate response to the IRMA server, in conjunction with the keyshare server using the [keyshare protocol](keyshare-protocol.md). If instead the user decides to abort, or if any error occurs, then the Yivi app cancels the session (see [below](#cancelling-delete-irma-session-clienttoken)).
+* If the user decides to proceed with the session, then based on the user's choices of attributes to be disclosed the Yivi app computes the appropriate response to the IRMA server, in conjunction with the keyshare server using the [keyshare protocol](keyshare-protocol.md). If instead the user decides to abort, or if any error occurs, then the Yivi app cancels the session (see [below](#cancelling-delete-irmasessionclienttoken)).
 
 In the remainder of this section, we assume that so far no error occurred and the user chooses to proceed. In that case, after constructing the response to the IRMA server as mentioned above one of the following three endpoints is invoked, depending on the session type.
 
@@ -301,9 +301,9 @@ The app POSTs an [`irma.SignedMessage` instance](https://pkg.go.dev/github.com/p
 Here, the fields are as follows:
 
 * `@context` identifies this as an IRMA attribute-based signature.
-* `signature` is the same as [`proofs` in disclosure sessions](#disclosure-post-irma-session-clienttoken-proofs).
-* `indices` is the same as in [disclosure sessions](#disclosure-post-irma-session-clienttoken-proofs).
-* `nonce` and `context` have the same values as in the [session request](#get-irma-session-clienttoken-request). Contrary to the response of disclosure sessions they are included here, so that the signature is completely self-contained: it contains all information necessary to verify its validity.
+* `signature` is the same as [`proofs` in disclosure sessions](#disclosure-post-irmasessionclienttokenproofs).
+* `indices` is the same as in [disclosure sessions](#disclosure-post-irmasessionclienttokenproofs).
+* `nonce` and `context` have the same values as in the [session request](#get-irmasessionclienttokenrequest). Contrary to the response of disclosure sessions they are included here, so that the signature is completely self-contained: it contains all information necessary to verify its validity.
 * `message` is the message signed by this signature.
 * `timestamp` contains a signed timestamp, which is used during verification of the attribute-based signature to establish that the attributes within it were valid at creation time of the signature.
 
@@ -325,13 +325,13 @@ The app POSTs an [`irma.IssueCommitmentMessage` instance](https://pkg.go.dev/git
 }
 ```
 
-The `combinedProofs` array contains, for each credential being issued within the session (one in this example), a [zero-knowledge proof](zkp.md) of the Yivi app's secret key (which will become [the first attribute](technical-overview.md#the-secret-key-attribute) of the credential(s) being issued). In addition, in case of [combined disclosure-issuance sessions](session-requests.md#issuance-requests) this array will also contain [`gabi.ProofD`](https://pkg.go.dev/github.com/privacybydesign/gabi#ProofD) instances, like the `proofs` array in [disclosure sessions](irma-protocol.md#disclosure-post-irma-session-clienttoken-proofs).
+The `combinedProofs` array contains, for each credential being issued within the session (one in this example), a [zero-knowledge proof](zkp.md) of the Yivi app's secret key (which will become [the first attribute](technical-overview.md#the-secret-key-attribute) of the credential(s) being issued). In addition, in case of [combined disclosure-issuance sessions](session-requests.md#issuance-requests) this array will also contain [`gabi.ProofD`](https://pkg.go.dev/github.com/privacybydesign/gabi#ProofD) instances, like the `proofs` array in [disclosure sessions](irma-protocol.md#disclosure-post-irmasessionclienttokenproofs).
 
-When responding to this HTTP request (see below) with its signature(s) over the attributes, the IRMA server includes a zero-knowledge proof of its own, proving that it correctly constructed its signatures. The `n_2` field contains the nonce over which the issuer is to construct that zero-knowledge proof (c.f. the `nonce` in the session request, see [above](irma-protocol.md#get-irma-session-clienttoken-request)).
+When responding to this HTTP request (see below) with its signature(s) over the attributes, the IRMA server includes a zero-knowledge proof of its own, proving that it correctly constructed its signatures. The `n_2` field contains the nonce over which the issuer is to construct that zero-knowledge proof (c.f. the `nonce` in the session request, see [above](irma-protocol.md#get-irmasessionclienttokenrequest)).
 
 ### The IRMA server's response
 
-When receiving data from the Yivi app on any of the above three endpoints, the IRMA server first verifies the proofs contained in them (note that the app sends zero-knowledge proofs for each session type). The Yivi app is a challenge-response protocol, so referring back to the `nonce` in the session request (as [mentioned earlier](irma-protocol.md#get-irma-session-clienttoken-request)) which acts as the challenge, the data that the Yivi app sends to these endpoints must be a valid response to that particular challenge.
+When receiving data from the Yivi app on any of the above three endpoints, the IRMA server first verifies the proofs contained in them (note that the app sends zero-knowledge proofs for each session type). The Yivi app is a challenge-response protocol, so referring back to the `nonce` in the session request (as [mentioned earlier](irma-protocol.md#get-irmasessionclienttokenrequest)) which acts as the challenge, the data that the Yivi app sends to these endpoints must be a valid response to that particular challenge.
 
 The server responds with an [`irma.ServerSessionResponse`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerSessionResponse) for each of the three above endpoints. For example:
 
@@ -363,9 +363,9 @@ Here the fields are as follows:
 
 * `proofStatus`: an [`irma.ProofStatus`](https://pkg.go.dev/github.com/privacybydesign/irmago#ProofStatus) constant containing whether or not the server successfully validated the proofs that it received from the app. Anything else than `VALID` is considered an error by the app. (The same status is reported to the requestor in the session result, see below.)
 * `nextSession` optionally contains the [session pointer](https://pkg.go.dev/github.com/privacybydesign/irmago#Qr) to the next session in the [session chain](chained-sessions.md). If this field is present, then after processing the current response the app will immediately start the next session using this session pointer.
-* In case of issuance sessions, the `sigs` array contains the issuer's signatures over each of the credentials being issued (if `proofStatus` is `VALID`). For each object within this array, the `signature` object contains the signature itself, and the `proof` is the issuer's proof of correctness of the signature, over the nonce `n_2` mentioned [above](#issuance-post-irma-session-clienttoken-commitments).
+* In case of issuance sessions, the `sigs` array contains the issuer's signatures over each of the credentials being issued (if `proofStatus` is `VALID`). For each object within this array, the `signature` object contains the signature itself, and the `proof` is the issuer's proof of correctness of the signature, over the nonce `n_2` mentioned [above](#issuance-post-irmasessionclienttokencommitments).
 
-After this, the session state is set to [`DONE`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusDone), and the requestor can retrieve the [session result](https://pkg.go.dev/github.com/privacybydesign/irmago/server#SessionResult) at the [`GET /session/{requestorToken}/result`](api-irma-server.md#get-session-requestortoken-result) or [`GET /session/{requestorToken}/result-jwt`](api-irma-server.md#get-session-requestortoken-result-jwt) endpoints, or using the [`GetSessionResult()` function](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver#Server.GetSessionResult).
+After this, the session state is set to [`DONE`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusDone), and the requestor can retrieve the [session result](https://pkg.go.dev/github.com/privacybydesign/irmago/server#SessionResult) at the [`GET /session/{requestorToken}/result`](api-irma-server.md#get-sessionrequestortokenresult) or [`GET /session/{requestorToken}/result-jwt`](api-irma-server.md#get-sessionrequestortokenresult-jwt) endpoints, or using the [`GetSessionResult()` function](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver#Server.GetSessionResult).
 
 ## Cancelling: `DELETE /irma/session/{clientToken}`
 

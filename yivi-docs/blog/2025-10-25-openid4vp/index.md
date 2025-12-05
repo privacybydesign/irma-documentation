@@ -10,6 +10,8 @@ A few months ago, we announced our plans to become an EUDI wallet while still re
 Since that announcement, we've come a long way, and today it's time to announce the release of the first major step towards true [crypto agility](/crypto-agile-introduction): the support for the OpenID4VP protocol and the SD-JWT VC credential format in the Yivi app.
 In this blog, we'll dive into how we did this and what it means for you.
 
+<!-- truncate -->
+
 ## EUDI Technology
 The EUDI Wallet ecosystem consists of many moving parts, but the most fundamental pieces are a set of credential formats and protocols.
 For web technology, it uses the OpenID4VCI protocol for credential issuance and the OpenID4VP protocol for disclosures.

@@ -9,6 +9,8 @@ We are announcing the **release of the Trusted Verifier** on the 24th of Septemb
 
 Trusted Verifiers marks a crucial step forward in our mission to enhance the security and reliability of digital identity verification within the Yivi ecosystem. It also secures the long term sustainability of the Yivi project.
 
+<!-- truncate -->
+
 ## What is Trusted Verifier?
 Trusted Verifier is a way for relying parties to be verified and trusted by Yivi. This means that verifiers that have been vetted and approved by Yivi will be able to request and receive verifiable credentials from users' Yivi wallets. Users of verifiers that are not trusted by Yivi will receive a warning in their Yivi app, informing them that the verifier is not trusted, and they need to be cautious when sharing their data.
 

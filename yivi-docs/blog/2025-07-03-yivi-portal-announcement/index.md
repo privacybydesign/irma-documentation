@@ -10,6 +10,7 @@ serves as part of our commitment to our users, as well as helps with transparenc
 
 In this blog post I will dive into what the portal exactly is, and what can you expect from the coming updates.
 
+<!-- truncate -->
 
 ## Yivi Portal 
 As part our core values, we want to make Yivi more accessible and easy to use. That also concerns developers and the business facing side of matters. In the portal you can see which organizations play a part and work with Yivi and search between the credentials information that is available.

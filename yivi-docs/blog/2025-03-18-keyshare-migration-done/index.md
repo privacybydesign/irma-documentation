@@ -1,11 +1,13 @@
 ---
-slug: 2025-keyshare-migration
+slug: 2025-keyshare-migration-done
 title: Yivi Keyshare Server Migration Completed
 authors: [dibranmulder]
 tags: [yivi, migration]
 ---
 
 We are pleased to announce the successful completion of the Yivi Keyshare Server migration. As of March 18, 2025, at 00:00-01:00 CET, all services have been seamlessly transitioned from SIDN to Caesar Groep.
+
+<!-- truncate -->
 
 ## What This Means for You
 - **Enhanced Performance**: The migration ensures improved reliability and efficiency in our authentication and identity management services.​

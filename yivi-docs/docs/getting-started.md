@@ -165,7 +165,7 @@ This will output something like the following:
 }
 ```
 
-* Use the `token` to [track the session status](api-irma-server.md#get-session-token-status), and to [get the session result](api-irma-server.md#get-session-token-result) after the session has finished.
+* Use the `token` to [track the session status](api-irma-server.md#get-sessionrequestortokenstatus), and to [get the session result](api-irma-server.md#get-sessionrequestortokenresult) after the session has finished.
 * The `sessionPtr` and `frontendRequest` are used by [`yivi-frontend`](api-yivi-frontend.md) to show a Yivi QR code or toggle to the Yivi app. Generally you [configure `yivi-frontend`](https://github.com/privacybydesign/yivi-frontend-packages/tree/master/plugins/yivi-client#usage) with a URL that returns the `sessionPtr` and `frontendRequest`; it will then start the session automatically.
 
 Instead of managing sessions with HTTP requests as shown here, [for certain languages](irma-backend.md) (currently Go and JavaScript) it is also possible to include an IRMA library and manage sessions using function invocations.
