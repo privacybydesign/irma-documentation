@@ -34,7 +34,7 @@ Once the issue was identified, the Yivi team quickly rerolled the expired public
 
 ## Next steps
 To prevent similar incidents in the future, the Yivi team is implementing the following measures:
-- `TODO`: Improved monitoring and alerting for key expiration dates to ensure timely updates, our monitoring insufficiently distinguishes between high priority and low priority alerts making it tough for the team to notice critical alerts.
+- `TODO`: Improve monitoring and alerting for key expiration dates to ensure timely updates, our monitoring insufficiently distinguishes between high priority and low priority alerts making it tough for the team to notice critical alerts.
 - `DONE`: We now use container orchestration to download the scheme prior to starting the irmaserver and keyshare server, preventing race conditions during startup.
 
 We apologize for the inconvenience caused by this incident and are committed to improving our processes to ensure the reliability of our services.
