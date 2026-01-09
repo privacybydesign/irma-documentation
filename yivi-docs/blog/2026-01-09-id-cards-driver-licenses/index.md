@@ -1,6 +1,6 @@
 ---
 slug: 2026-id-cards-driver-licenses
-title: "Yivi expands MRTD support: ID-cards and Dutch Driver Licenses now available"
+title: "ID-cards and Dutch Driver Licenses now available"
 authors: [dibranmulder]
 tags: [yivi, mrtd, id-card, driver-license, international]
 ---
@@ -20,7 +20,7 @@ This means Yivi now provides **full coverage for the complete range of MRTDs use
 Identity verification is often region-specific, with different countries relying on different primary documents. While passports are universally recognized, many people primarily use their national ID cards or driver's licenses for day-to-day identification needs.
 
 By supporting ID-cards alongside passports, Yivi becomes more practical and accessible to a broader international audience. Users can now choose the identity document that makes the most sense for their situation:
-- **Passports** for international travelers
+- **Passports** for international identification
 - **ID-cards** for EU citizens and those who prefer their national ID
 - **Driver's Licenses** for Dutch residents who want to use their most commonly carried document
 
@@ -32,6 +32,31 @@ The process mirrors our passport credential flow:
 3. **Validate the data** through Passive Authentication and Active Authentication
 
 Just like with passports, the data is validated against government-issued Masterlists of trusted document issuers, ensuring the highest level of security and authenticity.
+
+## Screenshots
+
+### Adding an ID-card
+<div class="center-container">
+    <img src="/img/id-card-edl/01_add_data_id.png" class="ss" alt="Yivi app - Add ID card data" />
+    <img src="/img/id-card-edl/02_id_mrz.png" class="ss" alt="Yivi app - Scan ID card MRZ" />
+    <img src="/img/id-card-edl/03_id_start_scan.png" class="ss" alt="Yivi app - Start NFC scan" />
+</div>
+
+<div class="center-container">
+    <img src="/img/id-card-edl/04_id_scanning.png" class="ss" alt="Yivi app - NFC scanning in progress" />
+    <img src="/img/id-card-edl/05_id_add_credential.png" class="ss" alt="Yivi app - Add ID credential" />
+</div>
+
+### ID-card and Driver's License credentials
+<div class="center-container">
+    <img src="/img/id-card-edl/06_id_cred_top.png" class="ss" alt="Yivi app - ID card credential (top)" />
+    <img src="/img/id-card-edl/07_id_cred_bottom.png" class="ss" alt="Yivi app - ID card credential (bottom)" />
+    <img src="/img/id-card-edl/08_edl_top.png" class="ss" alt="Yivi app - Driver's license credential (top)" />
+</div>
+
+<div class="center-container">
+    <img src="/img/id-card-edl/09_edl_bottom.png" class="ss" alt="Yivi app - Driver's license credential (bottom)" />
+</div>
 
 ## Technical integration
 
