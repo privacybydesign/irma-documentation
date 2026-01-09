@@ -1,6 +1,6 @@
 ---
 slug: 2026-jan-embedded-issuance
-title: Add your phone number and email directly inside Yivi
+title: Announcing Yivi in-app phone and email issuance
 authors: [wouterensink]
 tags: [yivi, email, phone]
 ---
@@ -26,15 +26,15 @@ Adding your phone number is straightforward:
 The same simple flow applies to email addresses—just check your inbox for the verification code instead.
 
 <div class="center-container">
-    <img src="/img/phone-embedded-issuance-flow.png" class="ss" alt="Yivi app UX flow for issuing phone number" />
+    <img src="/img/phone-embedded-issuance-flow.png" class="" alt="Yivi app UX flow for issuing phone number" />
 </div>
 <p style={{ textAlign: 'center', marginTop: '1em' }}>
-    Yivi app UX flow for issuing phone number
+    The new Yivi app UX flow for issuing your phone number
 </p>
 
-## Works when you need it most
+## Still works during disclosure
 
-Here's something particularly useful: this feature also works during disclosure flows. If a service requests your phone number and you haven't added it to your wallet yet, Yivi will guide you through adding it right then and there. No need to cancel, go find a website, issue the credential, and start over. The experience stays seamless.
+If a service requests your phone number and you haven't added it yet, Yivi already lets you issue missing credentials on the spot. That hasn't changed—but now you won't be redirected to a website to complete the process. Everything stays inside the app, so the flow feels uninterrupted.
 
 ## Inspired by what worked
 
@@ -43,7 +43,6 @@ We took that lesson and applied it here. Phone numbers and email addresses are s
 User experience remains one of our primary focuses for Yivi. Every tap we can eliminate, every context switch we can remove, brings us closer to an identity wallet that simply works.
 
 ## Try it now
-
 This feature is currently in beta and will be available to all users soon. If you're already using Yivi, keep an eye out for the update—and let us know what you think.
 
 We're building Yivi for you, and your feedback helps us make it better.
