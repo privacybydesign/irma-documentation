@@ -288,7 +288,7 @@ The app POSTs an [`irma.SignedMessage` instance](https://pkg.go.dev/github.com/p
   "message": "The message signed by this signature",
   "timestamp": {
     "Time": 1630063199,
-    "ServerUrl": "https://irma.sidn.nl/atumd",
+    "ServerUrl": "https://atumd.yivi.app",
     "Sig": {
       "Alg": "ed25519",
       "Data": "iAyQutB26ZaVLgfXvMa+sjAeXOYclpInq+xIaROdoWG/WqIg6xWQuFwaPvZQ0PQk5C3e0EYNDGsjNTpQejWBCw==",
