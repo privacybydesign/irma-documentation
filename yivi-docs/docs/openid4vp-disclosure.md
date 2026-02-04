@@ -7,7 +7,7 @@ We decided that the first step of this transition would be to
 add support for the OpenID4VP protocol and the SD-JWT VC credential format.
 
 Starting with `irmago` version `0.19` and version `7.10.0` of the Yivi app it is
-possible to issue SD-JWT VCs together with Idemix over the IRMA protocol and disclose SD-JWT VCs over OpenID4VP.
+possible to [issue SD-JWT VCs together with Idemix over the IRMA protocol](sdjwtvc-issuance) and disclose SD-JWT VCs over OpenID4VP.
 
 
 :::warning
@@ -158,6 +158,7 @@ Below you'll find an example for the json that defines the name and image shown 
     }
 }
 ```
+</details>
 
 ### Authorization requests
 We currently only support the `x509_san_dns` client identifier prefix as defined in the [OpenID4VP spec](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-defined-client-identifier-p),
@@ -168,7 +169,7 @@ including their origanization information, a logo and permissions for what crede
 Authorization requests that don't come with a valid certificate are denied by the Yivi app.
 Certificates can be revoked using a certificate refocation list, after which the Yivi app will refuse to share any data with the verifier.
 
-For the authorization request url we currently only support the `eudi-openid4vp://` scheme.
+For the authorization request url we currently support the `openid4vp://` and `eudi-openid4vp://` schemes.
 Any url using this scheme can open the Yivi app and is assumed to be an OpenID4VP session.
 We support both the response type `direct_post` as well as `direct_post.jwt` for an extra layer of encryption.
 
