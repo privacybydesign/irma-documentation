@@ -90,6 +90,59 @@ openssl req -config $ISSUER_HOST.cfg -new -key pkcs8.key -out $ISSUER_HOST.csr
 ```
 </details>
 
+ 
+Below you'll find an example json file for the issuer metadata that can be passed to the CSR generator script above using the AP_JSON_FILE environment variable.
+<details>
+  <summary>
+    Example json for issuer metadata
+  </summary>
+
+```json
+{
+    "registration": "https://portal.staging.yivi.app/organizations/<your-org>/",
+    "organization": {
+        "legalName": {
+            "en": "<your-org-name>",
+            "nl": "<your-org-name>"
+        }
+    },
+    "ap": {
+        "authorized": [
+            {
+                "credential": "pbdf-staging.sidn-pbdf.mobilenumber",
+                "attributes": [
+                    "mobilenumber"
+                ]
+            },
+            {
+                "credential": "pbdf-staging.pbdf.passport",
+                "attributes": [
+                    "photo",
+                    "documentNumber",
+                    "documentType",
+                    "firstName",
+                    "lastName",
+                    "nationality",
+                    "dateOfBirth",
+                    "yearOfBirth",
+                    "dateOfExpiry",
+                    "gender",
+                    "country",
+                    "over12",
+                    "over16",
+                    "over18",
+                    "over21",
+                    "over65",
+                    "isEuCitizen",
+                    "activeAuthentication"
+                ]
+            }
+        ]
+    }
+}
+```
+</details>
+
 ### Step 2: Update IRMA server
 Once an issuer certificate is obtained, the changes needed to support SD-JWT VC issuance in addition to Idemix are quite small.
 First and foremost, you should update your [IRMA server](irma-server.md) to version `0.19` or higher.
