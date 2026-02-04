@@ -12,6 +12,8 @@ Some iOS users of the Yivi app were unable to open their Yivi app on June 29th a
 
 Users that had the Yivi app installed prior to the incident were probably not affected, as the app was still able to open. However, users who installed the app after the domain migration were unable to open it due to the Universal Links issue.
 
+<!-- truncate -->
+
 ## Timeline of the incident
 | Date & Time                      | Description                                                                                                                                                                                          |
 |-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

@@ -10,6 +10,8 @@ According to our mission, we are committed to transparency and accountability. T
 ## Summary of the impact
 We experienced a significant outage on the 1st of July 2025, which affected our services for approximately 6 hours. During this time, users were unable to validate their pincodes and access their Yivi App, making the Yivi-App unusable. The issue was caused by an outage in the Scaleway data center AMS-1, where our database server is located. Scaleway preemptively shut down several services in the datacenter to prevent further issues such as hardware damage due to abnormal temperatures.
 
+<!-- truncate -->
+
 ## Timeline of the incident
 | Date & Time                      | Description                                                                                                                                                                                          |
 |-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

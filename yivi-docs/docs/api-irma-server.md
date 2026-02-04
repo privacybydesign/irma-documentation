@@ -15,12 +15,9 @@ The API that this server offers consists of two parts:
 ---
 ## API overview
 
-:::toc
-:::
-
 ---
 
-For each of these endpoints, if the HTTP status code indicates that the request was not successful (i.e. not in the 2xx range), then the server returns an [`irma.RemoteError`](https://godoc.org/github.com/privacybydesign/irmago#RemoteError) instance. For example, attempting to [retrieve the session result](#get-session-requestortoken-result) of an unknown session returns:
+For each of these endpoints, if the HTTP status code indicates that the request was not successful (i.e. not in the 2xx range), then the server returns an [`irma.RemoteError`](https://godoc.org/github.com/privacybydesign/irmago#RemoteError) instance. For example, attempting to [retrieve the session result](#get-sessionrequestortokenresult) of an unknown session returns:
 ```json
 {"status": 400, "error": "SESSION_UNKNOWN", "description": "Unknown or expired session"}
 ```
@@ -64,15 +61,15 @@ In the endpoints below, the `{requestorToken}` placeholder must be replaced with
 The final part of the `u` field in the `sessionPtr` is called the `clientToken`. The `clientToken` can be used to access the [public `/irma` endpoints](#api-reference-irma-endpoints) of the irma server.
 For accessing and using the [`/irma` frontend endpoints](#api-reference-irma-frontend-endpoints), you need the `frontendRequest`.
 
-Each session starts in the `"INITIALIZED"` [session status](#get-session-requestortoken-status). Regardless of how it reaches its ending status (`"DONE"`, `"CANCELLED"`, `"TIMEOUT"`), it is kept in memory for 5 minutes after reaching its ending status. After that all endpoints below requiring the requestor `token` return error `"SESSION_UNKNOWN"`.
+Each session starts in the `"INITIALIZED"` [session status](#get-sessionrequestortokenstatus). Regardless of how it reaches its ending status (`"DONE"`, `"CANCELLED"`, `"TIMEOUT"`), it is kept in memory for 5 minutes after reaching its ending status. After that all endpoints below requiring the requestor `token` return error `"SESSION_UNKNOWN"`.
 
 ---
 
 ### `DELETE /session/{requestorToken}`
 
-Cancel the session: set the [session status](#get-session-requestortoken-status) to `"CANCELLED"`.
+Cancel the session: set the [session status](#get-sessionrequestortokenstatus) to `"CANCELLED"`.
 
-> There is also a [variant of this endpoint](#delete-irma-session-clienttoken) for frontends (and Yivi apps) using client tokens (the final part of the `u` field in a `sessionPtr`).
+> There is also a [variant of this endpoint](#delete-irmasessionclienttoken) for frontends (and Yivi apps) using client tokens (the final part of the `u` field in a `sessionPtr`).
 
 ---
 
@@ -80,7 +77,7 @@ Cancel the session: set the [session status](#get-session-requestortoken-status)
 
 Retrieve the [session status](https://godoc.org/github.com/privacybydesign/irmago/server#Status) as a JSON string. Returns one of:
 * `"INITIALIZED"`: the session has been started and is waiting for the client
-* `"PAIRING"`: the client is waiting for the frontend to [give permission to connect](#post-irma-session-clienttoken-frontend-pairingcompleted)
+* `"PAIRING"`: the client is waiting for the frontend to [give permission to connect](#post-irmasessionclienttokenfrontendpairingcompleted)
 * `"CONNECTED"`: the client has retrieved the session request, we wait for its response
 * `"CANCELLED"`: the session is cancelled: the user refused, or the user did not have the requested attributes, or an error occurred during the session
 * `"DONE"`: the session has completed successfully
@@ -92,7 +89,7 @@ Of these the latter three are *ending statuses*; once the session reaches such a
 
 > If the session is cancelled due to the user aborting, it is (by design) not possible using this or the other endpoints of the `irma server` to distinguish between (1) the user had the requested attributes but refused to disclose them, and (2) the session was aborted by the user's Yivi app because (s)he did not have the required attributes.
 
-> There is also a [variant of this endpoint](#get-irma-session-clienttoken-status) for frontends (and Yivi apps) using client tokens (the final part of the `u` field in a `sessionPtr`).
+> There is also a [variant of this endpoint](#get-irmasessionclienttokenstatus) for frontends (and Yivi apps) using client tokens (the final part of the `u` field in a `sessionPtr`).
 
 ---
 
@@ -100,7 +97,7 @@ Of these the latter three are *ending statuses*; once the session reaches such a
 
 Subscribe to a [server-sent event](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) stream of status updates. Whenever the session status changes, an event is sent with the new session status as a JSON string. If you need to monitor the status of a session, this is preferred over polling to `GET /session/{requestorToken}/status`.
 
-> There is also a [variant of this endpoint](#get-irma-session-clienttoken-statusevents) for frontends (and Yivi apps) using client tokens (the final part of the `u` field in a `sessionPtr`)
+> There is also a [variant of this endpoint](#get-irmasessionclienttokenstatusevents) for frontends (and Yivi apps) using client tokens (the final part of the `u` field in a `sessionPtr`)
 
 ---
 
@@ -129,7 +126,7 @@ Get the [session result](https://godoc.org/github.com/privacybydesign/irmago/ser
 ```
 The response may contain the following fields:
 * `token`: Requestor token
-* `status`: Current [session status](#get-session-requestortoken-status)
+* `status`: Current [session status](#get-sessionrequestortokenstatus)
 * `type`: [Session type](what-is-yivi.md#session-types): one of `"disclosing"`, `"signing"`, or `"issuing"`
 * `proofStatus`: One of the package level [irma.ProofStatus](https://godoc.org/github.com/privacybydesign/irmago#pkg-constants) constants, indicating the cryptographic validity of the attributes and proofs of knowledge:
    * `"VALID"`: proofs are valid
@@ -142,7 +139,7 @@ The response may contain the following fields:
 * `signature`: The full attribute-based signature in case of `"signing"` sessions
 * `error`: Error message in case of failure
 
-If the session is not yet finished (that is, the session status is `INITIALIZED` or `CONNECTED`), then only the first three fields are populated. (For getting just the current session status, using [`GET /session/{requestorToken}/statusevents`](#get-session-requestortoken-statusevents) or [`GET /session/{requestorToken}/status`](#get-session-requestortoken-status) is preferred.)
+If the session is not yet finished (that is, the session status is `INITIALIZED` or `CONNECTED`), then only the first three fields are populated. (For getting just the current session status, using [`GET /session/{requestorToken}/statusevents`](#get-sessionrequestortokenstatusevents) or [`GET /session/{requestorToken}/status`](#get-sessionrequestortokenstatus) is preferred.)
 
 This endpoint just fetches the session result, and works normally even if the session failed. If so, the `status`, `proofStatus` or `error` fields will indicate what happened. Be sure to check these fields when retrieving and handling the session result.
 
@@ -150,7 +147,7 @@ This endpoint just fetches the session result, and works normally even if the se
 
 ### `GET /session/{requestorToken}/result-jwt`
 
-If a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results), then this returns a [JWT](https://jwt.io) signed by the `irma server` with the message from [`GET /session/{requestorToken}/result`](#get-session-requestortoken-result) above as JWT body, along with the following standard JWT fields:
+If a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results), then this returns a [JWT](https://jwt.io) signed by the `irma server` with the message from [`GET /session/{requestorToken}/result`](#get-sessionrequestortokenresult) above as JWT body, along with the following standard JWT fields:
 * `iss`: name of the current `irma server` as defined in its configuration
 * `iat`: Unix timestamp indicating when this JWT was created
 * `sub`: `verification_result` or `signing_result` or `issuing_result`
@@ -167,7 +164,7 @@ Also returns a session result JWT, but one whose structure is the same as the se
 
 ### `GET /publickey`
 
-If a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results), then this returns the corresponding public key in PEM with which the server's session result JWTs returned by [`GET /session/{requestorToken}/result-jwt`](#get-session-requestortoken-result-jwt) and [`GET /session/{requestorToken}/getproof`](#get-session-requestortoken-getproof) can be verified.
+If a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results), then this returns the corresponding public key in PEM with which the server's session result JWTs returned by [`GET /session/{requestorToken}/result-jwt`](#get-sessionrequestortokenresult-jwt) and [`GET /session/{requestorToken}/getproof`](#get-sessionrequestortokengetproof) can be verified.
 
 ---
 
@@ -182,22 +179,22 @@ The endpoints exclusively meant for frontend libraries can be found below [in a 
 ---
 
 ### `DELETE /irma/session/{clientToken}`
-Behaves exactly the same as the [delete endpoint for requestors](#delete-session-requestortoken), but uses the
+Behaves exactly the same as the [delete endpoint for requestors](#delete-sessionrequestortoken), but uses the
 [client token from the `sessionPtr`](#post-session) instead of the requestor token.
 
 ---
 
 ### `GET /irma/session/{clientToken}/status`
-Behaves exactly the same as the [status endpoint for requestors](#get-session-requestortoken-status), but uses the [client token
+Behaves exactly the same as the [status endpoint for requestors](#get-sessionrequestortokenstatus), but uses the [client token
 from the `sessionPtr`](#post-session) instead of the requestor token. For frontend libraries, this endpoint is deprecated.
-Please use the [frontend status endpoint](#get-irma-session-clienttoken-frontend-status) instead.
+Please use the [frontend status endpoint](#get-irmasessionclienttokenfrontendstatus) instead.
 
 ---
 
 ### `GET /irma/session/{clientToken}/statusevents`
-Behaves exactly the same as the [statusevents endpoint for requestors](#get-session-requestortoken-statusevents), but uses the
+Behaves exactly the same as the [statusevents endpoint for requestors](#get-sessionrequestortokenstatusevents), but uses the
 [client token from the `sessionPtr`](#post-session) instead of the requestor token. For frontend libraries this endpoint is deprecated.
-Please use the [frontend statusevents endpoint](#get-irma-session-clienttoken-frontend-statusevents) instead.
+Please use the [frontend statusevents endpoint](#get-irmasessionclienttokenfrontendstatusevents) instead.
 
 ---
 
@@ -218,7 +215,7 @@ The frontend endpoints in this version of the IRMA server implement frontend pro
 Retrieve the current [session status](https://godoc.org/github.com/privacybydesign/irmago/server#Status), and additional information
 being relevant for that session status, as a JSON object.
 
-The JSON object always contains a `status` field, containing the session status as being described in [status endpoint for requestors](#get-session-requestortoken-status).
+The JSON object always contains a `status` field, containing the session status as being described in [status endpoint for requestors](#get-sessionrequestortokenstatus).
 Additionally, when the session status is `DONE`, the `nextSession` field might be included.
 It contains the `sessionPtr` of the IRMA session following up the current session (a chained session).
 This happens when the `nextSession` option is used as [extra parameter in the session request](session-requests.md#extra-parameters).
@@ -235,7 +232,7 @@ Below you can find an example response:
 ### `GET /irma/session/{clientToken}/frontend/statusevents`
 Subscribe to a [server-sent event](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) stream of status updates.
 Whenever the session status changes, an event is sent as a JSON object. This JSON object follows the exact same format as the
-output of the [frontend status endpoint](#get-irma-session-clienttoken-frontend-status).
+output of the [frontend status endpoint](#get-irmasessionclienttokenfrontendstatus).
 If you need to monitor the status of a session, this is preferred over polling the frontend status endpoint.
 
 ### `POST /irma/session/{clientToken}/frontend/options`
@@ -246,7 +243,7 @@ of options, an error is returned.
 Session options can be changed multiple times. However, as soon as an
 [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[Yivi app](yivi-app.md)
 has connected to the session, it is not possible to change the options anymore. In other words, this
-endpoint can only be used when the [session status](#get-irma-session-clienttoken-frontend-status) is `"INITIALIZED"`.
+endpoint can only be used when the [session status](#get-irmasessionclienttokenfrontendstatus) is `"INITIALIZED"`.
 
 The body of an options request should have the following structure:
 ```json
@@ -261,13 +258,13 @@ Currently we only have one option, the option `pairingMethod`. It can have two v
    No device pairing is used. This is the normal, already known behaviour.
  * `"pairingMethod": "pin"`  
    When an [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[Yivi app](yivi-app.md)
-   connects to a session in which pairing is enabled, the [session status](#get-irma-session-clienttoken-frontend-status)
+   connects to a session in which pairing is enabled, the [session status](#get-irmasessionclienttokenfrontendstatus)
    becomes `PAIRING`. The irmaclient shows a 4 digit pairing code and only after the user correctly enters this code
    in the frontend the session continues, and the status becomes `CONNECTED`. This method can be
    used when a user is expected to scan an IRMA QR code using his/her phone and there is a risk on shoulder surfing
    (i.e. someone in close physical proximity to the user scans the QR code that was meant for the user).
    
-   Pairing confirmation can be communicated by the frontend using the [`pairingcompleted` endpoint](#post-irma-session-clienttoken-frontend-pairingcompleted).
+   Pairing confirmation can be communicated by the frontend using the [`pairingcompleted` endpoint](#post-irmasessionclienttokenfrontendpairingcompleted).
    
    When this option is requested, the session options response on this request will contain an extra field
    `pairingCode` containing the expected 4 digit code.
@@ -288,6 +285,6 @@ If the `pairingMethod` field has the value `none`, the `pairingCode` field is om
 ### `POST /irma/session/{clientToken}/frontend/pairingcompleted`
 This endpoint can be used by the frontend to confirm the pairing of the frontend
 and the [irmaclient](https://github.com/privacybydesign/irmago/tree/master/irmaclient)/[Yivi app](yivi-app.md).
-The endpoint can only be used while the [session status](#get-session-requestortoken-status) is set to `PAIRING`.
+The endpoint can only be used while the [session status](#get-sessionrequestortokenstatus) is set to `PAIRING`.
 A valid request to this endpoint will cause the session status to change from `PAIRING` to `CONNECTED`.
 When the request succeeds, a `204 No Content` response is returned.

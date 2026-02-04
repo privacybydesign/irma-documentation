@@ -10,6 +10,13 @@ const config: Config = {
   title: "Yivi docs",
   tagline: "Privacy first ID-wallet",
   favicon: "img/favicon.ico",
+  scripts: [
+    {
+      src: "https://static.cloudflareinsights.com/beacon.min.js",
+      defer: true,
+      "data-cf-beacon": '{"token": "6777c449784149a096de0ea8fd04c85b"}',
+    },
+  ],
 
   // Set the production url of your site here
   url: "https://docs.yivi.app",
@@ -23,7 +30,12 @@ const config: Config = {
   projectName: "irma-documentation", // Usually your repo name.
 
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "warn"
+    }
+  },
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -32,6 +44,18 @@ const config: Config = {
     defaultLocale: "en",
     locales: ["en"],
   },
+
+  plugins: [
+      [
+          "@cmfcmf/docusaurus-search-local",
+          {
+            // Whether to also index the titles of the parent categories in the sidebar of a doc page
+            indexDocSidebarParentCategories: 2,
+            // Includes parent categories path in search result
+            includeParentCategoriesInPageTitle: true
+          }
+      ]
+  ],
 
   presets: [
     [
@@ -158,6 +182,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ['bash']
     },
     stylesheets: [
       {

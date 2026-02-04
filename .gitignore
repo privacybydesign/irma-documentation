@@ -12,3 +12,4 @@ website/i18n/*
 
 yarn.lock
 .vscode/
+*:Zone.Identifier

@@ -11,6 +11,7 @@ We want to inform you about a slight change in the planning, with the following 
 - 30-04-2025: The scheme URL inside the scheme itself will be updated. If automatic scheme update is enabled on your server, this will automatically switch your server to use the new URL.
 - **If you are behind a firewall, please make sure the new domain and/or IP is whitelisted before April 30th and keep the old Privacy By Design domain and/or IP whitelisted until at least May 14th.**
 
+<!-- truncate -->
 
 # Scheme manager migration announcement
 

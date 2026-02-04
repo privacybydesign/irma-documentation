@@ -9,6 +9,8 @@ As we enter a pivotal phase in digital identity development across Europe, **Yiv
 
 Our mission has always been clear: **with Yivi, you are in charge of your digital data**. And while regulatory alignment with eIDAS 2.0 and the EUDI-wallet may challenge some of our architectural preferences, it is a necessary step to bring privacy-preserving identity to the masses.
 
+<!-- truncate -->
+
 <div class="center-container">
     <img src="/img/vision.png" class="mm" alt="Yivi's vision" />
 </div>

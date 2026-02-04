@@ -9,7 +9,7 @@ Each [IRMA server](what-is-yivi.md#irma-servers) exposes APIs for creating IRMA 
 
 * The [`POST /session`](api-irma-server.md#post-session) endpoint from [`irma server`](irma-server.md).
 * The [`StartSession()` function](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
-* The [`startSession()` function](api-irmajs.md#startsession) of `irmajs`.
+* The [`session.start` attribute](https://github.com/privacybydesign/yivi-frontend-packages/blob/master/plugins/yivi-client/README.md#session) of [`Yivi client`](/yivi-frontend#available-plugins-for-yivi-core).
 
 For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-yivi.md#irma-session-flow).
 
@@ -377,7 +377,7 @@ On iOS, toggling back to the calling app or website after the session can be sim
 
 ### Augmenting the client return URL
 
-It is possible to have the IRMA server augment the `clientReturnUrl` with the server token of a session (i.e., the `token` in the [response of the `/session` endpoint](api-irma-server.md#post-session)). This token is then appended as a query parameter with name `token` to the `clientReturnUrl`. Using this token, one can the retrieve the [session result](api-irma-server.md#get-session-token-result).
+It is possible to have the IRMA server augment the `clientReturnUrl` with the server token of a session (i.e., the `token` in the [response of the `/session` endpoint](api-irma-server.md#post-session)). This token is then appended as a query parameter with name `token` to the `clientReturnUrl`. Using this token, one can the retrieve the [session result](api-irma-server.md#get-sessionrequestortokenresult).
 
 To enable this, both the server configuration flag `augment-client-return-url` needs to be enabled, as well as the `augmentReturnUrl` session request parameter needs to be true.
 

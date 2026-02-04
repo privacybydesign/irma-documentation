@@ -7,6 +7,8 @@ tags: [yivi, authentication]
 
 Authentication and identification are critical components of digital services. This can be done with Yivi, our privacy-friendly ID-Wallet. It provides multiple options for verifying user identities. However, a significant challenge in implementing Yivi is the identifier used for authentication. Government and healthcare organizations can use the BSN (Burger Service Nummer), but private entities must explore alternative options. Below, we discuss potential authentication methods using Yivi, their advantages, and their limitations.
 
+<!-- truncate -->
+
 ## Authentication and Activation Using BRP Data
 For registration purposes organizations often need a set of data to match the user to their own administration, this is often done by matching on data from the Dutch Personal Records Database (BRP). The data in the BRP is of such quality that it can be trusted to be correct. The challenge often is that the data of the user in the administration of verifing organization is not of the same quality. Resulting in the proces that when a user discloses its BRP information to an organization it sometimes results in a dropout. These dropsouts are a problem, because it blocks the user from identifying and thereby registering or authenticating itself. To circumvent this problem organizations often choose to either: request more data from the user, for instance an contractnumber or change the data in their adminstration to match the data from the BRP so that in a next match the user is matched correctly.
 
