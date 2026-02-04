@@ -24,10 +24,140 @@ If a requested credential is missing, the user will be guided to obtain a new on
 
 ### Verifier certificates
 Before you're allowed to request any attributes you must possess a valid verifier certificate that is on the Yivi Trust List.
-You can obtain one via the Yivi portal by becoming a Trusted Verifier.
+You can obtain one by becoming a Trusted Verifier via the Yivi portal and then contacting Yivi support to help create a certificate.
+Since OpenID4VP support is in such a new state this cannot be done automatically yet.
 
 The certificate contains a json value that has some metadata in it, like the origanisation information and authorized attributes.
 It is tied to the hostname where the verifier server runs (so the URL the app has to contact for an OpenID4VP session).
+
+Below you'll find a script for creating a certificate signing request. Once you've created a CSR, you can send it to us so we can create a certificate for you. Keep in mind that the json inside the certificate needs to contain all attributes you're planning to use. This is a current limitation. Wild card support is planned for a future release.
+
+<details>
+  <summary>
+    Script to generate Verifier Certificate Signing Request
+  </summary>
+
+```bash
+# Example usage:
+# $ RP_JSON_FILE=app.json VERIFIER_HOST=is.yivi.app C=NL ST=Utrecht L=Utrecht O=Yivi  ./gen.sh
+
+# remove whitespace and escape quotes for json
+escaped_json=$(cat $RP_JSON_FILE | jq -c | jq -R)
+
+# create cfg file for the certificate signing request
+echo "
+[ req ]
+default_md         = sha256
+distinguished_name = req_distinguished_name
+prompt             = no
+req_extensions     = v3_req
+x509_extensions    = v3_ext
+
+[ req_distinguished_name ]
+C  = $C
+ST = $ST
+L  = $L
+O  = $O
+CN = $VERIFIER_HOST
+
+[ v3_req ]
+subjectAltName   = @alt_names
+extendedKeyUsage = clientAuth
+keyUsage         = digitalSignature, keyEncipherment
+basicConstraints = critical, CA:FALSE
+2.1.123.1        = ASN1:UTF8String:$escaped_json
+
+[ alt_names ]
+DNS.0 = $VERIFIER_HOST
+URI.1 = https://$VERIFIER_HOST
+
+[ v3_ext ]
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always,verifier
+" > "$VERIFIER_HOST.cfg"
+
+
+# generate private key (can skip this if you already have one)
+openssl ecparam -name prime256v1 -genkey -noout -outform DER -out $VERIFIER_HOST.der.key
+
+# convert private key to pem format (can skip this if you already have one)
+openssl ec -inform DER -in $VERIFIER_HOST.der.key -outform PEM -out $VERIFIER_HOST.pem.key
+
+# convert key to PKCS#8 format (can skip this if you already have one)
+openssl pkcs8 -topk8 -inform DER -outform DER -nocrypt -in $VERIFIER_HOST.der.key -out pkcs8.key
+
+# create certificate signing request
+openssl req -config $VERIFIER_HOST.cfg -new -key pkcs8.key -out $VERIFIER_HOST.csr
+
+```
+</details>
+
+Below you'll find an example for the json that defines the name and image shown to the user during disclosure, as well as all the attributes you'd like to be able to request.
+
+<details>
+  <summary>
+    Example Json for Verifier metadata json
+  </summary>
+
+```json
+{
+    "registration": "https://portal.staging.yivi.app/organizations/<your-org>/",
+    "organization": {
+        "logo": {
+            "mimeType": "image/png",
+            "data": "<base64_encoded_png>"
+        },
+        "legalName": {
+            "en": "<your-legal-name>",
+            "nl": "<your-legal-name>"
+        }
+    },
+    "rp": {
+        "authorized": [
+            {
+                "credential": "pbdf-staging.sidn-pbdf.mobilenumber",
+                "attributes": [
+                    "mobilenumber"
+                ]
+            },
+            {
+                "credential": "pbdf-staging.sidn-pbdf.email",
+                "attributes": [
+                    "email",
+                    "domain"
+                ]
+            },
+            {
+                "credential": "pbdf-staging.pbdf.passport",
+                "attributes": [
+                    "photo",
+                    "documentNumber",
+                    "documentType",
+                    "lastName",
+                    "dateOfBirth",
+                    "activeAuthentication",
+                    "country",
+                    "dateOfExpiry",
+                    "gender",
+                    "over12",
+                    "over16",
+                    "over18",
+                    "over65",
+                    "isEuCitizen",
+                    "nationality",
+                    "yearOfBirth",
+                    "over21",
+                    "firstName"
+                ]
+            }
+        ],
+        "purpose": {
+            "en": "EUDI PoC",
+            "nl": "EUDI PoC"
+        }
+    }
+}
+```
 
 ### Authorization requests
 We currently only support the `x509_san_dns` client identifier prefix as defined in the [OpenID4VP spec](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-defined-client-identifier-p),
