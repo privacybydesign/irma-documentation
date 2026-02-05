@@ -9,11 +9,6 @@ add support for the OpenID4VP protocol and the SD-JWT VC credential format.
 Starting with `irmago` version `0.19` and version `7.10.0` of the Yivi app it is
 possible to [issue SD-JWT VCs together with Idemix over the IRMA protocol](sdjwtvc-issuance) and disclose SD-JWT VCs over OpenID4VP.
 
-
-:::warning
-SD-JWT VC and OpenID4VP support in Yivi are currently experimental. We don't recommend depending on it for now.
-:::
-
 ## Requesting SD-JWT VCs using OpenID4VP
 Yivi is compatible with a subset of the [OpenID4VP standard version 1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html).
 
