@@ -33,9 +33,6 @@ Below you'll find a script for creating a certificate signing request. Once you'
   </summary>
 
 ```bash
-# Example usage:
-# $ RP_JSON_FILE=app.json VERIFIER_HOST=is.yivi.app C=NL ST=Utrecht L=Utrecht O=Yivi  ./gen.sh
-
 # remove whitespace and escape quotes for json
 escaped_json=$(cat $RP_JSON_FILE | jq -c | jq -R)
 
@@ -86,6 +83,23 @@ openssl req -config $VERIFIER_HOST.cfg -new -key pkcs8.key -out $VERIFIER_HOST.c
 
 ```
 </details>
+
+Save the contents of this script to a file and make it executable with:
+```bash
+chmod +x script.sh
+```
+
+You can then run it using the following command:
+```bash
+export RP_JSON_FILE=rp.json      # see below for the contents of this file
+export VERIFIER_HOST=<host_dns>  # replace with url where verifier server runs
+export C=NL                      # replace with your country
+export ST=Utrecht                # Replace with your state/province
+export L=Utrecht                 # replace with your city
+export O=Yivi                    # replace with your organization
+
+./script.sh
+```
 
 Below you'll find an example for the json that defines the name and image shown to the user during disclosure, as well as all the attributes you'd like to be able to request.
 
@@ -154,6 +168,14 @@ Below you'll find an example for the json that defines the name and image shown 
 }
 ```
 </details>
+
+To encode your organization image to a base64 string, run:
+```bash
+base64 "<logo_file>.png" > image.txt
+```
+
+Copy the contents of this file to and paste in the `origanization.logo.data` field.
+Note that only png is supported right now.
 
 ### Authorization requests
 We currently only support the `x509_san_dns` client identifier prefix as defined in the [OpenID4VP spec](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-defined-client-identifier-p),
