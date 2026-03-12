@@ -281,6 +281,10 @@ Interceptor.attach(Module.findExportByName("libavfacelib.so", "jni_match"), {
 });
 ```
 
+:::warning[Security/Privacy Tradeoff]
+Performing face verification and liveness detection on-device is a deliberate privacy choice - biometric data never leaves the user's phone. However, this creates a fundamental security gap: an attacker can borrow or steal someone else's passport, bypass the on-device face matching using the methods described above, and obtain a credential bound to their own device.
+:::
+
 ### The issuer has no defense
 
 Looking at [`formatter_func.py`](https://github.com/eu-digital-identity-wallet/av-srv-web-issuing-avw-py/blob/main/app/formatter_func.py) in the issuer service, we can see it simply accepts the birth date and creates a credential:
