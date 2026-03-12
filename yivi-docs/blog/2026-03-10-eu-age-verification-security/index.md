@@ -101,7 +101,29 @@ So the EU chose speed over privacy. The current implementation uses standard mdo
 
 The lack of server-side verification makes this system trivially exploitable. Here's a practical guide to the tools and techniques an attacker would use.
 
-![Attack Flow](./attack-flow.svg)
+```mermaid
+flowchart LR
+    subgraph attack["🕐 2-4 hours with basic reverse engineering skills"]
+        direction LR
+        A["🧑‍💻 Download APK<br/>from GitHub"] --> B["📦 Decompile<br/>apktool / jadx"]
+        B --> C["✏️ Modify code<br/>verifyHT → true<br/>birth_date = 1990"]
+        C --> D["🔧 Recompile<br/>& sign"]
+    end
+
+    D --> E["📱 Install app"]
+    E -->|"birth_date: 1990-01-01"| F["🏛️ Issuer<br/>cannot verify"]
+    F --> G["🎫 Fraudulent<br/>credential"]
+
+    style A fill:#2C3E50,color:#fff
+    style B fill:#8E44AD,color:#fff
+    style C fill:#8E44AD,color:#fff
+    style D fill:#8E44AD,color:#fff
+    style E fill:#34495E,color:#fff
+    style F fill:#5D6D7E,color:#fff
+    style G fill:#E74C3C,color:#fff
+```
+
+> **Alternative:** Use [Frida](https://frida.re/) for runtime hooking - no APK modification needed. Root the device, hook verification functions, same result.
 
 ### Method 1: App modification
 
@@ -239,10 +261,9 @@ All of this is good cryptography. But the results never leave the device in a ve
 
 ### Face verification: easily bypassable
 
-The face matching uses a native SDK with these thresholds:
+The face matching uses a native SDK with thresholds configured in [`WalletCoreConfigImpl.kt`](https://github.com/eu-digital-identity-wallet/av-app-android-wallet-ui/blob/main/core-logic/src/dev/java/eu/europa/ec/corelogic/config/WalletCoreConfigImpl.kt):
 
 ```kotlin
-// WalletCoreConfigImpl.kt
 faceMatchConfig = FaceMatchConfig(
     livenessThreshold = 0.972017,  // 97.2% confidence required
     matchingThreshold = 0.5        // 50% similarity required
@@ -262,10 +283,9 @@ Interceptor.attach(Module.findExportByName("libavfacelib.so", "jni_match"), {
 
 ### The issuer has no defense
 
-Looking at the [issuer code](https://github.com/eu-digital-identity-wallet/av-srv-web-issuing-avw-py/blob/main/app/formatter_func.py), we can see it simply accepts the birth date and creates a credential:
+Looking at [`formatter_func.py`](https://github.com/eu-digital-identity-wallet/av-srv-web-issuing-avw-py/blob/main/app/formatter_func.py) in the issuer service, we can see it simply accepts the birth date and creates a credential:
 
 ```python
-# formatter_func.py - mdocFormatter()
 def mdocFormatter(data, credential_metadata, country, device_publickey):
     # No verification of passport authenticity
     # Just trusts the data and signs a credential
