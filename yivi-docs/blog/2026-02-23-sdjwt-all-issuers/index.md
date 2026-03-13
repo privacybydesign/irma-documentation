@@ -32,6 +32,10 @@ The following Privacy by Design issuers now support SD-JWT VCs:
 | **Driver License** | Full identity data, photo, age verification | NFC chip scan |
 | **SURF** | Educational institution, affiliation | SURFconext authentication |
 
+:::warning[iDIN deprecation]
+The iDIN issuer is being deprecated and does not support SD-JWT VCs. If you rely on iDIN credentials, please migrate to alternative issuers such as Passport or ID-card for identity verification.
+:::
+
 ## Why SD-JWT VCs matter
 
 The European Union is standardizing on SD-JWT VCs for the upcoming European Digital Identity Wallet (EUDI). By supporting this format now, Yivi ensures forward compatibility with the broader European identity ecosystem.

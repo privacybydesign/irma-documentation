@@ -47,7 +47,7 @@ Imagine you're applying for a job that requires a university degree. There are t
 
 The EU Age Verification Wallet currently uses Approach A. The app performs all the verification on your phone, then simply tells the issuer "this person is over 18." The issuer has no way to confirm this claim independently.
 
-This creates what security researchers call a **trust boundary violation**. The verification happens in an environment the user controls (their phone), but the result is trusted by a system that the user shouldn't be able to manipulate (the credential issuer).
+This creates what security researchers call a trust boundary violation. The verification happens in an environment the user controls (their phone), but the result is trusted by a system that the user shouldn't be able to manipulate (the credential issuer).
 
 ![Architecture Overview](./trust-gap-infographic.svg)
 
@@ -81,7 +81,7 @@ This is a false sense of privacy. Users believe they're participating in a secur
 
 ### The real privacy gap: no Zero-Knowledge Proofs
 
-The more significant privacy concern isn't during enrollment, but during **verification**. When you prove your age to a website or store, the current system reveals your credential to the Relying Party. This creates linkability: the same credential presented to multiple verifiers can potentially be correlated.
+The more significant privacy concern isn't during enrollment, but during verification. When you prove your age to a website or store, the current system reveals your credential to the Relying Party. This creates linkability: the same credential presented to multiple verifiers can potentially be correlated.
 
 The solution is [Zero-Knowledge Proofs (ZKPs)](https://en.wikipedia.org/wiki/Zero-knowledge_proof): cryptographic techniques that let you prove "I am over 18" without revealing your credential or any other identifying information.
 
@@ -89,7 +89,7 @@ The specification acknowledges this:
 
 > "A next version of the Technical Specifications for Age Verification Solutions will include as an experimental feature the Zero-Knowledge Proof (ZKP) solution"
 
-But ZKPs are explicitly **not implemented**. The specification states they were deferred because:
+But ZKPs are explicitly not implemented. The specification states they were deferred because:
 
 > "Adding support for these features would introduce additional complexity, which could hinder the rapid adoption of the solution."
 
@@ -212,7 +212,7 @@ A common response to client-side security issues is: "Just use Google Play Integ
 | Liveness detection passed | ✗ | ✗ |
 | Birth date is genuine | ✗ | ✗ |
 
-App attestation proves the app is authentic. It does **not** prove the app did its job.
+App attestation proves the app is authentic. It does not prove the app did its job.
 
 ### The protocol-level bypass remains
 
@@ -301,31 +301,13 @@ def mdocFormatter(data, credential_metadata, country, device_publickey):
     )
 ```
 
-### The underground economy of fake IDs goes digital
-
-To understand why this matters, consider the existing market for fake identity documents. In 2024, Europol reported seizing over 12,000 fraudulent identity documents in a single operation. The demand is enormous: from underage alcohol purchases to organized crime using false identities for money laundering.
-
-A physical fake ID requires:
-- Access to specialized printing equipment
-- Knowledge of security features (holograms, UV markings, microprinting)
-- Physical materials that are often controlled
-- Distribution networks that risk detection
-
-A bypassed digital credential requires:
-- A laptop
-- Basic programming knowledge
-- The publicly available source code
-- A few hours of work
-
-The economics shift dramatically in favor of fraud. Once someone publishes a working bypass, it can be shared globally in seconds. There's no physical manufacturing bottleneck, no shipping logistics, no risk of interception.
-
 ---
 
 ## What would actually work
 
 ### The fix: server-side passport verification
 
-The issuer needs **cryptographic proof** that a real passport was scanned. Here's what should be sent:
+The issuer needs cryptographic proof that a real passport was scanned. Here's what should be sent:
 
 ```kotlin
 data class PassportProof(
@@ -341,7 +323,7 @@ The issuer would then:
 3. **Hash DG1** and compare to the hash in SOD
 4. **Extract birth date** from the now-verified DG1
 
-This way, a modified app **cannot** forge a valid passport proof. It would need to forge the passport's cryptographic signatures, which is infeasible.
+This way, a modified app cannot forge a valid passport proof. It would need to forge the passport's cryptographic signatures, which is infeasible.
 
 ### The tradeoff: privacy vs security
 
@@ -358,7 +340,7 @@ Sending SOD + DS certificate to the server reveals:
 
 It does NOT reveal your name, passport number, or face image.
 
-The recommendation: **verify and discard**. The issuer verifies the cryptographic proof, extracts the birth date, and immediately discards the passport data without storing it.
+The recommendation: verify and discard. The issuer verifies the cryptographic proof, extracts the birth date, and immediately discards the passport data without storing it.
 
 ---
 
@@ -374,7 +356,7 @@ The cryptographic building blocks are all there:
 - Certificate chains can be validated
 - [OpenID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) supports proof mechanisms
 
-The app just needs to **use** them in a way the issuer can verify.
+The app just needs to use them in a way the issuer can verify.
 
 ---
 
@@ -386,7 +368,7 @@ If you're a business planning to accept EU Age Verification credentials (an onli
 
 A credential from the current system means: *"Someone using the official app (or a modified version of it) submitted this birth date."*
 
-It does **not** mean: *"This person proved their age using a verified passport."*
+It does not mean: *"This person proved their age using a verified passport."*
 
 The liability implications are significant. If a minor obtains alcohol using a fraudulently obtained credential, who bears responsibility? The credential issuer who trusted the app? The business who trusted the credential? The platform provider who didn't implement additional checks?
 
@@ -418,7 +400,7 @@ The issuer performs:
 1. **Passive Authentication (PA)**: Verifies the passport's digital signatures against the Document Signing Certificate, then validates the certificate chain against government-issued Masterlists
 2. **Active Authentication (AA)**: Performs a challenge-response with the passport's NFC chip to prove the physical document is present, not just a copy of its data
 
-This means a modified app **cannot** forge credentials. Even if an attacker controls the entire app, they cannot produce valid cryptographic signatures from a passport they don't possess.
+This means a modified app cannot forge credentials. Even if an attacker controls the entire app, they cannot produce valid cryptographic signatures from a passport they don't possess.
 
 ### Zero-Knowledge Proofs with Idemix
 
