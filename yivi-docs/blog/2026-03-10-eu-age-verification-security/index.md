@@ -191,6 +191,10 @@ No passport required. No app required. No face matching required.
 
 ## Why app attestation doesn't solve this
 
+:::note
+Google Play Integrity and Apple App Attest are not currently implemented in the EU Age Verification app. However, app attestation is likely to be raised as a counter-argument to this security analysis. We address it here to explain why it would not solve the fundamental trust gap.
+:::
+
 A common response to client-side security issues is: "Just use Google Play Integrity or Apple App Attest." This fundamentally misunderstands the problem.
 
 ### What app attestation can verify
@@ -433,6 +437,8 @@ All Yivi components are open source and have been in production for years:
 - [vcmrtd](https://github.com/privacybydesign/vcmrtd): Example app for scanning and reading passports
 
 The passport credential feature has been [publicly available since 2025](/blog/2025-passport-callout), with support for passports, ID-cards, and driver's licenses validated against Dutch and German government Masterlists.
+
+The solution has been audited and penetration tested by [Radically Open Security](https://www.radicallyopensecurity.com/), an independent security firm, with no major findings.
 
 ---
 
