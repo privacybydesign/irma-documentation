@@ -91,7 +91,7 @@ But ZKPs are explicitly not implemented. The specification states they were defe
 
 > "Adding support for these features would introduce additional complexity, which could hinder the rapid adoption of the solution."
 
-So the EU chose speed over privacy. The current implementation uses standard mdoc presentations where Relying Parties see your actual credential: no unlinkability, no predicate proofs, no privacy-preserving verification. Every bar, website, and shop you verify your age with receives the same trackable credential.
+So the EU chose speed over privacy. The current implementation uses standard mdoc presentations where Relying Parties see your actual credential. To mitigate linkability, the system uses batch issuance: [30 single-use credentials](https://github.com/eu-digital-identity-wallet/av-srv-web-issuing-avw-py/blob/main/app/metadata_config/metadata_config.json#L8) are issued at once, and each credential is discarded after one use. This prevents tracking across verifications, but once all 30 are used, users must scan their passport again to obtain a fresh batch.
 
 ---
 
