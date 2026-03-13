@@ -13,7 +13,7 @@ tags: [security, privacy, eudi-wallet, age-verification, analysis]
 
 When we talk about age verification, it's easy to think of trivial use cases: buying a beer at a festival, accessing an adult website, or purchasing cigarettes. But the EU's digital identity ambitions extend far beyond these scenarios.
 
-The [Age Verification Wallet](https://github.com/eu-digital-identity-wallet/av-app-android-wallet-ui) is a stepping stone toward the broader [EU Digital Identity Wallet](https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/europe-fit-digital-age/european-digital-identity_en) - a system designed to become the digital equivalent of your physical ID card. Imagine using it to:
+The [Age Verification Wallet](https://github.com/eu-digital-identity-wallet/av-app-android-wallet-ui) is a stepping stone toward the broader [EU Digital Identity Wallet](https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/europe-fit-digital-age/european-digital-identity_en), a system designed to become the digital equivalent of your physical ID card. Imagine using it to:
 
 - Open a bank account
 - Sign legal contracts
@@ -21,11 +21,11 @@ The [Age Verification Wallet](https://github.com/eu-digital-identity-wallet/av-a
 - Vote in elections
 - Prove your professional qualifications
 
-The security of this foundation matters. A bypassable age verification system isn't just a problem for alcohol vendors - it's a warning sign for the entire digital identity infrastructure Europe is building.
+The security of this foundation matters. A bypassable age verification system isn't just a problem for alcohol vendors; it's a warning sign for the entire digital identity infrastructure Europe is building.
 
 ## Introduction
 
-The European Commission is building an [Age Verification (AV) Wallet](https://github.com/eu-digital-identity-wallet/av-app-android-wallet-ui) - a mobile application that allows EU citizens to prove their age using their passport, without revealing their actual birth date or identity. It's part of the broader [EU Digital Identity Wallet](https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/europe-fit-digital-age/european-digital-identity_en) initiative.
+The European Commission is building an [Age Verification (AV) Wallet](https://github.com/eu-digital-identity-wallet/av-app-android-wallet-ui): a mobile application that allows EU citizens to prove their age using their passport, without revealing their actual birth date or identity. It's part of the broader [EU Digital Identity Wallet](https://commission.europa.eu/strategy-and-policy/priorities-2019-2024/europe-fit-digital-age/european-digital-identity_en) initiative.
 
 The concept is compelling: scan your passport with NFC, verify you're the legitimate holder via face matching, and receive a cryptographic credential that proves "I am over 18" without revealing who you are. Privacy advocates should be pleased.
 
@@ -67,7 +67,7 @@ The [official technical specification](https://ageverification.dev/av-doc-techni
 
 These two requirements cannot both be satisfied. The Attestation Provider cannot verify the user's age at a "substantial" or "high" Level of Assurance if it receives no user-related personal information. The specification essentially mandates verification without evidence.
 
-This isn't an implementation bug - it's an architectural contradiction baked into the requirements themselves.
+This isn't an implementation bug. It's an architectural contradiction baked into the requirements themselves.
 
 ---
 
@@ -75,15 +75,15 @@ This isn't an implementation bug - it's an architectural contradiction baked int
 
 The architecture makes a compelling promise: your biometric data never leaves your device, your passport details stay local, and the issuer only learns your birth date. On paper, this sounds privacy-preserving.
 
-But privacy without security is meaningless. If anyone can forge an age credential without possessing a valid passport, then the "privacy" of the enrollment process becomes irrelevant - the entire system produces credentials that cannot be trusted.
+But privacy without security is meaningless. If anyone can forge an age credential without possessing a valid passport, then the "privacy" of the enrollment process becomes irrelevant. The entire system produces credentials that cannot be trusted.
 
 This is a false sense of privacy. Users believe they're participating in a secure, privacy-respecting system, when in reality they're using an infrastructure that will be exploited the moment it goes live.
 
 ### The real privacy gap: no Zero-Knowledge Proofs
 
-The more significant privacy concern isn't during enrollment - it's during **verification**. When you prove your age to a website or store, the current system reveals your credential to the Relying Party. This creates linkability: the same credential presented to multiple verifiers can potentially be correlated.
+The more significant privacy concern isn't during enrollment, but during **verification**. When you prove your age to a website or store, the current system reveals your credential to the Relying Party. This creates linkability: the same credential presented to multiple verifiers can potentially be correlated.
 
-The solution is [Zero-Knowledge Proofs (ZKPs)](https://en.wikipedia.org/wiki/Zero-knowledge_proof) - cryptographic techniques that let you prove "I am over 18" without revealing your credential or any other identifying information.
+The solution is [Zero-Knowledge Proofs (ZKPs)](https://en.wikipedia.org/wiki/Zero-knowledge_proof): cryptographic techniques that let you prove "I am over 18" without revealing your credential or any other identifying information.
 
 The specification acknowledges this:
 
@@ -93,7 +93,7 @@ But ZKPs are explicitly **not implemented**. The specification states they were 
 
 > "Adding support for these features would introduce additional complexity, which could hinder the rapid adoption of the solution."
 
-So the EU chose speed over privacy. The current implementation uses standard mdoc presentations where Relying Parties see your actual credential - no unlinkability, no predicate proofs, no privacy-preserving verification. Every bar, website, and shop you verify your age with receives the same trackable credential.
+So the EU chose speed over privacy. The current implementation uses standard mdoc presentations where Relying Parties see your actual credential: no unlinkability, no predicate proofs, no privacy-preserving verification. Every bar, website, and shop you verify your age with receives the same trackable credential.
 
 ---
 
@@ -123,14 +123,14 @@ flowchart LR
     style G fill:#E74C3C,color:#fff
 ```
 
-> **Alternative:** Use [Frida](https://frida.re/) for runtime hooking - no APK modification needed. Root the device, hook verification functions, same result.
+> **Alternative:** Use [Frida](https://frida.re/) for runtime hooking without APK modification. Root the device, hook verification functions, same result.
 
 ### Method 1: App modification
 
 **Tools required:**
-- [apktool](https://apktool.org/) - Decompile and recompile Android APKs
-- [jadx](https://github.com/skylot/jadx) - Decompile to readable Java/Kotlin code
-- [Android Studio](https://developer.android.com/studio) - For signing the modified APK
+- [apktool](https://apktool.org/): Decompile and recompile Android APKs
+- [jadx](https://github.com/skylot/jadx): Decompile to readable Java/Kotlin code
+- [Android Studio](https://developer.android.com/studio): For signing the modified APK
 
 **Attack steps:**
 1. Download the APK from the Play Store or build from [source](https://github.com/eu-digital-identity-wallet/av-app-android-wallet-ui)
@@ -139,14 +139,14 @@ flowchart LR
 4. Modify to skip verification and return a hardcoded birth date
 5. Recompile with `apktool b app -o modified.apk`
 6. Sign with your own key and install
-7. Request a credential - the issuer blindly trusts your claimed birth date
+7. Request a credential (the issuer blindly trusts your claimed birth date)
 
 ### Method 2: Runtime hooking
 
 **Tools required:**
-- [Frida](https://frida.re/) - Dynamic instrumentation toolkit
+- [Frida](https://frida.re/): Dynamic instrumentation toolkit
 - A rooted Android device or jailbroken iPhone
-- [Magisk](https://github.com/topjohnwu/Magisk) - For hiding root from detection
+- [Magisk](https://github.com/topjohnwu/Magisk): For hiding root from detection
 
 **Attack steps:**
 1. Root/jailbreak the device and install Frida
@@ -154,14 +154,14 @@ flowchart LR
 3. Write Frida scripts to intercept and modify return values:
 
 ```javascript
-// Hook passport verification - always return valid
+// Hook passport verification: always return valid
 Interceptor.attach(Module.findExportByName("libpassport.so", "verifyPassport"), {
     onLeave: function(retval) {
         retval.replace(1);  // Force success
     }
 });
 
-// Hook birth date extraction - return any date
+// Hook birth date extraction: return any date
 Interceptor.attach(Module.findExportByName("libpassport.so", "extractBirthDate"), {
     onLeave: function(retval) {
         // Return 1990-01-01 instead of actual birth date
@@ -176,7 +176,7 @@ Interceptor.attach(Module.findExportByName("libpassport.so", "extractBirthDate")
 ### Method 3: Protocol-level attack
 
 **Tools required:**
-- [Postman](https://www.postman.com/) or `curl` - For crafting HTTP requests
+- [Postman](https://www.postman.com/) or `curl`: For crafting HTTP requests
 - Basic understanding of [OpenID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
 - Any device capable of generating a key pair
 
@@ -222,7 +222,7 @@ Even with mandatory app attestation, an attacker can:
 3. Modify the `birth_date` field in transit
 4. The issuer receives tampered data from an "attested" app
 
-Or simpler: reverse-engineer the protocol and replay requests with forged data. The attestation token proves the app existed - it doesn't cryptographically bind the verification results to the credential request.
+Or simpler: reverse-engineer the protocol and replay requests with forged data. The attestation token proves the app existed, but it doesn't cryptographically bind the verification results to the credential request.
 
 ### The privacy cost
 
@@ -233,7 +233,7 @@ Even if app attestation could solve the security problem (it can't), it introduc
 | Google Play Integrity | App usage, timing, device fingerprint, linked to Google account |
 | Apple App Attest | App usage, obfuscated device identifier |
 
-Users of privacy-focused Android distributions like [GrapheneOS](https://grapheneos.org/) - who specifically avoid Google Play Services - would be excluded entirely.
+Users of privacy-focused Android distributions like [GrapheneOS](https://grapheneos.org/), who specifically avoid Google Play Services, would be excluded entirely.
 
 You'd be trading one set of privacy problems for another, while still not fixing the fundamental security flaw.
 
@@ -282,7 +282,7 @@ Interceptor.attach(Module.findExportByName("libavfacelib.so", "jni_match"), {
 ```
 
 :::warning[Security/Privacy Tradeoff]
-Performing face verification and liveness detection on-device is a deliberate privacy choice - biometric data never leaves the user's phone. However, this creates a fundamental security gap: an attacker can borrow or steal someone else's passport, bypass the on-device face matching using the methods described above, and obtain a credential bound to their own device.
+Performing face verification and liveness detection on-device is a deliberate privacy choice: biometric data never leaves the user's phone. However, this creates a fundamental security gap: an attacker can borrow or steal someone else's passport, bypass the on-device face matching using the methods described above, and obtain a credential bound to their own device.
 :::
 
 ### The issuer has no defense
@@ -341,7 +341,7 @@ The issuer would then:
 3. **Hash DG1** and compare to the hash in SOD
 4. **Extract birth date** from the now-verified DG1
 
-This way, a modified app **cannot** forge a valid passport proof - it would need to forge the passport's cryptographic signatures, which is infeasible.
+This way, a modified app **cannot** forge a valid passport proof. It would need to forge the passport's cryptographic signatures, which is infeasible.
 
 ### The tradeoff: privacy vs security
 
@@ -364,7 +364,7 @@ The recommendation: **verify and discard**. The issuer verifies the cryptographi
 
 ## The bigger picture
 
-This isn't just about age verification. The [EU Digital Identity Wallet](https://github.com/eu-digital-identity-wallet) is intended to become a cornerstone of digital identity in Europe - used for everything from opening bank accounts to accessing government services.
+This isn't just about age verification. The [EU Digital Identity Wallet](https://github.com/eu-digital-identity-wallet) is intended to become a cornerstone of digital identity in Europe, used for everything from opening bank accounts to accessing government services.
 
 If the architecture trusts the app to honestly report verification results, the entire system's security depends on the assumption that no one will modify the app. In 2025, that's not a reasonable assumption.
 
@@ -382,7 +382,7 @@ The app just needs to **use** them in a way the issuer can verify.
 
 ### Businesses relying on age verification
 
-If you're a business planning to accept EU Age Verification credentials - an online gambling platform, alcohol delivery service, or adult content provider - you need to understand what you're actually getting.
+If you're a business planning to accept EU Age Verification credentials (an online gambling platform, alcohol delivery service, or adult content provider), you need to understand what you're actually getting.
 
 A credential from the current system means: *"Someone using the official app (or a modified version of it) submitted this birth date."*
 
@@ -394,13 +394,13 @@ The liability implications are significant. If a minor obtains alcohol using a f
 
 The [eIDAS 2.0 regulation](https://digital-strategy.ec.europa.eu/en/policies/eidas-regulation) mandates that EU member states offer digital identity wallets to citizens by 2026. These wallets will be used for accessing public services, signing documents, and proving identity across borders.
 
-If the foundational age verification component is architecturally flawed, what does that suggest about the broader technical oversight? This isn't a criticism of individual developers - the code shows thoughtful privacy engineering. It's a systems-level concern about how security requirements are specified and verified in large government technology projects.
+If the foundational age verification component is architecturally flawed, what does that suggest about the broader technical oversight? This isn't a criticism of individual developers; the code shows thoughtful privacy engineering. It's a systems-level concern about how security requirements are specified and verified in large government technology projects.
 
 ### Privacy advocates
 
 Here's an uncomfortable truth: fixing the security vulnerability likely requires compromising some privacy guarantees.
 
-The most robust fix - sending passport cryptographic proofs to the server - reveals your nationality. This is a meaningful privacy reduction compared to the current design where only your birth date leaves your device.
+The most robust fix (sending passport cryptographic proofs to the server) reveals your nationality. This is a meaningful privacy reduction compared to the current design where only your birth date leaves your device.
 
 This creates a genuine tension. The privacy-first design is insecure. The secure design is less private. There may not be a perfect solution, only tradeoffs that need to be made transparently and with informed consent from citizens.
 
@@ -408,7 +408,7 @@ This creates a genuine tension. The privacy-first design is insecure. The secure
 
 ## How Yivi solved this problem
 
-The security issues we've identified aren't theoretical - they're well-known in the digital identity community. The [Yivi wallet](https://yivi.app) (formerly IRMA) has already implemented passport-based credentials with a fundamentally different architecture that addresses these exact vulnerabilities.
+The security issues we've identified aren't theoretical; they're well-known in the digital identity community. The [Yivi wallet](https://yivi.app) (formerly IRMA) has already implemented passport-based credentials with a fundamentally different architecture that addresses these exact vulnerabilities.
 
 ### Server-side passport validation
 
@@ -416,7 +416,7 @@ Yivi's [go-passport-issuer](https://github.com/privacybydesign/go-passport-issue
 
 The issuer performs:
 1. **Passive Authentication (PA)**: Verifies the passport's digital signatures against the Document Signing Certificate, then validates the certificate chain against government-issued Masterlists
-2. **Active Authentication (AA)**: Performs a challenge-response with the passport's NFC chip to prove the physical document is present - not just a copy of its data
+2. **Active Authentication (AA)**: Performs a challenge-response with the passport's NFC chip to prove the physical document is present, not just a copy of its data
 
 This means a modified app **cannot** forge credentials. Even if an attacker controls the entire app, they cannot produce valid cryptographic signatures from a passport they don't possess.
 
@@ -445,9 +445,9 @@ This is what privacy-preserving age verification actually looks like.
 
 All Yivi components are open source and have been in production for years:
 
-- [irmamobile](https://github.com/privacybydesign/irmamobile) - The Yivi wallet app
-- [go-passport-issuer](https://github.com/privacybydesign/go-passport-issuer) - Server-side passport validation API
-- [vcmrtd](https://github.com/privacybydesign/vcmrtd) - Example app for scanning and reading passports
+- [irmamobile](https://github.com/privacybydesign/irmamobile): The Yivi wallet app
+- [go-passport-issuer](https://github.com/privacybydesign/go-passport-issuer): Server-side passport validation API
+- [vcmrtd](https://github.com/privacybydesign/vcmrtd): Example app for scanning and reading passports
 
 The passport credential feature has been [publicly available since 2025](/blog/2025-passport-callout), with support for passports, ID-cards, and driver's licenses validated against Dutch and German government Masterlists.
 
@@ -455,25 +455,25 @@ The passport credential feature has been [publicly available since 2025](/blog/2
 
 ## Conclusion
 
-**Member states cannot adopt the EU Age Verification Wallet in its current form.** The architectural flaws we've documented aren't edge cases - they're fundamental. Any system that relies on client-side verification without cryptographic proof to the server will be bypassed within days of deployment. The tools are freely available, the attack vectors are well-documented, and the incentives for fraud are enormous.
+**Member states cannot adopt the EU Age Verification Wallet in its current form.** The architectural flaws we've documented aren't edge cases; they're fundamental. Any system that relies on client-side verification without cryptographic proof to the server will be bypassed within days of deployment. The tools are freely available, the attack vectors are well-documented, and the incentives for fraud are enormous.
 
 This isn't speculation. It's how mobile security works.
 
 ### The JMRTD problem
 
-The EU Age Verification app relies on [JMRTD](https://jmrtd.org/) for passport reading - a library that is poorly maintained and hasn't kept pace with the evolving landscape of Machine Readable Travel Documents. Security vulnerabilities go unpatched, compatibility issues with newer passport formats persist, and the project lacks the active development needed for critical infrastructure.
+The EU Age Verification app relies on [JMRTD](https://jmrtd.org/) for passport reading, a library that is poorly maintained and hasn't kept pace with the evolving landscape of Machine Readable Travel Documents. Security vulnerabilities go unpatched, compatibility issues with newer passport formats persist, and the project lacks the active development needed for critical infrastructure.
 
 ### Yivi offers a working alternative
 
 Member states looking for a secure, privacy-preserving age verification solution can adopt [Yivi](https://yivi.app) today. We maintain production-ready MRTD infrastructure that:
 
-- **Supports all EU countries** - validated against government-issued Masterlists
-- **Is actively maintained** - security updates, compatibility fixes, and new features ship regularly
-- **Implements proper security** - server-side validation with Passive and Active Authentication
-- **Delivers real privacy** - Zero-Knowledge Proofs via Idemix for unlinkable disclosures
-- **Is fully open source** - auditable, extensible, and free from vendor lock-in
+- **Supports all EU countries**: validated against government-issued Masterlists
+- **Is actively maintained**: security updates, compatibility fixes, and new features ship regularly
+- **Implements proper security**: server-side validation with Passive and Active Authentication
+- **Delivers real privacy**: Zero-Knowledge Proofs via Idemix for unlinkable disclosures
+- **Is fully open source**: auditable, extensible, and free from vendor lock-in
 
-The passport credential feature has been in production since 2025, supporting passports, ID-cards, and driver's licenses. The infrastructure exists. The code is battle-tested. Member states don't need to wait for the EU to fix its architecture - they can deploy a working solution now.
+The passport credential feature has been in production since 2025, supporting passports, ID-cards, and driver's licenses. The infrastructure exists. The code is battle-tested. Member states don't need to wait for the EU to fix its architecture; they can deploy a working solution now.
 
 Digital identity infrastructure, once deployed at scale, becomes extremely difficult to change. The decisions made now will echo for decades. We urge member states to choose security over expediency.
 
@@ -481,7 +481,7 @@ Digital identity infrastructure, once deployed at scale, becomes extremely diffi
 
 ## A note on responsible disclosure
 
-This analysis is based entirely on publicly available source code published on GitHub by the EU Digital Identity Wallet project. The repositories are open for review, which is commendable - transparency in government technology builds trust and enables community oversight.
+This analysis is based entirely on publicly available source code published on GitHub by the EU Digital Identity Wallet project. The repositories are open for review, which is commendable. Transparency in government technology builds trust and enables community oversight.
 
 We've chosen to publish this analysis publicly for several reasons:
 
@@ -493,7 +493,7 @@ We've chosen to publish this analysis publicly for several reasons:
 
 4. **Citizens deserve to understand the systems that affect them.** Digital identity infrastructure will become a critical part of European civic life. Transparency about its security properties is a public interest matter.
 
-We hope the EU Digital Identity Wallet team views this analysis as constructive input. The architectural changes recommended here are well within their capabilities to implement - the cryptographic building blocks already exist in the codebase.
+We hope the EU Digital Identity Wallet team views this analysis as constructive input. The architectural changes recommended here are well within their capabilities to implement; the cryptographic building blocks already exist in the codebase.
 
 ---
 
@@ -521,22 +521,22 @@ We hope the EU Digital Identity Wallet team views this analysis as constructive 
 
 ### Yivi / IRMA
 - [Yivi Wallet (irmamobile)](https://github.com/privacybydesign/irmamobile)
-- [Go Passport Issuer](https://github.com/privacybydesign/go-passport-issuer) - Server-side passport validation
-- [vcmrtd](https://github.com/privacybydesign/vcmrtd) - Passport scanning library
-- [Idemix Explanation](https://privacybydesign.foundation/irma-explanation/) - Zero-Knowledge Proof credentials
+- [Go Passport Issuer](https://github.com/privacybydesign/go-passport-issuer): Server-side passport validation
+- [vcmrtd](https://github.com/privacybydesign/vcmrtd): Passport scanning library
+- [Idemix Explanation](https://privacybydesign.foundation/irma-explanation/): Zero-Knowledge Proof credentials
 - [Yivi Passport Credentials Announcement](/blog/2025-passport-callout)
 
 ### Standards & Tools
-- [ICAO 9303 - Machine Readable Travel Documents](https://www.icao.int/publications/pages/publication.aspx?docnum=9303)
+- [ICAO 9303: Machine Readable Travel Documents](https://www.icao.int/publications/pages/publication.aspx?docnum=9303)
 - [OpenID4VCI Specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
 - [OpenID4VP Specification](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
-- [JMRTD - Java Machine Readable Travel Documents](https://jmrtd.org/)
+- [JMRTD: Java Machine Readable Travel Documents](https://jmrtd.org/)
 
 ### Security Tools
-- [Frida - Dynamic Instrumentation Toolkit](https://frida.re/)
-- [apktool - APK Decompiler](https://apktool.org/)
-- [jadx - Dex to Java Decompiler](https://github.com/skylot/jadx)
-- [Magisk - Root Management](https://github.com/topjohnwu/Magisk)
+- [Frida: Dynamic Instrumentation Toolkit](https://frida.re/)
+- [apktool: APK Decompiler](https://apktool.org/)
+- [jadx: Dex to Java Decompiler](https://github.com/skylot/jadx)
+- [Magisk: Root Management](https://github.com/topjohnwu/Magisk)
 
 ### Platform Security
 - [Google Play Integrity API](https://developer.android.com/google/play/integrity)
