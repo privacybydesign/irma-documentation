@@ -311,7 +311,7 @@ The issuer needs cryptographic proof that a real passport was scanned. Here's wh
 data class PassportProof(
     val sodFile: ByteArray,      // Security Object Document
     val dsCertificate: ByteArray, // Document Signing Certificate
-    val dg1Bytes: ByteArray,      // Raw DG1 data (includes birth date)
+    val dg1Bytes: ByteArray,      // Raw DG1 data (full MRZ)
 )
 ```
 
@@ -330,15 +330,18 @@ Here's the tension:
 | Approach | Privacy | Security |
 |----------|---------|----------|
 | Current (all on-device) | Excellent | Weak |
-| Server-side passport verification | Reduced (nationality revealed) | Strong |
+| Server-side passport verification | Reduced | Strong |
 
-Sending SOD + DS certificate to the server reveals:
-- Your nationality (from the certificate)
-- That you have a valid passport
+Sending DG1 to the server reveals the full MRZ content:
+- Your name
+- Document number
+- Nationality
+- Date of birth
+- Document expiry date
 
-It does NOT reveal your name, passport number, or face image.
+It does NOT reveal your face image (stored in DG2).
 
-The recommendation: verify and discard. The issuer verifies the cryptographic proof, extracts the birth date, and immediately discards the passport data without storing it.
+The recommendation: verify and discard. The issuer verifies the cryptographic proof, extracts only the birth date, and immediately discards all other passport data without storing it.
 
 ---
 
@@ -380,7 +383,7 @@ If the foundational age verification component is architecturally flawed, what d
 
 Here's an uncomfortable truth: fixing the security vulnerability likely requires compromising some privacy guarantees.
 
-The most robust fix (sending passport cryptographic proofs to the server) reveals your nationality. This is a meaningful privacy reduction compared to the current design where only your birth date leaves your device.
+The most robust fix (sending passport cryptographic proofs to the server) reveals the full MRZ content including your name and document number. This is a meaningful privacy reduction compared to the current design where only your birth date leaves your device.
 
 This creates a genuine tension. The privacy-first design is insecure. The secure design is less private. There may not be a perfect solution, only tradeoffs that need to be made transparently and with informed consent from citizens.
 
