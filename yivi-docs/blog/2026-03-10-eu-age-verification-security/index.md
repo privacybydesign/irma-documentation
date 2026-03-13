@@ -47,13 +47,11 @@ Imagine you're applying for a job that requires a university degree. There are t
 
 The EU Age Verification Wallet currently uses Approach A. The app performs all the verification on your phone, then simply tells the issuer "this person is over 18." The issuer has no way to confirm this claim independently.
 
-This creates what security researchers call a trust boundary violation. The verification happens in an environment the user controls (their phone), but the result is trusted by a system that the user shouldn't be able to manipulate (the credential issuer).
-
-![Architecture Overview](./trust-gap-infographic.svg)
-
-The official solution architecture shows the components involved:
+The official solution architecture illustrates this problem:
 
 ![EU Age Verification Solution Architecture](https://ageverification.dev/av-doc-technical-specification/docs/media/Figure_12_solution_cross_device.png)
+
+Notice how the "Age Verification App Instance" sits between the user's passport and the Attestation Provider. All passport verification, face matching, and liveness detection happen inside this app. The Attestation Provider only receives the result, not cryptographic evidence. This creates what security researchers call a trust boundary violation: the verification happens in an environment the user controls (their phone), but the result is trusted by a system that the user shouldn't be able to manipulate.
 
 ### The contradiction in the specifications
 
