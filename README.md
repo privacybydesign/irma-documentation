@@ -6,11 +6,7 @@ This is the source of the Yivi technical documentation website.
 To start a local docusaurus server simply run the following commands.
 ```bash
 cd yivi-docs
-```
-```bash
 npm i
-```
-```bash
 npm run start
 ```
 
