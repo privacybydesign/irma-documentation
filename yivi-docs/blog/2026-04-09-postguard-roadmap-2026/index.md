@@ -18,7 +18,7 @@ Let me first introduce myself. I'm Ruben and last February I started at Yivi as 
 
 
 ## PostGuard for you
-Our goal is for you to use PostGuard, simply because it's convenient and works well. No crazy sales tricks or hidden subscriptions, no tracking by or for advertisers. Our goal is for everyone to see that the identity wallet is _here to stay_ and that managing your own data can actually be pleasant and easy.
+Our goal is for you to use PostGuard, simply because it's convenient, secure and works well. No crazy sales tricks or hidden subscriptions, no tracking by or for advertisers. Our goal is for everyone to see that the identity wallet is _here to stay_ and that managing your own data can actually be pleasant and easy.
 
 Unless you happen to live in Nijmegen, the chances are very small that you've found a place where you can use Yivi, and we think that's a shame. That's why we're going to make PostGuard and the Thunderbird and Outlook extensions available for free for personal use. This way you can safely and freely send large files to your friends or family. You can do this in two ways:
 1. Via the website, just like WeTransfer. You upload a file via the website and fill in your own email and the recipient's. Your files are then emailed to the recipients by PostGuard.
