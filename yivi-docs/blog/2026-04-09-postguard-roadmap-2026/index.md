@@ -1,42 +1,44 @@
 ---
-slug: vooruitblikken-met-PostGuard
-title: Vooruitblikken met PostGuard
+slug: looking-ahead-with-PostGuard
+title: Looking ahead with PostGuard
 authors: [rubenhensen]
-tags: [PostGuard, e-mail, encryptie, roadmap]
+tags: [PostGuard, e-mail, encryption, roadmap]
 ---
 
 
+<a href="/nl/blog/vooruitblikken-met-PostGuard" style={{background: "var(--ifm-color-primary-lightest)", color: "var(--ifm-color-primary-darkest)", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: "500", textDecoration: "none"}}>AI translated from Dutch</a>
+
 ![PostGuard logo](./postguard_cover.png)
 
-Het Yivi team werkt hard aan Yivi zelf om EUDI compliant te worden, maar naast Yivi werken we ook hard aan andere projecten zoals PostGuard. In deze blog vertel ik je over PostGuard en wat PostGuards plannen zijn voor het komende jaar. Zo hoop ik dat jullie net zo enthousiast worden over PostGuard als ik. En dat als je bestanden wilt versturen, je het gaat doen met PostGuard natuurlijk!
+The Yivi team is working hard on Yivi itself to become EUDI compliant, but besides Yivi we're also working hard on other projects like PostGuard. In this blog I'll tell you about PostGuard and what PostGuard's plans are for the coming year. I hope to get you just as excited about PostGuard as I am. And that when you want to send files, you'll do it with PostGuard of course!
 
 <!-- truncate -->
 
-Ik zal mezelf eerst even voorstellen. Ik ben Ruben en afgelopen februari ben ik begonnen bij Yivi als open source ontwikkelaar. Een echte vaste taak heb ik niet bij Yivi, maar ik ben druk bezig geweest met PostGuard. PostGuard is een identity-based, end-to-end file sharing service die voortkomt uit het [iHub](https://ihub.ru.nl/) van de Radboud Universiteit. Het is oorspronkelijk gestart als een NWO-project onder de naam Encryption 4 All en mede gefinancierd door [NLNet](https://nlnet.nl/). De encryptie wordt geregeld met behulp van Yivi, wat wij identity-based encryption noemen. De Post in PostGuard is voor de focus op e-mail, wat voor veel mensen de standaard blijft om een bestand naar iemand te sturen. Zie het als een tegenhanger van Zivver of WeTransfer, alleen dan Europees, open source en met de volledige omarming van [Privacy by Design](https://www.sfu.ca/~palys/Cavoukian-2011-PrivacyByDesign-7FoundationalPrinciples.pdf). Ik kan het lang en breed uitleggen, maar het makkelijkste is als je het even uitprobeert op [PostGuard.eu](https://PostGuard.eu). Als je klaar bent dan neem ik je mee in de roadmap van PostGuard.
+Let me first introduce myself. I'm Ruben and last February I started at Yivi as an open source developer. I don't have a fixed role at Yivi, but I've been busy working on PostGuard. PostGuard is an identity-based, end-to-end file sharing service that originated from the [iHub](https://ihub.ru.nl/) at Radboud University. It was originally started as an NWO project under the name Encryption 4 All and co-funded by [NLNet](https://nlnet.nl/). The encryption is handled using Yivi, which we call identity-based encryption. The "Post" in PostGuard refers to the focus on e-mail, which for many people remains the default way to send a file to someone. Think of it as an alternative to Zivver or WeTransfer, but European, open source and with a full embrace of [Privacy by Design](https://www.sfu.ca/~palys/Cavoukian-2011-PrivacyByDesign-7FoundationalPrinciples.pdf). I could explain it at length, but the easiest thing is to just try it out at [PostGuard.eu](https://PostGuard.eu). Once you're done, I'll take you through PostGuard's roadmap.
 
 
-## PostGuard voor jou
-We willen graag dat jij PostGuard gaat gebruiken, gewoon omdat het handig is en fijn werkt. Geen gekke verkooptrucjes of verborgen abonnementen, geen tracking door of voor advertenties. We willen graag dat iedereen kan zien dat de identity wallet _here to stay_ is en dat het beheren van je eigen data juist fijn en makkelijk kan zijn. 
+## PostGuard for you
+We want you to use PostGuard, simply because it's convenient and works well. No crazy sales tricks or hidden subscriptions, no tracking by or for advertisers. We want everyone to see that the identity wallet is _here to stay_ and that managing your own data can actually be pleasant and easy.
 
-Tenzij je toevallig in Nijmegen woont, is de kans namelijk erg klein dat je een plek hebt gevonden waar je Yivi kan gebruiken en dat vinden we jammer. Daarom gaan we PostGuard en de Thunderbird en Outlook extensies gratis ter gebruik stellen voor persoonlijke doeleinden. Zo kan jij veilig en gratis grote bestanden sturen naar je vrienden of familie. Je kan dit op twee manieren doen:
-1. Via de website, net als WeTransfer. Je uploadt een bestand via de website, en vult je eigen e-mail en die van de ontvanger in. Je bestanden worden door PostGuard naar de ontvangers ge-maild.
-2. Via de extensies. We hopen dat met de Thunderbird en Outlook extensies het e-mailen van grote bestanden voelt als het versturen van een normale bijlage in een e-mail. Een bijkomend voordeel, de e-mail wordt dan ook verstuurd met jouw e-mail uit jouw naam. 
+Unless you happen to live in Nijmegen, the chances are very small that you've found a place where you can use Yivi, and we think that's a shame. That's why we're going to make PostGuard and the Thunderbird and Outlook extensions available for free for personal use. This way you can safely and freely send large files to your friends or family. You can do this in two ways:
+1. Via the website, just like WeTransfer. You upload a file via the website and fill in your own email and the recipient's. Your files are then emailed to the recipients by PostGuard.
+2. Via the extensions. We hope that with the Thunderbird and Outlook extensions, emailing large files feels like sending a regular attachment in an email. An added benefit is that the email is also sent from your email in your name.
 
 ## PostGuard for Business
-Het tweede deel van onze roadmap is PostGuard for Business. Het doel hier is vrij simpel uit te leggen, we willen een volledige E2E encryptie e-mail service worden met alles wat bedrijven daarbij verlangen. Dat houdt in downloadverificatie, e-mail revocatie, auditing trails en als belangrijkste programmatisch e-mailen vanuit een interne applicatie. Om dit te bereiken werken we mee aan verschillende Proof of Concepts (PoC) waar we de business case uittesten. Daarbij zeg ik trots dat we nu al aan het werk zijn voor twee projecten, Informatierijk notificeren met NotifyNL en Bereken Je Recht. Ik zal over beide iets meer vertellen.
+The second part of our roadmap is PostGuard for Business. The goal here is quite simple to explain: we want to become a full E2E encryption email service with everything businesses expect. That includes download verification, email revocation, auditing trails, and most importantly, programmatic emailing from an internal application. To achieve this, we're participating in several Proof of Concepts (PoC) where we test the business case. I'm proud to say that we're already working on two projects: information-rich notifications with NotifyNL and Bereken Je Recht ("Calculate Your Rights"). I'll tell you a bit more about both.
 
-### Informatierijk notificeren met NotifyNL
-"Er is een bericht voor je binnen gekomen". Als je nu een mailtje krijgt van de overheid, dan staat daar vrij bewust niets in, geen linkje of bestanden, om te zorgen dat mensen vanuit zichzelf naar een vertrouwde omgeving gaan waar ze het bericht kunnen lezen. Super veilig natuurlijk, maar niet heel gebruiksvriendelijk. Met NotifyNL zijn we bezig om een PoC op te zetten waar burgers via NotifyNL een versleuteld bericht krijgen in hun e-mail. Zo kan de overheid met de attribuut verificatie van Yivi zeker zijn dat het bericht alleen door de goede persoon te lezen is. En heeft de burger het gebruiksgemak van het lezen van een normale e-mail waar alle informatie die ze nodig hebben gelijk wordt meegegeven.
+### Information-rich notifications with NotifyNL
+"A message has arrived for you." When you receive an email from the government right now, it deliberately contains very little — no links or files — to make sure people navigate to a trusted environment on their own to read the message. Super secure of course, but not very user-friendly. With NotifyNL we're setting up a PoC where citizens receive an encrypted message in their email via NotifyNL. This way the government can use Yivi's attribute verification to be certain that the message can only be read by the right person. And the citizen gets the convenience of reading a regular email where all the information they need is included right away.
 
 ### Bereken Je Recht
-[berekenjerecht.nl](https://www.berekenjerecht.nl/) wil het makkelijk maken voor burgers om aanspraak te maken op de toeslagen waar je recht op hebt. Bereken Je Recht helpt je uitzoeken welke toeslagen je recht op hebt, en om die toeslagen daarna ook aan te vragen bij de juiste instanties. Het uiteindelijke doel is het proces, wat nu vaak rond de 10 weken tijd kost, te verkorten naar 10 minuten. Hier is veel winst in te halen met het uitgeven en verifiëren van attributen bij verschillende instanties van de gemeente en de overheid. PostGuard komt om de hoek kijken met het versturen van belangrijke documenten naar instanties die nog niet werken met identity wallet issuers en verifiers. Bereken Je Recht weet welke documenten je moet versturen voor een bepaalde aanvraag. En PostGuard kan dit veilig versleutelen en mailen naar de desbetreffende organisaties!
+[berekenjerecht.nl](https://www.berekenjerecht.nl/) wants to make it easy for citizens to claim the benefits they're entitled to. Bereken Je Recht helps you figure out which benefits you're entitled to, and then also apply for those benefits with the right agencies. The ultimate goal is to shorten the process, which currently often takes around 10 weeks, to 10 minutes. There's a lot to gain here by issuing and verifying attributes with various municipal and government agencies. PostGuard comes into play when sending important documents to agencies that don't yet work with identity wallet issuers and verifiers. Bereken Je Recht knows which documents you need to send for a particular application. And PostGuard can securely encrypt and email these to the relevant organizations!
 
-## Tot slot
-Ik heb heel veel zin om verder te werken aan PostGuard, en hoop dat ik jullie mijn enthousiasme over PostGuard heb kunnen delen. Ik denk dat PostGuard echt een toevoeging kan zijn aan de wereld die jou en mij helpt met een digitaal bestaan dat _voor_ ons werkt in plaats van tegen ons. Dat klinkt een beetje als een verkoop praatje dat je op LinkedIn terug vindt, maar ik geloof het echt en ik maak mij graag hard voor zo'n bestaan. Daarbij is PostGuard gratis, dus er valt niet zo veel te verkopen. 
+## In closing
+I'm very excited to continue working on PostGuard, and I hope I've been able to share my enthusiasm about PostGuard with you. I believe PostGuard can truly make a difference in the world, helping you and me with a digital existence that works _for_ us instead of against us. That sounds a bit like a sales pitch you'd find on LinkedIn, but I truly believe it and I'm happy to stand up for such an existence. Besides, PostGuard is free, so there's not much to sell.
 
 <div class="center-container" style={{marginTop: "1.5rem"}}>
-  <a class="button button--primary button--lg" href="https://PostGuard.eu" target="_blank" rel="noopener noreferrer">Probeer PostGuard nu!</a>
+  <a class="button button--primary button--lg" href="https://PostGuard.eu" target="_blank" rel="noopener noreferrer">Try PostGuard now!</a>
 </div>
 
 Ruben Hensen\
-Open source ontwikkelaar bij Yivi
+Open source developer at Yivi

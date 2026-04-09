@@ -7,6 +7,8 @@ tags: [yivi, email, phone]
 
 We're excited to announce a new feature that makes managing your digital identity even simpler: you can now issue your phone number and email address without ever leaving the Yivi app.
 
+<!-- truncate -->
+
 ## No more app-switching
 
 Previously, adding these credentials to your Yivi wallet meant visiting an external website, starting the issuance process there, and switching back to the app to complete it. It worked, but we knew we could do better.
