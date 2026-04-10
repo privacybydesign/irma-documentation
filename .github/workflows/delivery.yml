@@ -59,7 +59,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Scan Image
-        uses: anchore/scan-action@v3
+        uses: anchore/scan-action@v6
         id: scan
         with:
           image: local/irma-documentation:scan
@@ -69,7 +69,7 @@ jobs:
           output-format: sarif
 
       - name: Upload Anchore scan SARIF report
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: ${{ !cancelled() }}
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
