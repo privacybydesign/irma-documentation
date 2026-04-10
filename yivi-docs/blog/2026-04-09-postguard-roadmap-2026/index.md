@@ -5,9 +5,6 @@ authors: [rubenhensen]
 tags: [PostGuard, e-mail, encryption, roadmap]
 ---
 
-
-<a href="/nl/blog/vooruitblikken-met-PostGuard" style={{background: "var(--ifm-color-primary-lightest)", color: "var(--ifm-color-primary-darkest)", padding: "0.2rem 0.6rem", borderRadius: "999px", fontSize: "0.8rem", fontWeight: "500", textDecoration: "none"}}>AI translated from Dutch</a>
-
 ![PostGuard logo](./postguard_cover.png)
 
 The Yivi team is working hard on Yivi itself to become EUDI compliant, but besides Yivi we're also working hard on other projects like PostGuard. In this blog we'll tell you about PostGuard and what PostGuard's plans are for the coming year. We hope to get you just as excited about PostGuard as we are. And that when you want to send files, you'll do it with PostGuard of course!
