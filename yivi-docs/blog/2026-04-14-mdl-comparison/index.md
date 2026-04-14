@@ -65,7 +65,7 @@ Across all three countries, one key insight emerges: privacy in mDL systems is n
 
 
 ## What does this mean for Yivi?
-The comparison shows that wallet-to-wallet identification is not just a technical challenge; it is shaped by legal rules, trust models, and accountability requirements that differ across countries. This means there is no single “correct” way to implement it. Any solution has to operate within these constraints.
+The comparison shows that wallet-to-wallet identification is not just a technical challenge; it is shaped by legal rules, trust models, and accountability requirements that differ across countries. While the [upcoming EU regulation](https://transport.ec.europa.eu/news-events/news/modernised-eu-rules-driving-licences-and-driving-disqualifications-enter-force-2025-11-25_en) will harmonise the format and availability of mDLs, differences in verification practices and institutional requirements are likely to remain. Any solution therefore has to operate within these constraints.
 
 One of the key challenges is trust. Different countries place trust in different parts of the system. Austria relies on central registers to confirm validity, while Australia places more trust in the digital credential itself. Germany, for now, does not allow digital verification at all. For Yivi, this means that a wallet-to-wallet solution cannot assume a single trust model, but must be flexible enough to support both state-backed and credential-based verification.
 
