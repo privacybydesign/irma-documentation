@@ -58,3 +58,13 @@ rubenhensen:
   socials: 
     github: rubenhensen
     linkedin: ruben-hensen
+
+danielbaay:
+  name: Daniël Baay
+  title: Stagair @ Caesar Groep
+  url: https://github.com/danielbaay
+  image_url: https://github.com/danielbaay.png
+  page: true
+  socials: 
+    github: danielbaay
+    linkedin: daniël-baay
