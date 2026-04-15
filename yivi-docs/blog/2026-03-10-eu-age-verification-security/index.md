@@ -9,6 +9,23 @@ tags: [security, privacy, eudi-wallet, age-verification, analysis]
 
 <!-- truncate -->
 
+:::info[Update, April 2026: an experimental ZKP has appeared in the wallet, but it is not a working feature yet]
+
+Since this post was published, the EU Age Verification Android wallet has gained an **experimental Zero-Knowledge Proof implementation** based on Google's [Longfellow ZK](https://github.com/google/longfellow-zk) library. This partially walks back the "ZKPs are deferred for future work" position quoted below, but only partially.
+
+A few important caveats:
+
+- **The ZKP code is only switched on in the `demo` build variant.** The default development build does not enable it, and there is no production build that does. In practice, that means a regular user downloading a shipped version of the app is not getting ZKP protection.
+- **We found no evidence that the reference verifier supports Longfellow.** We reviewed both the EU's [verifier backend](https://github.com/eu-digital-identity-wallet/av-srv-web-verifier-endpoint-23220-4-kt) and the [cinema demo frontend](https://github.com/eu-digital-identity-wallet/av-verifier-frontend-cinema) that acts as a relying party. Neither contains any Longfellow code, any ZKP verification path, or even a feature flag for one. The verifier only accepts the existing mdoc and SD-JWT VC formats; anything else is rejected.
+
+So the picture today is asymmetric: a demo build of the wallet can *produce* a ZK proof, but the official verifier stack cannot *consume* one. Until verification is also implemented and deployed, the privacy benefit is hypothetical. And none of this changes the enrollment side trust gap described below. A ZKP at presentation time does nothing to fix an issuer that trusts a client reported birth date in the first place.
+
+The EU's own [Annex B on ZKP](https://ageverification.dev/av-doc-technical-specification/docs/annexes/annex-B/annex-B-zkp/) is notably candid about this. It describes the chosen scheme as relying on a "private, beta implementation" that "has not been peer reviewed," and notes that a suitable standard is "not expected in the near term." In other words, the EU is not claiming this is production ready. The specification itself flags it as experimental and unreviewed.
+
+**Meanwhile, Yivi already ships this in production.** The [Yivi wallet](https://yivi.app) has offered Zero-Knowledge Proofs based on Idemix since its earliest releases, used daily across Dutch healthcare, government and education. Predicate proofs such as "I am over 18" without revealing the birth date, and unlinkable presentations across relying parties, are not a future experimental feature there. They are the default. Member states looking for a privacy preserving age verification stack that is working end to end today, rather than a promising prototype in one build flavor, have that option available now.
+
+:::
+
 ## The stakes: more than just buying alcohol
 
 When we talk about age verification, it's easy to think of trivial use cases: buying a beer at a festival, accessing an adult website, or purchasing cigarettes. But the EU's digital identity ambitions extend far beyond these scenarios.
