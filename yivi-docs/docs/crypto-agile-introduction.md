@@ -18,6 +18,8 @@ Crypto agility refers to the ability of a digital identity system to support mul
 
 This approach allows Yivi to preserve its privacy-first implementation while becoming compatible with EUDI-wallet standards.
 
+![Yivi protocol architecture diagram showing IRMA, OpenID4VCI, and OpenID4VP support](/img/crypto-agility.png)
+
 ## Privacy by Design, Still at the Core
 
 Yivi was built from the ground up to respect user privacy. The emergence of the EUDI-wallet framework is a positive step for digital autonomy and self-sovereignty of users. However, we remain concerned about the current lack of native support for core privacy mechanisms such as **issuer unlinkability** and **relying party unlinkability**.
