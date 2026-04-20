@@ -13,7 +13,7 @@ We're opening a private BETA and inviting organizations to be among the first to
   <video controls style={{borderRadius: '8px', maxWidth: '360px', display: 'block', margin: '0 auto'}}>
     <source src="/img/openid4vc-complete-flow-demo-bg.mp4" type="video/mp4" />
   </video>
-  <figcaption style={{marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--ifm-color-emphasis-600)'}}>A Yivi user loads in his EduID and discloses it using OpenID4VP using Veramo verifier software.</figcaption>
+  <figcaption style={{marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--ifm-color-emphasis-600)'}}>A Yivi user loads in his eduID and discloses it using OpenID4VP using Veramo verifier software.</figcaption>
 </figure>
 
 <!-- truncate -->
@@ -30,19 +30,15 @@ With this release, the full OpenID stack is supported in Yivi. Existing IRMA bas
 
 **OpenID4VCI:** Issuers can now issue credentials directly into the Yivi app using the OpenID4VCI protocol. No custom IRMA server required. Any OpenID4VCI compliant issuer can participate in the Yivi ecosystem.
 
-**OpenID4VP:** Verifiers can request attributes using the OpenID4VP protocol with DCQL queries. This makes Yivi interoperable with any EUDI compliant verification flow today, and positions integrations for cross border compatibility going forward.
+**OpenID4VP:** Verifiers can request attributes using the OpenID4VP protocol with DCQL queries. This makes Yivi interoperable with the most commonly used protocol for selective disclosure in the European identity community. Any OpenID4VP compliant verifier can accept credentials from Yivi.
 
-**SD-JWT VC:** All credentials exchanged over the OpenID stack use the SD-JWT Verifiable Credentials format, the most widely adopted credential format in the European identity community.
+**SD-JWT VC:** All credentials exchanged over our OpenID stack use the SD-JWT Verifiable Credentials format, the most widely adopted credential format in the European identity community.
 
 ## Already in testing: SURF and Ver.id
 
 We're not starting from zero. We're actively testing with two early integration partners.
 
 **SURF** is the collaborative organisation for IT in Dutch education and research. Through this integration, a student can issue their **EduID credential** directly into the Yivi app via OpenID4VCI, and selectively disclose it to any service that accepts it via OpenID4VP.
-
-:::info[Placeholder: EduID in Yivi]
-*Add screenshot or flow diagram here showing EduID issuance into Yivi and a subsequent attribute disclosure, for example disclosing institution affiliation to a service.*
-:::
 
 **Ver.id** brings additional high quality attribute coverage to the ecosystem. We're working closely with them to validate the full issuance and disclosure cycle over the OpenID stack.
 
