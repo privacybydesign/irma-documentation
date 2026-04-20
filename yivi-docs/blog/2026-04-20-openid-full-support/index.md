@@ -1,6 +1,6 @@
 ---
 slug: 2026-openid-full-support
-title: "Yivi announces full OpenID support: private BETA now open"
+title: "Yivi announces end to end OpenID support: private BETA now open"
 authors: [dibranmulder]
 tags: [yivi, openid4vci, openid4vp, sdjwtvc, eudi, beta]
 ---
