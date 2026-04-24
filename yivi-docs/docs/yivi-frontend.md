@@ -16,6 +16,11 @@ Using the default styling, the browser version will look like this:
 
 All packages are published on [npm](https://www.npmjs.com/) in `@privacybydesign` scoped packages.
 
+:::info Migrating from v0.x?
+If you are upgrading from `@privacybydesign/yivi-*` v0.x, see the [migration guide](yivi-frontend-migration.md) for a
+full list of breaking changes and step-by-step upgrade instructions.
+:::
+
 ## Yivi core
 
 This package contains the [state machine](https://github.com/privacybydesign/yivi-frontend-packages/blob/master/yivi-core/state-transitions.js)
@@ -25,8 +30,9 @@ The plugins can also request state modifications to the state machine.
 
 Yivi core can be initialized in the following way:
 ```javascript
-const YiviCore = require('@privacybydesign/yivi-core');
-const yivi     = new YiviCore(/* options */);
+import { YiviCore } from '@privacybydesign/yivi-core';
+
+const yivi = new YiviCore(/* options */);
 
 yivi.use(/* Plugin A */);
 yivi.use(/* Plugin B */);
@@ -75,9 +81,9 @@ We also import the [`yivi-css`](#yivi-css) styling to nicely style our `yivi-web
 
 In our JavaScript we import `yivi-core` and the relevant plugins first.
 ```javascript
-const YiviCore   = require('@privacybydesign/yivi-core');
-const YiviWeb    = require('@privacybydesign/yivi-web');
-const YiviClient = require('@privacybydesign/yivi-client');
+import { YiviCore } from '@privacybydesign/yivi-core';
+import { YiviWeb } from '@privacybydesign/yivi-web';
+import { YiviClient } from '@privacybydesign/yivi-client';
 ```
 
 Then we can instantiate Yivi core. Let's assume we already have an endpoint `/get-irma-session`
@@ -158,12 +164,12 @@ particular plugin on GitHub. There are links in the plugin overview [above](#ava
 
 ## Yivi frontend
 For convenience we already bundled `yivi-core`, `yivi-web`, `yivi-popup` and `yivi-client` together with the default styling
-from `yivi-css`. We also added polyfills in this package to realize support for Internet Explorer 11.
+from `yivi-css`.
 The package can be installed from the npm registry.
 The bundled package can also be downloaded directly [here](https://github.com/privacybydesign/yivi-frontend-packages/releases/latest/download/yivi.js).
 Please host this file as asset yourself.
 
-The bundle can be imported in your JavaScript file by doing `require('@privacybydesign/yivi-frontend')` or it can
+The bundle can be imported in your JavaScript file by doing `import { newWeb, newPopup } from '@privacybydesign/yivi-frontend'` or it can
 be included directly in the HTML.
 
 ```html
@@ -172,7 +178,9 @@ be included directly in the HTML.
 
 You can then instantiate `yivi-frontend` and start a session like this when using an embedded web element:
 ```javascript
-const exampleWeb = yivi.newWeb({
+import { newWeb } from '@privacybydesign/yivi-frontend';
+
+const exampleWeb = newWeb({
   debugging: false,            // Enable to get helpful output in the browser console
   element:   '#yivi-web-form', // Which DOM element to render to
 
@@ -189,9 +197,11 @@ exampleWeb.start()
 .catch(error => console.error("Couldn't do what you asked 😢", error));
 ```
 
-When you want a popup overlay to be used to, you can do the following:
+When you want a popup overlay to be used, you can do the following:
 ```javascript
-const examplePopup = yivi.newPopup({
+import { newPopup } from '@privacybydesign/yivi-frontend';
+
+const examplePopup = newPopup({
   debugging: false, // Enable to get helpful output in the browser console
 
   // Back-end options
@@ -206,6 +216,9 @@ examplePopup.start()
 .then(result => console.log("Successful disclosure! 🎉", result))
 .catch(error => console.error("Couldn't do what you asked 😢", error));
 ```
+
+When including the bundle via a `<script>` tag in HTML, the JavaScript variable `yivi` will be bound to this library.
+In these environments you can access the exported functions by saying `yivi.newWeb(...)` or `yivi.newPopup(...)`.
 
 Be aware that you can start an instance of `yivi-frontend` only once.
 When you want to call `start()` again, you have to create a new instance.
@@ -259,11 +272,11 @@ design and build a new, customized style. This can be done in the following way:
    managing the session state we recommend you to use the `yivi-client` plugin.
    
 ```javascript
-require('assets/my-custom-yivi-css-design.min.css');
+import '@privacybydesign/yivi-css/dist/yivi.css';
 
-const YiviCore   = require('@privacybydesign/yivi-core');
-const YiviWeb    = require('@privacybydesign/yivi-web');
-const YiviClient = require('@privacybydesign/yivi-client');
+import { YiviCore } from '@privacybydesign/yivi-core';
+import { YiviWeb } from '@privacybydesign/yivi-web';
+import { YiviClient } from '@privacybydesign/yivi-client';
 
 const yivi = new YiviCore({
   debugging: true,
@@ -323,28 +336,34 @@ class YiviPlugin {
 }
 ```
 
-A plugin can request the state machine to make changes. This can be done using the `transition` and
-`finalTransition` methods of the `stateMachine`. The first parameter of these functions is the requested
+A plugin can request the state machine to make changes. This can be done using the `selectTransition`
+method of the `stateMachine`. The first parameter of this function is the requested
 transition. The possible transitions can be found in the [state machine](https://github.com/privacybydesign/yivi-frontend-packages/blob/master/yivi-core/state-transitions.js).
 As second parameter `payload` can be added to the transition. The payload can then be accessed by all other plugins
-as it is one of the parameters of the `stateChange` method. When requesting a `finalTransition`, the state
-machine will be locked in the new state. From then no transitions can be made anymore. For a `finalTransition`
+as it is one of the parameters of the `stateChange` method. When requesting a final transition, the state
+machine will be locked in the new state. From then no transitions can be made anymore. For a final transition
 the potential `newState` must be in the list of possible end states. Otherwise, an error is returned. After
-a `finalTransition` the `close` method of the plugin is called to close the plugin's state. This method should
+a final transition the `close` method of the plugin is called to close the plugin's state. This method should
 return a Promise which resolves when the plugin finishes closing. When the `close` Promises of all plugins are
 resolved, the promise returned by the `start` method of `YiviCore` will resolve or reject (depending on the
 transaction). In this way we can guarantee that plugins are not active anymore when the promise returned by the
-`start` method of `YiviCore` is finished. Besides when calling `finalTransition`, the closing procedure can also
-be activated when the `transition` method is used and the state machine gets in a state from which no
+`start` method of `YiviCore` is finished. The closing procedure is also
+activated when the `selectTransition` method is used and the state machine gets in a state from which no
 transitions are possible anymore.
 
 For example, in the `YiviPopup` plugin the user can press on the close button in the UI to abort the session.
 When this happens the `YiviPopup` plugin must request a state change at the Yivi core state machine to
 notify all other plugins that the new state becomes `Aborted`. This is done in the following way:
 ```javascript
-stateMachine.transition('abort', 'Popup closed');
+stateMachine.selectTransition('abort', 'Popup closed');
 ```
 
 There are no transitions possible anymore from the state `Aborted`. This means that unless the transition
 is not explicitly marked as final, the `stateChange` method of your plugin will be called with `isFinal` set
 to true.
+
+:::note
+The `transition()` and `finalTransition()` methods on the state machine are deprecated as of v1.0.
+Use `selectTransition()` instead, which automatically determines whether the transition is final based
+on the target state.
+:::
