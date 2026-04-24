@@ -5,6 +5,44 @@ title: "Migrating Yivi frontend packages from v0 to v1"
 This guide covers all breaking changes when upgrading from `@privacybydesign/yivi-*` v0.x to v1.0
 and provides step-by-step migration instructions.
 
+## Why v1.0?
+
+The v0.x packages were originally published as plain CommonJS with no TypeScript support, bundled
+Node.js polyfills for browser-irrelevant APIs, and relied on default exports — all of which caused
+real integration issues as the JavaScript ecosystem moved forward. v1.0 is a modernization release
+that addresses these problems:
+
+- **ESM-first with dual CJS/ESM builds.** The v0.x packages were CJS-only, which forced users of
+  modern bundlers like Vite to add workarounds (`optimizeDeps.include`, manual CJS-to-ESM
+  pre-bundling). Packages now ship both formats with a proper `"exports"` field, so they work
+  natively in all environments without bundler configuration.
+
+- **No more Node.js polyfill breakage in browsers.** The v0.x `yivi-client` depended on
+  `isomorphic-fetch` and the `eventsource` npm package. The latter pulled in `util.inherits`
+  (a Node.js-only API), which broke browser bundles and required consumers to create stub files and
+  resolve aliases to work around it. These polyfills are removed — native `fetch` is used directly,
+  and the client falls back to HTTP polling when `EventSource` is unavailable.
+
+- **Named exports for better tooling.** Default exports cause naming inconsistencies across
+  codebases, break tree-shaking in some bundlers, and make IDE auto-imports less reliable. All
+  packages now use named exports exclusively.
+
+- **TypeScript support out of the box.** All packages are now written in TypeScript and ship
+  declaration files. Consumers get type checking and editor autocompletion without installing
+  separate `@types/` packages.
+
+- **Improved accessibility.** Interactive elements (cancel, retry, back) are now semantic `<button>`
+  elements instead of `<a>` tags, and focus outlines are no longer suppressed.
+
+- **First-class minimal rendering mode.** Multiple consumers needed to show just the QR code without
+  the surrounding form wrapper, and resorted to aggressive CSS overrides
+  (`all: revert !important`, complex `:not()` selectors) to achieve this. The new `minimal: true`
+  option provides this natively.
+
+For most projects, upgrading to v1.0 consists of changing default imports to named imports and
+removing polyfill workarounds. The rest of the API — constructor options, plugin registration,
+session configuration — is unchanged.
+
 ## Named exports replace default exports
 
 All packages now use **named exports** instead of default exports. This is the change most likely to
