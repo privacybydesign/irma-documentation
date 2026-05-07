@@ -6,17 +6,17 @@ The Yivi frontend packages consist of multiple packages. Therefore we describe t
 The API description of the Yivi frontend plugins is combined into one section.
 
 ## Yivi core
-The [Yivi core](yivi-frontend.md#yivi-core) package only exports the `YiviCore` class. To handle an IRMA session, 
+The [Yivi core](yivi-frontend.md#yivi-core) package exports the `YiviCore` class as a named export. To handle an IRMA session, 
 an instance of this class can be made with the relevant options for your session. The options object is shared
 between all plugins that are registered at the `YiviCore` instance. The plugins don't need to be configured
 individually. The options that can be specified depend on the specific plugins you are using. You can find all 
 possible options in the READMEs of the plugins. You can find an overview of all available Yivi core plugins
 [here](#plugins).
 
-The Yivi core class has one constructor:
+The Yivi core class can be imported and instantiated as follows:
 ```javascript
-const YiviCore = require('@privacybydesign/yivi-core');
-const yivi     = new YiviCore({/* Options */});
+import { YiviCore } from '@privacybydesign/yivi-core';
+const yivi = new YiviCore({/* Options */});
 ```
 
 Below you can find an overview of all methods an Yivi core instance offers you.
@@ -50,6 +50,11 @@ Both functions return an interface with the following methods:
 
 When importing this library via a `<script>` tag in HTML the JavaScript variable `yivi` will be bound to this library.
 In these environments you can therefore directly access the exported functions by for instance saying `yivi.newWeb(...)`.
+
+When using ES modules or CommonJS, import the named exports directly:
+```javascript
+import { newWeb, newPopup } from '@privacybydesign/yivi-frontend';
+```
 
 ## Plugins
 The [plugins](yivi-frontend.md#available-plugins-for-yivi-core) do not export any class or method. They only add extra

@@ -39,6 +39,7 @@ const sidebars: SidebarsConfig = {
         "irma-server-lib",
         "irma-backend",
         "yivi-frontend",
+        "yivi-frontend-migration",
         "schemes",
         "issuer",
         "session-requests",
