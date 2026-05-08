@@ -6,7 +6,7 @@ This document describes the goals and details of the IRMA keyshare protocol.
 
 ## Introduction
 
-The [IRMA mobile app](yivi-app.md) allows users to obtain and disclose [IRMA attributes](technical-overview.md#cryptographic-entities), as well as attach them to signed statements. Before such an IRMA session proceeds, the Yivi app may ask the user to enter her IRMA PIN code so that the [requestor](technical-overview.md#participants) can be sure that it is indeed the attribute owner initiating the session (as opposed to, e.g., a thief of the user's phone). The verification of the correctness of the IRMA PIN code, and preventing the session from happening when it is not, is the responsibility of the [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server). In order to do this, it interacts with the Yivi app and possibly the IRMA server in a protocol that we call the *keyshare protocol*. This protocol is documented here.
+The [Yivi app](yivi-app.md) allows users to obtain and disclose [IRMA attributes](technical-overview.md#cryptographic-entities), as well as attach them to signed statements. Before such an IRMA session proceeds, the Yivi app may ask the user to enter her IRMA PIN code so that the [requestor](technical-overview.md#participants) can be sure that it is indeed the attribute owner initiating the session (as opposed to, e.g., a thief of the user's phone). The verification of the correctness of the IRMA PIN code, and preventing the session from happening when it is not, is the responsibility of the [IRMA keyshare server](https://github.com/privacybydesign/irma_keyshare_server). In order to do this, it interacts with the Yivi app and possibly the IRMA server in a protocol that we call the *keyshare protocol*. This protocol is documented here.
 
 Each [IRMA scheme](schemes.md) decides whether or not it employs an IRMA keyshare server. If it does, then this keyshare server is involved in any IRMA session that involves attributes that fall under the scheme manager's responsibility.
 
@@ -174,4 +174,4 @@ The keyshare server then looks up the user given the specified `id`, and checks 
 ```
 (That is, the same JSON message as `POST /user/verify/pin` but without an authentication JWT).
 
-In addition to these API endpoints, the keyshare server exposes a number of other endpoints that are used by the [MyIRMA webclient](https://github.com/privacybydesign/irma_keyshare_webclient), which allows the IRMA user to manage her registration at the keyshare server. These endpoints are not documented here.
+In addition to these API endpoints, the keyshare server exposes a number of other endpoints that are used by the [MyYivi webclient](https://github.com/privacybydesign/irma_keyshare_webclient), which allows the user to manage her registration at the keyshare server. These endpoints are not documented here.

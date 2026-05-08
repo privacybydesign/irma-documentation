@@ -30,7 +30,7 @@ This document presents a technical overview of the IRMA project.
 ### Core software projects
 
 * [IRMA mobile app](yivi-app.md): (mobile) application that receives attributes, and can disclose them.
-* [`irma` command](irma-cli.md): contains an IRMA attribute verification and issuance server, scheme management, and more.
+* [`yivi` command](yivi-cli.md): contains an IRMA attribute verification and issuance server, scheme management, and more.
 * [irmajs](irmajs.md): javascript library acting as glue between an IRMA server and the requestor's website, allowing the requestor to instruct an API server to issue or verify attributes.
 
 ## Overview
@@ -94,7 +94,7 @@ Each IRMA issuer has an Idemix private key, which it must keep secret as it is u
 
 Issuers cannot independently create credential types and start issuing them to Yivi app users: the credential type must first be included in an [IRMA scheme](schemes.md) by the scheme manager. In case of the default scheme `pbdf` of the Yivi app, this is the Privacy by Design Foundation.
 
-When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, this is documented in the [attribute index](https://attribute-index.yivi.app/en/pbdf.html). 
+When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, this is documented in the [attribute index](https://portal.yivi.app/attribute-index/). 
 
 ## IRMA PIN codes using the keyshare server
 

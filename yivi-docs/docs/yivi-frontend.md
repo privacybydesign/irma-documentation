@@ -4,7 +4,7 @@ title: Yivi frontend JavaScript packages
 
 The [`yivi-frontend-packages`](https://github.com/privacybydesign/yivi-frontend-packages) repository is a set of
 related JavaScript packages that together form a Javascript frontend client to the
-[`irma server`](https://github.com/privacybydesign/irmago/tree/master/irma). The packages contain a state
+[`yivi irma server`](https://github.com/privacybydesign/irmago/tree/master/irma). The packages contain a state
 machine package [`yivi-core`](#yivi-core) to which several plugin packages can be added to achieve Yivi support
 for your application. We also provide a wrapper package [`yivi-frontend`](#yivi-frontend) that combines `yivi-core` with some of the
 plugins in a bundle. With this wrapper package you have an easy starting point for handling sessions using an embedded
@@ -49,7 +49,7 @@ on GitHub (linked to in the left column).
 
 | Plugin | Functionality |
 |---|---|
-| [`yivi-client`](https://github.com/privacybydesign/yivi-frontend-packages/tree/master/plugins/yivi-client) | Plugin to fetch a [session package](api-irma-server.md#post-session), to check the `irma server` for the current session status and optionally to fetch the result. The plugin is widely configurable, so you can also fetch a session package or a session result at custom endpoints. |
+| [`yivi-client`](https://github.com/privacybydesign/yivi-frontend-packages/tree/master/plugins/yivi-client) | Plugin to fetch a [session package](api-irma-server.md#post-session), to check the `yivi irma server` for the current session status and optionally to fetch the result. The plugin is widely configurable, so you can also fetch a session package or a session result at custom endpoints. |
 | [`yivi-web`](https://github.com/privacybydesign/yivi-frontend-packages/tree/master/plugins/yivi-web) | Plugin to handle user interaction via a web element that developers can embed within the contents of their webpages. It is designed to be used with [`yivi-css`](#yivi-css). `yivi-css` is not embedded in this package, so you have to manually include this. You are also free to use your own styling. |
 | [`yivi-popup`](https://github.com/privacybydesign/yivi-frontend-packages/tree/master/plugins/yivi-popup) | `yivi-web` element embedded in a popup overlay. The popup is displayed on top of your content and is hidden again when a session is completed, when a fatal error occurs or when the user closes the popup. It is designed to be used with [`yivi-css`](#yivi-css). `yivi-css` is not embedded in this package, so you have to manually include this. You are also free to use your own styling.  |
 | [`yivi-console`](https://github.com/privacybydesign/yivi-frontend-packages/tree/master/plugins/yivi-console) | Plugin to handle user interaction via the console (either the browser console or the command line console) using node.js. |
@@ -87,7 +87,7 @@ import { YiviClient } from '@privacybydesign/yivi-client';
 ```
 
 Then we can instantiate Yivi core. Let's assume we already have an endpoint `/get-irma-session`
-in our backend that starts a relevant IRMA session at the [`irma server`](irma-server.md). Let's say the endpoint
+in our backend that starts a relevant IRMA session at the [`yivi irma server`](irma-server.md). Let's say the endpoint
 returns a single session package (in JSON) without any backend token.
 ```javascript
 const yivi = new YiviCore({

@@ -34,7 +34,7 @@ const sidebars: SidebarsConfig = {
       label: "Concepts",
       collapsed: false,
       items: [
-        "irma-cli",
+        "yivi-cli",
         "irma-server",
         "irma-server-lib",
         "irma-backend",

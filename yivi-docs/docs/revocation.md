@@ -28,7 +28,7 @@ In the papers linked to above (and generally in the scientific literature on rev
 
 > **⚠️ Note:**
 > In the remainder of this post when we refer to the requestor, issuer, or verifier, we generally refer to the IRMA server software implementing APIs for those parties. The term "IRMA server" itself refers to the following variants of the IRMA server:
-> * The [`irma server`](irma-server.md) daemon.
+> * The [`yivi irma server`](irma-server.md) daemon.
 > * The [`irmaserver` Go library](irma-server-lib.md).
 >
 > Support for revocation will be added to the [bindings of the above library](https://github.com/privacybydesign/irmago/tree/master/server/irmac) to other programming languages soon.
@@ -68,7 +68,7 @@ If the server hosting the revocation update messages is unreachable, then the re
 
 The only possible alternative behaviour would be for the requestor to not accept the attributes, but we want to avoid burdening the user with the consequences of the problem; she would then no longer be able to do whatever she wanted to do with her attributes. Therefore we leave this decision to the requestor. Instead it is the issuer's responsibility to always keep its server online so that this does not happen; and when it does go offline, to restore it as soon as possible. The shorter it is offline, the smaller the "nonrevocation window" and the smaller the problem.
 
-Before revocation is enabled for a given credential type, revocation-specific public and private key material has to be included in the IRMA public and private key of the issuer of the credential type. The [`irma` binary](irma-cli.md) will do so automatically for new keypairs and it can also augment existing keypairs.
+Before revocation is enabled for a given credential type, revocation-specific public and private key material has to be included in the IRMA public and private key of the issuer of the credential type. The [`yivi` binary](yivi-cli.md) will do so automatically for new keypairs and it can also augment existing keypairs.
 
 #### Scalability
 
@@ -109,7 +109,7 @@ See for example [this demo credential type](https://github.com/privacybydesign/i
 
 Existing credential types can gain support for revocation by adding a `RevocationServer` and adding an attribute with `revocation` enabled.
 
-The IRMA issuer private and public keys used for revocation-enabled credentials must contain revocation-specific key material. When generating new keypairs, `irma issuer keygen` now always includes this. Existing keypairs may be augmented using the new `irma issuer revocation keypair` subcommand.
+The IRMA issuer private and public keys used for revocation-enabled credentials must contain revocation-specific key material. When generating new keypairs, `yivi irma issuer keygen` now always includes this. Existing keypairs may be augmented using the new `yivi irma issuer revocation keypair` subcommand.
 
 ### Revocation settings
 
@@ -268,10 +268,10 @@ Yivi apps can disclose attributes out of revocation-aware credentials even to no
 ### Revocation
 
 The API that the IRMA server exposes for revoking previously issued credentials is similar to the API for starting and managing IRMA sessions:
-* A new revocation endpoint is available as a function on the [`irmaserver` Go library](irma-server-lib.md), and as a corresponding HTTP endpoint in the `irma server`.
-* Similar to session request data structures, (e.g. [`DisclosureRequest`](https://godoc.org/github.com/privacybydesign/irmago#DisclosureRequest)), revocation is initiated at the `irma server` by a [`RevocationRequest`](https://godoc.org/github.com/privacybydesign/irmago#RevocationRequest) data structure identified as such by a [JSON-LD](https://json-ld.org/) `@context` tag (having constant value `https://irma.app/ld/request/revocation/v1`).
-* As with ordinary session requests, when the `no-auth` setting is disabled in the `irma server` configuration this request has to be authenticated using one of the [existing authentication methods](irma-server.md#requestor-authentication) (i.e., by including a preshared `token` in an HTTP header or by signing the request into a JWT using `hmac` or `publickey`).
-* Each requestor configured in the `irma server` can be endowed with permission to revoke specific credential types (possibly in addition to [permissions to issue or verify attributes](irma-server#permissions)). If `no-auth` is disabled, and the revocation request can be succesfully authenticated as originating from a requestor present in the `irma server` configuration, and that requestor is authorized to revoke the credential type mentioned in the request, then the revocation command is executed and the credential is revoked.
+* A new revocation endpoint is available as a function on the [`irmaserver` Go library](irma-server-lib.md), and as a corresponding HTTP endpoint in the `yivi irma server`.
+* Similar to session request data structures, (e.g. [`DisclosureRequest`](https://godoc.org/github.com/privacybydesign/irmago#DisclosureRequest)), revocation is initiated at the `yivi irma server` by a [`RevocationRequest`](https://godoc.org/github.com/privacybydesign/irmago#RevocationRequest) data structure identified as such by a [JSON-LD](https://json-ld.org/) `@context` tag (having constant value `https://irma.app/ld/request/revocation/v1`).
+* As with ordinary session requests, when the `no-auth` setting is disabled in the `yivi irma server` configuration this request has to be authenticated using one of the [existing authentication methods](irma-server.md#requestor-authentication) (i.e., by including a preshared `token` in an HTTP header or by signing the request into a JWT using `hmac` or `publickey`).
+* Each requestor configured in the `yivi irma server` can be endowed with permission to revoke specific credential types (possibly in addition to [permissions to issue or verify attributes](irma-server#permissions)). If `no-auth` is disabled, and the revocation request can be succesfully authenticated as originating from a requestor present in the `yivi irma server` configuration, and that requestor is authorized to revoke the credential type mentioned in the request, then the revocation command is executed and the credential is revoked.
 
 For example, the following `RevocationRequest` instructs the server to revoke the `irma-demo.MijnOverheid.root` instance to which it previously assigned `bsn-12345` as `revocationKey` during issuance, and which was issued at Unix nano timestamp `1583765731750425000`. If `issued` is not specified, all previously issued credentials with matching `revocationKey` are revoked.
 

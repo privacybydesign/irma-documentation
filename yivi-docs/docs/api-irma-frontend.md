@@ -1,5 +1,5 @@
 ---
-title: IRMA frontend packages
+title: Yivi frontend packages
 ---
 
 The IRMA frontend packages have been renamed to [Yivi frontend packages](api-yivi-frontend.md).

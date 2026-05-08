@@ -3,7 +3,7 @@ title: irma server
 ---
 
 ```shell
-irma server [options...]
+yivi irma server [options...]
 ```
 
 The API that this server offers consists of two parts:
@@ -14,7 +14,6 @@ The API that this server offers consists of two parts:
 
 ---
 ## API overview
-
 ---
 
 For each of these endpoints, if the HTTP status code indicates that the request was not successful (i.e. not in the 2xx range), then the server returns an [`irma.RemoteError`](https://godoc.org/github.com/privacybydesign/irmago#RemoteError) instance. For example, attempting to [retrieve the session result](#get-sessionrequestortokenresult) of an unknown session returns:
@@ -41,7 +40,7 @@ Start an IRMA session. What to POST to this endpoint depends on the server confi
   * [(extended) JSON session request](session-requests.md) with an API token in the `Authorization` HTTP header
   * [JWT session request](session-requests.md#jwts-signed-session-requests) signed with RS256 or HS256
 
-If `no_auth` is false, then which of these options should be taken depends on the [`requestors`](irma-server.md#requestor-authentication) option passed to the `irma server`.
+If `no_auth` is false, then which of these options should be taken depends on the [`requestors`](irma-server.md#requestor-authentication) option passed to the `yivi irma server`.
 
 In each case an appropriate `Content-Type` with `text/plain` or `application/json` must be included.
 
@@ -87,7 +86,7 @@ Of these the latter three are *ending statuses*; once the session reaches such a
 
 > The session is cancelled and receives status `"CANCELLED"` not only when the Yivi app user refuses, but also when the session is aborted due to an error.
 
-> If the session is cancelled due to the user aborting, it is (by design) not possible using this or the other endpoints of the `irma server` to distinguish between (1) the user had the requested attributes but refused to disclose them, and (2) the session was aborted by the user's Yivi app because (s)he did not have the required attributes.
+> If the session is cancelled due to the user aborting, it is (by design) not possible using this or the other endpoints of the `yivi irma server` to distinguish between (1) the user had the requested attributes but refused to disclose them, and (2) the session was aborted by the user's Yivi app because (s)he did not have the required attributes.
 
 > There is also a [variant of this endpoint](#get-irmasessionclienttokenstatus) for frontends (and Yivi apps) using client tokens (the final part of the `u` field in a `sessionPtr`).
 
@@ -147,24 +146,24 @@ This endpoint just fetches the session result, and works normally even if the se
 
 ### `GET /session/{requestorToken}/result-jwt`
 
-If a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results), then this returns a [JWT](https://jwt.io) signed by the `irma server` with the message from [`GET /session/{requestorToken}/result`](#get-sessionrequestortokenresult) above as JWT body, along with the following standard JWT fields:
-* `iss`: name of the current `irma server` as defined in its configuration
+If a JWT private key was [provided in the configuration of the `yivi irma server`](irma-server.md#signed-jwt-session-results), then this returns a [JWT](https://jwt.io) signed by the `yivi irma server` with the message from [`GET /session/{requestorToken}/result`](#get-sessionrequestortokenresult) above as JWT body, along with the following standard JWT fields:
+* `iss`: name of the current `yivi irma server` as defined in its configuration
 * `iat`: Unix timestamp indicating when this JWT was created
 * `sub`: `verification_result` or `signing_result` or `issuing_result`
 
-This way, even if the session result from the `irma server` travels along an untrusted route (for example the user's browser), the session result can still be validated and trusted.
+This way, even if the session result from the `yivi irma server` travels along an untrusted route (for example the user's browser), the session result can still be validated and trusted.
 
 ---
 
 ### `GET /session/{requestorToken}/getproof`
 
-Also returns a session result JWT, but one whose structure is the same as the session JWTs returned by the [`irma_api_server`](https://github.com/privacybydesign/irma_api_server). Only works if a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results).
+Also returns a session result JWT, but one whose structure is the same as the session JWTs returned by the [`irma_api_server`](https://github.com/privacybydesign/irma_api_server). Only works if a JWT private key was [provided in the configuration of the `yivi irma server`](irma-server.md#signed-jwt-session-results).
 
 ---
 
 ### `GET /publickey`
 
-If a JWT private key was [provided in the configuration of the `irma server`](irma-server.md#signed-jwt-session-results), then this returns the corresponding public key in PEM with which the server's session result JWTs returned by [`GET /session/{requestorToken}/result-jwt`](#get-sessionrequestortokenresult-jwt) and [`GET /session/{requestorToken}/getproof`](#get-sessionrequestortokengetproof) can be verified.
+If a JWT private key was [provided in the configuration of the `yivi irma server`](irma-server.md#signed-jwt-session-results), then this returns the corresponding public key in PEM with which the server's session result JWTs returned by [`GET /session/{requestorToken}/result-jwt`](#get-sessionrequestortokenresult-jwt) and [`GET /session/{requestorToken}/getproof`](#get-sessionrequestortokengetproof) can be verified.
 
 ---
 

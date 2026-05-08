@@ -3,34 +3,34 @@ title: irma server
 ---
 
 
-`irma server` is an IRMA server executable (daemon) allowing you to perform IRMA sessions with
+`yivi irma server` is an IRMA server executable (daemon) allowing you to perform IRMA sessions with
 [Yivi apps](yivi-app.md). It handles all IRMA-specific cryptographic details of issuing or verifying IRMA attributes with an Yivi app on behalf of a [requestor](technical-overview.md#participants) (the application wishing to verify or issue attributes). It exposes the following:
  * HTTP endpoints under `/irma`, used by the Yivi app during IRMA sessions
  * a JSON API under `/sessions` for requestors, allowing them to request the server to verify or issue attributes.
 
-`irma server` is a subcommand of the [`irma`](irma-cli.md) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle [IRMA schemes](schemes.md), and more.
+`yivi irma server` is a subcommand of the [`yivi`](yivi-cli.md) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle [IRMA schemes](schemes.md), and more.
 
-For installation instructions, see [`irma`](irma-cli.md).
+For installation instructions, see [`yivi`](yivi-cli.md).
 
 ## Running the server
 
-Simply run `irma server` to run the server with the default configuration in development mode. Use `irma server -v` for more verbose logging, for example to see the current configuration. Use `irma server -vv` to also log session contents.
+Simply run `yivi irma server` to run the server with the default configuration in development mode. Use `yivi irma server -v` for more verbose logging, for example to see the current configuration. Use `yivi irma server -vv` to also log session contents.
 
-Run `irma server --help` to see configuration options. In order to verify your configuration, run `irma server check -v`.
+Run `yivi irma server --help` to see configuration options. In order to verify your configuration, run `yivi irma server check -v`.
 
 ## Starting a session
-Assuming the server runs in the [default configuration](#default-configuration) (in particular [requestor authentication](#requestor-authentication) is disabled (`no_auth` is `true`) and the `irma-demo` [scheme](schemes.md) is installed), issue `irma-demo.MijnOverheid.ageLower` attributes using the [`session`](irma-cli.md) subcommand of the `irma` tool:
+Assuming the server runs in the [default configuration](#default-configuration) (in particular [requestor authentication](#requestor-authentication) is disabled (`no_auth` is `true`) and the `irma-demo` [scheme](schemes.md) is installed), issue `irma-demo.MijnOverheid.ageLower` attributes using the [`session`](yivi-cli.md) subcommand of the `irma` tool:
 ```shell
-irma session --server http://localhost:8088 --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
+yivi irma session --server http://localhost:8088 --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
 ```
 Verify the `irma-demo.MijnOverheid.ageLower.over18` attribute:
 ```shell
-irma session --server http://localhost:8088 --disclose irma-demo.MijnOverheid.ageLower.over18
+yivi irma session --server http://localhost:8088 --disclose irma-demo.MijnOverheid.ageLower.over18
 ```
 These print QRs in your terminal that you can scan with your [Yivi app](yivi-app.md) to perform the session. For more extensive examples, see [irmajs](irmajs.md).
 
 ## Configuring
-Run `irma server -h` to see all configuration options. Each option may be passed as:
+Run `yivi irma server -h` to see all configuration options. Each option may be passed as:
  1. a command line flags (e.g. [`--listen-addr`](#http-server-endpoints))
  2. a environmental variable (e.g. `IRMASERVER_LISTEN_ADDR`)
  3. an item in a configuration file (e.g. `"listen_addr"`) (which may be in JSON, TOML or YAML)
@@ -42,14 +42,14 @@ Run `irma server -h` to see all configuration options. Each option may be passed
  * The [`requestors`](#requestor-authentication) and [`static_sessions`](#static-irma-qrs) options are special: when passed as a flag or environmental variable, they must be passed as a JSON object (for example: `--requestors '{"myapp":{"auth_method":"token","key":"12345"}}'`).
  * When passing a boolean flag [use an `=`](https://golang.org/pkg/flag/#hdr-Command_line_flag_syntax), for example [`--no-auth=false`](#requestor-authentication).
 
-In order to see the configuration that the server uses after having gathered input from these sources, specify `-v` or `-vv` or use the `verbose` option. Use `irma server check -v` (with the same flags, env vars and config files as `irma server`) to check your configuration for correctness before running the server.
+In order to see the configuration that the server uses after having gathered input from these sources, specify `-v` or `-vv` or use the `verbose` option. Use `yivi irma server check -v` (with the same flags, env vars and config files as `yivi irma server`) to check your configuration for correctness before running the server.
 
 For a full configuation example, see [Getting started](getting-started.md#example-configuration-and-irma-session).
 
 In the remainder of this document, when referring to options we write them as configuration file entries, with underscores and without prefix.
 
 ### Default configuration
-In the default configuration (run `irma server check -v` to see it) the server is immediately usable. In particular, it
+In the default configuration (run `yivi irma server check -v` to see it) the server is immediately usable. In particular, it
 * uses the [default IRMA schemes](schemes.md#default-schemes-pbdf-and-irma-demo) ([`pbdf`](https://github.com/credentials/pbdf-schememanager) and [`irma-demo`](https://github.com/credentials/irma-demo-schememanager)), downloading them if necessary
 * allows anyone to use the server [without authentication](#requestor-authentication) (the `no_auth` setting is `true`)
 * saves the session state in memory.
@@ -57,10 +57,10 @@ In the default configuration (run `irma server check -v` to see it) the server i
 If the server is reachable from the internet, you should consider enabling authentication of session requests.
 
 ### Configuration files
-A configuration file can be provided using the `config` option (for example: `irma server --config ./irmaserver.json`). When not specified, the server looks for a configuration file called `irmaserver.json` or `irmaserver.toml` or `irmaserver.yaml` in (1) the current path; (2) `/etc/irmaserver/`; (3) `$HOME/irmaserver`, in that order. A configuration file is not required; if none is found at any of these locations the server takes its configuration from just command line flags and environmental variables.
+A configuration file can be provided using the `config` option (for example: `yivi irma server --config ./irmaserver.json`). When not specified, the server looks for a configuration file called `irmaserver.json` or `irmaserver.toml` or `irmaserver.yaml` in (1) the current path; (2) `/etc/irmaserver/`; (3) `$HOME/irmaserver`, in that order. A configuration file is not required; if none is found at any of these locations the server takes its configuration from just command line flags and environmental variables.
 
 ### Production mode
-When running the server in production, you should enable the `production` option. This enables stricter defaults on the configuration options for safety and prints warnings on possibly unsafe configurations. In particular, when `production` is enabled, the default values of some options change as follows (cf. `diff <(irma server -h) <(irma server -h --production)`):
+When running the server in production, you should enable the `production` option. This enables stricter defaults on the configuration options for safety and prints warnings on possibly unsafe configurations. In particular, when `production` is enabled, the default values of some options change as follows (cf. `diff <(yivi irma server -h) <(yivi irma server -h --production)`):
 
 * `url` from `"http://$YOUR_LOCAL_IP:port"` to `""`: in development mode the `url` to which Yivi apps will connect is set by default to your current local IP address; in `production` mode you must configure it yourself.
 * [`no_auth`](#requestor-authentication) from `true` to `false`: you should consider enabling requestor authentication, or explicitly disable this by setting this flag to `true`.
@@ -72,13 +72,13 @@ In addition, when [developer mode is not enabled in the Yivi app](yivi-app.md#de
 ### Stateless mode
 By default session states are kept in memory. If you want to run several IRMA servers in parallel or if you wish data persistence for sessions, you can use [stateless mode](stateless.md) which is implemented in the IRMA server via a Redis data store.
 
-You can enable the Redis data store in the `irma server` by setting the `store_type` option to `redis`. For stand-alone mode, you should specify the `redis_addr` and `redis_pw` options. If you use ACLs in Redis, you should also specify the `redis_username` option. If you share the Redis instance with other applications and you want your Redis keys to be scoped, you can enable the `redis_acl_use_key_prefixes` option. All keys are prefixed with the Redis username (`<redis-username>:`) then.
+You can enable the Redis data store in the `yivi irma server` by setting the `store_type` option to `redis`. For stand-alone mode, you should specify the `redis_addr` and `redis_pw` options. If you use ACLs in Redis, you should also specify the `redis_username` option. If you share the Redis instance with other applications and you want your Redis keys to be scoped, you can enable the `redis_acl_use_key_prefixes` option. All keys are prefixed with the Redis username (`<redis-username>:`) then.
 
 The IRMA server also supports Redis in Sentinel mode for high availability. Instead of `redis_addr` you should then specify `redis_sentinel_addrs` (list of strings) and `redis_sentinel_master_name`.
 
 Please note that if you use Redis in Sentinel mode, you need to consider whether you accept the risk of losing session state in case of a failover. Redis does not guarantee strong consistency in these setups. We mitigated this by waiting for a write to have reached the master node and at least one replica. This means that at least two replicas should be configured for every master node to achieve high availability. Even then, there is a small chance of losing session state when a replica fails at the same time as the master node. For example, this might be problematic if you want to guarantee that a credential is not issued twice or if you need a session QR to have a long lifetime but you do want the session to be finished soon after the QR is scanned. If you require IRMA sessions to be highly consistent, you should use the default in-memory store or Redis in standalone mode. If you accept this risk, then you can enable Sentinel mode support by setting the `redis_accept_inconsistency_risk` to true.
 
-For all configuration options, check the help output of the `irma server` command (`irma server --help`).
+For all configuration options, check the help output of the `yivi irma server` command (`yivi irma server --help`).
 
 ### Keys and certificates
 For each configuration option that refers to some kind of key or certificate (for example `jwt_privkey`), there is a corresponding option with the `_file` suffix (for example `jwt_privkey_file`). Keys can be specified either by setting former to a (PEM) string, or setting the the latter to a file containing the (PEM) string.
@@ -95,7 +95,7 @@ In the default mode, the server starts one HTTP server that offers both, configu
 The `/irma` endpoints must always be reachable for the Yivi app. Using this double server mode you can restrict access to the `/session` endpoints by e.g. setting `listen_addr` to `127.0.0.1` or to an interface only reachable from an internal network. Restricting access to the `/session` endpoints in this way may make requestor authentication unnecessary.
 
 ### Requestor authentication
-The server runs in one of two modes: it either accepts all session requests from anyone that can reach the server, or it accepts only authenticated session requests from authorized requestors. This can be toggled with the `no_auth` boolean option. If the `/session` creation endpoint of your `irma server` is publicly accessible from the internet (i.e. the `client_port` option is used, see [above](#http-server-endpoints)), then you should consider enabling requestor authentication (i.e. turn `no_auth` off), otherwise anyone can use your `irma server`.
+The server runs in one of two modes: it either accepts all session requests from anyone that can reach the server, or it accepts only authenticated session requests from authorized requestors. This can be toggled with the `no_auth` boolean option. If the `/session` creation endpoint of your `yivi irma server` is publicly accessible from the internet (i.e. the `client_port` option is used, see [above](#http-server-endpoints)), then you should consider enabling requestor authentication (i.e. turn `no_auth` off), otherwise anyone can use your `yivi irma server`.
 
 The default is `true` (requests are not authenticated) when `production` is disabled and `false` otherwise.
 
@@ -137,9 +137,9 @@ Unlike normal QRs which differ per session (as they contain the session token), 
 ```
 Thus `static_sessions` must contain a map of which each item must be an [extended session request](session-requests.md#extra-parameters). Including a `callbackUrl` to which the [session result](api-irma-server.md#get-sessionrequestortokenresult) is sent after the session is required (since for these sessions there is no requestor waiting to receive the attributes after the session has finished). If a JWT private key is installed, then the session result is sent as a [JWT](api-irma-server.md#get-sessionrequestortokenresult-jwt).
 
-> If no JWT private key is installed, then the `callbackUrl` should either not be publically reachable, or it should include a secret token (e.g. https://example.com/cX5aTins5kEZpjDpfYcN) and have TLS enabled (which it should anyway as personal data will be POSTed to it). Otherwise there is no way of distinguishing POSTs from your `irma server` from POSTs made by someone else.
+> If no JWT private key is installed, then the `callbackUrl` should either not be publically reachable, or it should include a secret token (e.g. https://example.com/cX5aTins5kEZpjDpfYcN) and have TLS enabled (which it should anyway as personal data will be POSTed to it). Otherwise there is no way of distinguishing POSTs from your `yivi irma server` from POSTs made by someone else.
 
-Assuming the URL of the `irma server` is `http://example.com`, the session configured above is started when the Yivi app scans a QR with the following contents:
+Assuming the URL of the `yivi irma server` is `http://example.com`, the session configured above is started when the Yivi app scans a QR with the following contents:
 ```json
 {
     "irmaqr": "redirect",
@@ -240,17 +240,17 @@ Taking neither approach is an unsafe configuration as in that case anyone can cr
 
 If a `jwt_privkey` (or `jwt_privkey_file`) is given, then the following endpoints are enabled:
 
-* `GET /session/{sessiontoken}/result-jwt`: returns the session result signed by the `irma server` into a JWT.
+* `GET /session/{sessiontoken}/result-jwt`: returns the session result signed by the `yivi irma server` into a JWT.
 * `GET /session/{sessiontoken}/getproof`: returns a JWT similar to the one from `result-jwt`, but with the same structure as the IRMA API server session result JWTs.
 * `GET /publickey`: returns the public key with which the JWTs output by this server can be verified.
 
-This can be useful if the session result travels along an unsafe or untrusted route from the IRMA server to the requestor. As long as the `irma server` is trusted and its public key is known, the JWT can be verified to ensure that the session result was untampered with since it left the `irma server`.
+This can be useful if the session result travels along an unsafe or untrusted route from the IRMA server to the requestor. As long as the `yivi irma server` is trusted and its public key is known, the JWT can be verified to ensure that the session result was untampered with since it left the `yivi irma server`.
 
 ### TLS
 
 The [IRMA protocol](irma-protocol.md) relies on TLS for encryption of the attributes as they travel along the internet. If your server is connected to the internet and it handles actual attributes (personal data from people), then you ***must*** ensure that the attributes are protected in transit with TLS. In its default configuration (i.e. with [developer mode](yivi-app.md#developer-mode) disabled), the Yivi app will refuse to connect to servers not using TLS.
 
-You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` options (or the `_file` equivalents), specifying a PEM certificate (chain) and PEM private key. If you use [separate requestor and app endpoints](#http-server-endpoints), additionally use `client_tls_cert` and `client_tls_privkey`.
+You can enable TLS in the `yivi irma server` with the `tls_cert` and `tls_privkey` options (or the `_file` equivalents), specifying a PEM certificate (chain) and PEM private key. If you use [separate requestor and app endpoints](#http-server-endpoints), additionally use `client_tls_cert` and `client_tls_privkey`.
 
 Alternatively, if your IRMA server is connected to the internet through a reverse proxy then your reverse proxy probably handles TLS for you.
 
@@ -277,7 +277,7 @@ Outputting JSON is enabled with the `log-json` option:
 
 ## Running as daemon
 
-On most Linux systems, the `irma server` can be made into an automatically started daemon as follows:
+On most Linux systems, the `yivi irma server` can be made into an automatically started daemon as follows:
 
 1. Write a new systemd unit file to `/etc/systemd/system/irmaserver.service`:
     ```ini
@@ -288,7 +288,7 @@ On most Linux systems, the `irma server` can be made into an automatically start
 
     [Service]
     Type=simple
-    ExecStart=/usr/local/bin/irma server --config=/etc/irmaserver/config.json
+    ExecStart=/usr/local/bin/yivi irma server --config=/etc/irmaserver/config.json
     TimeoutStopSec=60
     Restart=always
     RestartSec=1
@@ -301,7 +301,7 @@ On most Linux systems, the `irma server` can be made into an automatically start
     [Install]
     WantedBy=multi-user.target
     ```
-    Modify the path to `irma` and [your configuration file (or flags or environmental variables)](#configuring) in `ExecStart` as needed, as well as `User` and `Group`.
+    Modify the path to `yivi` and [your configuration file (or flags or environmental variables)](#configuring) in `ExecStart` as needed, as well as `User` and `Group`.
 2.  Start the daemon and schedule it for automatic start on boot by running `systemctl start irmaserver.service && systemctl enable irmaserver.service`.
 
 See `systemctl status irmaserver.service` for the status of the daemon, and `journalctl -u irmaserver.service` for the console output of the IRMA server.
@@ -318,12 +318,12 @@ The server was designed with the following goals in mind.
 - Also available as [Go library](irma-server-lib.md) instead of standalone server
   - Bindings to other programming languages (Python, Ruby) are expected
 
-Being written in [Go](https://golang.org/), this server (in fact, the containing [`irma` binary](irma-cli.md)) additionally automatically has the following properties.
+Being written in [Go](https://golang.org/), this server (in fact, the containing [`irma` binary](yivi-cli.md)) additionally automatically has the following properties.
 - Simple to install (one binary, no dependencies, cross platform) and/or compile
 - [Reproducible builds](https://www.gnu.org/software/mes/manual/html_node/Reproducible-Builds.html)
 - [API documentation](https://godoc.org/github.com/privacybydesign/irmago) (generated automatically from `master` branch)
 
 Referring to Go packages (i.e. folders) under [`irmago`](https://github.com/privacybydesign/irmago), the server is structured as follows.
-* [`server/irmaserver`](irma-server-lib.md): Go library implementing the HTTP endpoints for the [IRMA protocol](irma-protocol.md) (in which the Yivi app is the client), and a Go API for requestors to manage sessons. ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver))
-* `server/requestorserver`: Go library wrapping `server/irmaserver`, exposing the requestor API as a second HTTP endpoint set under `/session` URLs instead of as Go functions (next to `/irma` for the Yivi app endpoints). ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver))
-* `irma`: executuable whose `server` commands wraps `server/requestorserver`.
+* [`irma/server/irmaserver`](irma-server-lib.md): Go library implementing the HTTP endpoints for the [IRMA protocol](irma-protocol.md) (in which the Yivi app is the client), and a Go API for requestors to manage sessons. ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver))
+* `irma/server/requestorserver`: Go library wrapping `server/irmaserver`, exposing the requestor API as a second HTTP endpoint set under `/session` URLs instead of as Go functions (next to `/irma` for the Yivi app endpoints). ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver))
+* `yivi`: executuable whose `irma server` subcommands wrap `server/requestorserver`.

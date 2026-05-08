@@ -37,7 +37,7 @@ issuer-id
 └── logo.png
 ```
 
-To get started, it is easiest to use an existing folder of another issuer in `irma-demo` as base by duplicating it, and modifying its contents. In order to check correctness of your modifications, you can try to sign the scheme by running `irma scheme sign` in your `irma-demo` checkout, which will point out common mistakes. For more details about the contents of schemes, see the [IRMA schemes](schemes.md) page.
+To get started, it is easiest to use an existing folder of another issuer in `irma-demo` as base by duplicating it, and modifying its contents. In order to check correctness of your modifications, you can try to sign the scheme by running `yivi irma scheme sign` in your `irma-demo` checkout, which will point out common mistakes. For more details about the contents of schemes, see the [IRMA schemes](schemes.md) page.
 
 Some notes about the `irma-demo` scheme:
 
@@ -45,19 +45,19 @@ Some notes about the `irma-demo` scheme:
 * Using the IRMA logo as `logo.png` for the issuer and credential type is fine.
 * For the private and public keypair, since no trust is associated to anything within `irma-demo`, using those of another issuer in `irma-demo` is fine (but generating a new keypair is fine too; see [below](#generating-irma-issuer-keys)).
 
-Once your modifcations are complete, ensure the scheme is validly signed by running `irma scheme sign` in your irma-demo checkout, and submit your changes as a [PR](https://github.com/privacybydesign/irma-demo-schememanager/compare). Once the PR is merged, your demo issuer and its credentials become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server.
+Once your modifcations are complete, ensure the scheme is validly signed by running `yivi irma scheme sign` in your irma-demo checkout, and submit your changes as a [PR](https://github.com/privacybydesign/irma-demo-schememanager/compare). Once the PR is merged, your demo issuer and its credentials become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server.
 
-You can then use your IRMA server to issue the new credentials to your Yivi app. Alternatively, after the `irma-demo` PR is merged, the new credentials can also be issued from their corresponding pages in the [attribute index](https://privacybydesign.foundation/attribute-index/en/) (only in the case of `irma-demo` credentials).
+You can then use your IRMA server to issue the new credentials to your Yivi app. Alternatively, after the `irma-demo` PR is merged, the new credentials can also be issued from their corresponding pages in the [Attribute index](https://portal.yivi.app/attribute-index) (only in the case of `irma-demo` credentials).
 
 #### Using a locally modified `irma-demo` scheme
 
 Instead of submitting a PR to the `irma-demo` scheme to us, it is also possible to modify a local copy of the `irma-demo` scheme, and embed that local copy in the IRMA server and a manually compiled Yivi app, as follows.
 
 1. Create your modifications in `irma-demo`.
-2. Ensure the scheme is validly signed by running `irma scheme sign` in your `irma-demo` checkout.
+2. Ensure the scheme is validly signed by running `yivi irma scheme sign` in your `irma-demo` checkout.
 3. When starting your [IRMA server](irma-server.md#irma-schemes), point it to the folder containing your `irma-demo` checkout and disable scheme updating:
    ```sh
-   irma server --schemes-path ... --schemes-update 0
+   yivi irma server --schemes-path ... --schemes-update 0
    ```
 4. Create a checkout of [`irmamobile`](https://github.com/privacybydesign/irmamobile/), the Yivi app source code; replace the `irma-demo` copy in `irmamobile/irma_configuration/irma-demo` with your modified copy; and compile the Yivi app using the instructions in its README.
 
@@ -76,20 +76,20 @@ Your PR will then be signed by us, and merged. As with `irma-demo`, your issuer 
 
 ### Generating IRMA issuer keys
 
-Generating a new IRMA issuer private/public keypair is done with the [`irma`](irma-cli.md) command line tool:
+Generating a new IRMA issuer private/public keypair is done with the [`irma`](yivi-cli.md) command line tool:
 
 ```sh
-irma issuer keygen
+yivi irma issuer keygen
 ```
 
-See `irma issuer keygen -h` for the flags that this command accepts. By default, it will emit the private and public keys in directories called `PrivateKeys` and `PublicKeys` under your current directory, creating them if they don't exist.
+See `yivi irma issuer keygen -h` for the flags that this command accepts. By default, it will emit the private and public keys in directories called `PrivateKeys` and `PublicKeys` under your current directory, creating them if they don't exist.
 
 Some notes:
 
 * When generating a new keypair for the `irma-demo` scheme, the private key is expected to be included in the PR to the `irma-demo` repository, within the `PrivateKeys` folder under your issuer folder. However, when generating a new keypair for the production `pbdf` scheme, you *must* keep your private key private.
 * Your past and current public keys are stored within your issuer folder in the `pbdf` scheme in the `PublicKeys` folder with increasing filenames: `0.xml`, `1.xml`, et cetera. The number in the filename is the counter of your public key. When generating a new public key, you can ensure it gets the correct counter in one of the following ways:
   - By specifying it explicitly using the `-c` or `--counter` flag.
-  - By running `irma issuer keygen` within your issuer folder in the scheme; it will then infer the appropriate counter using the public keys already present in the `PublicKeys` folder.
+  - By running `yivi irma issuer keygen` within your issuer folder in the scheme; it will then infer the appropriate counter using the public keys already present in the `PublicKeys` folder.
   - Alternatively, after generating the keypair you can open the private and public keys in a text editor and set the `<Counter>` tag to the appropriate number.
 * If one of your credentials contains more than 10 attributes, then that amount of attributes *increased by 2* (to account for [the secret key and metadata attributes](technical-overview.md#special-attributes)) must be passed to the `-a` or `--numattributes` flag, to ensure that the new public key supports the required amount of attributes.
 

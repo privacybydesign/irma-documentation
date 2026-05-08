@@ -114,7 +114,7 @@ The `description.xml` of a scheme looks like the following.
 * The `version` XML attribute of the `<SchemeManager>` tag is a constant, versioning the XML structure in the file.
 * The identifier of the issuer is specified by the `<Id>` tag (`scheme-id` in this example).
 * The `<Url>` tag points to the location where an online copy of this scheme is hosted, from which Yivi apps and servers update their local copies.
-* The `<Demo>` tag, containing `true` or `false`, defines whether this is a demo or a production scheme. When `true`, the human-readable names (i.e., the contents of the `<Name>` tags) of all issuers and credential types within the scheme are required to start with the prefix `Demo `, and some requirements checked by `irma scheme verify` and `irma scheme sign` are slightly relaxed.
+* The `<Demo>` tag, containing `true` or `false`, defines whether this is a demo or a production scheme. When `true`, the human-readable names (i.e., the contents of the `<Name>` tags) of all issuers and credential types within the scheme are required to start with the prefix `Demo `, and some requirements checked by `yivi irma scheme verify` and `yivi irma scheme sign` are slightly relaxed.
 * The `<TimestampServer>` defines which timestamp server is used for [attribute-based signatures](session-requests.md#attribute-based-signature-requests) that contain attributes from this scheme.
 * The `<KeyshareServer>`, `<KeyshareWebsite>`, and `<KeyshareAttribute>` tags, when present, enable the use of a [keyshare server](keyshare-protocol.md) for this scheme, and define the URL of the keyshare server; the URL of the MyIRMA webinterface for it; and which attribute is used by the keyshare server, respectively.
 
@@ -221,12 +221,12 @@ Most IRMA software components automatically use the following two schemes:
 
 The [Privacy by Design Foundation](https://privacybydesign.foundation/), which develops IRMA and issues a basic set of attributes, is the scheme manager of these two schemes. New issuers wishing to issue attributes under the `pbdf` scheme, or existing issuers wishing to issue new credential types, can [ask](https://yivi.app/for_developers/) the Foundation to be included in these schemes. For more information on this process, see the [issuer documentation page](issuer.md).
 
-These two schemes are hardcoded into the [Yivi app](yivi-app.md), and if an [`irma`](irma-cli.md) subcommand that requires schemes is run for the first time, these two schemes are downloaded to a default location on disk (`~/.local/share/irma/irma_configuration` on Linux/macOS). It is always possible to use other schemes in conjunction with these two, or without them, either by making a custom build of the Yivi app, or by passing the appropriate options to the `irma` subcommands (see the `--help` messages).
+These two schemes are hardcoded into the [Yivi app](yivi-app.md), and if an [`yivi irma`](yivi-cli.md) subcommand that requires schemes is run for the first time, these two schemes are downloaded to a default location on disk (`~/.local/share/irma/irma_configuration` on Linux/macOS). It is always possible to use other schemes in conjunction with these two, or without them, either by making a custom build of the Yivi app, or by passing the appropriate options to the `yivi irma` subcommands (see the `--help` messages).
 
 
-## Updating and signing schemes with `irma`
+## Updating and signing schemes with `yivi irma`
 
-The following `irma scheme` subcommands from the [`irma`](irma-cli.md) command line tool act on IRMA schemes:
+The following `yivi irma scheme` subcommands from the [`yivi irma`](yivi-cli.md) command line tool act on IRMA schemes:
 
 * `download`: Download a scheme from its remote URL
 * `issuer`: Manage IRMA issuers within an IRMA scheme
@@ -242,9 +242,9 @@ Check `-h` or `--help` of these for usage details.
 
 Anyone can create their own IRMA scheme. At minimum the following must be done:
 
-* Create a directory structure like the one above (you can use the `scheme` subcommand of the [`irma`](irma-cli.md) command line tool to generate an ECDSA public-private keypair and sign the directory tree);
-* Define at least one issuer and generate its Idemix public-private keypair (again using `irma`), putting the public key in the directory structure;
+* Create a directory structure like the one above (you can use the `scheme` subcommand of the [`yivi irma`](yivi-cli.md) command line tool to generate an ECDSA public-private keypair and sign the directory tree);
+* Define at least one issuer and generate its Idemix public-private keypair (again using `yivi irma`), putting the public key in the directory structure;
 * Define at least one credential type that this issuer will issue;
 * Compile a version of the Yivi app with this directory tree hardcoded in it;
-* Host an [`irma server`](irma-server.md) that will issue and verify your credential type (as this  server will issue credentials it must have a copy of the scheme directory tree, and the Idemix private key);
+* Host an [`yivi irma server`](irma-server.md) that will issue and verify your credential type (as this  server will issue credentials it must have a copy of the scheme directory tree, and the Idemix private key);
 * Create a website using [`yivi-frontend`](yivi-frontend.md) that will issue and verify instances of your credential type.

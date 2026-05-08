@@ -80,5 +80,5 @@ func createFullnameRequest(w http.ResponseWriter, r *http.Request) {
 ## See also
 
 * The Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) wraps the functions that this library exposes for starting and managing IRMA sessions into HTTP endpoints.
-* The [`irma server`](irma-server.md) command wraps `requestorserver` into an executable.
-* The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](yivi-app.md).
+* The [`yivi irma server`](irma-server.md) command wraps `requestorserver` into an executable.
+* The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [Yivi app](yivi-app.md).

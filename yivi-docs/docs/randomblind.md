@@ -54,14 +54,14 @@ We explain in detail how this comes to pass in the next section.
 
 As a concrete example we use the
 "Demo Voting Card" credential type, see [this page in the attribute
-index](https://attribute-index.yivi.app/en/irma-demo.stemmen.stempas.html#irma-demo.stemmen.stempas.election).
+index](https://portal.yivi.app/attribute-index/credentials/demo/stemmen/stempas).
 Even though the credential contains five attributes, the issuer must only give
 four concrete values to construct the credential. For example, a requestor can
 start an issuance session to issue such a credential using the following
 command:
 
 ```
-irma session --issue irma-demo.stemmen.stempas=test,test.com,14-12-2020,15-12-2020
+yivi irma session --issue irma-demo.stemmen.stempas=test,test.com,14-12-2020,15-12-2020
 ```
 
 Upon scanning the QR code, the Yivi app user is asked permission to perform the

@@ -60,7 +60,7 @@ This page does not deal with the cryptographic contents of the messages being pa
 
 ## Session creation
 
-The [requestor](technical-overview.md#participants) creates a session by sending a [session request](session-requests.md) for one of the three supported [session types](what-is-yivi.md#session-types) to the [`POST /session`](api-irma-server.md#post-session) endpoint of the `irma server`, or by invoking the [`StartSession()`](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver#Server.StartSession) function of the `irmaserver` Go library. If the IRMA server accepts the session (i.e., the session request is valid and the requestor is authorized to start sessions), the session is created and its state is set to [`INITIALIZED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusInitialized). This means that the IRMA server is waiting for the first HTTP request of the Yivi app, documented below.
+The [requestor](technical-overview.md#participants) creates a session by sending a [session request](session-requests.md) for one of the three supported [session types](what-is-yivi.md#session-types) to the [`POST /session`](api-irma-server.md#post-session) endpoint of the `yivi irma server`, or by invoking the [`StartSession()`](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver#Server.StartSession) function of the `irmaserver` Go library. If the IRMA server accepts the session (i.e., the session request is valid and the requestor is authorized to start sessions), the session is created and its state is set to [`INITIALIZED`](https://pkg.go.dev/github.com/privacybydesign/irmago#ServerStatusInitialized). This means that the IRMA server is waiting for the first HTTP request of the Yivi app, documented below.
 
 When the requestor creates the session, the IRMA server responds with a [session package](api-irma-server.md#post-session). For example:
 
@@ -234,10 +234,10 @@ i.Rsh(i, 1)
 fmt.Println(string(i.Bytes()))
 ```
 
-Note that attribute `1` is the [metadata attribute](technical-overview.md#the-metadata-attribute), containing among others the credential type and the expiry date of the credential in a custom encoding. This attribute is always disclosed. The above snippet will not output anything sensible for metadata attributes, but instead the [`irma` command line tool](irma-cli.md) can be used as follows.
+Note that attribute `1` is the [metadata attribute](technical-overview.md#the-metadata-attribute), containing among others the credential type and the expiry date of the credential in a custom encoding. This attribute is always disclosed. The above snippet will not output anything sensible for metadata attributes, but instead the [`yivi` command line tool](yivi-cli.md) can be used as follows.
 
 ```shell
-irma meta "AwAKhwAaAAXZZxdMn4TvQ6F/mVxWb6a7"
+yivi irma meta "AwAKhwAaAAXZZxdMn4TvQ6F/mVxWb6a7"
 ```
 Returns:
 ```text

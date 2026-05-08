@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 Each [IRMA server](what-is-yivi.md#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [Yivi app](yivi-app.md) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
 
-* The [`POST /session`](api-irma-server.md#post-session) endpoint from [`irma server`](irma-server.md).
+* The [`POST /session`](api-irma-server.md#post-session) endpoint from [`yivi irma server`](irma-server.md).
 * The [`StartSession()` function](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
 * The [`session.start` attribute](https://github.com/privacybydesign/yivi-frontend-packages/blob/master/plugins/yivi-client/README.md#session) of [`Yivi client`](/yivi-frontend#available-plugins-for-yivi-core).
 
@@ -373,7 +373,9 @@ If *not* set:
 
 This URL does not necessarily have to be a web URL; it can also be a universal link to another app. Universal links work both on Android and iOS. It is also possible to use iOS or Android scheme URLs. (Note however that iOS and Android scheme URLs differ from one another, so when starting a session with a scheme URL as return URL you should therefore determine on which platform the user's app is running.)
 
-On iOS, toggling back to the calling app or website after the session can be simulated by navigating towards the calling app using a `clientReturnUrl`, either a normal URL or universal link. This works on Android as well, so currently this is the only platform-independent way of ensuring that the used ends up at a specified place after the session. If the URL opens a website, however, then the user is navigated towards a new browser tab instead of back to an existing browser tab, so in website-IRMA-website flows you will need to reload your webapp and state in the newly opened tab.
+On iOS, toggling back to the calling app or website after the session can be simulated by navigating towards the calling app using a `clientReturnUrl`, either a normal URL or universal link. This works on Android as well, so currently this is the only platform-independent way of ensuring that the user ends up at a specified place after the session. However, if the URL opens a website, then the user is navigated towards a new browser tab instead of back to an existing browser tab, so in website-IRMA-website flows you will need to reload your webapp and state in the newly opened tab.
+
+The `clientReturnUrl` can also be configured with a phonenumber, for example `request.ClientReturnURL = "tel:+3161234567890"`. In this case, when a session is finished, the user is navigated to a screen, which explains the user that clicking on the button displayed, will initiate a phonecall to the configured phonenumber. The phonenumber may include so called "dailing extensions", like `#` (extension number) or `,` (pause ~2 seconds, which some devices require before sending other codes). An example could look like `request.ClientReturnURL = "tel:+3161234567890,,#1234"` (call the provided number, wait for 4 seconds, send `#1234` as extension data).
 
 ### Augmenting the client return URL
 
@@ -430,7 +432,7 @@ This leads to the following session package:
 
 The `host` field is optional. If not set, the `url` from the server's [configuration](irma-server.md#configuring) will be used as-is. In this case, the IRMA server will not check which host the Yivi app connects to. The Yivi app on the other hand will check that the TLS certificate being used is correct.
 
-When you use `irma server`, you should explicitly specify [requestor permissions](irma-server.md#permissions) for this. Otherwise, only the hostname from the `url` in the server's [configuration](irma-server.md#configuring) will be allowed. When you use the [IRMA server library](irma-server-lib.md), no permission restrictions are imposed. If you need restrictions, then you have to implement this yourself.
+When you use `yivi irma server`, you should explicitly specify [requestor permissions](irma-server.md#permissions) for this. Otherwise, only the hostname from the `url` in the server's [configuration](irma-server.md#configuring) will be allowed. When you use the [IRMA server library](irma-server-lib.md), no permission restrictions are imposed. If you need restrictions, then you have to implement this yourself.
 
 ## Extra parameters
 For each API that accepts one of the above session request data types, the requestor can provide additional parameters to configure the session at the IRMA server, by providing an *extended session request* instead, as follows:
@@ -478,7 +480,7 @@ Below you can find an overview of all extra parameters and their default value.
 More information about session lifetimes and timeouts can be found in the [IRMA server documentation](irma-server.md#session-lifetime).
 
 ## JWTs: signed session requests
-The IRMA API server or [`irma server`](irma-server.md) can be configured to only accept session requests that have been digitally signed using a signed JWT, according to the [JWT (RFC 7519)](https://datatracker.ietf.org/doc/html/rfc7519) and [JWS (RFC 7515)](https://datatracker.ietf.org/doc/html/rfc7515) standards. These signed session requests are JWS objects (signed JWTs) that encapsulate the session request data. Set the HTTP `Content-Type` header to `text/plain` when sending a signed session request.
+The IRMA API server or [`yivi irma server`](irma-server.md) can be configured to only accept session requests that have been digitally signed using a signed JWT, according to the [JWT (RFC 7519)](https://datatracker.ietf.org/doc/html/rfc7519) and [JWS (RFC 7515)](https://datatracker.ietf.org/doc/html/rfc7515) standards. These signed session requests are JWS objects (signed JWTs) that encapsulate the session request data. Set the HTTP `Content-Type` header to `text/plain` when sending a signed session request.
 
 An example requesting [YiviTube](https://yivitube.yivi.app/) attributes:
 
@@ -530,4 +532,4 @@ Currently the following libraries can produce JWTs of this form:
 * The [`irma_api_common`](https://github.com/privacybydesign/irma_api_common) Java library
 * The [`irma-diva-js`](https://github.com/Alliander/diva-irma-js) Javascript library
 
-`irma server` currently supports JWTs signed (asymmetrically with RSA) with the `RS256` algorithm, and (symmetrically signed with HMAC-SHA256) `RS256`. The IRMA API server only supports `RS256`.
+`yivi irma server` currently supports JWTs signed (asymmetrically with RSA) with the `RS256` algorithm, and (symmetrically signed with HMAC-SHA256) `RS256`. The IRMA API server only supports `RS256`.

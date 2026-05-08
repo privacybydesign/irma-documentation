@@ -86,10 +86,10 @@ Apart from exposing an API that is used by the [Yivi app](yivi-app.md) during IR
 
 Currently the following IRMA servers exist:
 
-* The `irma server` command of the [`irma`](irma-cli.md) binary: a standalone daemon exposing its requestor API as HTTP endpoints. [Documentation](irma-server.md); [API reference](api-irma-server.md).
+* The `yivi irma server` command of the [`irma`](yivi-cli.md) binary: a standalone daemon exposing its requestor API as HTTP endpoints. [Documentation](irma-server.md); [API reference](api-irma-server.md).
 * The `irmaserver` Go library, exposing a HTTP server that handles IRMA sessions with the Yivi app, and Go functions for starting and managing IRMA sessions. [Documentation](irma-server-lib.md); [API reference](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver).
 * The now deprecated [`irma_api_server`](https://github.com/privacybydesign/irma_api_server).
 
 ## About this documentation
 
-IRMA uses JSON to pass messages within IRMA sessions. The majority of IRMA is [written in Go](https://github.com/privacybydesign/irmago), and the JSON messages generally correspond to specific Go structs. For example, the [`GET /session/{token}/result`](api-irma-server.md#get-sessionrequestortokenresult) endpoint of the [`irma server`](irma-server.md) outputs instances of the [`server.SessionResult`](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult).  In such cases, a link to the corresponding Go struct will be included. This can tell you what fields you can use or expect. (Note that some structs have custom (un)marshalers. See also the [Go documentation](https://blog.golang.org/json-and-go) on JSON and Go.)
+IRMA uses JSON to pass messages within IRMA sessions. The majority of IRMA is [written in Go](https://github.com/privacybydesign/irmago), and the JSON messages generally correspond to specific Go structs. For example, the [`GET /session/{token}/result`](api-irma-server.md#get-sessionrequestortokenresult) endpoint of the [`yivi irma server`](irma-server.md) outputs instances of the [`server.SessionResult`](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult).  In such cases, a link to the corresponding Go struct will be included. This can tell you what fields you can use or expect. (Note that some structs have custom (un)marshalers. See also the [Go documentation](https://blog.golang.org/json-and-go) on JSON and Go.)

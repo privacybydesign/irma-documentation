@@ -7,51 +7,51 @@ import TabItem from '@theme/TabItem';
 
 This page shows how to get started with verifying or issuing IRMA attributes, using the following components:
 
- * [`irma server`](irma-server.md), a server that verifies or issues IRMA attributes to [Yivi apps](yivi-app.md),
- * [`yivi-frontend`](yivi-frontend.md), a JavaScript library for drawing the Yivi QR in your website, and handling IRMA session with the `irma server`.
+ * [`yivi irma server`](irma-server.md), a server that verifies or issues IRMA attributes to [Yivi apps](yivi-app.md),
+ * [`yivi-frontend`](yivi-frontend.md), a JavaScript library for drawing the Yivi QR in your website, and handling IRMA session with the `yivi irma server`.
 
 You should have the [Yivi app](yivi-app.md) installed ([Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994)). If you want to compile from source instead of using prebuilt binaries, you should additionally have [Git](https://git-scm.com/), [Go](https://golang.org/doc/install), and [npm](https://docs.npmjs.com/cli/npm) installed.
 
 
-## Installing `irma server`
-You can install the `irma` command line tool in the following three ways.
+## Installing `yivi irma server`
+You can install the `yivi` command line tool in the following three ways.
 
 <Tabs groupId="installation">
   <TabItem value="binary" label="Prebuilt binary" default>
     * Download prebuilt binary from [GitHub](https://github.com/privacybydesign/irmago/releases/latest). Choose the binary for your OS and architecture (most likely amd64).
-    * Rename the file to `/usr/local/bin/irma` to have it available in your PATH.
+    * Rename the file to `/usr/local/bin/yivi` to have it available in your PATH.
   </TabItem>
   <TabItem value="compile" label="Compile and install binary from source">
     ```shell
-    go install github.com/privacybydesign/irmago/irma@latest
+    go install github.com/privacybydesign/irmago/yivi@latest
     ```
   </TabItem>
   <TabItem value="docker" label="Docker">
     ```shell
-    docker pull ghcr.io/privacybydesign/irma:latest
+    docker pull ghcr.io/privacybydesign/yivi:latest
     ```
   </TabItem>
 </Tabs>
 
-## Running `irma server`
-After installing the `irma` binary, start the server (with increased verbosity but otherwise default configuration):
+## Running `yivi irma server`
+After installing the `yivi` binary, start the server (with increased verbosity but otherwise default configuration):
 
 <Tabs groupId="installation">
   <TabItem value="binary" label="Binary" default>
     ```shell
-    irma server -v
+    yivi irma server -v
     ```
   </TabItem>
   <TabItem value="docker" label="Docker">
     ```shell
     IP=192.168.1.2 # Replace with your local IP address.
-    docker run -p 8088:8088 ghcr.io/privacybydesign/irma:latest server -v --url "http://$IP:port"
+    docker run -p 8088:8088 ghcr.io/privacybydesign/yivi:latest irma server -v --url "http://$IP:port"
     ```
   </TabItem>
 </Tabs>
 
 ### Configuration
-Run `irma server -h` to see configuration options. In order to verify your configuration, run `irma server check -v`. General documentation can be found on the [irma server](irma-server.md) page, API documentation of HTTP endpoints can be found on the [api irma server](api-irma-server.md) page.
+Run `yivi irma server -h` to see configuration options. In order to verify your configuration, run `yivi irma server check -v`. General documentation can be found on the [irma server](irma-server.md) page, API documentation of HTTP endpoints can be found on the [api irma server](api-irma-server.md) page.
 
 ## Perform a command line IRMA session
 Given:
@@ -64,17 +64,17 @@ you can perform a first IRMA session using your server on the command line as fo
 <Tabs groupId="installation">
   <TabItem value="binary" label="Binary" default>
     ```shell
-    irma session --server http://localhost:8088 --disclose pbdf.pbdf.irmatube.type
+    yivi irma session --server http://localhost:8088 --disclose pbdf.pbdf.irmatube.type
     ```
   </TabItem>
   <TabItem value="docker" label="Docker">
     ```shell
     IP=192.168.1.2 # Replace with your local IP address.
-    docker run ghcr.io/privacybydesign/irma:latest session --server "http://$IP:8088" --disclose pbdf.pbdf.irmatube.type
+    docker run ghcr.io/privacybydesign/yivi:latest irma session --server "http://$IP:8088" --disclose pbdf.pbdf.irmatube.type
     ```
   </TabItem>
 </Tabs>
-[IRMATube attributes](https://attribute-index.yivi.app/en/pbdf.pbdf.irmatube.html) are available on the [YiviTube demo](https://yivitube.yivi.app/) page. This will print a QR that you can scan with your Yivi app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
+[IRMATube attributes](https://attribute-index.yivi.app/en/pbdf.pbdf.irmatube.html) are available on the [YiviTube demo](https://yivitube.yivi.app/) page. This will print a QR that you can scan with your Yivi app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `yivi irma server`.
 
 
 ## Installing an example webpage for `yivi-frontend`
@@ -92,33 +92,33 @@ npm run build
 
 ## Perform browser IRMA session
 
-(Re)start your `irma server`, configuring it such that it statically hosts the `yivi-frontend` example webpage we just built with the commands below. Change `~` to the actual folder you have downloaded `yivi-frontend-packages` to.
+(Re)start your `yivi irma server`, configuring it such that it statically hosts the `yivi-frontend` example webpage we just built with the commands below. Change `~` to the actual folder you have downloaded `yivi-frontend-packages` to.
 <Tabs groupId="installation">
   <TabItem value="binary" label="Binary" default>
     ```shell
-    irma server -v --static-path ~/yivi-frontend-packages/examples/browser/yivi-frontend
+    yivi irma server -v --static-path ~/yivi-frontend-packages/examples/browser/yivi-frontend
     ```
   </TabItem>
   <TabItem value="docker" label="Docker">
     ```shell
     IP=192.168.1.2 # Replace with your local IP address.
-    docker run -v ~/yivi-frontend-packages:/yivi-frontend-packages -p 8088:8088 ghcr.io/privacybydesign/irma:latest server -v --url "http://$IP:port" --static-path /yivi-frontend-packages/examples/browser/yivi-frontend
+    docker run -v ~/yivi-frontend-packages:/yivi-frontend-packages -p 8088:8088 ghcr.io/privacybydesign/yivi:latest irma server -v --url "http://$IP:port" --static-path /yivi-frontend-packages/examples/browser/yivi-frontend
     ```
   </TabItem>
 </Tabs>
 A webpage demoing IRMA attribute issuance verification should now be available at http://localhost:8088.
 
 :::note
-Open the browser console and the console running `irma server` to see various log messages and possibly error messages as the IRMA session proceeds.
+Open the browser console and the console running `yivi irma server` to see various log messages and possibly error messages as the IRMA session proceeds.
 :::
 
 ## Example configuration and IRMA session
 
 Generally, your IRMA server runs in your backend alongside a server application serving your frontend (website), with which the Yivi app user is interacting. Your server application starts and manages sessions at your IRMA server to verify or issue attributes (for example, when the user wants to log in). This can be set up as follows.
 
-### Configure `irma server`
+### Configure `yivi irma server`
 
-In production, it is generally best to [authenticate incoming session requests](irma-server.md#requestor-authentication) from your application. The following is an example production configuration file ([in YAML](irma-server.md#configuring)) for the `irma server` (start with `irma server -c /path/to/config.yml`) that will accept [session requests](session-requests.md) if they include a `Authorization: mysecrettoken` HTTP header.
+In production, it is generally best to [authenticate incoming session requests](irma-server.md#requestor-authentication) from your application. The following is an example production configuration file ([in YAML](irma-server.md#configuring)) for the `yivi irma server` (start with `yivi irma server -c /path/to/config.yml`) that will accept [session requests](session-requests.md) if they include a `Authorization: mysecrettoken` HTTP header.
 
 ```yaml title="config.yml"
 production: true

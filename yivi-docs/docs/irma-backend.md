@@ -19,7 +19,7 @@ Additionally, they will handle all communication with the [Yivi app](yivi-app.md
 
 Depending on the programming language, the libraries achieve this by either directly including
 the IRMA server functionality, or by consuming the [REST API](api-irma-server.md) exposed
-by the [`irma server`](irma-server.md).
+by the [`yivi irma server`](irma-server.md).
  
 The library will slightly differ per language, since each programming language has its own conventions.
  
@@ -28,7 +28,7 @@ For the list of currently available programming languages, check the [GitHub REA
 a separate [`irmaserver`](irma-server-lib.md) Go package.)
 
 If the programming language of your choice is not available yet, you can
-always directly invoke the `irma server` [REST API](api-irma-server.md).
+always directly invoke the `yivi irma server` [REST API](api-irma-server.md).
 If you think the programming language of your choice would benefit being part of 
 `irma-backend-packages`, you can always contact us or make an issue on [GitHub](https://github.com/privacybydesign/irma-backend-packages/issues).
 
