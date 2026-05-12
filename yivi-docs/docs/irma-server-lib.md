@@ -1,5 +1,5 @@
 ---
-title: irma server library
+title: IRMA server library
 ---
 
 <a href="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver" class="godoc"><img src="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver?status.svg" alt="GoDoc" /></a>

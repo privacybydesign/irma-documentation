@@ -1,5 +1,5 @@
 ---
-title: irma server
+title: IRMA server
 ---
 
 ```shell
