@@ -2,9 +2,7 @@
 title: What is Yivi?
 ---
 
-Yivi is a set of open source software project implementing the Idemix attribute-based credential scheme, allowing users to safely and securely authenticate themselves as privacy-preserving as the situation permits. Users receive digitally signed attributes from trusted issuer, storing them in their Yivi app, after which the user can selectively disclose attributes to others.
-
-Yivi's roots lie within Radboud University. Back in the day, its code name was IRMA, which stands for "I Reveal My Attributes." IRMA was later rebranded as Yivi, but many technical dependencies, such as the protocol and repositories, continue to bear the name IRMA.
+Yivi is a **crypto agile identity wallet**, aiming to become a certified **EUDI-wallet** under the [eIDAS 2.0](https://eur-lex.europa.eu/eli/reg/2024/1183/oj) regulation. It is a set of open source software projects that allow users to safely and securely authenticate themselves as privacy-preserving as the situation permits. Users receive digitally signed attributes from trusted issuers, store them in their Yivi app, and selectively disclose attributes to others.
 
 Schematically:
 
@@ -24,72 +22,145 @@ Schematically:
 
 Using the issuer's digital signature over the attributes the verifier can verify that the attributes were given to the user in the past, and that they have not been modified since.
 
-## IRMA session flow
+## From IRMA to Yivi
 
-A typical IRMA session is depicted schematically below.
+Yivi's roots lie within [Radboud University](https://www.ru.nl/), where researchers set out to put users back in control of their digital identity. The project's original code name was **IRMA**, short for "I Reveal My Attributes." IRMA is an implementation of [Idemix](https://www.zurich.ibm.com/identity_mixer/), an attribute-based credential scheme pioneered by IBM Research that supports strong privacy properties such as selective disclosure, issuer unlinkability, and relying party unlinkability.
 
-![IRMA session flow](/img/irmaflow.png)
+Years before EUDI-wallets entered the European agenda, IRMA was already delivering a production-grade, privacy-first identity solution. IRMA was later rebranded as Yivi, but many technical dependencies—such as the protocol and source repositories—continue to bear the IRMA name.
 
-Software components:
-* *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the [Yivi app](yivi-app.md) scans. All frontend tasks depicted in the diagram are supported by [`yivi-frontend`](yivi-frontend.md).
-* [*IRMA server*](#irma-servers): Handles [IRMA protocol](irma-protocol.md) with the Yivi app for the requestor.
-* [*Yivi mobile app*](yivi-app.md): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994).
+## Yivi Today: A Mature Ecosystem
 
-Explanation of the steps:
+Yivi is more than just a mobile app. It is a complete, open-source stack with production-grade technology including:
 
-1. Usually the session starts by the user performing some action on the website (e.g. clicking on "Log in with IRMA").
-1. The requestor sends its [session request](session-requests.md) (containing the attributes to be disclosed or issued, or message to be signed) to the [IRMA server](#irma-servers). Depending on its configuration, the IRMA server accepts the session request only if the session request is authentic (e.g. a validly signed [session request JWT](session-requests.md#jwts-signed-session-requests)) from an authorized requestor.
-1. The IRMA server accepts the request and assigns a session token (a random string) to it. It returns the contents of the QR code that the frontend must display: the URL to itself and the session token.
-1. The frontend ([`yivi-frontend`](yivi-frontend.md)) receives and displays the QR code, which is scanned by the Yivi app.
-1. The Yivi app requests the session request from step 1, receiving the attributes to be disclosed or issued, or message to be signed.
-1. The IRMA server returns the session request.
-1. The Yivi app displays the attributes to be disclosed or issued, or message to be signed, and asks the user if she wants to proceed.
-1. The user accepts.
-1. The IRMA server performs the IRMA protocol with the Yivi app, issuing new attributes to the user, or receiving and verifying attributes from the user's Yivi app, or receiving and verifying an attribute-based signature made by the user's app.
-1. The session status (`DONE`, `CANCELLED`, `TIMEOUT`), along with disclosed and verified attributes or signature depending on the session type, are returned to the requestor.
+- An implementation of the Idemix credential scheme
+- An open and transparent implementation of a Trust Scheme
+- An implementation of the proprietary [IRMA protocol](irma-protocol.md) for issuance and selective disclosure, supporting core features such as selective disclosure, issuance, and revocation based on accumulators—all while respecting core privacy features like issuer unlinkability and relying party unlinkability
+- A set of open-source software tooling to host Attestation Providers (Issuers) and Relying Parties (Verifiers)
+- A multi-platform, multi-language, and accessible mobile app
 
-Additional notes: 
+Yivi was ahead of its time, but now has come the time to align with the broader European ecosystem. We believe our work in the past decade has been fundamental to the new way of attribute-based credential thinking.
 
-* Which of these tasks are performed by the requestor's backend and which by its frontend differs case by case:
-  - Often the session request is sent to the IRMA server by the requestor's backend, after which the IRMA server's reply in step 2 is forwarded to the frontend which renders it as a QR code. Step 1 can however also be done by `yivi-frontend`, in which case `yivi-frontend` automatically picks up the IRMA server's reply in step 2 and renders the QR code.
-  - Similarly, `yivi-frontend` can be instructed to fetch the session result in step 10, but this can also be done in the backend. In the latter, `yivi-frontend` can fetch a custom result at your backend, if desired.
-* The IRMA server could be deployed on the same machine as the requestor's backend, but it need not be; possibly it is not even controlled by the requestor. Generally, steps 2/3 and 10 are done with REST HTTP calls to the IRMA server, but in case the [`irmaserver`](irma-server-lib.md) library is used, these steps are function calls. Alternatively, you could use one of the packages in [`irma-backend-packages`](irma-backend.md) to do these steps with function calls in other programming languages.
+## Privacy by Design, Still at the Core
 
-## Session types
+Yivi was built from the ground up to respect user privacy. The emergence of the EUDI-wallet framework is a positive step for digital autonomy and self-sovereignty of users. However, we remain concerned about the current lack of native support for core privacy mechanisms such as **issuer unlinkability** and **relying party unlinkability**.
 
-In an IRMA session, the [Yivi mobile app](yivi-app.md) performs one of the following three *session types* with an [*IRMA server*](#irma-servers):
+We are actively engaged in community discussions like [Topic G on Zero Knowledge Proofs](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/discussions/408), which highlight the limitations of the current specifications. While we appreciate that these topics are on the agenda, we remain cautious about both the timeline and the effectiveness of proposed solutions.
 
-* *Disclosure sessions*: Upon receiving a list of requested attributes from the IRMA server, the app discloses the required attributes to the IRMA server if the app user agrees, after which they are verified by the IRMA server.
-* *Attribute-based signature sessions*: Similar to disclosure sessions, but the attributes are attached to a message digitally signed into an [*attribute-based signature*](technical-overview.md#attribute-based-signatures). The attribute-based signature can be verified at any later time, ensuring that the signed message is intact, and that the IRMA attributes attached to it were valid at the time of creation of the attribute-based signature.
-* *Issuance sessions*: the Yivi app receives a new set of IRMA attributes including valid issuer signatures from the IRMA server, to use in later disclosure or attribute-based signature sessions. (Possibly the user is asked to disclose some attributes as well, within the same IRMA session, before receiving the new attributes. This is called a *combined issuance-disclosure session*.)
+## Crypto Agile and Open Standards
 
-This process is depicted schematically and explained in more detail in the [IRMA session flow](what-is-yivi.md#irma-session-flow) chapter. For the user, after scanning the QR in his/her Yivi app a disclosure session generally looks like the following. (Attribute-based signature sessions and issuance sessions are identical in terms of their flow (scan qr, provide permission, success screen); only the graphical interface is different.)
+With the arrival of eIDAS 2.0 and the EUDI-wallet framework, Yivi is evolving into a **crypto agile** wallet: capable of supporting multiple cryptographic schemes, credential formats, and protocols side by side. For Yivi, this means:
 
-<div className="center" style={{ margin: '3em 0' }}>
-  <img 
-    src="/img/disclose-permission.png" 
-    style={{ width: '30%', marginRight: '3em' }} 
-    alt="disclose-permission" 
-  />
-  <img 
-    src="/img/disclose-done.png"
-    style={{ width: '30%' }} 
-    alt="disclosure-done" 
-  />
-</div>
+- Supporting multiple credential formats (SD-JWT VC, Idemix, and future post-quantum implementations)
+- Implementing industry-standard protocols (OpenID4VP, OpenID4VCI) alongside our existing IRMA protocol
+- Enabling interoperability with various trust schemes and ecosystems
 
+![Yivi protocol architecture diagram showing IRMA, OpenID4VCI, and OpenID4VP support](/img/crypto-agility.png)
 
-## IRMA servers
+We are committed to open standards and open source development. By embracing the building blocks of the European digital identity ecosystem while preserving the privacy guarantees that have always defined Yivi, we ensure that users can interoperate across trust schemes without giving up control over their data.
 
-Various existing software components documented on this website can perform the role of the IRMA server. 
-Apart from exposing an API that is used by the [Yivi app](yivi-app.md) during IRMA sessions, each of these components also offer an API with which IRMA sessions can be started and monitored, for use by the [*requestor*](technical-overview.md#participants): the party wishing to issue attributes to or verify attributes from an Yivi app. The IRMA server handles the IRMA session with the Yivi app for the requestor.
+### Key Challenges Ahead
 
-Currently the following IRMA servers exist:
+Despite our maturity, there are significant gaps to bridge to achieve full EUDI-wallet compliance. We must work on interoperability and adopting industry standards. Our Idemix credential scheme has challenges such as not being Elliptic Curve based and lacking hardware binding support.
 
-* The `irma server` command of the [`irma`](irma-cli.md) binary: a standalone daemon exposing its requestor API as HTTP endpoints. [Documentation](irma-server.md); [API reference](api-irma-server.md).
-* The `irmaserver` Go library, exposing a HTTP server that handles IRMA sessions with the Yivi app, and Go functions for starting and managing IRMA sessions. [Documentation](irma-server-lib.md); [API reference](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver).
-* The now deprecated [`irma_api_server`](https://github.com/privacybydesign/irma_api_server).
+Yivi builds upon our own [IRMA protocol](irma-protocol.md), which we built because there were no alternatives and no standards available. However, reality caught up with us, and now protocols like [OpenID for Verifiable Presentations](https://openid.github.io/OpenID4VP/openid-4-verifiable-presentations-wg-draft.html) and [OpenID for Verifiable Credential Issuance](https://openid.github.io/OpenID4VCI/openid-4-verifiable-credential-issuance-wg-draft.html) are now approaching a first stable version.
 
-## About this documentation
+## The Road Ahead: Key Milestones
 
-IRMA uses JSON to pass messages within IRMA sessions. The majority of IRMA is [written in Go](https://github.com/privacybydesign/irmago), and the JSON messages generally correspond to specific Go structs. For example, the [`GET /session/{token}/result`](api-irma-server.md#get-sessionrequestortokenresult) endpoint of the [`irma server`](irma-server.md) outputs instances of the [`server.SessionResult`](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult).  In such cases, a link to the corresponding Go struct will be included. This can tell you what fields you can use or expect. (Note that some structs have custom (un)marshalers. See also the [Go documentation](https://blog.golang.org/json-and-go) on JSON and Go.)
+Becoming crypto agile is a multi-year effort. It will be a long-term investment which will significantly increase the interoperability of Yivi and thereby increase its usability for organizations. We have set the following milestones as a first step towards becoming a crypto agile and EUDI-wallet compliant ID-wallet.
+
+### 1. Issue SD-JWT VC credentials over the IRMA protocol
+
+:::tip Operational
+This milestone is operational and available in Yivi app version 7.10.0+ and irmago version 0.19+.
+:::
+
+Our first milestone is to enable the issuance of SD-JWT VC credentials using our existing IRMA protocol. This pragmatic approach allows us to introduce SD-JWT VCs into the Yivi ecosystem without waiting for full OpenID4VCI implementation. By extending the IRMA protocol to support both Idemix and SD-JWT VC credentials, existing Yivi issuers can gradually adopt the new credential format.
+
+This milestone includes:
+
+- Extending the IRMA protocol to issue SD-JWT VCs alongside Idemix credentials
+- Implementing batch issuance to maintain privacy properties
+- Supporting issuer certificates and trust list integration
+- Enabling opt-in SD-JWT VC support for existing issuers
+
+For detailed instructions on how to enable SD-JWT VC issuance, see our [SD-JWT VC Issuance guide](sdjwtvc-issuance.md).
+
+### 2. Disclose SD-JWT VC credentials over OpenID4VP
+
+:::tip Operational
+This milestone is operational and available in Yivi app version 7.10.0+ and irmago version 0.19+.
+:::
+
+The second milestone is to enable the disclosure of SD-JWT VC credentials using the OpenID for Verifiable Presentations (OpenID4VP) protocol. This is a crucial step in becoming interoperable with the broader EUDI-wallet ecosystem. OpenID4VP is designed as a flexible carrier for multiple credential formats, and we believe it will ultimately support Idemix-based credentials as well—especially given its close relation to [AnonCreds](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-anoncreds).
+
+Yivi aims to introduce its own credential format over OpenID4VP. While Idemix remains central to our stack, we will also embrace SD-JWT VCs and eventually other formats. This milestone includes:
+
+- Same-device and cross-device disclosure flows
+- Key binding support using Yivi's keyshare server
+- Support for multiple credential formats over OpenID4VP
+
+This approach allows us to retain Yivi's strengths while offering compatibility with modern standards.
+
+### 3. Issue SD-JWT VC credentials over OpenID4VCI
+
+:::info Private Beta
+This milestone is currently in private beta.
+:::
+
+The third milestone is standardizing issuance using industry protocols. We will adopt OpenID for Verifiable Credential Issuance (OpenID4VCI) to enable issuance of SD-JWT VCs in line with Dutch and European expectations.
+
+This will be essential for integrating with emerging national and sectoral ecosystems, such as:
+
+- The Dutch PID Provider
+- PuB EAA issuers like the KVK, Belastingdienst, and others
+
+While IRMA will continue to be supported, we will build bridges to support new flows and allow identity brokers to mediate across formats. Yivi must support multiple issuance standards to remain relevant and inclusive.
+
+### 4. Multi-trust scheme support
+
+:::info Private Beta
+This milestone is currently in private beta.
+:::
+
+The fourth milestone is the integration of multiple trust schemes. Currently, Yivi operates under the trust scheme of the Privacy by Design Foundation. But in a European context, users must be able to present credentials from various ecosystems—public and private—without friction.
+
+To do this, we'll begin aligning with the EUDI trust model, closely observing the architectural direction of the [NL Public Reference Wallet](https://github.com/MinBZK/nl-wallet). Topics under research include:
+
+- Relying Party (RP) registration and attribute catalog publishing
+- RP authentication using X.509 certificates
+- Lifecycle management of wallet instances and binding to specific devices
+- Compatibility with Dutch and EU-level schemes, including integration with EDI-stelsel for PID and PuB credentials
+
+Trust scheme pluralism is critical to maintaining Yivi's openness, and we will ensure that users can fluidly operate across ecosystems while remaining in full control of their data.
+
+## Core Principles
+
+In our continued efforts we will maintain our core principles:
+
+- We will always work **open source**
+- We will always prefer the most **privacy friendly** solution
+- We will **never ask users to pay** for the app
+- We will stand for **ethical usage** of Yivi
+
+## Conclusion: Privacy First, Future Ready
+
+Our journey toward EUDI-wallet compliance is a long-term commitment. It is not merely about ticking regulatory checkboxes—rather it's about preserving the right to privacy in a digitized European society. Yivi will continue to lead by example—through open innovation, ethical technology, and a relentless pursuit of user empowerment.
+
+By becoming crypto-agile and aligning with emerging European standards, we reaffirm our founding belief: **Digital identity should not come at the cost of privacy.**
+
+## Related Documentation
+
+- [Session requests](session-requests.md) - Session types and the IRMA session flow
+- [Technical Overview](technical-overview.md) - Deep dive into Yivi's architecture, including IRMA servers
+- [SD-JWT VC Issuance](sdjwtvc-issuance.md) - How to issue SD-JWT VCs using the IRMA protocol
+- [IRMA Protocol](irma-protocol.md) - Details about Yivi's proprietary protocol
+- [Schemes](schemes.md) - Information about IRMA schemes and trust models
+
+## References
+
+- [OpenID for Verifiable Presentations - Version 1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
+- [OpenID for Verifiable Credential Issuance - Version 1.0](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
+- [OpenID4VC High Assurance Interoperability Profile](https://openid.net/specs/openid4vc-high-assurance-interoperability-profile-1_0-03.html)
+- [SD-JWT-based Verifiable Credentials (SD-JWT VC)](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/)
+- [Topic G: Zero Knowledge Proof #408](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/discussions/408)
+- [Privacy shall be at the heart of ARF #192](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/discussions/192)

@@ -5,17 +5,71 @@ title: Session requests
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Each [IRMA server](what-is-yivi.md#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [Yivi app](yivi-app.md) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
+Each [IRMA server](technical-overview.md#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [Yivi app](yivi-app.md) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
 
 * The [`POST /session`](api-irma-server.md#post-session) endpoint from [`irma server`](irma-server.md).
 * The [`StartSession()` function](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
 * The [`session.start` attribute](https://github.com/privacybydesign/yivi-frontend-packages/blob/master/plugins/yivi-client/README.md#session) of [`Yivi client`](/yivi-frontend#available-plugins-for-yivi-core).
 
-For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-yivi.md#irma-session-flow).
+For the precise role of session requests in an IRMA session, see the [IRMA session flow](#irma-session-flow) below.
+
+## Session types
+
+In an IRMA session, the [Yivi mobile app](yivi-app.md) performs one of the following three *session types* with an [*IRMA server*](technical-overview.md#irma-servers):
+
+* *Disclosure sessions*: Upon receiving a list of requested attributes from the IRMA server, the app discloses the required attributes to the IRMA server if the app user agrees, after which they are verified by the IRMA server.
+* *Attribute-based signature sessions*: Similar to disclosure sessions, but the attributes are attached to a message digitally signed into an [*attribute-based signature*](technical-overview.md#attribute-based-signatures). The attribute-based signature can be verified at any later time, ensuring that the signed message is intact, and that the IRMA attributes attached to it were valid at the time of creation of the attribute-based signature.
+* *Issuance sessions*: the Yivi app receives a new set of IRMA attributes including valid issuer signatures from the IRMA server, to use in later disclosure or attribute-based signature sessions. (Possibly the user is asked to disclose some attributes as well, within the same IRMA session, before receiving the new attributes. This is called a *combined issuance-disclosure session*.)
+
+This process is depicted schematically and explained in more detail in the [IRMA session flow](#irma-session-flow) section below. For the user, after scanning the QR in his/her Yivi app a disclosure session generally looks like the following. (Attribute-based signature sessions and issuance sessions are identical in terms of their flow (scan qr, provide permission, success screen); only the graphical interface is different.)
+
+<div className="center" style={{ margin: '3em 0' }}>
+  <img 
+    src="/img/disclose-permission.png" 
+    style={{ width: '30%', marginRight: '3em' }} 
+    alt="disclose-permission" 
+  />
+  <img 
+    src="/img/disclose-done.png"
+    style={{ width: '30%' }} 
+    alt="disclosure-done" 
+  />
+</div>
+
+## IRMA session flow
+
+A typical IRMA session is depicted schematically below.
+
+![IRMA session flow](/img/irmaflow.png)
+
+Software components:
+* *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the [Yivi app](yivi-app.md) scans. All frontend tasks depicted in the diagram are supported by [`yivi-frontend`](yivi-frontend.md).
+* [*IRMA server*](technical-overview.md#irma-servers): Handles [IRMA protocol](irma-protocol.md) with the Yivi app for the requestor.
+* [*Yivi mobile app*](yivi-app.md): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994).
+
+Explanation of the steps:
+
+1. Usually the session starts by the user performing some action on the website (e.g. clicking on "Log in with IRMA").
+1. The requestor sends its session request (containing the attributes to be disclosed or issued, or message to be signed) to the [IRMA server](technical-overview.md#irma-servers). Depending on its configuration, the IRMA server accepts the session request only if the session request is authentic (e.g. a validly signed [session request JWT](#jwts-signed-session-requests)) from an authorized requestor.
+1. The IRMA server accepts the request and assigns a session token (a random string) to it. It returns the contents of the QR code that the frontend must display: the URL to itself and the session token.
+1. The frontend ([`yivi-frontend`](yivi-frontend.md)) receives and displays the QR code, which is scanned by the Yivi app.
+1. The Yivi app requests the session request from step 1, receiving the attributes to be disclosed or issued, or message to be signed.
+1. The IRMA server returns the session request.
+1. The Yivi app displays the attributes to be disclosed or issued, or message to be signed, and asks the user if she wants to proceed.
+1. The user accepts.
+1. The IRMA server performs the IRMA protocol with the Yivi app, issuing new attributes to the user, or receiving and verifying attributes from the user's Yivi app, or receiving and verifying an attribute-based signature made by the user's app.
+1. The session status (`DONE`, `CANCELLED`, `TIMEOUT`), along with disclosed and verified attributes or signature depending on the session type, are returned to the requestor.
+
+Additional notes: 
+
+* Which of these tasks are performed by the requestor's backend and which by its frontend differs case by case:
+  - Often the session request is sent to the IRMA server by the requestor's backend, after which the IRMA server's reply in step 2 is forwarded to the frontend which renders it as a QR code. Step 1 can however also be done by `yivi-frontend`, in which case `yivi-frontend` automatically picks up the IRMA server's reply in step 2 and renders the QR code.
+  - Similarly, `yivi-frontend` can be instructed to fetch the session result in step 10, but this can also be done in the backend. In the latter, `yivi-frontend` can fetch a custom result at your backend, if desired.
+* The IRMA server could be deployed on the same machine as the requestor's backend, but it need not be; possibly it is not even controlled by the requestor. Generally, steps 2/3 and 10 are done with REST HTTP calls to the IRMA server, but in case the [`irmaserver`](irma-server-lib.md) library is used, these steps are function calls. Alternatively, you could use one of the packages in [`irma-backend-packages`](irma-backend.md) to do these steps with function calls in other programming languages.
 
 ## Session request data types
 
-For each of the [three IRMA session types](what-is-yivi.md#session-types), we define a *session request* data type: an object whose JSON representation contains at least a [JSON-LD `@context`](https://w3c.github.io/json-ld-syntax/#the-context) key identifying which message type it is, and extra keys specific to the session type. The following three `@context` values identify disclosure, attribute-based signature, and issuance session requests respectively:
+For each of the [three IRMA session types](#session-types), we define a *session request* data type: an object whose JSON representation contains at least a [JSON-LD `@context`](https://w3c.github.io/json-ld-syntax/#the-context) key identifying which message type it is, and extra keys specific to the session type. The following three `@context` values identify disclosure, attribute-based signature, and issuance session requests respectively:
 
 * `"@context": "https://irma.app/ld/request/disclosure/v2"`
 * `"@context": "https://irma.app/ld/request/signature/v2"`
