@@ -42,8 +42,6 @@ const sidebars: SidebarsConfig = {
         "schemes",
         "issuer",
         "session-requests",
-        "email",
-        "stateless",
         "revocation",
         "randomblind",
         "trusted-verifier",

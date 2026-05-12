@@ -156,7 +156,7 @@ In production, it is generally best to [authenticate incoming session requests](
 
 ```yaml title="config.yml"
 production: true
-email: "example@example.com"  # see https://docs.yivi.app/email/
+email: "example@example.com"  # see https://docs.yivi.app/irma-server#email
 
 port: 443
 url: "https://example.com/irma/"
