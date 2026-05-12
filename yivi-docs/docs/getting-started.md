@@ -26,7 +26,7 @@ Yivi is a [crypto agile wallet](what-is-yivi.md#crypto-agile-and-open-standards)
 | **Maximum interoperability** — issue credentials that any EUDI wallet (not just Yivi) can receive | **OpenID4VCI** — standards-based, produces SD-JWT VCs other EUDI wallets understand |
 
 :::tip
-You don't have to pick one and stick with it. Yivi is crypto agile: an SD-JWT VC sitting in the wallet can be disclosed over either IRMA or OpenID4VP regardless of which protocol issued it.
+Issuance and disclosure are decoupled. Yivi is crypto agile: the IRMA protocol can issue multiple credential formats side by side — both Idemix and SD-JWT VC — from a single issuer setup. Once they are in the wallet, Idemix credentials are disclosed over IRMA and SD-JWT VCs over OpenID4VP, so you don't have to commit to a single wallet format up front.
 :::
 
 ## Starting points
@@ -242,7 +242,7 @@ curl https://example.com/session \
       }'
 ```
 
-To issue a demo credential of your own not already present in the `irma-demo` scheme, see the [issuer guide](issuer.md). To issue **SD-JWT VCs** over the IRMA protocol (so they can later be disclosed over both IRMA and OpenID4VP), see [Issuing SD-JWT VC over IRMA](sdjwtvc-issuance.md).
+To issue a demo credential of your own not already present in the `irma-demo` scheme, see the [issuer guide](issuer.md). To issue **SD-JWT VCs** over the IRMA protocol (so they can later be disclosed over OpenID4VP), see [Issuing SD-JWT VC over IRMA](sdjwtvc-issuance.md).
 
 ## Verifying over OpenID4VP
 

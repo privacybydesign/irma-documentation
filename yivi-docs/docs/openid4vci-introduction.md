@@ -23,7 +23,7 @@ Yivi supports the **pre-authorized code flow**, which is the most common flow us
 
 Yivi already supports issuing SD-JWT VCs **over the IRMA protocol** today — see [Issuing SD-JWT VC over IRMA](sdjwtvc-issuance.md). That path is operational and is the right choice for existing Yivi issuers gradually adopting SD-JWT VC. OpenID4VCI is the path for **new** issuers that want to follow the EUDI standards directly without onboarding into the IRMA ecosystem.
 
-Both paths produce the same SD-JWT VCs in the Yivi app, so credentials issued either way can be disclosed over both IRMA and OpenID4VP.
+Both paths produce the same SD-JWT VCs in the Yivi app. Once in the wallet, SD-JWT VCs are disclosed over OpenID4VP regardless of which protocol issued them.
 
 ## What's in this section
 
