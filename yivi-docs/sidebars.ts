@@ -31,7 +31,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: "category",
-      label: "Concepts",
+      label: "IRMA",
       collapsed: false,
       items: [
         "irma-cli",
@@ -50,25 +50,39 @@ const sidebars: SidebarsConfig = {
         "randomblind",
         "chained-sessions",
         "trusted-verifier",
+        "sdjwtvc-issuance",
+        {
+          type: "category",
+          label: "API reference",
+          collapsed: true,
+          items: ["api-go", "api-irma-server", "api-yivi-frontend"],
+        },
       ],
     },
     {
       type: "category",
-      label: "API reference",
+      label: "OpenID4VP",
       collapsed: false,
-      items: ["api-go", "api-irma-server", "api-yivi-frontend"],
+      items: [
+        "openid4vp-introduction",
+        "openid4vp-disclosure",
+        "openid4vp-verifier-integration",
+      ],
+    },
+    {
+      type: "category",
+      label: "OpenID4VCI",
+      collapsed: false,
+      items: [
+        "openid4vci-introduction",
+        "openid4vci-issuer-integration",
+      ],
     },
     {
       type: "category",
       label: "Background",
       collapsed: false,
       items: ["irma-protocol", "zkp", "keyshare-protocol"],
-    },
-    {
-      type: "category",
-      label: "EUDI",
-      collapsed: false,
-      items: ["sdjwtvc-issuance", "openid4vp-disclosure"],
     },
   ],
 };
