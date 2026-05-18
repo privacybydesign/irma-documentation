@@ -27,4 +27,3 @@ OpenID4VP disclosure is available from Yivi app version `7.10.0` and `irmago` ve
 
 - Issuance over OpenID4VP — see [OpenID4VCI](openid4vci-introduction.md) instead.
 - Idemix credentials over OpenID4VP — for now OpenID4VP carries only SD-JWT VC. Idemix disclosure continues to use the IRMA protocol.
-- Wildcards in verifier certificate attribute permissions — every attribute you intend to request must currently be listed in the certificate's metadata.

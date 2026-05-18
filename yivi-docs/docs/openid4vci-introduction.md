@@ -12,7 +12,7 @@ OpenID4VCI issuance is currently in private beta. The API and integration story 
 
 ## How it works at a glance
 
-Yivi supports the **pre-authorized code flow**, which is the most common flow used in the EUDI ecosystem and the only one currently exercised in our demos:
+Yivi supports both the **pre-authorized code flow** and the **authorization code flow**. The pre-authorized flow is the most common in the EUDI ecosystem and is what our demos exercise; the steps below describe it end-to-end:
 
 1. The issuer (or a frontend on its behalf) creates a **credential offer** describing which credential type to issue, optionally with a transaction code (`tx_code`) that the user must enter in the wallet for confirmation.
 2. The issuer returns a wallet link such as `openid-credential-offer://?credential_offer_uri=...`. The user scans it as a QR code or opens it directly on mobile.
@@ -31,6 +31,5 @@ Both paths produce the same SD-JWT VCs in the Yivi app. Once in the wallet, SD-J
 
 ## What's not supported (yet)
 
-- The authorization code flow (only pre-authorized code is in scope for the private beta).
 - Issuing Idemix credentials over OpenID4VCI. OpenID4VCI carries SD-JWT VC only.
 - Issuer trust list management via the Yivi portal — issuer onboarding is still a manual process during the private beta.

@@ -50,7 +50,7 @@ We are actively engaged in community discussions like [Topic G on Zero Knowledge
 
 With the arrival of eIDAS 2.0 and the EUDI-wallet framework, Yivi is evolving into a **crypto agile** wallet: capable of supporting multiple cryptographic schemes, credential formats, and protocols side by side. For Yivi, this means:
 
-- Supporting multiple credential formats (SD-JWT VC, Idemix, and future post-quantum implementations)
+- Supporting multiple credential formats (SD-JWT VC, Idemix, Mdoc, W3C VC, and future post-quantum implementations)
 - Implementing industry-standard protocols (OpenID4VP, OpenID4VCI) alongside our existing IRMA protocol
 - Enabling interoperability with various trust schemes and ecosystems
 
@@ -96,8 +96,7 @@ The second milestone is to enable the disclosure of SD-JWT VC credentials using 
 Yivi aims to introduce its own credential format over OpenID4VP. While Idemix remains central to our stack, we will also embrace SD-JWT VCs and eventually other formats. This milestone includes:
 
 - Same-device and cross-device disclosure flows
-- Key binding support using Yivi's keyshare server
-- Support for multiple credential formats over OpenID4VP
+- Key binding support
 
 This approach allows us to retain Yivi's strengths while offering compatibility with modern standards.
 
@@ -130,6 +129,7 @@ To do this, we'll begin aligning with the EUDI trust model, closely observing th
 - RP authentication using X.509 certificates
 - Lifecycle management of wallet instances and binding to specific devices
 - Compatibility with Dutch and EU-level schemes, including integration with EDI-stelsel for PID and PuB credentials
+- Alignment with the Decentralised Identity Interop Profile (DIIP) v5 for cross-ecosystem interoperability
 
 Trust scheme pluralism is critical to maintaining Yivi's openness, and we will ensure that users can fluidly operate across ecosystems while remaining in full control of their data.
 

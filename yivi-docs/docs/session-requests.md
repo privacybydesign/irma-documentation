@@ -585,6 +585,9 @@ First, we deploy the following Go program at `https://example.com`. This program
 
 Note that this program assumes that no JWT private key is installed; see the remark in the previous paragraph.
 
+<details>
+<summary>Full Go program (click to expand)</summary>
+
 ```go
 package main
 
@@ -657,6 +660,8 @@ func writeError(w http.ResponseWriter, msg string) {
 	w.Write([]byte(msg))
 }
 ```
+
+</details>
 
 The session chain can then be started by sending the following session request to our IRMA server.
 

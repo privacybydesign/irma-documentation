@@ -53,6 +53,10 @@ const dcqlQuery = {
 
 The full authorization request adds OpenID4VP envelope fields. The Yivi-compatible verifier backend expects the verifier's X.509 certificate chain inline as `issuer_chain`:
 
+:::caution Non-standard verifier backend API
+The authorization-request shape below (including the `issuer_chain` field, the `/ui/presentations` endpoint, and the polling endpoint further down) is not defined by OpenID4VP. It is specific to the [eudi-srv-verifier-endpoint](https://github.com/eu-digital-identity-wallet/eudi-srv-verifier-endpoint) reference server from the EUDI Wallet project, and the exact request and response shapes additionally depend on the version of that server we currently run. If you deploy a different verifier backend, expect its frontend-facing API to differ.
+:::
+
 ```ts
 const authorizationRequest = {
   type: "vp_token",

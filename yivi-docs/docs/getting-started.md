@@ -15,7 +15,7 @@ Yivi is a [crypto agile wallet](what-is-yivi.md#crypto-agile-and-open-standards)
 
 | Use case | Recommended protocol |
 | --- | --- |
-| **Privacy-preserving** scenarios — age verification, digital voting, anonymous attestations, anything where sessions must not be linkable to the same user | **IRMA** — Idemix gives you issuer unlinkability and relying-party unlinkability out of the box |
+| **Privacy-preserving** scenarios — age verification, digital voting, anonymous attestations, attribute-based signatures, anything where sessions must not be linkable to the same user | **IRMA** — Idemix gives you issuer unlinkability and relying-party unlinkability out of the box. OpenID4VP does not support attribute-based signatures. |
 | **Maximum interoperability** — accepting credentials from any EUDI-compliant wallet, or integrating with EU/national identity ecosystems | **OpenID4VP** — standards-based, carries SD-JWT VCs that any EUDI wallet can produce |
 
 ### Issuance (giving users attributes)
@@ -26,7 +26,7 @@ Yivi is a [crypto agile wallet](what-is-yivi.md#crypto-agile-and-open-standards)
 | **Maximum interoperability** — issue credentials that any EUDI wallet (not just Yivi) can receive | **OpenID4VCI** — standards-based, produces SD-JWT VCs other EUDI wallets understand |
 
 :::tip
-Issuance and disclosure are decoupled. Yivi is crypto agile: the IRMA protocol can issue multiple credential formats side by side — both Idemix and SD-JWT VC — from a single issuer setup. Once they are in the wallet, Idemix credentials are disclosed over IRMA and SD-JWT VCs over OpenID4VP, so you don't have to commit to a single wallet format up front.
+Issuance and disclosure are decoupled. Yivi is crypto agile: the IRMA protocol can issue multiple credential formats side by side — both Idemix and SD-JWT VC — from a single issuer setup. Once they are in the wallet, Idemix credentials are disclosed over IRMA and SD-JWT VCs over OpenID4VP, so users can hold credentials of both formats in one wallet at the same time.
 :::
 
 ## Starting points

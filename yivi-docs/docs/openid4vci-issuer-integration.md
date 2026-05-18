@@ -10,27 +10,26 @@ This guide walks through integrating a frontend with an OpenID4VCI-compatible is
 
 ## Architecture
 
-```
-┌──────────┐   1. create offer    ┌──────────────┐
-│ Frontend │ ───────────────────▶ │  Issuer      │
-│ (browser)│ ◀─────────────────── │  backend     │
-└──────────┘      offer URI,      └──────────────┘
-      │           tx_code (opt.)         ▲
-      │ 2. show QR + tx_code             │ 4. issue credential
-      ▼                                  │
-┌──────────┐                             │
-│ Yivi app │ ─── 3. fetch offer, ────────┘
-└──────────┘     exchange code,
-                 download credential
-      │
-      │ 5. frontend polls until issuance completes
-      ▼
-      done
+The OpenID4VCI specification defines the **wallet↔issuer** interaction — the credential offer URI, the token endpoint, and the credential endpoint. It does **not** specify how a frontend talks to its own issuer backend to create offers or check their status. The diagram below therefore mixes two kinds of interactions: the standardized wallet↔issuer steps (3 and 4), and the frontend↔issuer steps (1, 2, and 5) which are specific to the reference issuer backend used in our demos. If you integrate with a different OpenID4VCI issuer, expect the frontend-facing parts to differ.
+
+```mermaid
+sequenceDiagram
+    participant FE as Frontend (browser)
+    participant BE as Issuer backend
+    participant App as Yivi app
+
+    FE->>BE: 1. create offer
+    BE-->>FE: offer URI, tx_code (opt.)
+    FE->>App: 2. show QR + tx_code
+    App->>BE: 3. fetch offer, exchange code, download credential
+    BE-->>App: 4. issue credential
+    FE->>BE: 5. poll until issuance completes
+    BE-->>FE: status: CREDENTIAL_ISSUED
 ```
 
 ## Creating a credential offer
 
-The frontend asks the issuer backend to create an offer for a specific credential type. The minimal payload below issues a pre-configured `EmailCredentialSdJwt` with one year of validity:
+The frontend asks the issuer backend to create an offer for a specific credential type. The minimal payload below issues a pre-configured `EmailCredentialSdJwt` with one year of validity. As noted above, the request shape is specific to our reference issuer backend, not OpenID4VCI itself:
 
 ```ts
 const offer = {
@@ -64,6 +63,8 @@ The returned `uri` is the wallet link (typically `openid-credential-offer://?cre
 ## The optional tx_code
 
 A `tx_code` adds an extra confirmation step: the issuer's frontend displays a short numeric code that the user must type into the wallet before the credential is downloaded. Useful when the offer is delivered out-of-band (email, printed letter) and you want to ensure the right person redeems it.
+
+The example below extends the same reference-issuer offer shape introduced above; how a `tx_code` is requested and surfaced is therefore also reference-issuer-specific:
 
 ```ts
 const offerWithTxCode = {
@@ -103,7 +104,7 @@ const id_ = setInterval(async () => {
 }, 500)
 ```
 
-As with the verifier integration, polling is fine for demos but for production we recommend a push-based mechanism (server-sent events, WebSockets, or a webhook).
+Polling keeps the example minimal; what you use in production depends on your issuer setup.
 
 ## Where to go next
 
