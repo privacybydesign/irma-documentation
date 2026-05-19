@@ -7,7 +7,7 @@ tags: [yivi, openid4vp, eudi, sdjwtvc]
 
 A few months ago, we announced our plans to become an EUDI wallet while still retaining our original privacy-by-design technology.
 
-Since that announcement, we've come a long way, and today it's time to announce the release of the first major step towards true [crypto agility](/crypto-agile-introduction): the support for the OpenID4VP protocol and the SD-JWT VC credential format in the Yivi app.
+Since that announcement, we've come a long way, and today it's time to announce the release of the first major step towards true [crypto agility](/what-is-yivi#crypto-agile-and-open-standards): the support for the OpenID4VP protocol and the SD-JWT VC credential format in the Yivi app.
 In this blog, we'll dive into how we did this and what it means for you.
 
 <!-- truncate -->
@@ -145,8 +145,8 @@ More details about what features we support and how to set it up can be found in
 
 
 ## Next up: OpenID4VCI
-Now that OpenID4VP is done, our journey to become a [crypto-agile](/crypto-agile-introduction) EUDI-compatible wallet has officially started.
+Now that OpenID4VP is done, our journey to become a [crypto-agile](/what-is-yivi#crypto-agile-and-open-standards) EUDI-compatible wallet has officially started.
 Our next step is to implement the issuance side of the system: the OpenID4VCI protocol.
 
 ## Wrap up
-As we've seen today, Yivi is well on its way to becoming crypto-agile. For more information about our roadmap, see our [Crypto Agile Introduction](/crypto-agile-introduction).
+As we've seen today, Yivi is well on its way to becoming crypto-agile. For more information about our roadmap, see our [Crypto Agile Introduction](/what-is-yivi#crypto-agile-and-open-standards).

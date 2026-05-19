@@ -16,11 +16,6 @@ Using the default styling, the browser version will look like this:
 
 All packages are published on [npm](https://www.npmjs.com/) in `@privacybydesign` scoped packages.
 
-:::info Migrating from v0.x?
-If you are upgrading from `@privacybydesign/yivi-*` v0.x, see the [migration guide](yivi-frontend-migration.md) for a
-full list of breaking changes and step-by-step upgrade instructions.
-:::
-
 ## Yivi core
 
 This package contains the [state machine](https://github.com/privacybydesign/yivi-frontend-packages/blob/master/yivi-core/state-transitions.js)

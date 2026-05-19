@@ -5,17 +5,71 @@ title: Session requests
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Each [IRMA server](what-is-yivi.md#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [Yivi app](yivi-app.md) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
+Each [IRMA server](technical-overview.md#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [Yivi app](yivi-app.md) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
 
 * The [`POST /session`](api-irma-server.md#post-session) endpoint from [`irma server`](irma-server.md).
 * The [`StartSession()` function](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
 * The [`session.start` attribute](https://github.com/privacybydesign/yivi-frontend-packages/blob/master/plugins/yivi-client/README.md#session) of [`Yivi client`](/yivi-frontend#available-plugins-for-yivi-core).
 
-For the precise role of session requests in an IRMA session, see this [diagram of an IRMA session](what-is-yivi.md#irma-session-flow).
+For the precise role of session requests in an IRMA session, see the [IRMA session flow](#irma-session-flow) below.
+
+## Session types
+
+In an IRMA session, the [Yivi mobile app](yivi-app.md) performs one of the following three *session types* with an [*IRMA server*](technical-overview.md#irma-servers):
+
+* *Disclosure sessions*: Upon receiving a list of requested attributes from the IRMA server, the app discloses the required attributes to the IRMA server if the app user agrees, after which they are verified by the IRMA server.
+* *Attribute-based signature sessions*: Similar to disclosure sessions, but the attributes are attached to a message digitally signed into an [*attribute-based signature*](technical-overview.md#attribute-based-signatures). The attribute-based signature can be verified at any later time, ensuring that the signed message is intact, and that the IRMA attributes attached to it were valid at the time of creation of the attribute-based signature.
+* *Issuance sessions*: the Yivi app receives a new set of IRMA attributes including valid issuer signatures from the IRMA server, to use in later disclosure or attribute-based signature sessions. (Possibly the user is asked to disclose some attributes as well, within the same IRMA session, before receiving the new attributes. This is called a *combined issuance-disclosure session*.)
+
+This process is depicted schematically and explained in more detail in the [IRMA session flow](#irma-session-flow) section below. For the user, after scanning the QR in his/her Yivi app a disclosure session generally looks like the following. (Attribute-based signature sessions and issuance sessions are identical in terms of their flow (scan qr, provide permission, success screen); only the graphical interface is different.)
+
+<div className="center" style={{ margin: '3em 0' }}>
+  <img 
+    src="/img/disclose-permission.png" 
+    style={{ width: '30%', marginRight: '3em' }} 
+    alt="disclose-permission" 
+  />
+  <img 
+    src="/img/disclose-done.png"
+    style={{ width: '30%' }} 
+    alt="disclosure-done" 
+  />
+</div>
+
+## IRMA session flow
+
+A typical IRMA session is depicted schematically below.
+
+![IRMA session flow](/img/irmaflow.png)
+
+Software components:
+* *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the [Yivi app](yivi-app.md) scans. All frontend tasks depicted in the diagram are supported by [`yivi-frontend`](yivi-frontend.md).
+* [*IRMA server*](technical-overview.md#irma-servers): Handles [IRMA protocol](irma-protocol.md) with the Yivi app for the requestor.
+* [*Yivi mobile app*](yivi-app.md): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994).
+
+Explanation of the steps:
+
+1. Usually the session starts by the user performing some action on the website (e.g. clicking on "Log in with IRMA").
+1. The requestor sends its session request (containing the attributes to be disclosed or issued, or message to be signed) to the [IRMA server](technical-overview.md#irma-servers). Depending on its configuration, the IRMA server accepts the session request only if the session request is authentic (e.g. a validly signed [session request JWT](#jwts-signed-session-requests)) from an authorized requestor.
+1. The IRMA server accepts the request and assigns a session token (a random string) to it. It returns the contents of the QR code that the frontend must display: the URL to itself and the session token.
+1. The frontend ([`yivi-frontend`](yivi-frontend.md)) receives and displays the QR code, which is scanned by the Yivi app.
+1. The Yivi app requests the session request from step 1, receiving the attributes to be disclosed or issued, or message to be signed.
+1. The IRMA server returns the session request.
+1. The Yivi app displays the attributes to be disclosed or issued, or message to be signed, and asks the user if she wants to proceed.
+1. The user accepts.
+1. The IRMA server performs the IRMA protocol with the Yivi app, issuing new attributes to the user, or receiving and verifying attributes from the user's Yivi app, or receiving and verifying an attribute-based signature made by the user's app.
+1. The session status (`DONE`, `CANCELLED`, `TIMEOUT`), along with disclosed and verified attributes or signature depending on the session type, are returned to the requestor.
+
+Additional notes: 
+
+* Which of these tasks are performed by the requestor's backend and which by its frontend differs case by case:
+  - Often the session request is sent to the IRMA server by the requestor's backend, after which the IRMA server's reply in step 2 is forwarded to the frontend which renders it as a QR code. Step 1 can however also be done by `yivi-frontend`, in which case `yivi-frontend` automatically picks up the IRMA server's reply in step 2 and renders the QR code.
+  - Similarly, `yivi-frontend` can be instructed to fetch the session result in step 10, but this can also be done in the backend. In the latter, `yivi-frontend` can fetch a custom result at your backend, if desired.
+* The IRMA server could be deployed on the same machine as the requestor's backend, but it need not be; possibly it is not even controlled by the requestor. Generally, steps 2/3 and 10 are done with REST HTTP calls to the IRMA server, but in case the [`irmaserver`](irma-server-lib.md) library is used, these steps are function calls. Alternatively, you could use one of the packages in [`irma-backend-packages`](irma-backend.md) to do these steps with function calls in other programming languages.
 
 ## Session request data types
 
-For each of the [three IRMA session types](what-is-yivi.md#session-types), we define a *session request* data type: an object whose JSON representation contains at least a [JSON-LD `@context`](https://w3c.github.io/json-ld-syntax/#the-context) key identifying which message type it is, and extra keys specific to the session type. The following three `@context` values identify disclosure, attribute-based signature, and issuance session requests respectively:
+For each of the [three IRMA session types](#session-types), we define a *session request* data type: an object whose JSON representation contains at least a [JSON-LD `@context`](https://w3c.github.io/json-ld-syntax/#the-context) key identifying which message type it is, and extra keys specific to the session type. The following three `@context` values identify disclosure, attribute-based signature, and issuance session requests respectively:
 
 * `"@context": "https://irma.app/ld/request/disclosure/v2"`
 * `"@context": "https://irma.app/ld/request/signature/v2"`
@@ -249,7 +303,7 @@ request.Disclose = irma.AttributeConDisCon{
 This can be useful when certain attributes are not required, so that if the user does not have them the session does not need to be aborted.
 
 ### Skip expiry check
-You can allow users to disclose expired instances of credentials. This is useful for [combined issuance-disclosure sessions](session-requests.md#issuance-requests) and [chained sessions](chained-sessions.md) if you only want to ensure that the user is still using the same device, and therefore the same [secret key](zkp.md), as during a previous issuance session.
+You can allow users to disclose expired instances of credentials. This is useful for [combined issuance-disclosure sessions](#issuance-requests) and [chained sessions](#chained-sessions) if you only want to ensure that the user is still using the same device, and therefore the same [secret key](zkp.md), as during a previous issuance session.
 
 ```json
 {
@@ -473,9 +527,185 @@ Below you can find an overview of all extra parameters and their default value.
 | `"validity"` | `ResultJwtValidity`  | Validity of session result JWT in seconds (to determine JWT expiration time `exp`)  | 120 seconds |
 | `"timeout"` | `ClientTimeout` | Wait this many seconds for the Yivi app to connect before the session times out | 300 seconds (5 minutes) |
 | `"callbackUrl"` | `CallbackUrl` | URL to post session result to | `""` (no callback is performed) |
-| `"nextSession"` | `NextSession` | Continue with a follow-up IRMA session when this session succeeds. The session result is posted to `URL`, and as response on the `POST` a new session request should be returned for the IRMA server to start. More documentation [here](chained-sessions.md). | `nil` (there is no next session) |
+| `"nextSession"` | `NextSession` | Continue with a follow-up IRMA session when this session succeeds. The session result is posted to `URL`, and as response on the `POST` a new session request should be returned for the IRMA server to start. See [Chained sessions](#chained-sessions) below. | `nil` (there is no next session) |
 
 More information about session lifetimes and timeouts can be found in the [IRMA server documentation](irma-server.md#session-lifetime).
+
+## Chained sessions
+
+Multiple IRMA sessions may be chained together by the requestor into a single flow. After the Yivi app user has started the first session (for example, by scanning a QR code), she then passes through multiple session screens, as shown here. In this example, the requestor uses a disclosure session to retrieve the user's name and then immediately afterwards issues that into a new credential.
+
+<div className="center" style={{ textAlign: "center", marginBottom: "1em" }}>
+  <img
+    src="/img/chain-disclosure.png"
+    style={{ width: "35%" }}
+    alt="disclosure-flow"
+  />
+  <img
+    src="/img/chain-issuance.png"
+    style={{ width: "35%", marginRight: "3em" }}
+    alt="issuance-flow"
+  />
+</div>
+
+The IRMA server enables this by sending the session results of the intermediate sessions in the chain to a server chosen by the requestor, which can process the session results and respond with a session request for the next session in the chain.
+
+Attributes disclosed in earlier sessions in a session chain can also be used to lookup data to be issued in a new credential, later in the session chain. More generally, within a session chain later sessions may depend on the results of the earlier sessions. With ordinary (that is, non-chained) IRMA sessions, the only possible way to achieve this is to send the user to a webpage between each session to start the next session.
+
+### The `nextSession` URL
+
+An [extended session request](#extra-parameters) may contain a `nextSession` object which must contain a `url` field. If so, then at the end of the session (i.e., after the user has agreed to perform the session in the session screen of the Yivi app), the IRMA server will POST the [session result](https://pkg.go.dev/github.com/privacybydesign/irmago/server#SessionResult) in JSON (as returned by the [`/result` endpoint](api-irma-server.md#get-sessionrequestortokenresult)) to that `url`. The server at that `url` must then respond with one of the following:
+
+* a new (extended) session request in JSON, which may depend on the received session result;
+* HTTP 204, signifying that there is no next session to be performed. In this case, no further sessions take place and the flow stops normally.
+
+In the first case, the IRMA server will then start a new session using that session request and pass it to the Yivi app, which will show the corresponding session screen. Thus, the app user moves from the first session screen immediately to the next one.
+
+The session request returned by the server at the `nextSession` URL may itself contain a `nextSession` object (possibly but not necessarily referring to the same server). If so, then yet another session will be started using the same mechanism, after the one specified by the current session request. In this fashion, a session chain can consist of any number of sessions (although ideally it is kept as short as possible for optimal UX; in most cases two sessions will suffice).
+
+### Signing POSTed session results
+
+If a [JWT private key is installed in the IRMA server](irma-server.md#signed-jwt-session-results), then instead of POSTing plain JSON session results (as returned by the [`/result` endpoint](api-irma-server.md#get-sessionrequestortokenresult)) to the `nextSession` URL, the server will POST a session result JWT signed with the private key (as returned by the [`/result-jwt` endpoint](api-irma-server.md#get-sessionrequestortokenresult-jwt)) to the `nextSession` URL. The server at that URL can verify the JWT using the corresponding public key to authenticate the request as coming from the expected IRMA server.
+
+If a JWT private key is not installed, then the boolean `--allow-unsigned-callbacks` option must be passed to the IRMA server before chained sessions may be used, to explicitly enable POSTing unsigned session results. Otherwise, the server will reject session requests containing a `nextSession` object.
+
+> If no JWT private key is installed, then the `nextSession` URL should either not be publically reachable, or it should include a secret token (e.g. `https://example.com/cX5aTins5kEZpjDpfYcN`) and have TLS enabled (which it should anyway as personal data will be POSTed to it). Otherwise there is no way for the server at the `nextSession` URL to distinguish POSTs from your IRMA server from POSTs made by anyone else.
+
+### Use cases
+
+* Retrieving an attribute and then issuing it into a new credential.
+* Retrieving an attribute; use that to lookup related data; and issue that data into new credentials.
+* Refreshing a nearly expired credential, by retrieving an identifying attribute from it; use that to lookup fresh values for the other attributes, and issue a fresh credential.
+
+### Example
+
+In this example, we use an IRMA disclosure request to retrieve the user's name, and then issue that into a new credential, as shown in the two screenshots above. A live demo very similar to this may be found [here](https://demos.yivi.app/demos/irmaTubePremium/index.en.html).
+
+First, we deploy the following Go program at `https://example.com`. This program unmarshals the request body into a session result, takes the disclosed attribute from it, and returns an issuance request containing that attribute.
+
+Note that this program assumes that no JWT private key is installed; see the remark in the previous paragraph.
+
+<details>
+<summary>Full Go program (click to expand)</summary>
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+
+	irma "github.com/privacybydesign/irmago"
+	"github.com/privacybydesign/irmago/server"
+)
+
+func main() {
+	log.Fatal(http.ListenAndServe(":80", http.HandlerFunc(handler)))
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	// Read and unmarshal the POSTed session result
+	bts, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		writeError(w, err.Error())
+		return
+	}
+	var result server.SessionResult
+	if err := json.Unmarshal(bts, &result); err != nil {
+		writeError(w, err.Error())
+		return
+	}
+
+	// Perform sanity checks on the session result.
+	// NB: this endpoint is called by the IRMA server just before it ends the
+	// session, so the session status is expected to be server.StatusConnected
+	// (or the JSON string "CONNECTED").
+	if result.Status != server.StatusConnected ||
+		result.ProofStatus != irma.ProofStatusValid ||
+		len(result.Disclosed) == 0 || len(result.Disclosed[0]) == 0 ||
+		result.Disclosed[0][0].Identifier.String() != "irma-demo.gemeente.personalData.fullname" ||
+		result.Disclosed[0][0].RawValue == nil {
+		writeError(w, "received invalid session result")
+		return
+	}
+
+	// Construct issuance request to respond with,
+	// containing the attribute from the session result
+	issuanceRequest := irma.NewIssuanceRequest([]*irma.CredentialRequest{{
+		CredentialTypeID: irma.NewCredentialTypeIdentifier("irma-demo.IRMATube.member"),
+		Attributes: map[string]string{
+			"fullname": *result.Disclosed[0][0].RawValue,
+			"type":     "premium",
+			"id":       "123456",
+		}}},
+	)
+
+	// Marshal and write our issuance request
+	bts, err = json.Marshal(issuanceRequest)
+	if err != nil {
+		writeError(w, err.Error())
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if _, err = w.Write(bts); err != nil {
+		fmt.Println(err.Error())
+	}
+}
+
+func writeError(w http.ResponseWriter, msg string) {
+	w.WriteHeader(500)
+	w.Write([]byte(msg))
+}
+```
+
+</details>
+
+The session chain can then be started by sending the following session request to our IRMA server.
+
+<Tabs>
+  <TabItem value="json" label="Extended session request (JSON)" default>
+  	```jsonc
+		{
+		"nextSession": {
+			"url": "https://example.com"
+		},
+		"request": {
+			"@context": "https://irma.app/ld/request/disclosure/v2",
+			"disclose": [[[ "irma-demo.gemeente.personalData.fullname" ]]]
+		}
+	}
+	```
+  </TabItem>
+  <TabItem value="go" label="Extended session request (Go)">
+    ```go
+	irma.ServiceProviderRequest{
+		RequestorBaseRequest: irma.RequestorBaseRequest{
+			NextSession: &irma.NextSessionData{
+				URL: "https://example.com",
+			},
+		},
+		Request: irma.NewDisclosureRequest(
+			irma.NewAttributeTypeIdentifier("irma-demo.gemeente.personalData.fullname"),
+		),
+	}
+	```
+  </TabItem>
+</Tabs>
+
+After the user discloses the `irma-demo.gemeente.personalData.fullname` attribute, the IRMA server POSTs it to `https://example.com`. Our Go server responds to the IRMA server with the `issuanceRequest` found near the end of the program. Next, the IRMA server immediately starts this issuance session with the user's Yivi app, resulting in the screenshots shown above.
+
+### Differences with combined issuance-disclosure requests
+
+[Combined issuance-disclosure requests](#issuance-requests), i.e. issuance requests with a nonempty `disclose` field requesting attributes to be disclosed, is another way of first requesting and then issuing attributes from/to an Yivi app user within a single flow. Thus, this is very similar to a session chain consisting of first a disclosure request and then an issuance request. However, contrary to session chains, this flow is started using a single session request. Thus, when using combined issuance-disclosure requests it is impossible for the issued attributes to depend on the disclosed attributes, because at the time the session request is composed the value of the disclosed attributes are not yet known.
+
+Comparing the two, chained sessions are more powerful in the following ways:
+
+* As mentioned, sessions later in the chain may depend on the session results of earlier sessions in the chain;
+* Session chains can consist of more than two sessions (although this may lead to bad UX);
+* The sessions occuring in a session chain may be of any type (although first disclosure and then issuance is probably the most common scenario).
 
 ## JWTs: signed session requests
 The IRMA API server or [`irma server`](irma-server.md) can be configured to only accept session requests that have been digitally signed using a signed JWT, according to the [JWT (RFC 7519)](https://datatracker.ietf.org/doc/html/rfc7519) and [JWS (RFC 7515)](https://datatracker.ietf.org/doc/html/rfc7515) standards. These signed session requests are JWS objects (signed JWTs) that encapsulate the session request data. Set the HTTP `Content-Type` header to `text/plain` when sending a signed session request.

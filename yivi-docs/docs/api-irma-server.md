@@ -1,5 +1,5 @@
 ---
-title: irma server
+title: IRMA server
 ---
 
 ```shell
@@ -127,7 +127,7 @@ Get the [session result](https://godoc.org/github.com/privacybydesign/irmago/ser
 The response may contain the following fields:
 * `token`: Requestor token
 * `status`: Current [session status](#get-sessionrequestortokenstatus)
-* `type`: [Session type](what-is-yivi.md#session-types): one of `"disclosing"`, `"signing"`, or `"issuing"`
+* `type`: [Session type](session-requests.md#session-types): one of `"disclosing"`, `"signing"`, or `"issuing"`
 * `proofStatus`: One of the package level [irma.ProofStatus](https://godoc.org/github.com/privacybydesign/irmago#pkg-constants) constants, indicating the cryptographic validity of the attributes and proofs of knowledge:
    * `"VALID"`: proofs are valid
    * `"INVALID"`: proofs are invalid
@@ -135,7 +135,7 @@ The response may contain the following fields:
    * `"UNMATCHED_REQUEST"`: proofs do not correspond to a specified request
    * `"MISSING_ATTRIBUTES"`: proofs do not contain all requested attributes
    * `"EXPIRED"`: Attributes were expired at creation time
-* `disclosed`: List of [attributes disclosed](https://godoc.org/github.com/privacybydesign/irmago#DisclosedAttribute) by the user. The array structure mirrors that of the [session request](session-requests#disclosure-requests) that started the session: the i-th item of the outer array is a conjunction of attributes satisfying the i-th outer conjunction of the session request. (*Note*: if the session was started with a legacy, pre-[condiscon](condiscon.md) session request, then this array structure has a different legacy structure; see the [legacy documentation](https://irma.app/docs/v0.2.0/api-irma-server/#get-session-requestortoken-result))
+* `disclosed`: List of [attributes disclosed](https://godoc.org/github.com/privacybydesign/irmago#DisclosedAttribute) by the user. The array structure mirrors that of the [session request](session-requests#disclosure-requests) that started the session: the i-th item of the outer array is a conjunction of attributes satisfying the i-th outer conjunction of the session request. (*Note*: if the session was started with a legacy, pre-condiscon session request, then this array structure has a different legacy structure; see the [legacy documentation](https://irma.app/docs/v0.2.0/api-irma-server/#get-session-requestortoken-result))
 * `signature`: The full attribute-based signature in case of `"signing"` sessions
 * `error`: Error message in case of failure
 

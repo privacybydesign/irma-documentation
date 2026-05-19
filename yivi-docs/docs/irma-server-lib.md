@@ -1,5 +1,5 @@
 ---
-title: irma server library
+title: IRMA server library
 ---
 
 <a href="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver" class="godoc"><img src="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver?status.svg" alt="GoDoc" /></a>
@@ -17,7 +17,7 @@ The server is configured by passing a `server.Configuration` instance to `irmase
 
 ## Email
 
-Users are encouraged to provide an email address with the `Email` option in the `server.Configuration` struct, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](email.md).
+Users are encouraged to provide an email address with the `Email` option in the `server.Configuration` struct, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](irma-server.md#email).
 
 ## Example
 

@@ -1,5 +1,5 @@
 ---
-title: irma cli
+title: IRMA CLI
 ---
 
 import Tabs from '@theme/Tabs';
