@@ -65,7 +65,6 @@ When running the server in production, you should enable the `production` option
 * `url` from `"http://$YOUR_LOCAL_IP:port"` to `""`: in development mode the `url` to which Yivi apps will connect is set by default to your current local IP address; in `production` mode you must configure it yourself.
 * [`no_auth`](#requestor-authentication) from `true` to `false`: you should consider enabling requestor authentication, or explicitly disable this by setting this flag to `true`.
 * [`issue_perms`](#global-permissions) from `[*]` (everything) to `[]` (none).
-* [`no_email`](#email) from `true` to `false`: in `production` mode, opting out of providing an email address can be done by explicitly setting this flag to `true`.
 
 In addition, when [developer mode is not enabled in the Yivi app](yivi-app.md#developer-mode) (the default setting), the Yivi app wil refuse to perform sessions with IRMA servers not running in `production` mode. Since the majority of the Yivi app users will not have developer mode enabled, this requires IRMA servers facing those users to enable `production` mode.
 
@@ -294,21 +293,6 @@ The [IRMA protocol](irma-protocol.md) relies on TLS for encryption of the attrib
 You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` options (or the `_file` equivalents), specifying a PEM certificate (chain) and PEM private key. If you use [separate requestor and app endpoints](#http-server-endpoints), additionally use `client_tls_cert` and `client_tls_privkey`.
 
 Alternatively, if your IRMA server is connected to the internet through a reverse proxy then your reverse proxy probably handles TLS for you.
-
-### Email
-
-IRMA has a decentral architecture: anyone can start an `irma server` and verify attributes, communicating directly with Yivi apps. This is an important and distinguishing feature contributing to IRMA's privacy properties and trustworthiness, but it also means that we as authors of the software have no natural update channel for all IRMA servers running within the ecosystem. We need a way to prevent a fractured IRMA ecosystem with incompatible apps and servers.
-
-Inspired by the approach of Let's Encrypt, each IRMA server can be configured with an `email` option. If specified, the address is uploaded to the [Privacy by Design Foundation](https://privacybydesign.foundation/) and subscribed to receive notifications about changes in the IRMA software or ecosystem — for example major IRMA server releases, or breaking changes that require operators to update their server or take other action.
-
-***We strongly recommend anyone running an IRMA server in production to specify an email address.***
-
-* The Foundation uses the address exclusively for the above purpose.
-* Volume is very low (on average perhaps one email per several months).
-* To unsubscribe, contact Yivi support at [support@yivi.app](mailto:support@yivi.app).
-* See also Yivi's [privacy policy](https://yivi.app/privacy/).
-
-In `production` mode, it is required to either provide an email address or to explicitly opt out with the `no_email` option.
 
 ### Logging and verbosity
 
