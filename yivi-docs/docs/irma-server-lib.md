@@ -15,10 +15,6 @@ go get github.com/privacybydesign/irmago
 ## Configuring
 The server is configured by passing a `server.Configuration` instance to `irmaserver.New()`. For the options and their meaning, see [Godoc](https://godoc.org/github.com/privacybydesign/irmago/server/#Configuration).
 
-## Email
-
-Users are encouraged to provide an email address with the `Email` option in the `server.Configuration` struct, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](irma-server.md#email).
-
 ## Example
 
 ```go
