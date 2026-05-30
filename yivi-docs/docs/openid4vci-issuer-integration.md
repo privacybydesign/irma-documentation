@@ -60,6 +60,14 @@ const { id, uri } = await response.json()
 
 The returned `uri` is the wallet link (typically `openid-credential-offer://?credential_offer_uri=...`). Render it as a QR code on desktop, or navigate to it directly on mobile.
 
+The Yivi app also accepts an HTTPS universal link form, useful when you want a single link that works on devices without the app installed:
+
+```
+https://open.yivi.app/-/openid-credential-offer?credential_offer_uri=...
+```
+
+Reuse the query string from the `openid-credential-offer://` URI; the app rewrites the link to the canonical scheme internally. The staging host `https://open.staging.yivi.app/-/openid-credential-offer` is accepted for testing.
+
 ## The optional tx_code
 
 A `tx_code` adds an extra confirmation step: the issuer's frontend displays a short numeric code that the user must type into the wallet before the credential is downloaded. Useful when the offer is delivered out-of-band (email, printed letter) and you want to ensure the right person redeems it.
