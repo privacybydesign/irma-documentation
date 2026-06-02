@@ -135,7 +135,7 @@ Disclosure sessions are started with an [`irma.DisclosureRequest`](https://godoc
 
 This asks for a (demo) `BSN` attribute, as well as either `street`, `houseNumber` and `city` from `irma-demo.nijmegen.address`, or `address` and `city` from `irma-demo.idin.idin`. The three levels correspond to a *conjunction* of *disjunctions* of *conjunctions* of requested attributes, allowing verifiers to request multiple attribute sets from the user, offering choices for some or all of these sets.
 
-All of the attribute types (i.e., the string values) contained in the request must exist in their scheme ([`irma-demo`](https://github.com/privacybydesign/irma-demo-schememanager) in the example above). For the `irma-demo` and `pbdf` schemes, an index of existing attribute types that can be requested can be found [here](https://attribute-index.yivi.app/en/).
+All of the attribute types (i.e., the string values) contained in the request must exist in their scheme ([`irma-demo`](https://github.com/privacybydesign/irma-demo-schememanager) in the example above). For the `irma-demo` and `pbdf` schemes, an index of existing attribute types that can be requested can be found [here](https://portal.yivi.app/attribute-index).
 
 > Attributes can be disclosed to the requestor in any of the three session types: in issuance sessions issuance proceeds only if the user discloses the required attributes just before issuance, and in attribute-based signature sessions the requested attributes are attached to the resulting attribute-based signature. Thus the `disclose` and `labels` fields introduced above can also occur in issuance or attribute-based signature session requests (see below).
 
