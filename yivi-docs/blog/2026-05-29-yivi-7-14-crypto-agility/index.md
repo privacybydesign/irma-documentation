@@ -94,7 +94,7 @@ A verifier can request only `address.city` and the year of the second qualificat
 
 The wallet sends back exactly those two claims, plus the issuer's signature over the whole credential — selective disclosure preserved at every level of nesting.
 
-## `irmago` is now `yivi`
+## `irma` cli is now `yivi`
 
 The repository keeps its name, but the command-line tool does not. In 0.20.0 the CLI's entry point moves from `irma/cmd/` to `yivi/cli/`, and the binary is built and shipped as `yivi`:
 
