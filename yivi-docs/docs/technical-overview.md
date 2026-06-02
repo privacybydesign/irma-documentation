@@ -76,7 +76,7 @@ In this table, the right column are the attribute values which are stored and si
 
 ### Singletons
 
-A credential type can be marked as a *singleton* by the scheme manager. If so the Yivi app will store at most one instance of this credential type simultaneously, and receiving a new one would overwrite any older instance. (Example:  [`pbdf.nijmegen.bsn`](https://portal.yivi.app/attribute-index/credentials/production/nijmegen/bsn) If a credential type is not a singleton (example: [`pbdf.pbdf.diploma`](https://portal.yivi.app/attribute-index/credentials/production/pbdf/diploma), then the user can have any number of instances of that credential type in her Yivi app.
+A credential type can be marked as a *singleton* by the scheme manager. If so the Yivi app will store at most one instance of this credential type simultaneously, and receiving a new one would overwrite any older instance. (Example: [`pbdf.nijmegen.bsn`](https://portal.yivi.app/attribute-index/credentials/production/nijmegen/bsn).) If a credential type is not a singleton (example: [`pbdf.pbdf.diploma`](https://portal.yivi.app/attribute-index/credentials/production/pbdf/diploma)), then the user can have any number of instances of that credential type in her Yivi app.
 
 ### Special attributes
 
