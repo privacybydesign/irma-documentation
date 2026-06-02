@@ -108,7 +108,7 @@ you can perform a first IRMA session using your server on the command line as fo
     ```
   </TabItem>
 </Tabs>
-[IRMATube attributes](https://portal.yivi.app/attribute-index) are available on the [YiviTube demo](https://yivitube.yivi.app/) page. This will print a QR that you can scan with your Yivi app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
+[IRMATube attributes](https://portal.yivi.app/attribute-index/credentials/production/pbdf/irmatube) are available on the [YiviTube demo](https://yivitube.yivi.app/) page. This will print a QR that you can scan with your Yivi app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
 
 
 ### Installing an example webpage for `yivi-frontend`
@@ -207,7 +207,7 @@ Instead of managing sessions with HTTP requests as shown here, [for certain lang
 
 The IRMA quickstart above mostly focuses on verifying — receiving IRMA attributes from Yivi apps and establishing their authenticity. Issuing attributes to Yivi apps can be done with the same software and largely similar flows, but is more involved, because the identity of prospective issuers needs to be verified and the contents and structure of the credentials to be issued needs to be established. This process is documented in the [issuer guide](issuer.md).
 
-For experimenting and demoing, however, it is possible to issue [any of the existing credentials](https://portal.yivi.app/attribute-index) within the [`irma-demo` scheme](schemes.md). For example, if the `requestors` block in the [YAML example configuration](#configure-irma-server) of the IRMA server above would include permission to issue `irma-demo` attributes, as follows:
+For experimenting and demoing, however, it is possible to issue [any of the existing credentials](https://portal.yivi.app/attribute-index/environments/demo) within the [`irma-demo` scheme](schemes.md). For example, if the `requestors` block in the [YAML example configuration](#configure-irma-server) of the IRMA server above would include permission to issue `irma-demo` attributes, as follows:
 
 ```yaml
 requestors:
