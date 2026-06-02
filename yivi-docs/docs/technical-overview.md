@@ -76,7 +76,7 @@ In this table, the right column are the attribute values which are stored and si
 
 ### Singletons
 
-A credential type can be marked as a *singleton* by the scheme manager. If so the Yivi app will store at most one instance of this credential type simultaneously, and receiving a new one would overwrite any older instance. (Example:  [`pbdf.nijmegen.bsn`](https://attribute-index.yivi.app/en/pbdf.nijmegen.bsn.html) If a credential type is not a singleton (example: [`pbdf.pbdf.diploma`](https://attribute-index.yivi.app/en/pbdf.pbdf.diploma.html), then the user can have any number of instances of that credential type in her Yivi app.
+A credential type can be marked as a *singleton* by the scheme manager. If so the Yivi app will store at most one instance of this credential type simultaneously, and receiving a new one would overwrite any older instance. (Example:  [`pbdf.nijmegen.bsn`](https://portal.yivi.app/attribute-index) If a credential type is not a singleton (example: [`pbdf.pbdf.diploma`](https://portal.yivi.app/attribute-index), then the user can have any number of instances of that credential type in her Yivi app.
 
 ### Special attributes
 
@@ -109,7 +109,7 @@ Each IRMA issuer has an Idemix private key, which it must keep secret as it is u
 
 Issuers cannot independently create credential types and start issuing them to Yivi app users: the credential type must first be included in an [IRMA scheme](schemes.md) by the scheme manager. In case of the default scheme `pbdf` of the Yivi app, this is the Privacy by Design Foundation.
 
-When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, this is documented in the [attribute index](https://attribute-index.yivi.app/en/pbdf.html). 
+When verifying IRMA attributes, out of all possible attributes the verifier could ask for, it must decide which attributes suite its purposes best. In order to be able to make this decision, it is important that for each credential type it is clearly documented how the attributes are obtained, and how it is ensured that they indeed belong to the person that receives them. For each credential type in the `pbdf` scheme, this is documented in the [attribute index](https://portal.yivi.app/attribute-index). 
 
 ## IRMA PIN codes using the keyshare server
 

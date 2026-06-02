@@ -54,7 +54,7 @@ We explain in detail how this comes to pass in the next section.
 
 As a concrete example we use the
 "Demo Voting Card" credential type, see [this page in the attribute
-index](https://attribute-index.yivi.app/en/irma-demo.stemmen.stempas.html#irma-demo.stemmen.stempas.election).
+index](https://portal.yivi.app/attribute-index).
 Even though the credential contains five attributes, the issuer must only give
 four concrete values to construct the credential. For example, a requestor can
 start an issuance session to issue such a credential using the following
