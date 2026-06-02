@@ -1,5 +1,5 @@
 ---
-title: irma server
+title: IRMA server
 ---
 
 
@@ -65,18 +65,58 @@ When running the server in production, you should enable the `production` option
 * `url` from `"http://$YOUR_LOCAL_IP:port"` to `""`: in development mode the `url` to which Yivi apps will connect is set by default to your current local IP address; in `production` mode you must configure it yourself.
 * [`no_auth`](#requestor-authentication) from `true` to `false`: you should consider enabling requestor authentication, or explicitly disable this by setting this flag to `true`.
 * [`issue_perms`](#global-permissions) from `[*]` (everything) to `[]` (none).
-* [`no_email`](email.md) from `true` to `false`: in `production` mode, opting out of providing an email address can be done by explicitly setting this flag to `true`.
 
 In addition, when [developer mode is not enabled in the Yivi app](yivi-app.md#developer-mode) (the default setting), the Yivi app wil refuse to perform sessions with IRMA servers not running in `production` mode. Since the majority of the Yivi app users will not have developer mode enabled, this requires IRMA servers facing those users to enable `production` mode.
 
 ### Stateless mode
-By default session states are kept in memory. If you want to run several IRMA servers in parallel or if you wish data persistence for sessions, you can use [stateless mode](stateless.md) which is implemented in the IRMA server via a Redis data store.
 
-You can enable the Redis data store in the `irma server` by setting the `store_type` option to `redis`. For stand-alone mode, you should specify the `redis_addr` and `redis_pw` options. If you use ACLs in Redis, you should also specify the `redis_username` option. If you share the Redis instance with other applications and you want your Redis keys to be scoped, you can enable the `redis_acl_use_key_prefixes` option. All keys are prefixed with the Redis username (`<redis-username>:`) then.
+For each IRMA session the IRMA server needs to keep track of the [session state](irma-protocol.md#the-session-state). By default the session state is kept in memory, which requires no extra setup but cannot be shared between multiple IRMA servers and is lost when the server restarts or crashes. From version 0.9.0 the IRMA server can run in *stateless* mode, in which the session state is decoupled from the server and stored in a Redis data store instead. This unlocks:
 
-The IRMA server also supports Redis in Sentinel mode for high availability. Instead of `redis_addr` you should then specify `redis_sentinel_addrs` (list of strings) and `redis_sentinel_master_name`.
+* Scaling the IRMA server horizontally, i.e. running several IRMA servers in parallel behind a load balancer.
+* Preventing data loss when restarting an IRMA server.
+* Preventing data loss in case of IRMA server crashes.
+
+#### Enabling Redis
+
+Enable the Redis data store by setting the `store_type` option to `redis`. For stand-alone mode, you should specify the `redis_addr` and `redis_pw` options. If you use ACLs in Redis, you should also specify the `redis_username` option. If you share the Redis instance with other applications and you want your Redis keys to be scoped, you can enable the `redis_acl_use_key_prefixes` option. All keys are prefixed with the Redis username (`<redis-username>:`) then.
+
+For test purposes you can override the need for a password by setting the `redis_allow_empty_password` option to `true`. Make sure to use a secure Redis password in production — your Redis data store will contain sensitive data and must be password-protected.
+
+```
+irma server -vv --store-type redis --redis-addr "localhost:6379" --redis-pw "placeholderPassword"
+```
+
+#### Redis TLS
+
+By default the IRMA server connects to Redis with TLS, using the system store of certificate authorities. Alternatively, you can specify the certificate that Redis uses, or the certificate authority with which that certificate is signed, using the `redis_tls_cert` or `redis_tls_cert_file` options. A certificate may be configured in Redis as follows:
+
+```
+requirepass placeholderPassword
+
+# Disable the non-TLS port completely
+port 0
+# Enable TLS on the default Redis port
+tls-port 6379
+
+# X.509 certificate and a private key
+tls-cert-file /path/to/cert.pem
+tls-key-file /path/to/privkey.pem
+
+# Disable TLS client authentication
+tls-auth-clients no
+```
+
+TLS can be disabled altogether for connections to Redis using the `redis_no_tls` option.
+
+> **⚠️ Warning:** In production, always using TLS for Redis is recommended. If you disable TLS, be sure to run your Redis server in an internal network protected against unauthorized access.
+
+#### Sentinel mode (high availability)
+
+The IRMA server also supports Redis in Sentinel mode for high availability. Instead of `redis_addr` you should then specify `redis_sentinel_addrs` (list of strings) and `redis_sentinel_master_name`. We currently do not support Redis in cluster mode — if you need that, please contact us.
 
 Please note that if you use Redis in Sentinel mode, you need to consider whether you accept the risk of losing session state in case of a failover. Redis does not guarantee strong consistency in these setups. We mitigated this by waiting for a write to have reached the master node and at least one replica. This means that at least two replicas should be configured for every master node to achieve high availability. Even then, there is a small chance of losing session state when a replica fails at the same time as the master node. For example, this might be problematic if you want to guarantee that a credential is not issued twice or if you need a session QR to have a long lifetime but you do want the session to be finished soon after the QR is scanned. If you require IRMA sessions to be highly consistent, you should use the default in-memory store or Redis in standalone mode. If you accept this risk, then you can enable Sentinel mode support by setting the `redis_accept_inconsistency_risk` to true.
+
+Stateless mode currently does not support server-sent events; please contact us if you need that combination.
 
 For all configuration options, check the help output of the `irma server` command (`irma server --help`).
 
@@ -147,10 +187,10 @@ Assuming the URL of the `irma server` is `http://example.com`, the session confi
 }
 ```
 
-Only static [disclosure or attribute-based signature sessions](what-is-yivi.md#session-types) are supported.
+Only static [disclosure or attribute-based signature sessions](session-requests.md#session-types) are supported.
 
 ### Permissions
-For each of the [three IRMA session types](what-is-yivi.md#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
+For each of the [three IRMA session types](session-requests.md#session-types) (attribute verification; attribute-based signature sessions; and attribute issuance), permission to use specific attributes/credentials can be granted to requestors in the configuration. For example, including permissions in the `myapp` requestor from above:
 ```json
 {
     "requestors": {
@@ -253,10 +293,6 @@ The [IRMA protocol](irma-protocol.md) relies on TLS for encryption of the attrib
 You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` options (or the `_file` equivalents), specifying a PEM certificate (chain) and PEM private key. If you use [separate requestor and app endpoints](#http-server-endpoints), additionally use `client_tls_cert` and `client_tls_privkey`.
 
 Alternatively, if your IRMA server is connected to the internet through a reverse proxy then your reverse proxy probably handles TLS for you.
-
-### Email
-
-Users of the server are encouraged to provide an email address with the `email` option, subscribing for notifications about changes in the IRMA software or ecosystem. [More information](email.md). In `production` mode, it is required to either provide an email address or to explicitly out with the `no_email` option.
 
 ### Logging and verbosity
 
