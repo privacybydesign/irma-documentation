@@ -113,6 +113,10 @@ The first ecosystem this release plugs into is **[SURF Edubadges](https://edubad
 
 For now, this is where we are concentrating production attention. The infrastructure built for SURF Edubadges.
 
+## Known limitations
+
+OpenID4VC session logs do not yet show up in [my.yivi.app](https://my.yivi.app), the user-facing dashboard where Yivi users review their session history. The logs do exist on the device — users can still review them inside the Yivi app — but surfacing them in my.yivi.app requires the wallet-provider backend mentioned under "What's next" below.
+
 ## What's next
 
 The schema-independent foundation is what unlocks the next set of work. Three things are on the near horizon:
