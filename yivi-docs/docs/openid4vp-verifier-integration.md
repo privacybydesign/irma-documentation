@@ -90,6 +90,22 @@ const walletLink = `eudi-openid4vp://?${params}`
 
 The Yivi app accepts both the `openid4vp://` and `eudi-openid4vp://` URI schemes. On mobile you can navigate the user directly to `walletLink`; on desktop, render it as a QR code that the Yivi app can scan.
 
+## Universal links (optional)
+
+Any app on the device can claim the `openid4vp://` and `eudi-openid4vp://` schemes, so on a phone with multiple wallets the user sees a chooser sheet — and a hostile app could in principle register the same scheme. To make a session deterministically open in the Yivi app, wrap the standard URI in a `https://open.yivi.app/-/openid4vp` universal link. The OS verifies that host against Yivi's `apple-app-site-association` / `assetlinks.json`, so only Yivi can claim it.
+
+The transform is mechanical: strip the scheme, prepend the universal-link host and path, keep the query string verbatim. No params are added, removed, reordered, or re-encoded.
+
+```
+openid4vp://?request_uri=https://verifier.example/req/abc&client_id=verifier.example
+    ↓
+https://open.yivi.app/-/openid4vp?request_uri=https://verifier.example/req/abc&client_id=verifier.example
+```
+
+Both `openid4vp://` and `eudi-openid4vp://` collapse to the same `/-/openid4vp` path. Use `https://open.staging.yivi.app/-/openid4vp` for staging.
+
+The custom schemes remain supported unchanged, so this is opt-in and only matters when you specifically want to bypass the wallet chooser.
+
 ## Polling for the result
 
 Poll the verifier backend's result endpoint until the user completes the flow in the Yivi app:
