@@ -90,6 +90,16 @@ const walletLink = `eudi-openid4vp://?${params}`
 
 The Yivi app accepts both the `openid4vp://` and `eudi-openid4vp://` URI schemes. On mobile you can navigate the user directly to `walletLink`; on desktop, render it as a QR code that the Yivi app can scan.
 
+### Universal links
+
+The Yivi app also accepts an HTTPS universal link form that opens directly into the app on mobile (or falls back to the App Store / Play Store entry on devices without Yivi installed):
+
+```
+https://open.yivi.app/-/openid4vp?request_uri=...&client_id=...
+```
+
+Use the same query string you would put on the `openid4vp://` URI; the app rewrites the link to the canonical scheme internally. The staging host `https://open.staging.yivi.app/-/openid4vp` is accepted for testing.
+
 ## Polling for the result
 
 Poll the verifier backend's result endpoint until the user completes the flow in the Yivi app:
