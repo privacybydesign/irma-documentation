@@ -1,11 +1,11 @@
 ---
-slug: 2026-yivi-7-14-crypto-agility
-title: "Yivi 7.14: a foundation built for crypto agility"
+slug: 2026-yivi-8-0-crypto-agility
+title: "Yivi 8.0: a foundation built for crypto agility"
 authors: [wouterensink]
 tags: [yivi, openid4vci, openid4vp, sdjwtvc, eudi]
 ---
 
-Last month we [announced end-to-end OpenID4VC support in private beta](/blog/2026-openid-full-support). With **Yivi 7.14.0** and **irmago 0.20.0** shipping at the end of May, those protocols reach production — and the foundation underneath them has finally caught up.
+Last month we [announced end-to-end OpenID4VC support in private beta](/blog/2026-openid-full-support). With **Yivi 8.0** and **irmago 1.0** shipping at the end of June, those protocols reach production — and the foundation underneath them has finally caught up.
 
 This release is the structural moment Yivi stops being an IRMA wallet that speaks OpenID and becomes a credential-format-agnostic wallet that happens to also speak IRMA. It is the single biggest milestone in our transition toward a crypto-agile EUDI wallet.
 
@@ -48,7 +48,7 @@ With this release, Yivi supports the **[DIIP v5](https://fidescommunity.github.i
 
 Within that profile:
 
-**OpenID4VCI for issuance.** New in 0.20.0. The `eudi/openid4vci` package implements both the **pre-authorized code flow** (with `tx_code` for out-of-band user verification) and the **authorization code flow** (with [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) and an in-app browser), as required by DIIP v5. Any DIIP v5-compliant issuer can drop credentials into Yivi.
+**OpenID4VCI for issuance.** New in 1.0. The `eudi/openid4vci` package implements both the **pre-authorized code flow** (with `tx_code` for out-of-band user verification) and the **authorization code flow** (with [PKCE](https://datatracker.ietf.org/doc/html/rfc7636) and an in-app browser), as required by DIIP v5. Any DIIP v5-compliant issuer can drop credentials into Yivi.
 
 **OpenID4VP for disclosure.** Originally shipped in 0.19.0; now part of a complete picture. DCQL queries select credentials by their VCT and disclose individual claims by claim path. Both `direct_post` and `direct_post.jwt` response modes are supported, matching the DIIP v5 requirements.
 
@@ -96,7 +96,7 @@ The wallet sends back exactly those two claims, plus the issuer's signature over
 
 ## `irma` cli is now `yivi`
 
-The repository keeps its name, but the command-line tool does not. In 0.20.0 the CLI's entry point moves from `irma/cmd/` to `yivi/cli/`, and the binary is built and shipped as `yivi`:
+The repository keeps its name, but the command-line tool does not. In 1.0 the CLI's entry point moves from `irma/cmd/` to `yivi/cli/`, and the binary is built and shipped as `yivi`:
 
 ```diff
 - irma server
@@ -130,6 +130,6 @@ Each of these would have been a substantially harder change against the old IRMA
 
 ---
 
-Yivi 7.14.0 and irmago 0.20.0 ship at the end of May. Source on GitHub: [privacybydesign/irmamobile](https://github.com/privacybydesign/irmamobile) and [privacybydesign/irmago](https://github.com/privacybydesign/irmago). Full release notes in the [irmago changelog](https://github.com/privacybydesign/irmago/blob/master/CHANGELOG.md).
+Yivi 8.0 and irmago 1.0 ship at the end of June. Source on GitHub: [privacybydesign/irmamobile](https://github.com/privacybydesign/irmamobile) and [privacybydesign/irmago](https://github.com/privacybydesign/irmago). Full release notes in the [irmago changelog](https://github.com/privacybydesign/irmago/blob/master/CHANGELOG.md).
 
 If you are integrating OpenID4VC issuance or disclosure with Yivi, [support@yivi.app](mailto:support@yivi.app) is the place to start.
