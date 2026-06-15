@@ -1,6 +1,6 @@
 ---
 slug: 2026-irma-cli-becomes-yivi
-title: "Migrating from the `irma` CLI to `yivi`"
+title: "📢 Announcing irmago 1.0: irma cli becomes yivi"
 authors: [wouterensink]
 tags: [yivi, irma, irmago, migration, cli]
 ---
@@ -18,7 +18,7 @@ The repository name does not change. `github.com/privacybydesign/irmago` stays w
 - The Docker image is published as `ghcr.io/privacybydesign/yivi`.
 - The former top-level commands become subcommands of `yivi irma`:
 
-```
+```diff
 - irma server
 - irma session
 - irma scheme
@@ -50,14 +50,14 @@ For most users the migration is mechanical. The shape of every command stays the
 
 **Direct CLI usage.** Replace `irma <subcommand>` with `yivi irma <subcommand>`. Flags, positional arguments, and exit codes are identical:
 
-```
+```diff
 - irma server --config /etc/irma/config.json
 + yivi irma server --config /etc/irma/config.json
 ```
 
 **Docker.** Pull the new image and update the entrypoint or command if you override it:
 
-```
+```diff
 - docker pull ghcr.io/privacybydesign/irma
 - docker run ghcr.io/privacybydesign/irma server
 + docker pull ghcr.io/privacybydesign/yivi
@@ -78,28 +78,21 @@ Most issuer and verifier deployments fall into one of two shapes: they run a sta
 
 **The import change is one line.** Where you previously aliased the bare module path to `irma`, you now import the explicit `irma` subpackage and the alias falls away:
 
-```
-- irma "github.com/privacybydesign/irmago"
-+ "github.com/privacybydesign/irmago/irma"
+```diff
+- import irma "github.com/privacybydesign/irmago"
++ import "github.com/privacybydesign/irmago/irma"
 ```
 
 Call sites — `irma.NewIssuanceRequest`, `irma.NewCredentialTypeIdentifier`, `irma.SignSessionRequest`, and so on — are unchanged. They were already qualified with the `irma` prefix; only the import line shifts.
 
-**`go.mod` bumps to the 1.0 line.** Update `github.com/privacybydesign/irmago` to the current 1.0 beta tag. A real integration's diff looks like this (taken from the [go-sms-issuer](https://github.com/privacybydesign/go-sms-issuer) phone-number issuer):
+**`go.mod` bumps to the 1.0 line.** Update `github.com/privacybydesign/irmago` to the current 1.0 beta tag:
 
-```
+```diff
 - github.com/privacybydesign/irmago v0.19.2
 + github.com/privacybydesign/irmago v1.0.0-beta.1
 ```
 
-```
-- irma "github.com/privacybydesign/irmago"
-+ "github.com/privacybydesign/irmago/irma"
-```
-
-The rest of the issuer code — `irma.NewIssuanceRequest`, the credential request shape, the JWT signing call — compiles unchanged against the new package location. For a working reference, the `irmago-v1-beta` branch of go-sms-issuer is exactly this two-file change.
-
-**Other 0.19 → 1.0 API changes exist but are out of scope here.** The 1.0 release contains substantive irmago changes beyond the rename — new OpenID4VCI types, the schemaless session layer, batched SD-JWT issuance fields (e.g. `SdJwtBatchSize` on credential requests). Those belong with the broader 1.0 release notes rather than this post; see the [irmago changelog](https://github.com/privacybydesign/irmago/blob/master/CHANGELOG.md) for the full list.
+The rest of the issuer code — `irma.NewIssuanceRequest`, the credential request shape, the JWT signing call — compiles unchanged against the new package location.
 
 ## A note on the beta
 
