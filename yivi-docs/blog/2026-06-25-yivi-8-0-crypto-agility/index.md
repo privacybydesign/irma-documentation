@@ -5,7 +5,7 @@ authors: [wouterensink]
 tags: [yivi, openid4vci, openid4vp, sdjwtvc, eudi]
 ---
 
-Last month we [announced end-to-end OpenID4VC support in private beta](/blog/2026-openid-full-support). With **Yivi 8.0** and **irmago 1.0** shipping at the end of June, those protocols reach production — and the foundation underneath them has finally caught up.
+Two months ago we [announced end-to-end OpenID4VC support in private beta](/blog/2026-openid-full-support). With **Yivi 8.0** and **irmago 1.0** shipping at the end of June, those protocols reach production — and the foundation underneath them has finally caught up.
 
 This release is the structural moment Yivi stops being an IRMA wallet that speaks OpenID and becomes a credential-format-agnostic wallet that happens to also speak IRMA. It is the single biggest milestone in our transition toward a crypto-agile EUDI wallet.
 
@@ -103,6 +103,13 @@ The repository keeps its name, but the command-line tool does not. In 1.0 the CL
 - irma session
 + yivi irma server
 + yivi irma session
+```
+
+The Docker image follows the same rename:
+
+```diff
+- docker pull ghcr.io/privacybydesign/irma
++ docker pull ghcr.io/privacybydesign/yivi
 ```
 
 The Go module path stays `github.com/privacybydesign/irmago` — only the binary is renamed. All subcommands and flags carry over. The rename reflects what the tool actually is now: a toolkit for a wallet that is no longer just an IRMA wallet.
