@@ -112,7 +112,7 @@ const config: Config = {
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
-          href: "https://attribute-index.yivi.app/en/",
+          href: "https://portal.yivi.app/attribute-index",
           label: "Attribute Index",
           position: "right",
         },

@@ -47,7 +47,7 @@ Some notes about the `irma-demo` scheme:
 
 Once your modifcations are complete, ensure the scheme is validly signed by running `irma scheme sign` in your irma-demo checkout, and submit your changes as a [PR](https://github.com/privacybydesign/irma-demo-schememanager/compare). Once the PR is merged, your demo issuer and its credentials become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server.
 
-You can then use your IRMA server to issue the new credentials to your Yivi app. Alternatively, after the `irma-demo` PR is merged, the new credentials can also be issued from their corresponding pages in the [attribute index](https://privacybydesign.foundation/attribute-index/en/) (only in the case of `irma-demo` credentials).
+You can then use your IRMA server to issue the new credentials to your Yivi app. Alternatively, after the `irma-demo` PR is merged, the new credentials can also be issued from their corresponding pages in the [attribute index](https://portal.yivi.app/attribute-index/environments/demo) (only in the case of `irma-demo` credentials).
 
 #### Using a locally modified `irma-demo` scheme
 
@@ -72,7 +72,7 @@ After the development phase of your issuance application is finished and the iss
 3. [Generate](#generating-irma-issuer-keys) a new 2048 bit IRMA issuer private/public keypair; put the public key within your issuer folder in `PublicKeys/0.xml`; and keep your private key private.
 4. Submit your changes to `pbdf` as a PR.
 
-Your PR will then be signed by us, and merged. As with `irma-demo`, your issuer and its credentials then become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server. Your credentials will also automatically appear in the [attribute index](https://privacybydesign.foundation/attribute-index/en/), but in contrast with `irma-demo` credentials, they cannot be issued from there.
+Your PR will then be signed by us, and merged. As with `irma-demo`, your issuer and its credentials then become available for issuance to your IRMA server when it updates its copy of the scheme: periodically (hourly by default), or when you restart your server. Your credentials will also automatically appear in the [attribute index](https://portal.yivi.app/attribute-index), but in contrast with `irma-demo` credentials, they cannot be issued from there.
 
 ### Generating IRMA issuer keys
 
