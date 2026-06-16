@@ -11,7 +11,7 @@ dibranmulder:
 
 saravahdatipour:
   name: Sara Vahdati Pour
-  title: Developer @ Caesar Groep
+  title: Developer @ Yivi
   url: https://github.com/saravahdatipour
   image_url: https://github.com/saravahdatipour.png
   page: true
@@ -21,7 +21,7 @@ saravahdatipour:
 
 wouterensink:
   name: Wouter Ensink
-  title: Developer @ Caesar Groep
+  title: Developer @ Yivi
   url: https://github.com/w-ensink
   image_url: https://github.com/w-ensink.png
   page: true
@@ -41,7 +41,7 @@ jaspervanderlinden:
 
 martijnkamphuis:
   name: Martijn Kamphuis
-  title: Lead Developer @ Caesar Groep
+  title: Lead Developer @ Yivi
   url: https://github.com/kamphuisem
   image_url: https://github.com/kamphuisem.png
   page: true
@@ -51,7 +51,7 @@ martijnkamphuis:
 
 rubenhensen:
   name: Ruben Hensen
-  title: Developer @ Caesar Groep
+  title: Developer @ Yivi
   url: https://github.com/rubenhensen
   image_url: https://github.com/rubenhensen.png
   page: true
@@ -61,7 +61,7 @@ rubenhensen:
 
 danielbaay:
   name: Daniël Baay
-  title: Intern @ Caesar Groep
+  title: Intern @ Yivi
   url: https://github.com/danielbaay
   image_url: https://github.com/danielbaay.png
   page: true
