@@ -5,7 +5,7 @@ authors: [wouterensink]
 tags: [yivi, openid4vci, openid4vp, sdjwtvc, eudi]
 ---
 
-Two months ago we [announced end-to-end OpenID4VC support in private beta](/blog/2026-openid-full-support). With **Yivi 8.0** and **irmago 1.0** shipping at the end of June, those protocols reach production — and the foundation underneath them has finally caught up.
+Two months ago we [announced end-to-end OpenID4VC support in private beta](/blog/2026-openid-full-support). With **Yivi 8.0** and **irmago 1.0** shipping today, those protocols reach production — and the foundation underneath them has finally caught up.
 
 This release is the structural moment Yivi stops being an IRMA wallet that speaks OpenID and becomes a credential-format-agnostic wallet that happens to also speak IRMA. It is the single biggest milestone in our transition toward a crypto-agile EUDI wallet.
 
@@ -27,6 +27,10 @@ Two pieces make this work:
 
 **Attributes are addressed by their location inside the credential, not by an IRMA-scheme identifier.** That location is just a path: `["email"]` for a flat field, `["address", "street"]` for a nested one, `["departments", 0, "name"]` for something inside an array. The same notation works for a flat IRMA attribute and a deeply nested SD-JWT claim, so the rest of the app — credential cards, disclosure prompts, the activity log — handles them all the same way.
 
+IRMA did not go away in this refactor — it became one protocol among several. Idemix-based credentials flow through the same schemaless session layer as SD-JWT credentials, just with a different `Protocol` tag and a different signing path. Existing IRMA integrations keep working unchanged.
+
+EUDI credentials are stored encrypted at rest in a SQLCipher-backed database alongside the existing IRMA storage, and the rest of the app — credential cards, activity logs, disclosure prompts — was reshaped to work without an IRMA scheme so it can render any of them.
+
 ### Session logic moved across the repo boundary
 
 The half of the refactor that reaches into irmamobile is the half that took the longest. The complex parts of the disclosure flow — disclosure-plan computation, candidate-credential matching, selective-disclosure choice resolution, the session state machine itself — all moved out of Dart and into Go.
@@ -37,10 +41,6 @@ This buys two properties we explicitly designed for:
 
 1. **The frontend is now protocol- and format-independent.** Adding mdoc, a new OpenID flavor, or any future credential format is now a Go change. The Flutter UI stays the same — it consumes session snapshots, not a credential type.
 2. **End-to-end testing runs in Go.** Disclosure flow tests exercise the real session machinery as integration tests in irmago, without spinning up a Flutter test harness. Feedback that used to take minutes takes seconds.
-
-IRMA did not go away in this refactor — it became one protocol among several. Idemix-based credentials flow through the same schemaless session layer as SD-JWT credentials, just with a different `Protocol` tag and a different signing path. Existing IRMA integrations keep working unchanged.
-
-EUDI credentials are stored encrypted at rest in a SQLCipher-backed database alongside the existing IRMA storage, and the rest of the app — credential cards, activity logs, disclosure prompts — was reshaped to work without an IRMA scheme so it can render any of them.
 
 ## End-to-end on open standards
 
@@ -94,26 +94,6 @@ A verifier can request only `address.city` and the year of the second qualificat
 
 The wallet sends back exactly those two claims, plus the issuer's signature over the whole credential — selective disclosure preserved at every level of nesting.
 
-## `irma` cli is now `yivi`
-
-The repository keeps its name, but the command-line tool does not. In 1.0 the CLI's entry point moves from `irma/cmd/` to `yivi/cli/`, and the binary is built and shipped as `yivi`:
-
-```diff
-- irma server
-- irma session
-+ yivi irma server
-+ yivi irma session
-```
-
-The Docker image follows the same rename:
-
-```diff
-- docker pull ghcr.io/privacybydesign/irma
-+ docker pull ghcr.io/privacybydesign/yivi
-```
-
-The Go module path stays `github.com/privacybydesign/irmago` — only the binary is renamed. All subcommands and flags carry over. The rename reflects what the tool actually is now: a toolkit for a wallet that is no longer just an IRMA wallet.
-
 ## First ecosystem: SURF Edubadges
 
 The first ecosystem this release plugs into is **[SURF Edubadges](https://edubadges.nl/login)**. Through this integration, a student can issue their **eduID** credential into Yivi over OpenID4VCI and present it to any service that accepts eduID over OpenID4VP. The full loop runs on open standards on both ends, with no Yivi-specific adapter on the issuer or verifier side.
@@ -137,6 +117,6 @@ Each of these would have been a substantially harder change against the old IRMA
 
 ---
 
-Yivi 8.0 and irmago 1.0 ship at the end of June. Source on GitHub: [privacybydesign/irmamobile](https://github.com/privacybydesign/irmamobile) and [privacybydesign/irmago](https://github.com/privacybydesign/irmago). Full release notes in the [irmago changelog](https://github.com/privacybydesign/irmago/blob/master/CHANGELOG.md).
+Yivi 8.0 and irmago 1.0 ship today. Source on GitHub: [privacybydesign/irmamobile](https://github.com/privacybydesign/irmamobile) and [privacybydesign/irmago](https://github.com/privacybydesign/irmago). Full release notes in the [irmago changelog](https://github.com/privacybydesign/irmago/blob/master/CHANGELOG.md).
 
 If you are integrating OpenID4VC issuance or disclosure with Yivi, [support@yivi.app](mailto:support@yivi.app) is the place to start.
