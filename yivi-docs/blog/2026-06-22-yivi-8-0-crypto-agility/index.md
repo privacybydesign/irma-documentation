@@ -98,15 +98,13 @@ The wallet sends back exactly those two claims, plus the issuer's signature over
 
 The first ecosystem this release plugs into is **[SURF Edubadges](https://edubadges.nl/login)**. Through this integration, a student can issue their **eduID** credential into Yivi over OpenID4VCI and present it to any service that accepts eduID over OpenID4VP. The full loop runs on open standards on both ends, with no Yivi-specific adapter on the issuer or verifier side.
 
-For now, this is where we are concentrating production attention. The infrastructure built for SURF Edubadges.
-
 ## Known limitations
 
 OpenID4VC session logs do not yet show up in [my.yivi.app](https://my.yivi.app), the user-facing dashboard where Yivi users review their session history. The logs do exist on the device — users can still review them inside the Yivi app — but surfacing them in my.yivi.app requires the wallet-provider backend mentioned under "What's next" below.
 
 ## What's next
 
-The schema-independent foundation is what unlocks the next set of work. Three things are on the near horizon:
+The schema-independent foundation is what unlocks the next set of work. Four things are on the near horizon:
 
 - **[mdoc / ISO 18013-5](https://www.iso.org/standard/69084.html) support.** Alongside SD-JWT VC. mdoc is the dominant format for proximity-based presentation (mDL and the rest of the ISO 18013 family). The new claim-path data model already accommodates it; the remaining work is in the protocol and storage layers.
 - **[W3C VCDM 2.0](https://www.w3.org/TR/vc-data-model-2.0/) support.** Adding the W3C Verifiable Credentials Data Model 2.0 alongside SD-JWT VC and mdoc rounds out the third major credential format in the EUDI landscape. The claim-path model carries over directly; the work is in the proof formats and the issuance/verification paths.
