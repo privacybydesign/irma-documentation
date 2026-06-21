@@ -8,29 +8,29 @@ title: IRMA server
  * HTTP endpoints under `/irma`, used by the Yivi app during IRMA sessions
  * a JSON API under `/sessions` for requestors, allowing them to request the server to verify or issue attributes.
 
-`irma server` is a subcommand of the [`irma`](irma-cli.md) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle [IRMA schemes](schemes.md), and more.
+`yivi irma server` is a subcommand of the [`yivi irma`](irma-cli.md) command line tool, which additionally contains subcommands to start or perform IRMA sessions, handle [IRMA schemes](schemes.md), and more.
 
-For installation instructions, see [`irma`](irma-cli.md).
+For installation instructions, see [`yivi irma`](irma-cli.md).
 
 ## Running the server
 
-Simply run `irma server` to run the server with the default configuration in development mode. Use `irma server -v` for more verbose logging, for example to see the current configuration. Use `irma server -vv` to also log session contents.
+Simply run `yivi irma server` to run the server with the default configuration in development mode. Use `yivi irma server -v` for more verbose logging, for example to see the current configuration. Use `yivi irma server -vv` to also log session contents.
 
-Run `irma server --help` to see configuration options. In order to verify your configuration, run `irma server check -v`.
+Run `yivi irma server --help` to see configuration options. In order to verify your configuration, run `yivi irma server check -v`.
 
 ## Starting a session
-Assuming the server runs in the [default configuration](#default-configuration) (in particular [requestor authentication](#requestor-authentication) is disabled (`no_auth` is `true`) and the `irma-demo` [scheme](schemes.md) is installed), issue `irma-demo.MijnOverheid.ageLower` attributes using the [`session`](irma-cli.md) subcommand of the `irma` tool:
+Assuming the server runs in the [default configuration](#default-configuration) (in particular [requestor authentication](#requestor-authentication) is disabled (`no_auth` is `true`) and the `irma-demo` [scheme](schemes.md) is installed), issue `irma-demo.MijnOverheid.ageLower` attributes using the [`session`](irma-cli.md) subcommand of the `yivi irma` tool:
 ```shell
-irma session --server http://localhost:8088 --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
+yivi irma session --server http://localhost:8088 --issue irma-demo.MijnOverheid.ageLower=yes,yes,yes,no
 ```
 Verify the `irma-demo.MijnOverheid.ageLower.over18` attribute:
 ```shell
-irma session --server http://localhost:8088 --disclose irma-demo.MijnOverheid.ageLower.over18
+yivi irma session --server http://localhost:8088 --disclose irma-demo.MijnOverheid.ageLower.over18
 ```
 These print QRs in your terminal that you can scan with your [Yivi app](yivi-app.md) to perform the session. For more extensive examples, see [irmajs](irmajs.md).
 
 ## Configuring
-Run `irma server -h` to see all configuration options. Each option may be passed as:
+Run `yivi irma server -h` to see all configuration options. Each option may be passed as:
  1. a command line flags (e.g. [`--listen-addr`](#http-server-endpoints))
  2. a environmental variable (e.g. `IRMASERVER_LISTEN_ADDR`)
  3. an item in a configuration file (e.g. `"listen_addr"`) (which may be in JSON, TOML or YAML)
@@ -42,14 +42,14 @@ Run `irma server -h` to see all configuration options. Each option may be passed
  * The [`requestors`](#requestor-authentication) and [`static_sessions`](#static-irma-qrs) options are special: when passed as a flag or environmental variable, they must be passed as a JSON object (for example: `--requestors '{"myapp":{"auth_method":"token","key":"12345"}}'`).
  * When passing a boolean flag [use an `=`](https://golang.org/pkg/flag/#hdr-Command_line_flag_syntax), for example [`--no-auth=false`](#requestor-authentication).
 
-In order to see the configuration that the server uses after having gathered input from these sources, specify `-v` or `-vv` or use the `verbose` option. Use `irma server check -v` (with the same flags, env vars and config files as `irma server`) to check your configuration for correctness before running the server.
+In order to see the configuration that the server uses after having gathered input from these sources, specify `-v` or `-vv` or use the `verbose` option. Use `yivi irma server check -v` (with the same flags, env vars and config files as `yivi irma server`) to check your configuration for correctness before running the server.
 
 For a full configuation example, see [Getting started](getting-started.md#example-configuration-and-irma-session).
 
 In the remainder of this document, when referring to options we write them as configuration file entries, with underscores and without prefix.
 
 ### Default configuration
-In the default configuration (run `irma server check -v` to see it) the server is immediately usable. In particular, it
+In the default configuration (run `yivi irma server check -v` to see it) the server is immediately usable. In particular, it
 * uses the [default IRMA schemes](schemes.md#default-schemes-pbdf-and-irma-demo) ([`pbdf`](https://github.com/credentials/pbdf-schememanager) and [`irma-demo`](https://github.com/credentials/irma-demo-schememanager)), downloading them if necessary
 * allows anyone to use the server [without authentication](#requestor-authentication) (the `no_auth` setting is `true`)
 * saves the session state in memory.
@@ -57,10 +57,10 @@ In the default configuration (run `irma server check -v` to see it) the server i
 If the server is reachable from the internet, you should consider enabling authentication of session requests.
 
 ### Configuration files
-A configuration file can be provided using the `config` option (for example: `irma server --config ./irmaserver.json`). When not specified, the server looks for a configuration file called `irmaserver.json` or `irmaserver.toml` or `irmaserver.yaml` in (1) the current path; (2) `/etc/irmaserver/`; (3) `$HOME/irmaserver`, in that order. A configuration file is not required; if none is found at any of these locations the server takes its configuration from just command line flags and environmental variables.
+A configuration file can be provided using the `config` option (for example: `yivi irma server --config ./irmaserver.json`). When not specified, the server looks for a configuration file called `irmaserver.json` or `irmaserver.toml` or `irmaserver.yaml` in (1) the current path; (2) `/etc/irmaserver/`; (3) `$HOME/irmaserver`, in that order. A configuration file is not required; if none is found at any of these locations the server takes its configuration from just command line flags and environmental variables.
 
 ### Production mode
-When running the server in production, you should enable the `production` option. This enables stricter defaults on the configuration options for safety and prints warnings on possibly unsafe configurations. In particular, when `production` is enabled, the default values of some options change as follows (cf. `diff <(irma server -h) <(irma server -h --production)`):
+When running the server in production, you should enable the `production` option. This enables stricter defaults on the configuration options for safety and prints warnings on possibly unsafe configurations. In particular, when `production` is enabled, the default values of some options change as follows (cf. `diff <(yivi irma server -h) <(yivi irma server -h --production)`):
 
 * `url` from `"http://$YOUR_LOCAL_IP:port"` to `""`: in development mode the `url` to which Yivi apps will connect is set by default to your current local IP address; in `production` mode you must configure it yourself.
 * [`no_auth`](#requestor-authentication) from `true` to `false`: you should consider enabling requestor authentication, or explicitly disable this by setting this flag to `true`.
@@ -83,7 +83,7 @@ Enable the Redis data store by setting the `store_type` option to `redis`. For s
 For test purposes you can override the need for a password by setting the `redis_allow_empty_password` option to `true`. Make sure to use a secure Redis password in production — your Redis data store will contain sensitive data and must be password-protected.
 
 ```
-irma server -vv --store-type redis --redis-addr "localhost:6379" --redis-pw "placeholderPassword"
+yivi irma server -vv --store-type redis --redis-addr "localhost:6379" --redis-pw "placeholderPassword"
 ```
 
 #### Redis TLS
@@ -118,7 +118,7 @@ Please note that if you use Redis in Sentinel mode, you need to consider whether
 
 Stateless mode currently does not support server-sent events; please contact us if you need that combination.
 
-For all configuration options, check the help output of the `irma server` command (`irma server --help`).
+For all configuration options, check the help output of the `yivi irma server` command (`yivi irma server --help`).
 
 ### Keys and certificates
 For each configuration option that refers to some kind of key or certificate (for example `jwt_privkey`), there is a corresponding option with the `_file` suffix (for example `jwt_privkey_file`). Keys can be specified either by setting former to a (PEM) string, or setting the the latter to a file containing the (PEM) string.
@@ -324,7 +324,7 @@ On most Linux systems, the `irma server` can be made into an automatically start
 
     [Service]
     Type=simple
-    ExecStart=/usr/local/bin/irma server --config=/etc/irmaserver/config.json
+    ExecStart=/usr/local/bin/yivi irma server --config=/etc/irmaserver/config.json
     TimeoutStopSec=60
     Restart=always
     RestartSec=1

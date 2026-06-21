@@ -196,7 +196,7 @@ You can pick one of three methods to set the paths to these directories:
   You can also pass the paths to the IRMA server directly when invoking it by using command line arguments:
 
 ```bash
-irma server --sdjwtvc-issuer-certificates-dir="<path_to_certs>" \
+yivi irma server --sdjwtvc-issuer-certificates-dir="<path_to_certs>" \
             --sdjwtvc-issuer-private-keys-dir="<path_to_keys>"
 ```
 </details>
@@ -211,7 +211,7 @@ irma server --sdjwtvc-issuer-certificates-dir="<path_to_certs>" \
 ```bash
 export IRMASERVER_SDJWTVC_ISSUER_CERTIFICATES_DIR="<path_to_certs>"
 export IRMASERVER_SDJWTVC_ISSUER_PRIVATE_KEYS_DIR="<path_to_keys>"
-irma server
+yivi irma server
 ```
 </details>
 

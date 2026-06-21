@@ -109,7 +109,7 @@ See for example [this demo credential type](https://github.com/privacybydesign/i
 
 Existing credential types can gain support for revocation by adding a `RevocationServer` and adding an attribute with `revocation` enabled.
 
-The IRMA issuer private and public keys used for revocation-enabled credentials must contain revocation-specific key material. When generating new keypairs, `irma issuer keygen` now always includes this. Existing keypairs may be augmented using the new `irma issuer revocation keypair` subcommand.
+The IRMA issuer private and public keys used for revocation-enabled credentials must contain revocation-specific key material. When generating new keypairs, `yivi irma issuer keygen` now always includes this. Existing keypairs may be augmented using the new `yivi irma issuer revocation keypair` subcommand.
 
 ### Revocation settings
 

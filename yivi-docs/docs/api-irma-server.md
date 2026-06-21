@@ -3,7 +3,7 @@ title: IRMA server
 ---
 
 ```shell
-irma server [options...]
+yivi irma server [options...]
 ```
 
 The API that this server offers consists of two parts:

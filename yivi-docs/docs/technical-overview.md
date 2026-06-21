@@ -30,7 +30,7 @@ This document presents a technical overview of the IRMA project.
 ### Core software projects
 
 * [IRMA mobile app](yivi-app.md): (mobile) application that receives attributes, and can disclose them.
-* [`irma` command](irma-cli.md): contains an IRMA attribute verification and issuance server, scheme management, and more.
+* [`yivi irma` command](irma-cli.md): contains an IRMA attribute verification and issuance server, scheme management, and more.
 * [irmajs](irmajs.md): javascript library acting as glue between an IRMA server and the requestor's website, allowing the requestor to instruct an API server to issue or verify attributes.
 
 ### IRMA servers
@@ -40,7 +40,7 @@ Apart from exposing an API that is used by the [Yivi app](yivi-app.md) during IR
 
 Currently the following IRMA servers exist:
 
-* The `irma server` command of the [`irma`](irma-cli.md) binary: a standalone daemon exposing its requestor API as HTTP endpoints. [Documentation](irma-server.md); [API reference](api-irma-server.md).
+* The `yivi irma server` command of the [`yivi irma`](irma-cli.md) binary: a standalone daemon exposing its requestor API as HTTP endpoints. [Documentation](irma-server.md); [API reference](api-irma-server.md).
 * The `irmaserver` Go library, exposing a HTTP server that handles IRMA sessions with the Yivi app, and Go functions for starting and managing IRMA sessions. [Documentation](irma-server-lib.md); [API reference](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver).
 * The now deprecated [`irma_api_server`](https://github.com/privacybydesign/irma_api_server).
 
