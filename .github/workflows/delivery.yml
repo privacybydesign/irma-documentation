@@ -70,10 +70,6 @@ jobs:
 
       - name: Upload Anchore scan SARIF report
         uses: github/codeql-action/upload-sarif@v4
-        # codeql-action needs a ref to attribute results to; release events carry
-        # no GITHUB_REF it accepts, so skip the upload there. The scan above still
-        # gates the build (fail-build on critical). ponytail: re-add release uploads
-        # if/when codeql-action stops requiring GITHUB_REF on release events.
         if: ${{ !cancelled() && github.event_name != 'release' }}
         with:
           sarif_file: ${{ steps.scan.outputs.sarif }}
