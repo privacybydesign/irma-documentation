@@ -1,5 +1,5 @@
 ---
-slug: itsme-idin-silent-migration
+slug: itsme-idin-migration
 title: "When trust changes hands: itsme, iDIN, and where your biometrics actually go"
 authors: [dibranmulder]
 tags: [yivi, privacy, identity, iDIN, itsme, biometrics, self-hosting]
