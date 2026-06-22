@@ -90,15 +90,21 @@ const walletLink = `eudi-openid4vp://?${params}`
 
 The Yivi app accepts both the `openid4vp://` and `eudi-openid4vp://` URI schemes. On mobile you can navigate the user directly to `walletLink`; on desktop, render it as a QR code that the Yivi app can scan.
 
-### Universal links
+## Universal links (optional)
 
-The Yivi app also accepts an HTTPS universal link form that opens directly into the app on mobile (or falls back to the App Store / Play Store entry on devices without Yivi installed):
+Any app on the device can claim the `openid4vp://` and `eudi-openid4vp://` schemes, so on a phone with multiple wallets the user sees a chooser sheet — and a hostile app could in principle register the same scheme. To make a session deterministically open in the Yivi app, wrap the standard URI in a `https://open.yivi.app/-/openid4vp` universal link. The OS verifies that host against Yivi's `apple-app-site-association` / `assetlinks.json`, so only Yivi can claim it.
+
+The transform is mechanical: strip the scheme, prepend the universal-link host and path, keep the query string verbatim. No params are added, removed, reordered, or re-encoded.
 
 ```
-https://open.yivi.app/-/openid4vp?request_uri=...&client_id=...
+openid4vp://?request_uri=https://verifier.example/req/abc&client_id=verifier.example
+    ↓
+https://open.yivi.app/-/openid4vp?request_uri=https://verifier.example/req/abc&client_id=verifier.example
 ```
 
-Use the same query string you would put on the `openid4vp://` URI; the app rewrites the link to the canonical scheme internally. The staging host `https://open.staging.yivi.app/-/openid4vp` is accepted for testing.
+Both `openid4vp://` and `eudi-openid4vp://` collapse to the same `/-/openid4vp` path. Use `https://open.staging.yivi.app/-/openid4vp` for staging.
+
+The custom schemes remain supported unchanged, so this is opt-in and only matters when you specifically want to bypass the wallet chooser.
 
 ## Polling for the result
 

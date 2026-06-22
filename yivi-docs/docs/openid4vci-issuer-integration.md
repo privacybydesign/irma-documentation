@@ -60,13 +60,19 @@ const { id, uri } = await response.json()
 
 The returned `uri` is the wallet link (typically `openid-credential-offer://?credential_offer_uri=...`). Render it as a QR code on desktop, or navigate to it directly on mobile.
 
-The Yivi app also accepts an HTTPS universal link form, useful when you want a single link that works on devices without the app installed:
+## Universal links (optional)
+
+Any app on the device can claim the `openid-credential-offer://` scheme, so on a phone with multiple wallets the user sees a chooser sheet — and a hostile app could in principle register the same scheme. To make an offer deterministically open in the Yivi app, wrap the standard URI in a `https://open.yivi.app/-/openid-credential-offer` universal link. The OS verifies that host against Yivi's `apple-app-site-association` / `assetlinks.json`, so only Yivi can claim it.
+
+The transform is mechanical: strip the scheme, prepend the universal-link host and path, keep the query string verbatim. No params are added, removed, reordered, or re-encoded.
 
 ```
-https://open.yivi.app/-/openid-credential-offer?credential_offer_uri=...
+openid-credential-offer://?credential_offer_uri=https://issuer.example/offer/123
+    ↓
+https://open.yivi.app/-/openid-credential-offer?credential_offer_uri=https://issuer.example/offer/123
 ```
 
-Reuse the query string from the `openid-credential-offer://` URI; the app rewrites the link to the canonical scheme internally. The staging host `https://open.staging.yivi.app/-/openid-credential-offer` is accepted for testing.
+Use `https://open.staging.yivi.app/-/openid-credential-offer` for staging. The custom scheme remains supported unchanged, so this is opt-in and only matters when you specifically want to bypass the wallet chooser.
 
 ## The optional tx_code
 
