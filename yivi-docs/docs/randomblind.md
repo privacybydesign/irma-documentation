@@ -61,7 +61,7 @@ start an issuance session to issue such a credential using the following
 command:
 
 ```
-irma session --issue irma-demo.stemmen.stempas=test,test.com,14-12-2020,15-12-2020
+yivi irma session --issue irma-demo.stemmen.stempas=test,test.com,14-12-2020,15-12-2020
 ```
 
 Upon scanning the QR code, the Yivi app user is asked permission to perform the

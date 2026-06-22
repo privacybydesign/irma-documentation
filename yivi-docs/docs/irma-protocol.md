@@ -234,10 +234,10 @@ i.Rsh(i, 1)
 fmt.Println(string(i.Bytes()))
 ```
 
-Note that attribute `1` is the [metadata attribute](technical-overview.md#the-metadata-attribute), containing among others the credential type and the expiry date of the credential in a custom encoding. This attribute is always disclosed. The above snippet will not output anything sensible for metadata attributes, but instead the [`irma` command line tool](irma-cli.md) can be used as follows.
+Note that attribute `1` is the [metadata attribute](technical-overview.md#the-metadata-attribute), containing among others the credential type and the expiry date of the credential in a custom encoding. This attribute is always disclosed. The above snippet will not output anything sensible for metadata attributes, but instead the [`yivi irma` command line tool](irma-cli.md) can be used as follows.
 
 ```shell
-irma meta "AwAKhwAaAAXZZxdMn4TvQ6F/mVxWb6a7"
+yivi irma meta "AwAKhwAaAAXZZxdMn4TvQ6F/mVxWb6a7"
 ```
 Returns:
 ```text

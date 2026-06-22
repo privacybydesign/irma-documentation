@@ -45,19 +45,19 @@ This walkthrough uses the following components:
 - [`irma server`](irma-server.md), a server that verifies or issues IRMA attributes to [Yivi apps](yivi-app.md).
 - [`yivi-frontend`](yivi-frontend.md), a JavaScript library for drawing the Yivi QR in your website and handling the IRMA session with the `irma server`.
 
-If you want to compile from source instead of using prebuilt binaries, you should additionally have [Git](https://git-scm.com/), [Go](https://golang.org/doc/install), and [npm](https://docs.npmjs.com/cli/npm) installed.
+If you want to compile from source instead of using prebuilt binaries, follow the build prerequisites documented in the upstream repositories: the [irmago README](https://github.com/privacybydesign/irmago#prerequisites) for the `irma server`, and the [yivi-frontend-packages README](https://github.com/privacybydesign/yivi-frontend-packages#development) for `yivi-frontend`.
 
 ### Installing `irma server`
-You can install the `irma` command line tool in the following three ways.
+You can install the `yivi` command line tool in the following three ways.
 
 <Tabs groupId="installation">
   <TabItem value="binary" label="Prebuilt binary" default>
     * Download prebuilt binary from [GitHub](https://github.com/privacybydesign/irmago/releases/latest). Choose the binary for your OS and architecture (most likely amd64).
-    * Rename the file to `/usr/local/bin/irma` to have it available in your PATH.
+    * Rename the file to `/usr/local/bin/yivi` to have it available in your PATH.
   </TabItem>
   <TabItem value="compile" label="Compile and install binary from source">
     ```shell
-    go install github.com/privacybydesign/irmago/irma@latest
+    go install github.com/privacybydesign/irmago/yivi@latest
     ```
   </TabItem>
   <TabItem value="docker" label="Docker">
@@ -68,12 +68,12 @@ You can install the `irma` command line tool in the following three ways.
 </Tabs>
 
 ### Running `irma server`
-After installing the `irma` binary, start the server (with increased verbosity but otherwise default configuration):
+After installing the `yivi` binary, start the server (with increased verbosity but otherwise default configuration):
 
 <Tabs groupId="installation">
   <TabItem value="binary" label="Binary" default>
     ```shell
-    irma server -v
+    yivi irma server -v
     ```
   </TabItem>
   <TabItem value="docker" label="Docker">
@@ -85,7 +85,7 @@ After installing the `irma` binary, start the server (with increased verbosity b
 </Tabs>
 
 #### Configuration
-Run `irma server -h` to see configuration options. In order to verify your configuration, run `irma server check -v`. General documentation can be found on the [irma server](irma-server.md) page, API documentation of HTTP endpoints can be found on the [api irma server](api-irma-server.md) page.
+Run `yivi irma server -h` to see configuration options. In order to verify your configuration, run `yivi irma server check -v`. General documentation can be found on the [irma server](irma-server.md) page, API documentation of HTTP endpoints can be found on the [api irma server](api-irma-server.md) page.
 
 ### Perform a command line IRMA session
 Given:
@@ -98,7 +98,7 @@ you can perform a first IRMA session using your server on the command line as fo
 <Tabs groupId="installation">
   <TabItem value="binary" label="Binary" default>
     ```shell
-    irma session --server http://localhost:8088 --disclose pbdf.pbdf.irmatube.type
+    yivi irma session --server http://localhost:8088 --disclose pbdf.pbdf.irmatube.type
     ```
   </TabItem>
   <TabItem value="docker" label="Docker">
@@ -108,7 +108,7 @@ you can perform a first IRMA session using your server on the command line as fo
     ```
   </TabItem>
 </Tabs>
-[IRMATube attributes](https://portal.yivi.app/attribute-index/credentials/production/pbdf/irmatube) are available on the [YiviTube demo](https://yivitube.yivi.app/) page. This will print a QR that you can scan with your Yivi app, and the attribute contents after they have been received and verified by the server. `irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
+[IRMATube attributes](https://portal.yivi.app/attribute-index/credentials/production/pbdf/irmatube) are available on the [YiviTube demo](https://yivitube.yivi.app/) page. This will print a QR that you can scan with your Yivi app, and the attribute contents after they have been received and verified by the server. `yivi irma session` can also perform issuance sessions and attribute-based signature sessions. If you pass  `-v` it logs the session request JSON that it sends to your `irma server`.
 
 
 ### Installing an example webpage for `yivi-frontend`
@@ -130,7 +130,7 @@ npm run build
 <Tabs groupId="installation">
   <TabItem value="binary" label="Binary" default>
     ```shell
-    irma server -v --static-path ~/yivi-frontend-packages/examples/browser/yivi-frontend
+    yivi irma server -v --static-path ~/yivi-frontend-packages/examples/browser/yivi-frontend
     ```
   </TabItem>
   <TabItem value="docker" label="Docker">
@@ -152,7 +152,7 @@ Generally, your IRMA server runs in your backend alongside a server application 
 
 #### Configure `irma server`
 
-In production, it is generally best to [authenticate incoming session requests](irma-server.md#requestor-authentication) from your application. The following is an example production configuration file ([in YAML](irma-server.md#configuring)) for the `irma server` (start with `irma server -c /path/to/config.yml`) that will accept [session requests](session-requests.md) if they include a `Authorization: mysecrettoken` HTTP header.
+In production, it is generally best to [authenticate incoming session requests](irma-server.md#requestor-authentication) from your application. The following is an example production configuration file ([in YAML](irma-server.md#configuring)) for the `irma server` (start with `yivi irma server -c /path/to/config.yml`) that will accept [session requests](session-requests.md) if they include a `Authorization: mysecrettoken` HTTP header.
 
 ```yaml title="config.yml"
 production: true
