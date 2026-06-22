@@ -357,9 +357,9 @@ The server was designed with the following goals in mind.
 Being written in [Go](https://golang.org/), this server (in fact, the containing [`irma` binary](irma-cli.md)) additionally automatically has the following properties.
 - Simple to install (one binary, no dependencies, cross platform) and/or compile
 - [Reproducible builds](https://www.gnu.org/software/mes/manual/html_node/Reproducible-Builds.html)
-- [API documentation](https://godoc.org/github.com/privacybydesign/irmago) (generated automatically from `master` branch)
+- [API documentation](https://pkg.go.dev/github.com/privacybydesign/irmago) (generated automatically from `master` branch)
 
 Referring to Go packages (i.e. folders) under [`irmago`](https://github.com/privacybydesign/irmago), the server is structured as follows.
-* [`server/irmaserver`](irma-server-lib.md): Go library implementing the HTTP endpoints for the [IRMA protocol](irma-protocol.md) (in which the Yivi app is the client), and a Go API for requestors to manage sessons. ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver))
-* `server/requestorserver`: Go library wrapping `server/irmaserver`, exposing the requestor API as a second HTTP endpoint set under `/session` URLs instead of as Go functions (next to `/irma` for the Yivi app endpoints). ([Godoc API documentation](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver))
+* [`server/irmaserver`](irma-server-lib.md): Go library implementing the HTTP endpoints for the [IRMA protocol](irma-protocol.md) (in which the Yivi app is the client), and a Go API for requestors to manage sessons. ([Godoc API documentation](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver))
+* `server/requestorserver`: Go library wrapping `server/irmaserver`, exposing the requestor API as a second HTTP endpoint set under `/session` URLs instead of as Go functions (next to `/irma` for the Yivi app endpoints). ([Godoc API documentation](https://pkg.go.dev/github.com/privacybydesign/irmago/server/requestorserver))
 * `irma`: executuable whose `server` commands wraps `server/requestorserver`.
