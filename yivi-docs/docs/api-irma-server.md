@@ -17,13 +17,13 @@ The API that this server offers consists of two parts:
 
 ---
 
-For each of these endpoints, if the HTTP status code indicates that the request was not successful (i.e. not in the 2xx range), then the server returns an [`irma.RemoteError`](https://godoc.org/github.com/privacybydesign/irmago#RemoteError) instance. For example, attempting to [retrieve the session result](#get-sessionrequestortokenresult) of an unknown session returns:
+For each of these endpoints, if the HTTP status code indicates that the request was not successful (i.e. not in the 2xx range), then the server returns an [`irma.RemoteError`](https://pkg.go.dev/github.com/privacybydesign/irmago#RemoteError) instance. For example, attempting to [retrieve the session result](#get-sessionrequestortokenresult) of an unknown session returns:
 ```json
 {"status": 400, "error": "SESSION_UNKNOWN", "description": "Unknown or expired session"}
 ```
 The following fields may occur in this message:
 * `status`: HTTP error code associated to this error
-* `error`: an error `Type` from the list of possible errors in the [server API documentation](https://godoc.org/github.com/privacybydesign/irmago/server#Error)
+* `error`: an error `Type` from the list of possible errors in the [server API documentation](https://pkg.go.dev/github.com/privacybydesign/irmago/server#Error)
 * `description`: English human-readable description of this error
 * `message`: May contain additional information
 * `stacktrace`: Stack trace of the error, only if verbose mode is enabled
@@ -75,7 +75,7 @@ Cancel the session: set the [session status](#get-sessionrequestortokenstatus) t
 
 ### `GET /session/{requestorToken}/status`
 
-Retrieve the [session status](https://godoc.org/github.com/privacybydesign/irmago/server#Status) as a JSON string. Returns one of:
+Retrieve the [session status](https://pkg.go.dev/github.com/privacybydesign/irmago/server#Status) as a JSON string. Returns one of:
 * `"INITIALIZED"`: the session has been started and is waiting for the client
 * `"PAIRING"`: the client is waiting for the frontend to [give permission to connect](#post-irmasessionclienttokenfrontendpairingcompleted)
 * `"CONNECTED"`: the client has retrieved the session request, we wait for its response
@@ -103,7 +103,7 @@ Subscribe to a [server-sent event](https://developer.mozilla.org/en-US/docs/Web/
 
 ### `GET /session/{requestorToken}/result`
 
-Get the [session result](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult). Example output:
+Get the [session result](https://pkg.go.dev/github.com/privacybydesign/irmago/server#SessionResult). Example output:
 ```json
 {
   "type" : "disclosing",
@@ -128,14 +128,14 @@ The response may contain the following fields:
 * `token`: Requestor token
 * `status`: Current [session status](#get-sessionrequestortokenstatus)
 * `type`: [Session type](session-requests.md#session-types): one of `"disclosing"`, `"signing"`, or `"issuing"`
-* `proofStatus`: One of the package level [irma.ProofStatus](https://godoc.org/github.com/privacybydesign/irmago#pkg-constants) constants, indicating the cryptographic validity of the attributes and proofs of knowledge:
+* `proofStatus`: One of the package level [irma.ProofStatus](https://pkg.go.dev/github.com/privacybydesign/irmago#pkg-constants) constants, indicating the cryptographic validity of the attributes and proofs of knowledge:
    * `"VALID"`: proofs are valid
    * `"INVALID"`: proofs are invalid
    * `"INVALID_TIMESTAMP"`: Attribute-based signature has invalid timestamp
    * `"UNMATCHED_REQUEST"`: proofs do not correspond to a specified request
    * `"MISSING_ATTRIBUTES"`: proofs do not contain all requested attributes
    * `"EXPIRED"`: Attributes were expired at creation time
-* `disclosed`: List of [attributes disclosed](https://godoc.org/github.com/privacybydesign/irmago#DisclosedAttribute) by the user. The array structure mirrors that of the [session request](session-requests#disclosure-requests) that started the session: the i-th item of the outer array is a conjunction of attributes satisfying the i-th outer conjunction of the session request. (*Note*: if the session was started with a legacy, pre-condiscon session request, then this array structure has a different legacy structure; see the [legacy documentation](https://irma.app/docs/v0.2.0/api-irma-server/#get-session-requestortoken-result))
+* `disclosed`: List of [attributes disclosed](https://pkg.go.dev/github.com/privacybydesign/irmago#DisclosedAttribute) by the user. The array structure mirrors that of the [session request](session-requests#disclosure-requests) that started the session: the i-th item of the outer array is a conjunction of attributes satisfying the i-th outer conjunction of the session request. (*Note*: if the session was started with a legacy, pre-condiscon session request, then this array structure has a different legacy structure; see the [legacy documentation](https://irma.app/docs/v0.2.0/api-irma-server/#get-session-requestortoken-result))
 * `signature`: The full attribute-based signature in case of `"signing"` sessions
 * `error`: Error message in case of failure
 
@@ -212,7 +212,7 @@ token in the `frontendRequest`.
 The frontend endpoints in this version of the IRMA server implement frontend protocol version 1.1.
 
 ### `GET /irma/session/{clientToken}/frontend/status`
-Retrieve the current [session status](https://godoc.org/github.com/privacybydesign/irmago/server#Status), and additional information
+Retrieve the current [session status](https://pkg.go.dev/github.com/privacybydesign/irmago/server#Status), and additional information
 being relevant for that session status, as a JSON object.
 
 The JSON object always contains a `status` field, containing the session status as being described in [status endpoint for requestors](#get-sessionrequestortokenstatus).

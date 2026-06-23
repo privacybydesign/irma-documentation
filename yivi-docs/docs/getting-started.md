@@ -5,7 +5,7 @@ title: Getting started
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-This page helps you pick the right Yivi protocol for your use case, and points you to the setup guide for that path. Before you start, install the [Yivi app](yivi-app.md) ([Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994)) on your phone.
+This page helps you pick the right Yivi protocol for your use case, and points you to the setup guide for that path. Before you start, install the [Yivi app](yivi-app.md) ([Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://apps.apple.com/nl/app/irma-authentication/id1294092994)) on your phone.
 
 ## Choose your protocol
 

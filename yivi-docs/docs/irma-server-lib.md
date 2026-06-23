@@ -2,7 +2,7 @@
 title: IRMA server library
 ---
 
-<a href="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver" class="godoc"><img src="https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver?status.svg" alt="GoDoc" /></a>
+<a href="https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver" class="godoc"><img src="https://pkg.go.dev/badge/github.com/privacybydesign/irmago/server/irmaserver.svg" alt="GoDoc" /></a>
 
 `irmaserver` is a Go library providing a HTTP server that handles IRMA session with the Yivi app, and functions for starting and managing IRMA sessions.
 
@@ -13,7 +13,7 @@ go get github.com/privacybydesign/irmago
 ```
 
 ## Configuring
-The server is configured by passing a `server.Configuration` instance to `irmaserver.New()`. For the options and their meaning, see [Godoc](https://godoc.org/github.com/privacybydesign/irmago/server/#Configuration).
+The server is configured by passing a `server.Configuration` instance to `irmaserver.New()`. For the options and their meaning, see [Godoc](https://pkg.go.dev/github.com/privacybydesign/irmago/server#Configuration).
 
 ## Example
 
@@ -75,6 +75,6 @@ func createFullnameRequest(w http.ResponseWriter, r *http.Request) {
 
 ## See also
 
-* The Go library [`requestorserver`](https://godoc.org/github.com/privacybydesign/irmago/server/requestorserver) wraps the functions that this library exposes for starting and managing IRMA sessions into HTTP endpoints.
+* The Go library [`requestorserver`](https://pkg.go.dev/github.com/privacybydesign/irmago/server/requestorserver) wraps the functions that this library exposes for starting and managing IRMA sessions into HTTP endpoints.
 * The [`yivi irma server`](irma-server.md) command wraps `requestorserver` into an executable.
-* The [client](https://godoc.org/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](yivi-app.md).
+* The [client](https://pkg.go.dev/github.com/privacybydesign/irmago/irmaclient) corresponding to this server is implemented by the [IRMA mobile app](yivi-app.md).

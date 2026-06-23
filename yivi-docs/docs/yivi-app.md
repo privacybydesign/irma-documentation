@@ -10,7 +10,7 @@ title: Yivi app
 The Yivi app allows users to receive and store digitally signed attributes from trusted issuers, after which they can be selectively disclosed to others. The app is essentially a GUI for the [`irmaclient`](https://github.com/privacybydesign/irmago/tree/master/irmaclient) Go package, which implements the client relative to the [IRMA server](irma-server.md). It is available in the iOS and Android app stores and may also be compiled from source.
 
 <a href="https://play.google.com/store/apps/details?id=org.irmacard.cardemu" target="_blank"><img src="/img/google-play-badge.png" alt="Play Store" class="badge" width="150" /></a>
-<a href="https://itunes.apple.com/nl/app/irma-authentication/id1294092994" target="_blank"><img src="/img/app-store-badge.png" alt="Apple Store" class="badge" width="150" /></a>
+<a href="https://apps.apple.com/nl/app/irma-authentication/id1294092994" target="_blank"><img src="/img/app-store-badge.png" alt="Apple Store" class="badge" width="150" /></a>
 
 ## Source code
 

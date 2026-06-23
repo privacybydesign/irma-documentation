@@ -232,7 +232,7 @@ The IRMA server of the requestor obtains new revocation update messages from the
 
 The server will accept the nonrevocation proof of the app if the proof is valid against either the accumulator that it included in the session request, or a newer one. The app always includes the accumulator against which it proved nonrevocation with the nonrevocation proof, so that during verification it is never necessary to retrieve accumulators from the issuer; by including the accumulator the response of the app contains all information required to verify it.
 
-When reporting verified attributes for which the app proved nonrevocation to the requestor at the end of the session, the corresponding entry in the [`SessionResult`](https://godoc.org/github.com/privacybydesign/irmago/server#SessionResult) might look as follows.
+When reporting verified attributes for which the app proved nonrevocation to the requestor at the end of the session, the corresponding entry in the [`SessionResult`](https://pkg.go.dev/github.com/privacybydesign/irmago/server#SessionResult) might look as follows.
 
 ```json
 {
@@ -269,7 +269,7 @@ Yivi apps can disclose attributes out of revocation-aware credentials even to no
 
 The API that the IRMA server exposes for revoking previously issued credentials is similar to the API for starting and managing IRMA sessions:
 * A new revocation endpoint is available as a function on the [`irmaserver` Go library](irma-server-lib.md), and as a corresponding HTTP endpoint in the `irma server`.
-* Similar to session request data structures, (e.g. [`DisclosureRequest`](https://godoc.org/github.com/privacybydesign/irmago#DisclosureRequest)), revocation is initiated at the `irma server` by a [`RevocationRequest`](https://godoc.org/github.com/privacybydesign/irmago#RevocationRequest) data structure identified as such by a [JSON-LD](https://json-ld.org/) `@context` tag (having constant value `https://irma.app/ld/request/revocation/v1`).
+* Similar to session request data structures, (e.g. [`DisclosureRequest`](https://pkg.go.dev/github.com/privacybydesign/irmago#DisclosureRequest)), revocation is initiated at the `irma server` by a [`RevocationRequest`](https://pkg.go.dev/github.com/privacybydesign/irmago#RevocationRequest) data structure identified as such by a [JSON-LD](https://json-ld.org/) `@context` tag (having constant value `https://irma.app/ld/request/revocation/v1`).
 * As with ordinary session requests, when the `no-auth` setting is disabled in the `irma server` configuration this request has to be authenticated using one of the [existing authentication methods](irma-server.md#requestor-authentication) (i.e., by including a preshared `token` in an HTTP header or by signing the request into a JWT using `hmac` or `publickey`).
 * Each requestor configured in the `irma server` can be endowed with permission to revoke specific credential types (possibly in addition to [permissions to issue or verify attributes](irma-server#permissions)). If `no-auth` is disabled, and the revocation request can be succesfully authenticated as originating from a requestor present in the `irma server` configuration, and that requestor is authorized to revoke the credential type mentioned in the request, then the revocation command is executed and the credential is revoked.
 

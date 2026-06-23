@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 Each [IRMA server](technical-overview.md#irma-servers) exposes APIs for creating IRMA sessions with a session request. An *IRMA session request* contains all information required for the IRMA server and [Yivi app](yivi-app.md) to perform an IRMA session with, such as the attributes to be issued or verified. This page documents IRMA session requests. It applies to:
 
 * The [`POST /session`](api-irma-server.md#post-session) endpoint from [`irma server`](irma-server.md).
-* The [`StartSession()` function](https://godoc.org/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
+* The [`StartSession()` function](https://pkg.go.dev/github.com/privacybydesign/irmago/server/irmaserver#StartSession) in the `irmaserver` Go library.
 * The [`session.start` attribute](https://github.com/privacybydesign/yivi-frontend-packages/blob/master/plugins/yivi-client/README.md#session) of [`Yivi client`](/yivi-frontend#available-plugins-for-yivi-core).
 
 For the precise role of session requests in an IRMA session, see the [IRMA session flow](#irma-session-flow) below.
@@ -45,7 +45,7 @@ A typical IRMA session is depicted schematically below.
 Software components:
 * *Requestor backend and frontend*: Generally the requestor runs a website with a (JavaScript) frontend in the user's browser, and a backend server. During an IRMA session the frontend displays the IRMA QR that the [Yivi app](yivi-app.md) scans. All frontend tasks depicted in the diagram are supported by [`yivi-frontend`](yivi-frontend.md).
 * [*IRMA server*](technical-overview.md#irma-servers): Handles [IRMA protocol](irma-protocol.md) with the Yivi app for the requestor.
-* [*Yivi mobile app*](yivi-app.md): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://itunes.apple.com/nl/app/irma-authentication/id1294092994).
+* [*Yivi mobile app*](yivi-app.md): [Android](https://play.google.com/store/apps/details?id=org.irmacard.cardemu), [iOS](https://apps.apple.com/nl/app/irma-authentication/id1294092994).
 
 Explanation of the steps:
 
@@ -78,7 +78,7 @@ For each of the [three IRMA session types](#session-types), we define a *session
 (For now these URIs do not resolve to anything; they just distinguish the message type.)
 
 ## Disclosure requests
-Disclosure sessions are started with an [`irma.DisclosureRequest`](https://godoc.org/github.com/privacybydesign/irmago#DisclosureRequest). Example:
+Disclosure sessions are started with an [`irma.DisclosureRequest`](https://pkg.go.dev/github.com/privacybydesign/irmago#DisclosureRequest). Example:
 
 <Tabs>
   <TabItem value="json" label="Session request (JSON)" default>
@@ -320,7 +320,7 @@ You can allow users to disclose expired instances of credentials. This is useful
 ```
 
 ## Attribute-based signature requests
-Attribute-based signature sessions are started with an [`irma.SignatureRequest`](https://godoc.org/github.com/privacybydesign/irmago#SignatureRequest), which are similar to disclosure requests:
+Attribute-based signature sessions are started with an [`irma.SignatureRequest`](https://pkg.go.dev/github.com/privacybydesign/irmago#SignatureRequest), which are similar to disclosure requests:
 
 <Tabs>
   <TabItem value="json" label="Session request (JSON)">
@@ -345,7 +345,7 @@ request.Labels = map[int]irma.TranslatedString{}
 The `message` field is required. The attributes to be attached to the attribute-based signature are requested with the `disclose` field, which along with the `labels` field work exactly like in disclosure sessions.
 
 ## Issuance requests
-Issuance sessions are started with an [`irma.IssuanceRequest`](https://godoc.org/github.com/privacybydesign/irmago#IssuanceRequest). Example:
+Issuance sessions are started with an [`irma.IssuanceRequest`](https://pkg.go.dev/github.com/privacybydesign/irmago#IssuanceRequest). Example:
 
 <Tabs>
   <TabItem value="json" label="Session request (JSON)">
@@ -754,7 +754,7 @@ For each possible session type, the contents of the `sub` field and the name of 
 | Issuance | `issue_request` | `iprequest` | `irma.NewIdentityProviderJwt()` |
 
 Currently the following libraries can produce JWTs of this form:
-* The [`irmago`](https://godoc.org/github.com/privacybydesign/irmago) library, using the mentioned functions
+* The [`irmago`](https://pkg.go.dev/github.com/privacybydesign/irmago) library, using the mentioned functions
 * The [`irmajs`](irmajs.md) Javascript library
 * The [`irma-requestor`](https://github.com/privacybydesign/irma-requestor) PHP library
 * The [`irma_api_common`](https://github.com/privacybydesign/irma_api_common) Java library
