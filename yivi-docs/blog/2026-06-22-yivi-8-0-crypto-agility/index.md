@@ -94,9 +94,11 @@ A verifier can request only `address.city` and the year of the second qualificat
 
 The wallet sends back exactly those two claims, plus the issuer's signature over the whole credential — selective disclosure preserved at every level of nesting.
 
-## First ecosystem: SURF Edubadges
+## First ecosystem: SURF's eduwallet pilot
 
-The first ecosystem this release plugs into is **[SURF Edubadges](https://edubadges.nl/login)**. Through this integration, a student can issue their **eduID** credential into Yivi over OpenID4VCI and present it to any service that accepts eduID over OpenID4VP. The full loop runs on open standards on both ends, with no Yivi-specific adapter on the issuer or verifier side.
+The first ecosystem this release plugs into is **SURF's eduwallet pilot**, built around **[eduID](https://eduid.nl/)** — the identity for lifelong learning. In the pilot, an invited learner who has received an eduID Verifiable Credential can issue that credential into Yivi over OpenID4VCI and present it to any service that accepts eduID over OpenID4VP. The full loop runs on open standards on both ends, with no Yivi-specific adapter on the issuer or verifier side.
+
+This is a pilot environment today: logging in with an eduID VC requires being invited to the pilot and having received an eduID VC.
 
 ## Known limitations
 
