@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 300" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <rect x="1" y="1" width="878" height="298" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="440" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Verifying integrity: the same five checks every time</text>
+  <text x="440" y="66" text-anchor="middle" font-size="13" fill="#64748b">Miss any one and the guarantee quietly degrades</text>
+
+  <!-- Chip 1 -->
+  <rect x="35" y="96" width="150" height="168" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <circle cx="110" cy="132" r="19" fill="#3b6fd4"/>
+  <text x="110" y="139" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">1</text>
+  <text x="110" y="184" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Fresh</text>
+  <text x="110" y="212" text-anchor="middle" font-size="11" fill="#475569">bound to a nonce</text>
+  <text x="110" y="228" text-anchor="middle" font-size="11" fill="#475569">you issued now</text>
+
+  <!-- Chip 2 -->
+  <rect x="205" y="96" width="150" height="168" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <circle cx="280" cy="132" r="19" fill="#2e9e6b"/>
+  <text x="280" y="139" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">2</text>
+  <text x="280" y="184" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Rooted</text>
+  <text x="280" y="212" text-anchor="middle" font-size="11" fill="#475569">chains to a trusted</text>
+  <text x="280" y="228" text-anchor="middle" font-size="11" fill="#475569">anchor or key</text>
+
+  <!-- Chip 3 -->
+  <rect x="375" y="96" width="150" height="168" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <circle cx="450" cy="132" r="19" fill="#7c3aed"/>
+  <text x="450" y="139" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">3</text>
+  <text x="450" y="184" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Identified</text>
+  <text x="450" y="212" text-anchor="middle" font-size="11" fill="#475569">it is your app</text>
+  <text x="450" y="228" text-anchor="middle" font-size="11" fill="#475569">and your key</text>
+
+  <!-- Chip 4 -->
+  <rect x="545" y="96" width="150" height="168" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <circle cx="620" cy="132" r="19" fill="#d9932b"/>
+  <text x="620" y="139" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">4</text>
+  <text x="620" y="184" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Sound</text>
+  <text x="620" y="212" text-anchor="middle" font-size="11" fill="#475569">genuine OS,</text>
+  <text x="620" y="228" text-anchor="middle" font-size="11" fill="#475569">hardware backed key</text>
+
+  <!-- Chip 5 -->
+  <rect x="715" y="96" width="150" height="168" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <circle cx="790" cy="132" r="19" fill="#0d9488"/>
+  <text x="790" y="139" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">5</text>
+  <text x="790" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">Not revoked</text>
+  <text x="790" y="212" text-anchor="middle" font-size="11" fill="#475569">still valid on</text>
+  <text x="790" y="228" text-anchor="middle" font-size="11" fill="#475569">the status lists</text>
+</svg>
