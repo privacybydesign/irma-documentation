@@ -178,8 +178,8 @@ Copy the contents of this file to and paste in the `origanization.logo.data` fie
 Note that only png is supported right now.
 
 ### Authorization requests
-We currently only support the `x509_san_dns` client identifier prefix as defined in the [OpenID4VP spec](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-defined-client-identifier-p),
-which means we identify and verifiy verifiers by a x.509 certificate.
+We support the `x509_san_dns` and `x509_hash` client identifier prefixes as defined in the [OpenID4VP spec](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-defined-client-identifier-p),
+which means we identify and verify verifiers by a x.509 certificate.
 
 Additionally we put some metadata about the verifier inside of this certificate,
 including their origanization information, a logo and permissions for what credentials and attributes they're allowed to ask.
