@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="878" height="468" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="440" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">The attestation triad</text>
+  <text x="440" y="66" text-anchor="middle" font-size="13" fill="#64748b">Two questions about trust, plus the ticket the wallet shows later</text>
+
+  <!-- Question 1 -->
+  <rect x="60" y="92" width="340" height="72" rx="10" fill="#eaf1fb" stroke="#3b6fd4" stroke-width="1.5"/>
+  <text x="230" y="124" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a8a">Is the software genuine?</text>
+  <text x="230" y="146" text-anchor="middle" font-size="12" fill="#475569">the real, unmodified app on a sound OS</text>
+
+  <!-- Question 2 -->
+  <rect x="480" y="92" width="340" height="72" rx="10" fill="#e7f6ee" stroke="#2e9e6b" stroke-width="1.5"/>
+  <text x="650" y="124" text-anchor="middle" font-size="15" font-weight="600" fill="#166540">Are the keys in hardware?</text>
+  <text x="650" y="146" text-anchor="middle" font-size="12" fill="#475569">private keys in a certified secure element</text>
+
+  <!-- Attestation mechanism boxes -->
+  <rect x="90" y="206" width="280" height="46" rx="8" fill="#ffffff" stroke="#3b6fd4" stroke-width="1.5"/>
+  <text x="230" y="234" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">App attestation</text>
+
+  <rect x="510" y="206" width="280" height="46" rx="8" fill="#ffffff" stroke="#2e9e6b" stroke-width="1.5"/>
+  <text x="650" y="234" text-anchor="middle" font-size="14" font-weight="600" fill="#166540">Key attestation</text>
+
+  <!-- WIA / KA -->
+  <rect x="90" y="292" width="280" height="56" rx="8" fill="#3b6fd4"/>
+  <text x="230" y="316" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">WIA</text>
+  <text x="230" y="336" text-anchor="middle" font-size="11" fill="#dbeafe">Wallet Instance Attestation, the app</text>
+
+  <rect x="510" y="292" width="280" height="56" rx="8" fill="#2e9e6b"/>
+  <text x="650" y="316" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">KA</text>
+  <text x="650" y="336" text-anchor="middle" font-size="11" fill="#d7f2e3">Key Attestation, the keys</text>
+
+  <!-- WUA -->
+  <rect x="250" y="398" width="380" height="58" rx="10" fill="#7c3aed"/>
+  <text x="440" y="424" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">WUA</text>
+  <text x="440" y="444" text-anchor="middle" font-size="11" fill="#ede9fe">Wallet Unit Attestation, the ticket shown to issuers and verifiers</text>
+
+  <!-- Arrows -->
+  <line x1="230" y1="164" x2="230" y2="204" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="650" y1="164" x2="650" y2="204" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="230" y1="252" x2="230" y2="290" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="650" y1="252" x2="650" y2="290" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M230 348 L230 375 L360 375 L400 396" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M650 348 L650 375 L520 375 L480 396" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>
