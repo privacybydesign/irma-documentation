@@ -20,11 +20,11 @@
   <!-- Key attestation branch -->
   <rect x="80" y="250" width="280" height="52" rx="8" fill="#ffffff" stroke="#2e9e6b" stroke-width="1.5"/>
   <text x="220" y="274" text-anchor="middle" font-size="14" font-weight="600" fill="#166540">Key attestation</text>
-  <text x="220" y="292" text-anchor="middle" font-size="11" fill="#475569">of the device key</text>
+  <text x="220" y="292" text-anchor="middle" font-size="11" fill="#475569">of the wallet key</text>
 
   <rect x="80" y="322" width="280" height="56" rx="8" fill="#2e9e6b"/>
   <text x="220" y="346" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">Key Attestation (KA)</text>
-  <text x="220" y="366" text-anchor="middle" font-size="11" fill="#d7f2e3">the keys live in a secure element</text>
+  <text x="220" y="366" text-anchor="middle" font-size="11" fill="#d7f2e3">the keys live in a certified WSCD</text>
 
   <!-- App attestation branch -->
   <rect x="520" y="250" width="280" height="52" rx="8" fill="#ffffff" stroke="#3b6fd4" stroke-width="1.5"/>
