@@ -28,7 +28,7 @@ You cannot answer this by asking the app, because a malicious app lies. You answ
 Strip everything down and there are two independent questions:
 
 1. **Is the software genuine?** Is this the real, unmodified wallet on an operating system that has not been tampered with?
-2. **Are the keys really in hardware?** Are the private keys held in a certified secure element, so the user keeps control and nobody can clone them?
+2. **Are the keys really in a certified secure device?** Are the private keys held in a certified **Wallet Secure Cryptographic Device (WSCD)**, so the user keeps control and nobody can clone them? For a Level of Assurance High wallet that WSCD is usually an HSM operated by the wallet provider, yet the device or holder binding key that ties the wallet to a specific phone should still live in that phone's own secure hardware.
 
 They are independent, and it is worth seeing why, because the natural objection is *surely a genuine app implies genuine keys?* It does not. App attestation certifies the **code**, not the runtime outcome. A genuine, unmodified build can *ask* the platform for a hardware key and still be handed a software or TEE key when the device has no certified secure element, an older phone, some OEM builds, an emulator, and the binary is none the wiser. On iOS the split is unavoidable: the Secure Enclave holds the key but hands your server no certificate proving it, so even a perfectly genuine app cannot self-certify where its key lives. That is exactly what key attestation reports independently, rooted in the manufacturer's hardware trust anchor rather than in the app's identity. The reverse fails too: a cloned app can talk to real hardware. So you need evidence for both. The ARF names three attestations that map onto those questions plus one more for presentation.
 
@@ -41,14 +41,19 @@ A short way to hold it in your head:
 | Attestation | What it attests | Which question | Signed by |
 |---|---|---|---|
 | **WIA**, Wallet Instance Attestation | the integrity and authenticity of the app on the device, plus a revocation reference | Is the software genuine? | Wallet Provider |
-| **KA**, Key Attestation | that a certified secure element manages the wallet keys, and lists their public keys | Are the keys in hardware? | Wallet Provider |
+| **KA**, Key Attestation | that a certified WSCD, usually an HSM at the provider, manages the wallet keys, with the device binding key in the phone's secure hardware, and lists their public keys | Are the keys in a certified secure device? | Wallet Provider |
 | **WUA**, Wallet Unit Attestation | a presentable proof the wallet is genuine, with its Level of Assurance and non revocation status | Can a third party trust it later? | Wallet Provider |
 
 The crucial point: the **WIA is fed by app attestation**, and the **KA is fed by key attestation**. Both can be collected in the same step at activation, bound to the same server nonce. Get that step right and the age verification failure does not happen. Skip it, and a tampered app can talk to your issuer with a straight face.
 
-## Key attestation: proving a key lives in hardware
+## Key attestation: proving a key lives in a certified device
 
-Key attestation answers question two. The secure element generates a key and then hands you a manufacturer signed statement: this key was created inside me, it has never left, and here are its properties.
+Key attestation answers question two. It certifies the **Wallet Secure Cryptographic Device (WSCD)** that holds the wallet's private keys, and lists the matching public keys. The ARF is deliberate about *where* that WSCD sits, and in a Level of Assurance High wallet two pieces of hardware are usually in play:
+
+* **The WSCD itself is usually a remote HSM at the wallet provider.** A high assurance wallet needs a *certified* WSCD, and certifying the secure element in every phone model on the market is impractical, so the common architecture is an **HSM operated by the provider** that holds the wallet's private keys. Those keys live in the provider's own certified hardware rather than on the phone, and the KA attests *that* module. This is the case that is easy to overlook, key attestation is not always about the phone.
+* **The device or holder binding key nevertheless belongs in the phone's secure hardware.** Even with a remote WSCD, the wallet must prove it is *this* wallet on *this* device in the user's hands, so the binding key should sit in the phone's own secure hardware, an embedded secure element, StrongBox, a UICC or eSIM, or the iOS Secure Enclave. Otherwise a credential could be lifted off one device and replayed from another. This is the on device key attestation the rest of this section walks through.
+
+Either way the promise is the same, each key lives in a certified cryptographic device and cannot be cloned, and the wallet provider issues the KA once it has checked the underlying evidence. What follows is how that evidence is produced for a key held in the phone's secure hardware, where the secure element generates a key and hands you a manufacturer signed statement: this key was created inside me, it has never left, and here are its properties.
 
 On **Android** you generate a key in the Keystore and pass an attestation challenge, a server nonce N. The device returns an X.509 certificate chain, from the leaf up to a hardware attestation root published by the platform vendor. A dedicated extension on the leaf tells you the security level (a dedicated secure element, a trusted execution environment, or plain software), whether the key was born in hardware and never imported, the challenge it was bound to, the verified boot state, and even the calling app identity. To verify you check every link in the chain, anchor it in the vendor root, confirm the leaf public key equals the key being registered, confirm the challenge equals N, read the security level, and check the leaf is not on the vendor revocation list.
 
@@ -93,7 +98,7 @@ Here is the payoff. During activation the app performs a single attestation coll
 
 ![During activation the app collects both attestations bound to one nonce; the key attestation feeds the KA and the app attestation feeds the WIA, and the provider issues a WUA on top of both.](./activation-flow.svg)
 
-* The **key attestation of the device key** feeds the **KA**: the provider issues a certificate that lists the wallet public keys and states that a certified secure element holds their private counterparts.
+* The **key attestation of the wallet key** feeds the **KA**: the provider issues a certificate that lists the wallet public keys and states that a certified WSCD holds their private counterparts, usually a provider operated HSM for the certified wallet keys, with the device or holder binding key in the phone's own secure hardware.
 * The **app attestation** feeds the **WIA**, the provider verdict that the app binary is genuine.
 * Both are bound to the same nonce, so they are provably fresh and provably part of the same activation.
 * Later, when the wallet presents itself to an issuer or a relying party, it shows a **WUA** and proves that it controls the key by signing a challenge. The WUA is trustworthy exactly because the provider checked the WIA and the KA at onboarding, and because a status list lets the provider revoke it.
@@ -118,7 +123,7 @@ Two design choices come with this:
 The ARF triad is not paperwork. It is the answer to "why should I believe this wallet" broken into three checkable claims:
 
 * **WIA**, the app is genuine, fed by app attestation, whether Apple App Attest, Google Play Integrity, or an open variant for phones without Google or Apple services;
-* **KA**, the keys live in a certified secure element, fed by key attestation;
+* **KA**, the keys live in a certified WSCD, usually an HSM at the provider, with the device binding key in the phone's secure hardware, fed by key attestation;
 * **WUA**, a presentable and revocable ticket the wallet shows downstream, trustworthy because the provider verified the other two.
 
 The EU Age Verification App is the cautionary tale. It shipped real signatures and real attestations, yet it could still be fooled, because it never firmly answered the one question that matters: is the thing making this request a genuine app, on sound hardware, backed by a provider I trust? App attestation is the piece that closes the software half of that answer, and treating it as a pluggable capability rather than as whatever Apple and Google happen to offer is what lets a European wallet serve independent Android distributions as first class citizens. Get the five checks right, fresh, rooted, identified, sound and not revoked, and every scheme slots into the same frame.
