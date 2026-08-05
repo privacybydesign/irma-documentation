@@ -1,7 +1,7 @@
 ---
 slug: 2026-07-yivi-app-update
-title: "Yivi app update, July 2026: a locked app stays locked"
-authors: [martijnkamphuis]
+title: "Yivi app update, July 2026"
+authors: [dibranmulder]
 tags: [yivi, yivi-app, release, security, openid4vp, openid4vci]
 ---
 
@@ -11,9 +11,9 @@ July brought two Yivi app releases, **8.1.1** and **8.1.2**, and two releases of
 
 ## A locked app stays locked
 
-If the Yivi app is locked and something opens it with a link that carries a session — a "Log in with Yivi" button on the same phone, for example — you should be asked for your PIN before anything is shared. Two fixes in July closed the gaps in that rule.
+If the Yivi app is locked and something opens it with a link that carries a session, a "Log in with Yivi" button on the same phone, for example, you should be asked for your PIN before anything is shared. Two fixes in July closed the gaps in that rule.
 
-The first, in **8.1.1**, deals with a cold start. Biometric unlock (Face ID, fingerprint) is now held back until the app knows *which* link opened it. Before, biometrics could win the race and unlock the app, after which the pending session forced a relock — a visible flash, and not the deterministic behaviour intended.
+The first, in **8.1.1**, deals with a cold start. Biometric unlock (Face ID, fingerprint) is now held back until the app knows *which* link opened it. Before, biometrics could win the race and unlock the app, after which the pending session forced a relock, a visible flash, and not the deterministic behaviour intended.
 
 The second, in **8.1.2**, deals with a warm resume: the app has been open, auto-locked while idle, and is then brought forward by a session link. That path was not covered by the first fix. Biometrics are now withheld there too while a session is pending or in flight.
 
@@ -26,14 +26,6 @@ In a **same-device** session the browser asking for your data is on the phone it
 Scanning a desktop QR code with the phone's own camera app is again recognised as a second-device session; it had begun running the same-device return flow, which tries to send you onward on the phone while the real session waits on the laptop.
 
 More importantly, on a second-device session the app no longer opens the relying party's return URL in a browser on the phone. That URL belongs to the browser session on the other device, which honours it there. Opening it on the phone started a second, unrelated browser session with the relying party — an interaction the person never asked for, and a request carrying the phone's address and browser to a party with no reason to receive one. The app now confirms success locally instead. A `tel:` return URL is the deliberate exception and still opens the dialer.
-
-## Encryption at rest, put right
-
-Yivi 8.0 introduced a second credential store next to the classic IRMA one: the EUDI database, holding SD-JWT VC credentials received over OpenID4VCI along with holder binding keys, private keys and logs. It is meant to be encrypted at rest with SQLCipher.
-
-From `irmago` 1.0.0 onward it was being opened without its AES key, so it was written in plaintext despite the documented encryption. This was fixed in `irmago` **1.1.1**, which ships in Yivi app **8.1.1**. On the first launch after updating, an existing plaintext database is re-encrypted in place, atomically and without data loss; already-encrypted databases are left alone. Storage regression tests now cover both cases.
-
-The scope, stated plainly: the affected file is the EUDI database as written by app versions 8.0.0 and 8.1.0. The classic IRMA credential store is a different database and was not affected. If you are still on 8.0.0 or 8.1.0, updating performs the migration for you.
 
 ## Fewer sessions that stall, and harder-to-abuse SMS verification
 
@@ -65,12 +57,11 @@ None of this makes Yivi a wallet that "supports OpenID4VCI" without qualificatio
 |---|---:|---|---|
 | PIN gating of session links on cold start | 8.1.1 | Android and iOS | Stable |
 | PIN gating on warm resume | 8.1.2 | Android and iOS | Stable |
-| EUDI database encrypted at rest (+ migration) | 8.1.1 | Android and iOS | Stable |
 | Second-device return URL disregarded | 8.1.2 | Android and iOS | Stable |
 | Proof-of-work before embedded SMS send | 8.1.2 | Android and iOS | Stable |
 | Passport read without DG15 | 8.1.2 | Android and iOS | Stable |
 | `x509_hash` and verifier metadata (OpenID4VP) | 8.1.0 | Android and iOS | Stable |
-| External holder-key binding (WSCA/HSM) | 8.1.2 | Android and iOS | Library interface, app uses software keys |
+| External holder-key binding (WSCA/HSM) | 8.1.2 | Android and iOS | Library interface |
 | Token Status List revocation for SD-JWT | Not released | — | Merged, unreleased |
 | Credential offer without a `grants` member | Not released | — | Merged, unreleased |
 
@@ -81,39 +72,3 @@ If you run a Yivi issuer with embedded SMS verification, the proof-of-work check
 ## Looking ahead
 
 Several changes were merged in July but are not in a released app, and we are putting no date on them: SVG credential logos rendering correctly, credential and issuer text resolved in your app language by `irmago` — falling back to English or another language the issuer did supply, instead of "[translation missing]" — a confirmation when you log out from the More tab, and the Token Status List revocation support above.
-
----
-
-### Sources
-
-**Releases**
-
-- [Yivi app 8.1.1](https://github.com/privacybydesign/irmamobile/releases/tag/v8.1.1) and [8.1.2](https://github.com/privacybydesign/irmamobile/releases/tag/v8.1.2)
-- [irmago 1.1.0](https://github.com/privacybydesign/irmago/releases/tag/v1.1.0), [1.1.1](https://github.com/privacybydesign/irmago/releases/tag/v1.1.1) and [1.2.0](https://github.com/privacybydesign/irmago/releases/tag/v1.2.0)
-
-**Yivi app**
-
-- [Gate universal-link sessions behind the PIN after biometric unlock](https://github.com/privacybydesign/irmamobile/pull/645)
-- [PIN-gate universal-link sessions on resume-lock](https://github.com/privacybydesign/irmamobile/pull/655)
-- [Restore the QR-versus-button second-device distinction](https://github.com/privacybydesign/irmamobile/pull/652)
-- [Disregard the client return URL on second-device sessions](https://github.com/privacybydesign/irmamobile/pull/663)
-- [Proof-of-work challenge before an embedded SMS send](https://github.com/privacybydesign/irmamobile/pull/662) and [the ALTCHA gate on the Send button](https://github.com/privacybydesign/irmamobile/pull/670)
-- [Remove high-risk countries from the SMS country picker](https://github.com/privacybydesign/irmamobile/pull/661)
-- [Skip Active Authentication when the chip has no DG15](https://github.com/privacybydesign/irmamobile/pull/672)
-- [Ask engaged users for feedback after five sessions](https://github.com/privacybydesign/irmamobile/pull/650)
-- [Render SVG credential logos](https://github.com/privacybydesign/irmamobile/pull/676) and [confirm logout with a notification](https://github.com/privacybydesign/irmamobile/pull/562) (both unreleased)
-
-**irmago**
-
-- [Encrypt the EUDI database at rest and migrate legacy plaintext databases](https://github.com/privacybydesign/irmago/pull/615)
-- [Drop the 5s HTTP client timeout so body reads honour the 20s deadline](https://github.com/privacybydesign/irmago/pull/607)
-- [Add the `x509_hash` client identifier prefix and verifier metadata support](https://github.com/privacybydesign/irmago/pull/602)
-- [Offer an issuance option for fixed-value disclosure requests](https://github.com/privacybydesign/irmago/pull/630)
-- [WSCA-ready holder-key binding seams](https://github.com/privacybydesign/irmago/pull/624) and [`NewStorageWithDialector`](https://github.com/privacybydesign/irmago/pull/620)
-- [Status list support for SD-JWT](https://github.com/privacybydesign/irmago/pull/561) and [credential offers without a `grants` member](https://github.com/privacybydesign/irmago/pull/644) (both unreleased)
-- [Locale-aware client](https://github.com/privacybydesign/irmago/pull/633) (unreleased)
-
-**Standards**
-
-- [OpenID for Verifiable Presentations](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
-- [OpenID for Verifiable Credential Issuance](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
