@@ -94,6 +94,44 @@ const offerWithTxCode = {
 
 The issuer backend returns the generated code as `txCode` in the response — show it next to the QR so the user can copy it into the Yivi app.
 
+## How the Yivi app picks a grant type
+
+Unlike the two sections above, this part is not reference-issuer-specific: it is the wallet↔issuer contract from [OID4VCI v1.0 § 4.1.1](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-credential-offer-parameters), and it applies to any issuer the Yivi app talks to. The app implements two grant type identifiers:
+
+| Identifier | Flow |
+| --- | --- |
+| `urn:ietf:params:oauth:grant-type:pre-authorized_code` | Pre-authorized code |
+| `authorization_code` | Authorization code |
+
+When the offer's `grants` member names both, the app uses the pre-authorized code grant.
+
+`pre-authorized_code` is REQUIRED inside a pre-authorized code grant. If your offer omits it or sends it as an empty string, the app rejects the offer while parsing it, before it contacts the token endpoint. A grant whose value is JSON `null` names no grant at all and is treated as absent.
+
+If `grants` names only identifiers the app does not implement, the session fails and the error message lists what was offered. This is deliberate: naming a grant type states which grants the issuer is prepared to process for that offer.
+
+### An offer without a grants member
+
+`grants` is OPTIONAL. When it is absent, `null`, or an empty object, the app takes the grant type from the authorization server's `grant_types_supported` metadata instead:
+
+```json
+{
+  "issuer": "https://as.example",
+  "authorization_endpoint": "https://as.example/authorize",
+  "token_endpoint": "https://as.example/token",
+  "grant_types_supported": ["authorization_code"]
+}
+```
+
+Three consequences to plan for:
+
+- Only the authorization code grant can be derived. The pre-authorized code flow needs a `pre-authorized_code`, and only the offer can supply one, so an offer without `grants` can never start that flow.
+- An authorization server that does not advertise `authorization_code` fails the session, with the error naming the grant types it does advertise. Omitting `grant_types_supported` entirely means `["authorization_code", "implicit"]` per [RFC 8414 § 2](https://www.rfc-editor.org/rfc/rfc8414.html#section-2), so the derivation still succeeds; an explicitly empty list means no grant type is supported and it does not.
+- A derived grant carries no `issuer_state` and no `authorization_server` hint, because both are members of an offered grant. The app therefore uses the first entry of the credential issuer metadata's `authorization_servers`, or the credential issuer itself when that member is absent.
+
+:::note Unreleased
+Deriving the grant type from authorization server metadata, and rejecting an empty `pre-authorized_code` during parsing, landed in irmago after `v1.2.0` ([irmago#644](https://github.com/privacybydesign/irmago/pull/644)). On an app built against `v1.2.0` or earlier, an offer without a `grants` member crashes the app process rather than failing the session, and an empty `pre-authorized_code` is sent to the token endpoint as-is. Send an explicit, fully populated `grants` member until the app version you target ships that fix.
+:::
+
 ## Polling for issuance completion
 
 The Yivi app talks directly to the issuer over the OpenID4VCI HTTP endpoints; the frontend stays out of that loop and only watches for completion:
