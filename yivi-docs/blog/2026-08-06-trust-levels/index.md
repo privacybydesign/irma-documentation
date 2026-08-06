@@ -205,7 +205,7 @@ Why does the "Known by Yivi" banner require high, and not medium? Because the ba
 
 The three roads to high are deliberately independent, and a party lands on the strongest rung any channel earns it — `level = max(certificate, list)`. A list outage can never demote a party holding a Yivi certificate, and a party with no certificate at all — even a bare `did:jwk` — reaches high through a list entry alone. Being listed *is* being onboarded: Yivi cannot name a party on its list without vouching for it.
 
-The same ladder applies unchanged to **issuers**, and arguably matters more there. A verifier you should not trust is one bad interaction; an issuer you should not trust puts credentials *into* your wallet that stay there. Today's Trusted Verifier label is the verifier-side face of the high tier — a corresponding trust label for issuers is a natural counterpart we are exploring.
+The same ladder measures **issuers** too — but the bar for the banner will not be the same there, and the difference is the user-safety logic again. Disclosure is the irreversible act: data shared with the wrong verifier is out, and nobody can take it back. Issuance flows the other way — nothing about you leaves the wallet, and a credential from an issuer you do not want can simply be deleted. So while the verifier banner demands high, we intend to set the issuer banner at medium: for *receiving* credentials, an issuer vouched for by an audited CA is trustworthy enough, even without Yivi's own vetting. Same fixed levels, different policy per role — exactly the kind of dial this system is designed to be.
 
 ## Third-party CAs: vouching, delegated
 
