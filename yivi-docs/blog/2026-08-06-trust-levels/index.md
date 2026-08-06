@@ -64,7 +64,7 @@ The EUDI wallet world is not like that. Under the **OpenID4VC** family of standa
 
 ## The ways a party can prove who it is
 
-When an issuer or verifier connects to the Yivi wallet over the OpenID stack, it authenticates in one of a handful of ways. They differ enormously in what they actually prove.
+When an issuer or verifier connects to the Yivi wallet over the OpenID4VC stack, it authenticates in one of a handful of ways. They differ enormously in what they actually prove.
 
 * **A certificate from Yivi's own CA.** The party went through Yivi's onboarding: vetting, a contract, and a certificate issued by the CA we operate ourselves. This is how today's trusted verifiers work. Yivi itself stands behind the party.
 * **A certificate from a third-party CA we anchor.** An external, audited certificate authority (think of the qualified trust service providers of the eIDAS world) verified the party's legal identity and issued it a certificate. Somebody credible vouches for *who the party is*.
@@ -99,7 +99,7 @@ Why only TS 119 602 for now, and not 119 612? Because the wallet's runtime quest
 
 ### One party administration, two lists
 
-This should sound familiar by now: a signed, Yivi-curated registry of parties is exactly what the requestor scheme has been all along. The LoTE is not a competitor to it; it is the same party administration, projected into a second world. One onboarding will produce a scheme entry for IRMA sessions and a LoTE entry for OpenID sessions. Same vetting, same off-boarding, two list formats speaking to two protocol stacks.
+This should sound familiar by now: a signed, Yivi-curated registry of parties is exactly what the requestor scheme has been all along. The LoTE is not a competitor to it; it is the same party administration, projected into a second world. One onboarding will produce a scheme entry for IRMA sessions and a LoTE entry for OpenID4VC sessions. Same vetting, same off-boarding, two list formats speaking to two protocol stacks.
 
 ## Three levels, and a gate before the ladder
 
@@ -225,7 +225,7 @@ The escape hatch is built into the design regardless: an individual party under 
 
 One thing this system unfortunately cannot do, and we looked, is answer the question users ask most often during disclosure: *"I do not have this credential yet. Where do I get it?"* It would be natural if the wallet could point at the issuer's website the moment a verifier asks for something missing.
 
-The reason it cannot is an axis mismatch. The entire trust system, from the ladder to the list to the certificates, is keyed by **party**: it answers "who vouches for this organisation". The obtain-flow needs the reverse lookup, keyed by **credential type**: "who issues this kind of credential, and at which URL". The ETSI list format has no field for that, and adding one would turn a trust statement into a discovery service with very different freshness and governance needs. It is no accident that the IRMA world *can* do this: the IRMA scheme happens to be both things at once, a party registry *and* a credential catalog with issuance URLs. For the OpenID stack, a credential catalog is a separate piece of infrastructure, and a story for another post.
+The reason it cannot is an axis mismatch. The entire trust system, from the ladder to the list to the certificates, is keyed by **party**: it answers "who vouches for this organisation". The obtain-flow needs the reverse lookup, keyed by **credential type**: "who issues this kind of credential, and at which URL". The ETSI list format has no field for that, and adding one would turn a trust statement into a discovery service with very different freshness and governance needs. It is no accident that the IRMA world *can* do this: the IRMA scheme happens to be both things at once, a party registry *and* a credential catalog with issuance URLs. For the OpenID4VC stack, a credential catalog is a separate piece of infrastructure, and a story for another post.
 
 ## Getting vouched for
 
