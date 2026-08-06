@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 430" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="878" height="428" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="440" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">The three roads to the top level</text>
+  <text x="440" y="66" text-anchor="middle" font-size="13" fill="#64748b">Independent channels — a party lands on the strongest rung any of them earns</text>
+
+  <!-- Channel 1: IRMA requestor scheme -->
+  <rect x="40" y="100" width="250" height="96" rx="10" fill="#eaf1fb" stroke="#3b6fd4" stroke-width="1.5"/>
+  <text x="165" y="132" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a8a">IRMA requestor scheme</text>
+  <text x="165" y="154" text-anchor="middle" font-size="12" fill="#475569">registered in a valid scheme</text>
+  <text x="165" y="176" text-anchor="middle" font-size="12" fill="#475569">IRMA sessions</text>
+
+  <!-- Channel 2: Yivi CA certificate -->
+  <rect x="315" y="100" width="250" height="96" rx="10" fill="#e7f6ee" stroke="#2e9e6b" stroke-width="1.5"/>
+  <text x="440" y="132" text-anchor="middle" font-size="15" font-weight="600" fill="#14532d">Certificate from Yivi's CA</text>
+  <text x="440" y="154" text-anchor="middle" font-size="12" fill="#475569">issued at onboarding</text>
+  <text x="440" y="176" text-anchor="middle" font-size="12" fill="#475569">X.509 and attested DID keys</text>
+
+  <!-- Channel 3: LoTE entry -->
+  <rect x="590" y="100" width="250" height="96" rx="10" fill="#fdf3e3" stroke="#d99a2b" stroke-width="1.5"/>
+  <text x="715" y="132" text-anchor="middle" font-size="15" font-weight="600" fill="#7c4a03">Entry on Yivi's trust list</text>
+  <text x="715" y="154" text-anchor="middle" font-size="12" fill="#475569">ETSI TS 119 602 LoTE</text>
+  <text x="715" y="176" text-anchor="middle" font-size="12" fill="#475569">any identifier technology</text>
+
+  <!-- Arrows converging -->
+  <path d="M165 196 L165 240 Q165 258 183 258 L385 258" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M440 196 L440 250" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M715 196 L715 240 Q715 258 697 258 L495 258" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- HIGH box -->
+  <rect x="290" y="262" width="300" height="88" rx="10" fill="#1c6b58" stroke="#14523f" stroke-width="1.5"/>
+  <text x="440" y="299" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff" letter-spacing="2">HIGH</text>
+  <text x="440" y="326" text-anchor="middle" font-size="13" fill="#d9efe7">Yivi vouches — the "Known by Yivi" banner</text>
+
+  <!-- Footnote -->
+  <text x="440" y="388" text-anchor="middle" font-size="13" fill="#475569">level = max(certificate, list) — a list outage never demotes a certified party,</text>
+  <text x="440" y="408" text-anchor="middle" font-size="13" fill="#475569">and a listed party needs no certificate at all</text>
+</svg>
