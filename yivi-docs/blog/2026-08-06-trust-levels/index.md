@@ -44,7 +44,7 @@ tags: [yivi, trust, eudi-wallet, trusted-verifier, etsi, security]
 
 ## Every session starts with a stranger
 
-A wallet has one job that is easy to state and hard to do well: help you share verified data about yourself, with the right party, and with nobody else. The cryptography behind that first part is in good shape. Signatures check out, certificate chains validate, credentials cannot be forged or tampered with. But cryptography answers the question *is this message authentic* — it says nothing about the question that actually decides whether you are safe: *should you be talking to this party at all?*
+A wallet has one job that is easy to state and hard to do well: help you share verified data about yourself, with the right party, and with nobody else. The cryptography behind that first part is in good shape. Signatures check out, certificate chains validate, credentials cannot be forged or tampered with. But cryptography answers the question *is this message authentic*. It says nothing about the question that actually decides whether you are safe: *should you be talking to this party at all?*
 
 For the person holding the phone, trust is not a chain validation result. It is the confidence that when the app says "the Chamber of Commerce asks for your name and date of birth", it really is the Chamber of Commerce, and that someone accountable stands behind that claim. Every disclosure and every issuance starts with a party the wallet has to size up on your behalf, and the wallet needs a principled way to do it.
 
@@ -52,33 +52,33 @@ That is the question this post is about:
 
 > **Who vouches for this party?**
 
-Everything that follows — the identifier technologies, the ETSI standards, the trust levels — is that one question, made mechanical. It is also a preview: the trust system described in this post is new, and will land in the Yivi wallet in an upcoming release.
+The identifier technologies, the ETSI standards, the trust levels: everything that follows is that one question, made mechanical. It is also a preview: the trust system described in this post is new, and will land in the Yivi wallet in an upcoming release.
 
 ## Trust by scheme: how IRMA answers it today
 
-The IRMA side of Yivi has always had an answer to this question, and a strict one: **schemes**. An IRMA wallet only accepts credentials from issuers registered in the IRMA scheme — a signed registry, curated by Yivi, that names every issuer, the credentials it may issue, and the keys it signs with. An issuer outside the scheme cannot issue at all. Verifiers live in a second registry, the **requestor scheme**: a registered verifier greets you with its vetted name and logo, while an unregistered one gets [a warning screen](/blog/2025-trusted-verifer) telling you to be careful. Trust, in the IRMA world, is a curated list with Yivi holding the pen.
+The IRMA side of Yivi has always had an answer to this question, and a strict one: **schemes**. An IRMA wallet only accepts credentials from issuers registered in the IRMA scheme, a signed registry curated by Yivi that names every issuer, the credentials it may issue, and the keys it signs with. An issuer outside the scheme cannot issue at all. Verifiers live in a second registry, the **requestor scheme**: a registered verifier greets you with its vetted name and logo, while an unregistered one gets [a warning screen](/blog/2025-trusted-verifer) telling you to be careful. Trust, in the IRMA world, is a curated list with Yivi holding the pen.
 
-That model works because IRMA is one ecosystem with one operator: every party can reasonably be asked to register with Yivi, so the vouching question always has one of two answers — Yivi does, or nobody does.
+That model works because IRMA is one ecosystem with one operator: every party can reasonably be asked to register with Yivi, so the vouching question always has one of two answers: Yivi does, or nobody does.
 
-The EUDI wallet world is not like that. Under the **OpenID4VC** family of standards — OpenID4VCI for issuance, OpenID4VP for disclosure — the wallet meets issuers and verifiers that never signed up with Yivi and never will: parties from other ecosystems, other countries, other trust domains, authenticating with the technologies of the open world. The rest of this post is about how the wallet will size *them* up.
+The EUDI wallet world is not like that. Under the **OpenID4VC** family of standards (OpenID4VCI for issuance, OpenID4VP for disclosure), the wallet meets issuers and verifiers that never signed up with Yivi and never will: parties from other ecosystems, other countries, other trust domains, authenticating with the technologies of the open world. The rest of this post is about how the wallet will size *them* up.
 
 ## The ways a party can prove who it is
 
 When an issuer or verifier connects to the Yivi wallet over the OpenID stack, it authenticates in one of a handful of ways. They differ enormously in what they actually prove.
 
-* **A certificate from Yivi's own CA.** The party went through Yivi's onboarding — vetting, a contract, and a certificate issued by the CA we operate ourselves. This is how today's trusted verifiers work. Yivi itself stands behind the party.
-* **A certificate from a third-party CA we anchor.** An external, audited certificate authority — think of the qualified trust service providers of the eIDAS world — verified the party's legal identity and issued it a certificate. Somebody credible vouches for *who the party is*.
+* **A certificate from Yivi's own CA.** The party went through Yivi's onboarding: vetting, a contract, and a certificate issued by the CA we operate ourselves. This is how today's trusted verifiers work. Yivi itself stands behind the party.
+* **A certificate from a third-party CA we anchor.** An external, audited certificate authority (think of the qualified trust service providers of the eIDAS world) verified the party's legal identity and issued it a certificate. Somebody credible vouches for *who the party is*.
 * **A certificate from a CA we do not know.** The chain does not trace to any root the wallet anchors. The wallet can verify the math, but the math ends nowhere. Evidentially this is the same as a self-signed key.
-* **did:web.** The party publishes a DID document on its own domain. This proves control of that domain at the moment of resolution — roughly TLS-grade assurance — and everything in the document, including the display name, is self-asserted.
+* **did:web.** The party publishes a DID document on its own domain. This proves control of that domain at the moment of resolution, roughly TLS-grade assurance, and everything in the document, including the display name, is self-asserted.
 * **did:jwk.** The identifier *is* the public key, encoded into a string. There is no document, no domain, and nothing else. Anyone can mint one in a millisecond, for free.
 
 ## Valid is not the same as trustworthy
 
-Each of these methods lets the wallet check a signature, but they differ sharply in whether anyone vouches for the party behind it. A certificate chain genuinely answers the vouching question — the CA at its root vouches for the subject it certified. The bare DID methods cannot even carry an answer. And even the certificate's answer, as we will see, is narrower than the question that decides whether you are safe.
+Each of these methods lets the wallet check a signature, but they differ sharply in whether anyone vouches for the party behind it. A certificate chain genuinely answers the vouching question: the CA at its root vouches for the subject it certified. The bare DID methods cannot even carry an answer. And even the certificate's answer, as we will see, is narrower than the question that decides whether you are safe.
 
-Take `did:jwk`, which the DIIP interoperability profile (which Yivi supports) mandates alongside `did:web`. Because the key is the identifier, a `did:jwk` has three structural problems. It costs nothing to create, so a party that is denied or distrusted simply mints a new one. Rotating a key — routine security hygiene — silently creates a *different party*, breaking any trust that was attached to the old identifier. And since there is no DID document, there is no place to attach an attestation: no certificate can ever be bound to it. The identifier is also 176 characters long for a P-256 key, which rules out a human ever recognising one. A bare `did:web` is only slightly better: it proves domain control, and domains are cheap.
+Take `did:jwk`, which the DIIP interoperability profile (which Yivi supports) mandates alongside `did:web`. Because the key is the identifier, a `did:jwk` has three structural problems. It costs nothing to create, so a party that is denied or distrusted simply mints a new one. Rotating a key, routine security hygiene, silently creates a *different party*, breaking any trust that was attached to the old identifier. And since there is no DID document, there is no place to attach an attestation: no certificate can ever be bound to it. The identifier is also 176 characters long for a P-256 key, which rules out a human ever recognising one. A bare `did:web` is only slightly better: it proves domain control, and domains are cheap.
 
-Certificates from real CAs are better still, but they answer a narrower question than it seems. An audited CA attests that a legal entity with a given name exists and controls this key. That is genuinely valuable — it is somebody vouching. But a real, registered legal name is not authorization. Fraud is routinely committed by real companies with real Chamber of Commerce registrations. Knowing *who a party is* does not tell the wallet whether that party has any business asking for your date of birth.
+Certificates from real CAs are better still, but they answer a narrower question than it seems. An audited CA attests that a legal entity with a given name exists and controls this key. That is genuinely valuable, and it is somebody vouching. But a real, registered legal name is not authorization. Fraud is routinely committed by real companies with real Chamber of Commerce registrations. Knowing *who a party is* does not tell the wallet whether that party has any business asking for your date of birth.
 
 ## The list the EU already asked for
 
@@ -89,13 +89,13 @@ The two sound interchangeable and are not. In easy words:
 > **TS 119 612 answers "who may vouch": it lists certificate authorities and trust services.
 > TS 119 602 answers "who is vouched for": it lists the organisations themselves.**
 
-TS 119 612 is the veteran. Since 2013 every member state has published an XML list of the trust services it supervises — the CAs allowed to issue qualified certificates — stitched together by an EU-level list of lists that is bootstrapped, charmingly, through the *Official Journal of the European Union*. It operates at the CA level: it can tell you that a certificate authority is legitimate, but it has nothing to say about the individual web shop or municipality holding one of that CA's certificates.
+TS 119 612 is the veteran. Since 2013 every member state has published an XML list of the trust services it supervises (the CAs allowed to issue qualified certificates), stitched together by an EU-level list of lists that is bootstrapped, charmingly, through the *Official Journal of the European Union*. It operates at the CA level: it can tell you that a certificate authority is legitimate, but it has nothing to say about the individual web shop or municipality holding one of that CA's certificates.
 
-TS 119 602, published in late 2025, is the missing half. A **List of Trusted Entities (LoTE)** names *parties*: PID providers, wallet providers, relying parties — organisations, not CAs. It comes in a JSON binding signed as a JWS, carries per-entry statuses and service types, has sequence numbers and expiry built in, and the European Commission already publishes several such lists on the eIDAS dashboard. Crucially for us, the ARF explicitly allows ecosystems that issue non-qualified attestations to operate their *own* LoTE — which is precisely the space Yivi occupies.
+TS 119 602, published in late 2025, is the missing half. A **List of Trusted Entities (LoTE)** names *parties* rather than CAs: PID providers, wallet providers, relying parties. It comes in a JSON binding signed as a JWS, carries per-entry statuses and service types, has sequence numbers and expiry built in, and the European Commission already publishes several such lists on the eIDAS dashboard. Crucially for us, the ARF explicitly allows ecosystems that issue non-qualified attestations to operate their *own* LoTE, which is precisely the space Yivi occupies.
 
 So Yivi will publish a LoTE: a signed, regularly refreshed, machine-readable list of the parties Yivi vouches for, in the EU's own format.
 
-Why only TS 119 602 for now, and not 119 612? Because the wallet's runtime question is the party-level one. The CA-level question — *which roots do we trust at all* — we answer at build time, by pinning a curated set of anchors into the wallet (a set that national 119 612 lists help us curate). Consuming 119 612 at runtime would mean XML signature validation for an answer we do not need mid-session, while the 119 602 JSON binding verifies with the exact machinery the wallet already uses for credentials. One list format does the runtime work; the other informs what we bake in.
+Why only TS 119 602 for now, and not 119 612? Because the wallet's runtime question is the party-level one. The CA-level question, *which roots do we trust at all*, we answer at build time, by pinning a curated set of anchors into the wallet (a set that national 119 612 lists help us curate). Consuming 119 612 at runtime would mean XML signature validation for an answer we do not need mid-session, while the 119 602 JSON binding verifies with the exact machinery the wallet already uses for credentials. One list format does the runtime work; the other informs what we bake in.
 
 ### One party administration, two lists
 
@@ -108,7 +108,7 @@ With authentication methods on one axis and vouching on the other, the trust sys
 <div className="tl-cards">
   <div className="tl-card tl-high">
     <div className="tl-name">High</div>
-    <p><strong>Yivi vouches.</strong> Registration in a valid IRMA scheme, a certificate under the Yivi CA, or an entry on Yivi's own trust list — whatever the party's identifier technology.</p>
+    <p><strong>Yivi vouches.</strong> Registration in a valid IRMA scheme, a certificate under the Yivi CA, or an entry on Yivi's own trust list, whatever the party's identifier technology.</p>
   </div>
   <div className="tl-card tl-medium">
     <div className="tl-name">Medium</div>
@@ -124,13 +124,13 @@ Three levels and not five, because a trust indicator is only useful if each stat
 
 :::warning A failed check is not a low level
 
-The ladder only ranks parties whose identity **checks out**. A party the wallet cannot authenticate at all — a broken signature, an unresolvable DID, a certificate chain that fails validation — never gets a level. The session ends with an error and nothing is shared. "Low" means *legitimate-looking but unknown*; it never means *broken*.
+The ladder only ranks parties whose identity **checks out**. A party the wallet cannot authenticate at all (a broken signature, an unresolvable DID, a certificate chain that fails validation) never gets a level. The session ends with an error and nothing is shared. "Low" means *legitimate-looking but unknown*; it never means *broken*.
 
 :::
 
 And if the wallet cannot obtain a fresh, validly signed copy of the trust list? Then missing evidence is simply absent vouching: parties will rank by their certificates alone, sessions will keep working, and nobody gets upgraded by an outage.
 
-Here is the full picture of the new system — every way of authenticating, crossed with whether Yivi's list names the party:
+Here is the full picture of the new system, every way of authenticating crossed with whether Yivi's list names the party:
 
 <div className="tl-scroll" role="region" aria-label="Trust level matrix" tabIndex={0}>
   <table className="tl-matrix">
@@ -147,7 +147,7 @@ Here is the full picture of the new system — every way of authenticating, cros
         <th scope="row"><span className="tl-what">IRMA requestor or issuer<span className="tl-id">registered in a valid scheme</span></span></th>
         <td><span className="tl-pill tl-high">High</span></td>
         <td><span className="tl-pill tl-na">Not applicable</span></td>
-        <td className="tl-note">IRMA parties are never on the LoTE — the requestor scheme <em>is</em> their list, and it is a projection of the same party administration. Scheme registration already is Yivi's word.</td>
+        <td className="tl-note">IRMA parties are never on the LoTE. The requestor scheme <em>is</em> their list, and it is a projection of the same party administration. Scheme registration already is Yivi's word.</td>
       </tr>
       <tr>
         <th scope="row"><span className="tl-what">X.509 → Yivi's own CA<span className="tl-id">certificate chain to the Yivi root</span></span></th>
@@ -159,7 +159,7 @@ Here is the full picture of the new system — every way of authenticating, cros
         <th scope="row"><span className="tl-what">X.509 → anchored third-party CA<span className="tl-id">an audited CA Yivi does not operate</span></span></th>
         <td><span className="tl-pill tl-medium">Medium</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
-        <td className="tl-note">An external CA attested the legal name — that is somebody vouching, but not Yivi. The list entry is what adds Yivi's word.</td>
+        <td className="tl-note">An external CA attested the legal name: somebody vouches, but not Yivi. The list entry is what adds Yivi's word.</td>
       </tr>
       <tr>
         <th scope="row"><span className="tl-what">X.509 → unknown CA<span className="tl-id">any root the wallet does not anchor</span></span></th>
@@ -177,13 +177,13 @@ Here is the full picture of the new system — every way of authenticating, cros
         <th scope="row"><span className="tl-what">did:web, bare<span className="tl-id">DID document on a domain, self-asserted name</span></span></th>
         <td><span className="tl-pill tl-low">Low</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
-        <td className="tl-note">Nothing attests a legal entity, so the list is the only thing that can speak for this party — and Yivi's word is Yivi's word, whatever the identifier technology.</td>
+        <td className="tl-note">Nothing attests a legal entity, so the list is the only thing that can speak for this party, and Yivi's word is Yivi's word, whatever the identifier technology.</td>
       </tr>
       <tr>
-        <th scope="row"><span className="tl-what">did:jwk<span className="tl-id">key embedded in the identifier — no document exists</span></span></th>
+        <th scope="row"><span className="tl-what">did:jwk<span className="tl-id">key embedded in the identifier, no document exists</span></span></th>
         <td><span className="tl-pill tl-low">Low</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
-        <td className="tl-note">No DID document means no certificate can ever be attached — the certificate channel is permanently silent, and the list is the whole story.</td>
+        <td className="tl-note">No DID document means no certificate can ever be attached. The certificate channel is permanently silent, and the list is the whole story.</td>
       </tr>
     </tbody>
   </table>
@@ -191,7 +191,7 @@ Here is the full picture of the new system — every way of authenticating, cros
 
 Read down the right-hand column and you see the design: every party Yivi lists reaches high, and the only distinctions left are between kinds of *unlisted* party, where the certificate channel decides everything.
 
-## What you will see in the app — and why that part will change
+## What you will see in the app, and why that part will change
 
 The levels will translate to the screen roughly like this:
 
@@ -201,42 +201,42 @@ The levels will translate to the screen roughly like this:
 | **Medium** | Still a warning that the party is not known by Yivi, but with the organisation name attested by its CA. |
 | **High** | The normal flow, with the "Known by Yivi" banner. |
 
-There is an important split hiding in that table. The **levels are the fixed part** of the system: what each level means, and what evidence earns it, is designed not to change. What the app *does* with a level — the warnings, the defaults, what is allowed at all — is **policy**, and policy will evolve. At launch, a low-trust verifier can still run a session, behind a warning. We may later decide that unknown verifiers are off by default, and that users who want them must explicitly allow low-trust parties in the settings. The EU is moving in the same direction: under the eIDAS implementing rules taking effect at the end of 2026, wallets are expected to stop accepting credentials from issuers that no recognised authority stands behind — issuers this post would rank low. The trust levels are the dial that lets us — and coming regulation — tighten behaviour over time without rebuilding anything.
+There is an important split hiding in that table. The **levels are the fixed part** of the system: what each level means, and what evidence earns it, is designed not to change. What the app *does* with a level (the warnings, the defaults, what is allowed at all) is **policy**, and policy will evolve. At launch, a low-trust verifier can still run a session, behind a warning. We may later decide that unknown verifiers are off by default, and that users who want them must explicitly allow low-trust parties in the settings. The EU is moving in the same direction: under the eIDAS implementing rules taking effect at the end of 2026, wallets are expected to stop accepting credentials from issuers that no recognised authority stands behind, the issuers this post would rank low. The trust levels are the dial that lets policy tighten over time, whether by our choice or by coming regulation, without rebuilding anything.
 
 ## The top rung, and the banner that depends on it
 
-Why will the "Known by Yivi" banner require high, and not medium? Because the banner is not information, it is a *promise* — and it is Yivi making it. A user who sees it will reasonably relax. From a safety standpoint that means the banner must be backed by something Yivi can actually stand behind: a vetting process we ran, a contract we can enforce, an off-boarding path we control. Medium is real vouching, but it is somebody else's — an external CA attesting a name tells you who the party is, not that Yivi will answer for them. Reserving the banner for high keeps the promise honest.
+Why will the "Known by Yivi" banner require high, and not medium? Because the banner is not information, it is a *promise*, and it is Yivi making it. A user who sees it will reasonably relax. From a safety standpoint that means the banner must be backed by something Yivi can actually stand behind: a vetting process we ran, a contract we can enforce, an off-boarding path we control. Medium is real vouching, but it is somebody else's: an external CA attesting a name tells you who the party is, not that Yivi will answer for them. Reserving the banner for high keeps the promise honest.
 
-![The three roads to the top level: an IRMA scheme registration, a certificate from the Yivi CA, or an entry on the Yivi trust list — independent channels, and the strongest one wins.](./trust-channels.svg)
+![The three roads to the top level: an IRMA scheme registration, a certificate from the Yivi CA, or an entry on the Yivi trust list. Independent channels, and the strongest one wins.](./trust-channels.svg)
 
-The three roads to high are deliberately independent, and a party lands on the strongest rung any channel earns it — `level = max(certificate, list)`. A list outage can never demote a party holding a Yivi certificate, and a party with no certificate at all — even a bare `did:jwk` — reaches high through a list entry alone. Being listed *is* being onboarded: Yivi cannot name a party on its list without vouching for it.
+The three roads to high are deliberately independent, and a party lands on the strongest rung any channel earns it: `level = max(certificate, list)`. A list outage can never demote a party holding a Yivi certificate, and a party with no certificate at all, even a bare `did:jwk`, reaches high through a list entry alone. Being listed *is* being onboarded: Yivi cannot name a party on its list without vouching for it.
 
-The same ladder will measure **issuers** too — but the bar for the banner will not be the same there, and the difference is the user-safety logic again. Disclosure is the irreversible act: data shared with the wrong verifier is out, and nobody can take it back. Issuance flows the other way — nothing about you leaves the wallet, and a credential from an issuer you do not want can simply be deleted. So while the verifier banner demands high, we intend to set the issuer banner at medium: for *receiving* credentials, an issuer vouched for by an audited CA is trustworthy enough, even without Yivi's own vetting. Same fixed levels, different policy per role — exactly the kind of dial this system is designed to be.
+The same ladder will measure **issuers** too, but the bar for the banner will not be the same there. The difference is the user-safety logic again. Disclosure is the irreversible act: data shared with the wrong verifier is out, and nobody can take it back. Issuance flows the other way: nothing about you leaves the wallet, and a credential from an issuer you do not want can simply be deleted. So while the verifier banner demands high, we intend to set the issuer banner at medium: for *receiving* credentials, an issuer vouched for by an audited CA is trustworthy enough, even without Yivi's own vetting. Same fixed levels, different policy per role. That is exactly the kind of dial this system is designed to be.
 
 ## Third-party CAs: vouching, delegated
 
-The matrix above places third-party CAs at medium, and at launch that will be the whole story. The roadmap goes one step further: we intend to anchor external CAs under *contractual agreements*, and the agreement determines the level their certificates confer. The reasoning follows directly from the vouching model. A CA's level is the level of its onboarding bar. If a CA contractually vets its subjects to the same standard as Yivi's own onboarding — and accepts liability for it — then trusting its certificates at high *is* Yivi vouching, delegated. A CA with a lighter regime anchors at medium.
+The matrix above places third-party CAs at medium, and at launch that will be the whole story. The roadmap goes one step further: we intend to anchor external CAs under *contractual agreements*, and the agreement determines the level their certificates confer. The reasoning follows directly from the vouching model. A CA's level is the level of its onboarding bar. If a CA contractually vets its subjects to the same standard as Yivi's own onboarding, and accepts liability for it, then trusting its certificates at high *is* Yivi vouching, delegated. A CA with a lighter regime anchors at medium.
 
 And the escape hatch is built into the design: an individual party under a medium-tier CA that needs the top rung does not need a new certificate. It gets an entry on Yivi's LoTE, and `max(certificate, list)` does the rest.
 
 ## What the trust system deliberately does not solve
 
-One thing this system unfortunately cannot do — and we looked — is answer the question users ask most often during disclosure: *"I do not have this credential yet. Where do I get it?"* It would be natural if the wallet could point at the issuer's website the moment a verifier asks for something missing.
+One thing this system unfortunately cannot do, and we looked, is answer the question users ask most often during disclosure: *"I do not have this credential yet. Where do I get it?"* It would be natural if the wallet could point at the issuer's website the moment a verifier asks for something missing.
 
-The reason it cannot is an axis mismatch. The entire trust system — the ladder, the list, the certificates — is keyed by **party**: it answers "who vouches for this organisation". The obtain-flow needs the reverse lookup, keyed by **credential type**: "who issues this kind of credential, and at which URL". The ETSI list format has no field for that, and adding one would turn a trust statement into a discovery service with very different freshness and governance needs. It is no accident that the IRMA world *can* do this: the IRMA scheme happens to be both things at once — a party registry *and* a credential catalog with issuance URLs. For the OpenID stack, a credential catalog is a separate piece of infrastructure, and a story for another post.
+The reason it cannot is an axis mismatch. The entire trust system, from the ladder to the list to the certificates, is keyed by **party**: it answers "who vouches for this organisation". The obtain-flow needs the reverse lookup, keyed by **credential type**: "who issues this kind of credential, and at which URL". The ETSI list format has no field for that, and adding one would turn a trust statement into a discovery service with very different freshness and governance needs. It is no accident that the IRMA world *can* do this: the IRMA scheme happens to be both things at once, a party registry *and* a credential catalog with issuance URLs. For the OpenID stack, a credential catalog is a separate piece of infrastructure, and a story for another post.
 
 ## Getting vouched for
 
-The new trust levels will arrive in an upcoming release of the Yivi app. What they boil down to is one question, asked on your behalf every session: *who vouches for this party?* Nobody — low, and the wallet will warn you. Somebody credible — medium, and the wallet will say so. Yivi itself — high, and the wallet will show it.
+The new trust levels will arrive in an upcoming release of the Yivi app. What they boil down to is one question, asked on your behalf every session: *who vouches for this party?* Nobody? Low, and the wallet will warn you. Somebody credible? Medium, and the wallet will say so. Yivi itself? High, and the wallet will show it.
 
-If you are running a verifier — or an issuer — and you would rather have your users greeted by your verified name than by a warning screen, that last rung is where you want to be, and getting there is a conversation away: reach us at [support@yivi.app](mailto:support@yivi.app).
+If you are running a verifier (or an issuer) and you would rather have your users greeted by your verified name than by a warning screen, that last rung is where you want to be, and getting there is a conversation away: reach us at [support@yivi.app](mailto:support@yivi.app).
 
 ## Sources
 
-* [ETSI TS 119 602 V1.1.1 — Lists of Trusted Entities](https://www.etsi.org/deliver/etsi_ts/119600_119699/119602/01.01.01_60/ts_119602v010101p.pdf)
-* [ETSI TS 119 612 V2.4.1 — Trusted Lists](https://www.etsi.org/deliver/etsi_ts/119600_119699/119612/02.04.01_60/ts_119612v020401p.pdf)
-* [EUDI Architecture and Reference Framework — Trust Model](https://eudi.dev/3.0.0/main/06-trust-model/)
+* [ETSI TS 119 602 V1.1.1: Lists of Trusted Entities](https://www.etsi.org/deliver/etsi_ts/119600_119699/119602/01.01.01_60/ts_119602v010101p.pdf)
+* [ETSI TS 119 612 V2.4.1: Trusted Lists](https://www.etsi.org/deliver/etsi_ts/119600_119699/119612/02.04.01_60/ts_119612v020401p.pdf)
+* [EUDI Architecture and Reference Framework: Trust Model](https://eudi.dev/3.0.0/main/06-trust-model/)
 * [Commission Implementing Regulation (EU) 2025/848 on the registration of wallet-relying parties](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0848)
-* [eIDAS Dashboard — Lists of Trusted Entities](https://eidas.ec.europa.eu/efda/wallet/lists-of-trusted-entities/wallet-providers)
-* [DIIP — the Decentralized Identity Interop Profile](https://fidescommunity.github.io/DIIP/)
+* [eIDAS Dashboard: Lists of Trusted Entities](https://eidas.ec.europa.eu/efda/wallet/lists-of-trusted-entities/wallet-providers)
+* [DIIP, the Decentralized Identity Interop Profile](https://fidescommunity.github.io/DIIP/)
 * [Release of Trusted Verifier, Yivi blog](/blog/2025-trusted-verifer)

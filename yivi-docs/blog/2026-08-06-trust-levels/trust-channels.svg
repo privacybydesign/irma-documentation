@@ -6,7 +6,7 @@
   </defs>
   <rect x="1" y="1" width="878" height="428" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
   <text x="440" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">The three roads to the top level</text>
-  <text x="440" y="66" text-anchor="middle" font-size="13" fill="#64748b">Independent channels — a party lands on the strongest rung any of them earns</text>
+  <text x="440" y="66" text-anchor="middle" font-size="13" fill="#64748b">Independent channels: a party lands on the strongest rung any of them earns</text>
 
   <!-- Channel 1: IRMA requestor scheme -->
   <rect x="40" y="100" width="250" height="96" rx="10" fill="#eaf1fb" stroke="#3b6fd4" stroke-width="1.5"/>
@@ -34,9 +34,9 @@
   <!-- HIGH box -->
   <rect x="290" y="262" width="300" height="88" rx="10" fill="#1c6b58" stroke="#14523f" stroke-width="1.5"/>
   <text x="440" y="299" text-anchor="middle" font-size="19" font-weight="700" fill="#ffffff" letter-spacing="2">HIGH</text>
-  <text x="440" y="326" text-anchor="middle" font-size="13" fill="#d9efe7">Yivi vouches — the "Known by Yivi" banner</text>
+  <text x="440" y="326" text-anchor="middle" font-size="13" fill="#d9efe7">Yivi vouches: the "Known by Yivi" banner</text>
 
   <!-- Footnote -->
-  <text x="440" y="388" text-anchor="middle" font-size="13" fill="#475569">level = max(certificate, list) — a list outage never demotes a certified party,</text>
+  <text x="440" y="388" text-anchor="middle" font-size="13" fill="#475569">level = max(certificate, list): a list outage never demotes a certified party,</text>
   <text x="440" y="408" text-anchor="middle" font-size="13" fill="#475569">and a listed party needs no certificate at all</text>
 </svg>
