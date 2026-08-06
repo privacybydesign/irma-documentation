@@ -54,6 +54,14 @@ That is the question this post is about:
 
 Everything that follows — the identifier technologies, the ETSI standards, the trust levels — is that one question, made mechanical.
 
+## Trust by scheme: how IRMA answers it today
+
+The IRMA side of Yivi has always had an answer to this question, and a strict one: **schemes**. An IRMA wallet only accepts credentials from issuers registered in the IRMA scheme — a signed registry, curated by Yivi, that names every issuer, the credentials it may issue, and the keys it signs with. An issuer outside the scheme cannot issue at all. Verifiers live in a second registry, the **requestor scheme**: a registered verifier greets you with its vetted name and logo, while an unregistered one gets [a warning screen](https://docs.yivi.app/blog/2025-trusted-verifer) telling you to be careful. Trust, in the IRMA world, is a curated list with Yivi holding the pen.
+
+That model works because IRMA is one ecosystem with one operator: every party can reasonably be asked to register with Yivi, so the vouching question always has one of two answers — Yivi does, or nobody does.
+
+The EUDI wallet world is not like that. Under the **OpenID4VC** family of standards — OpenID4VCI for issuance, OpenID4VP for disclosure — the wallet meets issuers and verifiers that never signed up with Yivi and never will: parties from other ecosystems, other countries, other trust domains, authenticating with the technologies of the open world. The rest of this post is about how the wallet sizes *them* up.
+
 ## The ways a party can prove who it is
 
 When an issuer or verifier connects to the Yivi wallet over the OpenID stack, it authenticates in one of a handful of ways. They differ enormously in what they actually prove.
@@ -93,7 +101,7 @@ Why only TS 119 602 for now, and not 119 612? Because the wallet's runtime quest
 
 ### One party administration, two lists
 
-If you know the IRMA side of Yivi, this should sound familiar — because Yivi has operated a party-level trust list for years: the **requestor scheme**, the signed registry that IRMA verifiers are checked against on every session. The LoTE is not a competitor to that; it is the same party administration, projected into a second world. One onboarding produces a scheme entry for IRMA sessions and a LoTE entry for OpenID sessions. Same vetting, same off-boarding, two list formats speaking to two protocol stacks.
+This should sound familiar by now: a signed, Yivi-curated registry of parties is exactly what the requestor scheme has been all along. The LoTE is not a competitor to it; it is the same party administration, projected into a second world. One onboarding produces a scheme entry for IRMA sessions and a LoTE entry for OpenID sessions. Same vetting, same off-boarding, two list formats speaking to two protocol stacks.
 
 ## Three levels, and a gate before the ladder
 
