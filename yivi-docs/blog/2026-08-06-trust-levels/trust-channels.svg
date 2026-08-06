@@ -27,9 +27,9 @@
   <text x="715" y="176" text-anchor="middle" font-size="12" fill="#475569">any identifier technology</text>
 
   <!-- Arrows converging -->
-  <path d="M165 196 L165 240 Q165 258 183 258 L385 258" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
-  <path d="M440 196 L440 250" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
-  <path d="M715 196 L715 240 Q715 258 697 258 L495 258" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M165 196 L165 288 Q165 306 183 306 L284 306" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M440 196 L440 256" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M715 196 L715 288 Q715 306 697 306 L596 306" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
 
   <!-- HIGH box -->
   <rect x="290" y="262" width="300" height="88" rx="10" fill="#1c6b58" stroke="#14523f" stroke-width="1.5"/>
