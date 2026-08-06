@@ -80,11 +80,9 @@ Take `did:jwk`, which the DIIP interoperability profile (which Yivi supports) ma
 
 Certificates from real CAs are better still, but they answer a narrower question than it seems. An audited CA attests that a legal entity with a given name exists and controls this key. That is genuinely valuable — it is somebody vouching. But a real, registered legal name is not authorization. Fraud is routinely committed by real companies with real Chamber of Commerce registrations. Knowing *who a party is* does not tell the wallet whether that party has any business asking for your date of birth.
 
-It is telling that the decentralized-identity communities reached the same conclusion themselves. The FIDES community, home of the DIIP profile built on `did:jwk` and `did:web`, publishes its own trust list — and that list anchors trust in X.509 certificates, with DIDs carried as informational links only. When it was time to say *who can be trusted*, everyone converged on the same answer: signed lists and certificate authorities. Authentication tells you the channel is genuine. Trust needs a layer on top: someone accountable, saying in a verifiable way, *we know this party, and we vouch for it*.
-
 ## The list the EU already asked for
 
-We did not have to invent that layer, because the EU has been busy standardising exactly this. The Architecture and Reference Framework (ARF) that governs the European Digital Identity Wallet requires wallets to take their trust anchors from two ETSI list formats: the classic trusted lists of **ETSI TS 119 612**, and the new Lists of Trusted Entities of **ETSI TS 119 602**.
+What the wallet needs, then, is a layer on top of authentication: someone accountable stating, in a verifiable way, *we know this party, and we vouch for it*. We did not have to invent that layer, because the EU has been busy standardising exactly this. The Architecture and Reference Framework (ARF) that governs the European Digital Identity Wallet requires wallets to take their trust anchors from two ETSI list formats: the classic trusted lists of **ETSI TS 119 612**, and the new Lists of Trusted Entities of **ETSI TS 119 602**.
 
 The two sound interchangeable and are not. In easy words:
 
@@ -241,5 +239,4 @@ If you are running a verifier — or an issuer — and you would rather have you
 * [Commission Implementing Regulation (EU) 2025/848 on the registration of wallet-relying parties](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0848)
 * [eIDAS Dashboard — Lists of Trusted Entities](https://eidas.ec.europa.eu/efda/wallet/lists-of-trusted-entities/wallet-providers)
 * [DIIP — the Decentralized Identity Interop Profile](https://fidescommunity.github.io/DIIP/)
-* [FIDES community trust list](https://github.com/FIDEScommunity/fides-trust-list)
 * [Release of Trusted Verifier, Yivi blog](https://docs.yivi.app/blog/2025-trusted-verifer)
