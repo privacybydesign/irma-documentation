@@ -157,9 +157,9 @@ Here is the full picture of the new system, every way of authenticating crossed 
       </tr>
       <tr>
         <th scope="row"><span className="tl-what">X.509 → anchored third-party CA<span className="tl-id">an audited CA Yivi does not operate</span></span></th>
-        <td><span className="tl-pill tl-medium">Medium</span></td>
+        <td><span className="tl-pill tl-medium">Medium</span><span className="tl-note"> or </span><span className="tl-pill tl-high">High</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
-        <td className="tl-note">An external CA attested the legal name: somebody vouches, but not Yivi. The list entry is what adds Yivi's word.</td>
+        <td className="tl-note">An external CA attested the legal name: somebody vouches, but not Yivi. A CA promoted under contract confers high, as if Yivi issued the certificate itself; other anchored CAs confer medium, and then a list entry is what adds Yivi's word.</td>
       </tr>
       <tr>
         <th scope="row"><span className="tl-what">X.509 → unknown CA<span className="tl-id">any root the wallet does not anchor</span></span></th>
@@ -215,7 +215,7 @@ The same ladder will measure **issuers** too, but the bar for the banner will no
 
 ## Third-party CAs: vouching, delegated
 
-The matrix above places third-party CAs at medium, and at launch that will be the whole story. The roadmap goes one step further: under contract, we can promote a third-party CA to the same trust level as the first-party Yivi CA. The reasoning follows directly from the vouching model. A CA's level is the level of its onboarding bar. If a CA contractually vets its subjects to the same standard as Yivi's own onboarding, and accepts liability for it, then trusting its certificates at high *is* Yivi vouching, delegated. A CA with a lighter regime stays at medium.
+The matrix above shows third-party CAs conferring medium or high. At launch, medium will be the whole story; the high option is the roadmap step: under contract, we can promote a third-party CA to the same trust level as the first-party Yivi CA. The reasoning follows directly from the vouching model. A CA's level is the level of its onboarding bar. If a CA contractually vets its subjects to the same standard as Yivi's own onboarding, and accepts liability for it, then trusting its certificates at high *is* Yivi vouching, delegated. A CA with a lighter regime stays at medium.
 
 That promotion does not travel through the trust list. A LoTE names organisations, not certificate authorities, so there is nothing on it that could carry a CA. CA-level trust is the build-time question from earlier: the promotion lives in the wallet's pinned anchor set, where each anchored root carries the level its certificates confer.
 
