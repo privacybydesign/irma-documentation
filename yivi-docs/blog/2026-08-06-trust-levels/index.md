@@ -215,9 +215,11 @@ The same ladder will measure **issuers** too, but the bar for the banner will no
 
 ## Third-party CAs: vouching, delegated
 
-The matrix above places third-party CAs at medium, and at launch that will be the whole story. The roadmap goes one step further: we intend to anchor external CAs under *contractual agreements*, and the agreement determines the level their certificates confer. The reasoning follows directly from the vouching model. A CA's level is the level of its onboarding bar. If a CA contractually vets its subjects to the same standard as Yivi's own onboarding, and accepts liability for it, then trusting its certificates at high *is* Yivi vouching, delegated. A CA with a lighter regime anchors at medium.
+The matrix above places third-party CAs at medium, and at launch that will be the whole story. The roadmap goes one step further: under contract, we can promote a third-party CA to the same trust level as the first-party Yivi CA. The reasoning follows directly from the vouching model. A CA's level is the level of its onboarding bar. If a CA contractually vets its subjects to the same standard as Yivi's own onboarding, and accepts liability for it, then trusting its certificates at high *is* Yivi vouching, delegated. A CA with a lighter regime stays at medium.
 
-And the escape hatch is built into the design: an individual party under a medium-tier CA that needs the top rung does not need a new certificate. It gets an entry on Yivi's LoTE, and `max(certificate, list)` does the rest.
+That promotion does not travel through the trust list. A LoTE names organisations, not certificate authorities, so there is nothing on it that could carry a CA. CA-level trust is the build-time question from earlier: the promotion lives in the wallet's pinned anchor set, where each anchored root carries the level its certificates confer.
+
+The escape hatch is built into the design regardless: an individual party under a medium CA that needs the top rung does not need a new certificate. It gets its own entry on Yivi's LoTE, and `max(certificate, list)` does the rest. That is a party entry, which is exactly what the list is built to carry.
 
 ## What the trust system deliberately does not solve
 
