@@ -66,7 +66,7 @@ When an issuer or verifier connects to the Yivi wallet over the OpenID stack, it
 
 ## Valid is not the same as trustworthy
 
-Each of these methods lets the wallet check a signature. None of them, on its own, answers the vouching question — and the weakest ones cannot even carry an answer.
+Each of these methods lets the wallet check a signature, but they differ sharply in whether anyone vouches for the party behind it. A certificate chain genuinely answers the vouching question — the CA at its root vouches for the subject it certified. The bare DID methods cannot even carry an answer. And even the certificate's answer, as we will see, is narrower than the question that decides whether you are safe.
 
 Take `did:jwk`, which the DIIP interoperability profile (which Yivi supports) mandates alongside `did:web`. Because the key is the identifier, a `did:jwk` has three structural problems. It costs nothing to create, so a party that is denied or distrusted simply mints a new one. Rotating a key — routine security hygiene — silently creates a *different party*, breaking any trust that was attached to the old identifier. And since there is no DID document, there is no place to attach an attestation: no certificate can ever be bound to it. The identifier is also 176 characters long for a P-256 key, which rules out a human ever recognising one. A bare `did:web` is only slightly better: it proves domain control, and domains are cheap.
 
@@ -147,7 +147,7 @@ Here is the full picture — every way of authenticating, crossed with whether Y
         <td><span className="tl-what">X.509 → Yivi's own CA<span className="tl-id">certificate chain to the Yivi root</span></span></td>
         <td><span className="tl-pill tl-high">High</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
-        <td className="tl-note">Yivi issued the certificate, so Yivi vouches. A list entry cannot raise this further — it only adds the curated name and logo.</td>
+        <td className="tl-note">Yivi issued the certificate, so Yivi vouches. A list entry cannot raise this further.</td>
       </tr>
       <tr>
         <td><span className="tl-what">X.509 → anchored third-party CA<span className="tl-id">an audited CA Yivi does not operate</span></span></td>
@@ -191,7 +191,7 @@ The levels translate to the screen roughly like this:
 
 | Level | What the app does today |
 |---|---|
-| **Low** | A clear warning, consent that is never the default choice, no logo, and the party's name shown as self-asserted. |
+| **Low** | A clear warning, consent that is never the default choice, and a name and logo that are only self-asserted. |
 | **Medium** | The normal flow, with the organisation name attested by its CA. |
 | **High** | The normal flow, with the "Known by Yivi" banner. |
 
