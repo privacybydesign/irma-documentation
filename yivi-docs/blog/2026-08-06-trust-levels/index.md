@@ -2,7 +2,7 @@
 slug: who-vouches-for-you
 title: "Who vouches for you? How the Yivi wallet will decide whom to trust"
 authors: [wouterensink]
-tags: [trust, eudi-wallet, trusted-verifier, etsi, security]
+tags: [yivi, trust, eudi-wallet, trusted-verifier, etsi, security]
 ---
 
 *A first look at the new trust system coming to the Yivi wallet: the ways an issuer or verifier can prove who it is, why a valid signature is not the same as a party you should trust, how the EU's new ETSI TS 119 602 trust lists became our backbone, and what it will take to earn the wallet's top trust level.*
@@ -23,11 +23,11 @@ tags: [trust, eudi-wallet, trusted-verifier, etsi, security]
 
   .tl-scroll { overflow-x: auto; border: 1px solid var(--ifm-color-emphasis-300); border-radius: 4px; margin: 1.5rem 0; }
   .tl-matrix { border-collapse: collapse; width: 100%; min-width: 46rem; margin: 0; display: table; }
-  .tl-matrix thead th { font-size: 0.71rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; color: var(--ifm-color-emphasis-600); padding: 0.85rem 1rem; border: none; border-bottom: 1px solid var(--ifm-color-emphasis-400); background: var(--ifm-background-surface-color); }
-  .tl-matrix tbody td { padding: 0.85rem 1rem; border: none; border-bottom: 1px solid var(--ifm-color-emphasis-200); vertical-align: top; font-size: 0.92rem; line-height: 1.45; background: var(--ifm-background-surface-color); }
-  .tl-matrix tbody tr:last-child td { border-bottom: none; }
+  .tl-matrix thead th { font-size: 0.71rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-align: left; color: var(--ifm-color-emphasis-700); padding: 0.85rem 1rem; border: none; border-bottom: 1px solid var(--ifm-color-emphasis-400); background: var(--ifm-background-surface-color); }
+  .tl-matrix tbody td, .tl-matrix tbody th { padding: 0.85rem 1rem; border: none; border-bottom: 1px solid var(--ifm-color-emphasis-200); vertical-align: top; font-size: 0.92rem; line-height: 1.45; font-weight: 400; text-align: left; background: var(--ifm-background-surface-color); }
+  .tl-matrix tbody tr:last-child td, .tl-matrix tbody tr:last-child th { border-bottom: none; }
   .tl-what { font-weight: 600; display: block; }
-  .tl-what .tl-id { display: block; font-family: var(--ifm-font-family-monospace); font-weight: 400; font-size: 0.76rem; color: var(--ifm-color-emphasis-600); margin-top: 0.2rem; }
+  .tl-what .tl-id { display: block; font-family: var(--ifm-font-family-monospace); font-weight: 400; font-size: 0.76rem; color: var(--ifm-color-emphasis-700); margin-top: 0.2rem; }
   .tl-note { color: var(--ifm-color-emphasis-700); font-size: 0.88rem; }
 
   .tl-pill { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.28rem 0.6rem 0.28rem 0.5rem; border-radius: 2px; white-space: nowrap; }
@@ -38,7 +38,7 @@ tags: [trust, eudi-wallet, trusted-verifier, etsi, security]
   [data-theme='dark'] .tl-pill.tl-high { color: #63c3a8; background: #14261f; }
   [data-theme='dark'] .tl-pill.tl-medium { color: #d9a441; background: #2a2113; }
   [data-theme='dark'] .tl-pill.tl-low { color: #98a1b3; background: #1d222c; }
-  .tl-pill.tl-na { color: var(--ifm-color-emphasis-600); background: none; border: 1px dashed var(--ifm-color-emphasis-400); font-weight: 600; letter-spacing: 0.03em; text-transform: none; }
+  .tl-pill.tl-na { color: var(--ifm-color-emphasis-700); background: none; border: 1px dashed var(--ifm-color-emphasis-400); font-weight: 600; letter-spacing: 0.03em; text-transform: none; }
   .tl-pill.tl-na::before { display: none; }
 `}</style>
 
@@ -56,7 +56,7 @@ Everything that follows — the identifier technologies, the ETSI standards, the
 
 ## Trust by scheme: how IRMA answers it today
 
-The IRMA side of Yivi has always had an answer to this question, and a strict one: **schemes**. An IRMA wallet only accepts credentials from issuers registered in the IRMA scheme — a signed registry, curated by Yivi, that names every issuer, the credentials it may issue, and the keys it signs with. An issuer outside the scheme cannot issue at all. Verifiers live in a second registry, the **requestor scheme**: a registered verifier greets you with its vetted name and logo, while an unregistered one gets [a warning screen](https://docs.yivi.app/blog/2025-trusted-verifer) telling you to be careful. Trust, in the IRMA world, is a curated list with Yivi holding the pen.
+The IRMA side of Yivi has always had an answer to this question, and a strict one: **schemes**. An IRMA wallet only accepts credentials from issuers registered in the IRMA scheme — a signed registry, curated by Yivi, that names every issuer, the credentials it may issue, and the keys it signs with. An issuer outside the scheme cannot issue at all. Verifiers live in a second registry, the **requestor scheme**: a registered verifier greets you with its vetted name and logo, while an unregistered one gets [a warning screen](/blog/2025-trusted-verifer) telling you to be careful. Trust, in the IRMA world, is a curated list with Yivi holding the pen.
 
 That model works because IRMA is one ecosystem with one operator: every party can reasonably be asked to register with Yivi, so the vouching question always has one of two answers — Yivi does, or nobody does.
 
@@ -132,7 +132,7 @@ And if the wallet cannot obtain a fresh, validly signed copy of the trust list? 
 
 Here is the full picture of the new system — every way of authenticating, crossed with whether Yivi's list names the party:
 
-<div className="tl-scroll">
+<div className="tl-scroll" role="region" aria-label="Trust level matrix" tabIndex={0}>
   <table className="tl-matrix">
     <thead>
       <tr>
@@ -144,43 +144,43 @@ Here is the full picture of the new system — every way of authenticating, cros
     </thead>
     <tbody>
       <tr>
-        <td><span className="tl-what">IRMA requestor or issuer<span className="tl-id">registered in a valid scheme</span></span></td>
+        <th scope="row"><span className="tl-what">IRMA requestor or issuer<span className="tl-id">registered in a valid scheme</span></span></th>
         <td><span className="tl-pill tl-high">High</span></td>
         <td><span className="tl-pill tl-na">Not applicable</span></td>
         <td className="tl-note">IRMA parties are never on the LoTE — the requestor scheme <em>is</em> their list, and it is a projection of the same party administration. Scheme registration already is Yivi's word.</td>
       </tr>
       <tr>
-        <td><span className="tl-what">X.509 → Yivi's own CA<span className="tl-id">certificate chain to the Yivi root</span></span></td>
+        <th scope="row"><span className="tl-what">X.509 → Yivi's own CA<span className="tl-id">certificate chain to the Yivi root</span></span></th>
         <td><span className="tl-pill tl-high">High</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
         <td className="tl-note">Yivi issued the certificate, so Yivi vouches. A list entry cannot raise this further.</td>
       </tr>
       <tr>
-        <td><span className="tl-what">X.509 → anchored third-party CA<span className="tl-id">an audited CA Yivi does not operate</span></span></td>
+        <th scope="row"><span className="tl-what">X.509 → anchored third-party CA<span className="tl-id">an audited CA Yivi does not operate</span></span></th>
         <td><span className="tl-pill tl-medium">Medium</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
         <td className="tl-note">An external CA attested the legal name — that is somebody vouching, but not Yivi. The list entry is what adds Yivi's word.</td>
       </tr>
       <tr>
-        <td><span className="tl-what">X.509 → unknown CA<span className="tl-id">any root the wallet does not anchor</span></span></td>
+        <th scope="row"><span className="tl-what">X.509 → unknown CA<span className="tl-id">any root the wallet does not anchor</span></span></th>
         <td><span className="tl-pill tl-low">Low</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
         <td className="tl-note">A chain the wallet cannot trace to any anchor proves nothing, so the certificate's contents count as self-asserted and the floor is low.</td>
       </tr>
       <tr>
-        <td><span className="tl-what">did:web with an attested key<span className="tl-id">certificate carried inside the DID document</span></span></td>
+        <th scope="row"><span className="tl-what">did:web with an attested key<span className="tl-id">certificate carried inside the DID document</span></span></th>
         <td><span className="tl-pill tl-medium">Medium</span><span className="tl-note"> or </span><span className="tl-pill tl-high">High</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
         <td className="tl-note">Identical evidence to a certificate-authenticated party; only the transport differs. The certificate decides which rung.</td>
       </tr>
       <tr>
-        <td><span className="tl-what">did:web, bare<span className="tl-id">DID document on a domain, self-asserted name</span></span></td>
+        <th scope="row"><span className="tl-what">did:web, bare<span className="tl-id">DID document on a domain, self-asserted name</span></span></th>
         <td><span className="tl-pill tl-low">Low</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
         <td className="tl-note">Nothing attests a legal entity, so the list is the only thing that can speak for this party — and Yivi's word is Yivi's word, whatever the identifier technology.</td>
       </tr>
       <tr>
-        <td><span className="tl-what">did:jwk<span className="tl-id">key embedded in the identifier — no document exists</span></span></td>
+        <th scope="row"><span className="tl-what">did:jwk<span className="tl-id">key embedded in the identifier — no document exists</span></span></th>
         <td><span className="tl-pill tl-low">Low</span></td>
         <td><span className="tl-pill tl-high">High</span></td>
         <td className="tl-note">No DID document means no certificate can ever be attached — the certificate channel is permanently silent, and the list is the whole story.</td>
@@ -201,13 +201,13 @@ The levels will translate to the screen roughly like this:
 | **Medium** | Still a warning that the party is not known by Yivi, but with the organisation name attested by its CA. |
 | **High** | The normal flow, with the "Known by Yivi" banner. |
 
-There is an important split hiding in that table. The **levels are the fixed part** of the system: what each level means, and what evidence earns it, is designed not to change. What the app *does* with a level — the warnings, the defaults, what is allowed at all — is **policy**, and policy will evolve. At launch, a low-trust verifier can still run a session, behind a warning. We may later decide that unknown verifiers are off by default, and that users who want them must explicitly allow low-trust parties in the settings. The EU is moving in the same direction: under the eIDAS implementing rules taking effect at the end of 2026, wallets are expected to refuse credentials from issuers that cannot be authenticated at all. The trust levels are the dial that lets us — and coming regulation — tighten behaviour over time without rebuilding anything.
+There is an important split hiding in that table. The **levels are the fixed part** of the system: what each level means, and what evidence earns it, is designed not to change. What the app *does* with a level — the warnings, the defaults, what is allowed at all — is **policy**, and policy will evolve. At launch, a low-trust verifier can still run a session, behind a warning. We may later decide that unknown verifiers are off by default, and that users who want them must explicitly allow low-trust parties in the settings. The EU is moving in the same direction: under the eIDAS implementing rules taking effect at the end of 2026, wallets are expected to stop accepting credentials from issuers that no recognised authority stands behind — issuers this post would rank low. The trust levels are the dial that lets us — and coming regulation — tighten behaviour over time without rebuilding anything.
 
 ## The top rung, and the banner that depends on it
 
 Why will the "Known by Yivi" banner require high, and not medium? Because the banner is not information, it is a *promise* — and it is Yivi making it. A user who sees it will reasonably relax. From a safety standpoint that means the banner must be backed by something Yivi can actually stand behind: a vetting process we ran, a contract we can enforce, an off-boarding path we control. Medium is real vouching, but it is somebody else's — an external CA attesting a name tells you who the party is, not that Yivi will answer for them. Reserving the banner for high keeps the promise honest.
 
-![The three roads to the top level: an IRMA scheme registration, a certificate from Yivi's CA, or an entry on Yivi's trust list — independent channels, and the strongest one wins.](./trust-channels.svg)
+![The three roads to the top level: an IRMA scheme registration, a certificate from the Yivi CA, or an entry on the Yivi trust list — independent channels, and the strongest one wins.](./trust-channels.svg)
 
 The three roads to high are deliberately independent, and a party lands on the strongest rung any channel earns it — `level = max(certificate, list)`. A list outage can never demote a party holding a Yivi certificate, and a party with no certificate at all — even a bare `did:jwk` — reaches high through a list entry alone. Being listed *is* being onboarded: Yivi cannot name a party on its list without vouching for it.
 
@@ -239,4 +239,4 @@ If you are running a verifier — or an issuer — and you would rather have you
 * [Commission Implementing Regulation (EU) 2025/848 on the registration of wallet-relying parties](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32025R0848)
 * [eIDAS Dashboard — Lists of Trusted Entities](https://eidas.ec.europa.eu/efda/wallet/lists-of-trusted-entities/wallet-providers)
 * [DIIP — the Decentralized Identity Interop Profile](https://fidescommunity.github.io/DIIP/)
-* [Release of Trusted Verifier, Yivi blog](https://docs.yivi.app/blog/2025-trusted-verifer)
+* [Release of Trusted Verifier, Yivi blog](/blog/2025-trusted-verifer)
