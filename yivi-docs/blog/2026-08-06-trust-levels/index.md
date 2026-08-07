@@ -197,9 +197,9 @@ The levels will translate to the screen roughly like this:
 
 | Level | What the app will do at launch |
 |---|---|
-| **Low** | A clear warning, consent that is never the default choice, and a name and logo that are only self-asserted. |
-| **Medium** | Still a warning that the party is not known by Yivi, but with the organisation name attested by its CA. |
 | **High** | The normal flow, with the "Known by Yivi" banner. |
+| **Medium** | Still a warning that the party is not known by Yivi, but with the organisation name attested by its CA. |
+| **Low** | A clear warning, consent that is never the default choice, and a name and logo that are only self-asserted. |
 
 There is an important split hiding in that table. The **levels are the fixed part** of the system: what each level means, and what evidence earns it, is designed not to change. What the app *does* with a level (the warnings, the defaults, what is allowed at all) is **policy**, and policy will evolve. At launch, a low-trust verifier can still run a session, behind a warning. We may later decide that unknown verifiers are off by default, and that users who want them must explicitly allow low-trust parties in the settings. The EU is moving in the same direction: under the eIDAS implementing rules taking effect at the end of 2026, wallets are expected to stop accepting credentials from issuers that no recognised authority stands behind, the issuers this post would rank low. The trust levels are the dial that lets policy tighten over time, whether by our choice or by coming regulation, without rebuilding anything.
 
