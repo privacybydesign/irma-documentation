@@ -1,10 +1,11 @@
-FROM node:18
+FROM node:22-alpine AS build
 
 WORKDIR /app/website
 
-EXPOSE 3000 35729
-COPY ./docs /app/docs
-COPY ./website /app/website
-RUN yarn install
+# COPY ./docs /app/docs
+COPY ./yivi-docs /app/website
+RUN npm install
+RUN npm run build
 
-CMD ["yarn", "start"]
+FROM joseluisq/static-web-server:latest
+COPY --from=build /app/website/build /public

@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700">
+  <defs>
+    <linearGradient id="phoneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90D9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="serverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#5D6D7E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34495E;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dangerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E74C3C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C0392B;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="successGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#27AE60;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E8449;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="700" fill="#F8F9FA"/>
+
+  <!-- Title -->
+  <text x="450" y="40" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="bold" fill="#2C3E50" text-anchor="middle">The Trust Gap: Why Client-Side Verification Fails</text>
+
+  <!-- CURRENT DESIGN SECTION -->
+  <rect x="30" y="70" width="410" height="580" rx="12" fill="white" filter="url(#shadow)"/>
+  <rect x="30" y="70" width="410" height="50" rx="12" fill="url(#dangerGrad)"/>
+  <rect x="30" y="108" width="410" height="12" fill="url(#dangerGrad)"/>
+  <text x="235" y="102" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">CURRENT DESIGN (Insecure)</text>
+
+  <!-- Phone/App Box - Current -->
+  <rect x="60" y="140" width="350" height="280" rx="8" fill="#EBF5FB" stroke="#3498DB" stroke-width="2"/>
+  <text x="235" y="165" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="bold" fill="#2C3E50" text-anchor="middle">USER'S PHONE (Attacker Controls)</text>
+
+  <!-- Passport Icon -->
+  <rect x="85" y="185" width="70" height="50" rx="4" fill="#1A5276"/>
+  <text x="120" y="215" font-family="Inter, system-ui, sans-serif" font-size="10" fill="white" text-anchor="middle">PASSPORT</text>
+
+  <!-- Arrow -->
+  <path d="M165 210 L195 210" stroke="#7F8C8D" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <polygon points="195,210 185,205 185,215" fill="#7F8C8D"/>
+
+  <!-- NFC Read Box -->
+  <rect x="200" y="185" width="80" height="50" rx="4" fill="#85C1E9"/>
+  <text x="240" y="207" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#1A5276" text-anchor="middle">NFC Read</text>
+  <text x="240" y="220" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#5D6D7E" text-anchor="middle">Can be faked</text>
+
+  <!-- Arrow down -->
+  <path d="M240 235 L240 255" stroke="#7F8C8D" stroke-width="2"/>
+  <polygon points="240,260 235,250 245,250" fill="#7F8C8D"/>
+
+  <!-- Verification Boxes -->
+  <rect x="85" y="265" width="140" height="40" rx="4" fill="#FADBD8"/>
+  <text x="155" y="283" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#922B21" text-anchor="middle">Hash Verification</text>
+  <text x="155" y="296" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#C0392B" text-anchor="middle">Can be skipped</text>
+
+  <rect x="235" y="265" width="140" height="40" rx="4" fill="#FADBD8"/>
+  <text x="305" y="283" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#922B21" text-anchor="middle">Signature Verification</text>
+  <text x="305" y="296" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#C0392B" text-anchor="middle">Can be skipped</text>
+
+  <!-- Arrow down -->
+  <path d="M235 305 L235 325" stroke="#7F8C8D" stroke-width="2"/>
+  <polygon points="235,330 230,320 240,320" fill="#7F8C8D"/>
+
+  <!-- Face Matching -->
+  <rect x="160" y="335" width="150" height="40" rx="4" fill="#FADBD8"/>
+  <text x="235" y="353" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#922B21" text-anchor="middle">Face Matching + Liveness</text>
+  <text x="235" y="366" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#C0392B" text-anchor="middle">Can be hooked with Frida</text>
+
+  <!-- Arrow down -->
+  <path d="M235 375 L235 395" stroke="#7F8C8D" stroke-width="2"/>
+  <polygon points="235,400 230,390 240,390" fill="#7F8C8D"/>
+
+  <!-- Output -->
+  <rect x="160" y="380" width="150" height="30" rx="4" fill="#FCF3CF"/>
+  <text x="235" y="400" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#7D6608" text-anchor="middle">birth_date: "1990-01-15"</text>
+
+  <!-- Big Arrow to Server -->
+  <path d="M235 430 L235 490" stroke="#E74C3C" stroke-width="3" stroke-dasharray="8,4"/>
+  <polygon points="235,500 225,485 245,485" fill="#E74C3C"/>
+  <text x="320" y="465" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#E74C3C" text-anchor="start">Only birth_date</text>
+  <text x="320" y="478" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#E74C3C" text-anchor="start">sent to issuer</text>
+
+  <!-- Server Box - Current -->
+  <rect x="130" y="510" width="210" height="110" rx="8" fill="#EBEDEF" stroke="#5D6D7E" stroke-width="2"/>
+  <text x="235" y="535" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="bold" fill="#2C3E50" text-anchor="middle">ISSUER SERVER</text>
+
+  <text x="235" y="560" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#7B7D7D" text-anchor="middle">Receives: birth_date</text>
+  <text x="235" y="578" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#C0392B" text-anchor="middle">Cannot verify:</text>
+  <text x="235" y="593" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#C0392B" text-anchor="middle">• Passport was real</text>
+  <text x="235" y="606" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#C0392B" text-anchor="middle">• Face matched</text>
+
+  <!-- RECOMMENDED DESIGN SECTION -->
+  <rect x="460" y="70" width="410" height="580" rx="12" fill="white" filter="url(#shadow)"/>
+  <rect x="460" y="70" width="410" height="50" rx="12" fill="url(#successGrad)"/>
+  <rect x="460" y="108" width="410" height="12" fill="url(#successGrad)"/>
+  <text x="665" y="102" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">RECOMMENDED DESIGN (Secure)</text>
+
+  <!-- Phone/App Box - Recommended -->
+  <rect x="490" y="140" width="350" height="200" rx="8" fill="#E8F8F5" stroke="#1ABC9C" stroke-width="2"/>
+  <text x="665" y="165" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="bold" fill="#2C3E50" text-anchor="middle">USER'S PHONE</text>
+
+  <!-- Passport Icon -->
+  <rect x="515" y="185" width="70" height="50" rx="4" fill="#1A5276"/>
+  <text x="550" y="215" font-family="Inter, system-ui, sans-serif" font-size="10" fill="white" text-anchor="middle">PASSPORT</text>
+
+  <!-- Arrow -->
+  <path d="M595 210 L625 210" stroke="#7F8C8D" stroke-width="2"/>
+  <polygon points="625,210 615,205 615,215" fill="#7F8C8D"/>
+
+  <!-- NFC Read Box -->
+  <rect x="630" y="185" width="80" height="50" rx="4" fill="#A3E4D7"/>
+  <text x="670" y="207" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#0E6251" text-anchor="middle">NFC Read</text>
+  <text x="670" y="220" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#117864" text-anchor="middle">Extract SOD</text>
+
+  <!-- Arrow down -->
+  <path d="M670 235 L670 255" stroke="#7F8C8D" stroke-width="2"/>
+  <polygon points="670,260 665,250 675,250" fill="#7F8C8D"/>
+
+  <!-- Face Matching (stays on device) -->
+  <rect x="590" y="265" width="160" height="40" rx="4" fill="#D5F5E3"/>
+  <text x="670" y="283" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#1E8449" text-anchor="middle">Face Matching + Liveness</text>
+  <text x="670" y="296" font-family="Inter, system-ui, sans-serif" font-size="8" fill="#27AE60" text-anchor="middle">Stays on device (privacy)</text>
+
+  <!-- Data sent box -->
+  <rect x="510" y="320" width="300" height="70" rx="4" fill="#FCF3CF" stroke="#F4D03F" stroke-width="1"/>
+  <text x="660" y="340" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="bold" fill="#7D6608" text-anchor="middle">Data sent to issuer:</text>
+  <text x="660" y="358" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#7D6608" text-anchor="middle">• SOD (cryptographic proof)</text>
+  <text x="660" y="372" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#7D6608" text-anchor="middle">• DS Certificate • birth_date claim</text>
+  <text x="660" y="386" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#7D6608" text-anchor="middle">• Play Integrity token</text>
+
+  <!-- Big Arrow to Server -->
+  <path d="M665 400 L665 460" stroke="#27AE60" stroke-width="3"/>
+  <polygon points="665,470 655,455 675,455" fill="#27AE60"/>
+  <text x="740" y="435" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#1E8449" text-anchor="start">Cryptographic</text>
+  <text x="740" y="448" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#1E8449" text-anchor="start">proof sent</text>
+
+  <!-- Server Box - Recommended -->
+  <rect x="510" y="480" width="310" height="140" rx="8" fill="#E8F8F5" stroke="#1ABC9C" stroke-width="2"/>
+  <text x="665" y="505" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="bold" fill="#2C3E50" text-anchor="middle">ISSUER SERVER</text>
+
+  <text x="665" y="530" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#117864" text-anchor="middle" font-weight="bold">Server verifies:</text>
+  <text x="665" y="548" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#1E8449" text-anchor="middle">✓ SOD signature is valid</text>
+  <text x="665" y="563" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#1E8449" text-anchor="middle">✓ Certificate chains to trusted CSCA</text>
+  <text x="665" y="578" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#1E8449" text-anchor="middle">✓ DG1 hash matches SOD</text>
+  <text x="665" y="593" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#1E8449" text-anchor="middle">✓ App integrity verified</text>
+  <text x="665" y="608" font-family="Inter, system-ui, sans-serif" font-size="9" fill="#1E8449" text-anchor="middle">→ Extract birth_date from verified data</text>
+
+  <!-- Legend -->
+  <rect x="30" y="660" width="840" height="30" rx="6" fill="#EBEDEF"/>
+  <circle cx="70" cy="675" r="8" fill="#E74C3C"/>
+  <text x="85" y="679" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#2C3E50">Can be bypassed</text>
+  <circle cx="230" cy="675" r="8" fill="#27AE60"/>
+  <text x="245" y="679" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#2C3E50">Cryptographically verified</text>
+  <rect x="400" y="667" width="16" height="16" rx="2" fill="#FCF3CF" stroke="#F4D03F"/>
+  <text x="422" y="679" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#2C3E50">Data in transit</text>
+  <rect x="560" y="667" width="16" height="16" rx="2" fill="#FADBD8"/>
+  <text x="582" y="679" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#2C3E50">Vulnerable component</text>
+  <rect x="720" y="667" width="16" height="16" rx="2" fill="#D5F5E3"/>
+  <text x="742" y="679" font-family="Inter, system-ui, sans-serif" font-size="10" fill="#2C3E50">Private (on-device)</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 552" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="878" height="550" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="440" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">One collection step, two attestations</text>
+  <text x="440" y="64" text-anchor="middle" font-size="13" fill="#64748b">Both proofs are bound to the same nonce, so they are provably fresh and provably one activation</text>
+
+  <!-- Nonce -->
+  <rect x="310" y="82" width="260" height="46" rx="8" fill="#475569"/>
+  <text x="440" y="110" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">Server issues a fresh nonce N</text>
+
+  <!-- Collect -->
+  <rect x="280" y="160" width="320" height="52" rx="8" fill="#1e293b"/>
+  <text x="440" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">App collects attestations</text>
+  <text x="440" y="202" text-anchor="middle" font-size="11" fill="#cbd5e1">all bound to N for freshness</text>
+
+  <!-- Key attestation branch -->
+  <rect x="80" y="250" width="280" height="52" rx="8" fill="#ffffff" stroke="#2e9e6b" stroke-width="1.5"/>
+  <text x="220" y="274" text-anchor="middle" font-size="14" font-weight="600" fill="#166540">Key attestation</text>
+  <text x="220" y="292" text-anchor="middle" font-size="11" fill="#475569">of the wallet key</text>
+
+  <rect x="80" y="322" width="280" height="56" rx="8" fill="#2e9e6b"/>
+  <text x="220" y="346" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">Key Attestation (KA)</text>
+  <text x="220" y="366" text-anchor="middle" font-size="11" fill="#d7f2e3">the keys live in a certified WSCD</text>
+
+  <!-- App attestation branch -->
+  <rect x="520" y="250" width="280" height="52" rx="8" fill="#ffffff" stroke="#3b6fd4" stroke-width="1.5"/>
+  <text x="660" y="274" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">App attestation</text>
+  <text x="660" y="292" text-anchor="middle" font-size="11" fill="#475569">App Attest, Play Integrity, open</text>
+
+  <rect x="520" y="322" width="280" height="56" rx="8" fill="#3b6fd4"/>
+  <text x="660" y="346" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">Wallet Instance Attestation (WIA)</text>
+  <text x="660" y="366" text-anchor="middle" font-size="11" fill="#dbeafe">the app is genuine</text>
+
+  <!-- Provider verify -->
+  <rect x="240" y="410" width="400" height="50" rx="9" fill="#334155"/>
+  <text x="440" y="440" text-anchor="middle" font-size="14" font-weight="600" fill="#ffffff">Provider verifies both, then issues the credential</text>
+
+  <!-- WUA -->
+  <rect x="240" y="476" width="400" height="56" rx="10" fill="#7c3aed"/>
+  <text x="440" y="502" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">Wallet Unit Attestation (WUA)</text>
+  <text x="440" y="521" text-anchor="middle" font-size="11" fill="#ede9fe">presented later to issuers and verifiers</text>
+
+  <!-- Arrows -->
+  <line x1="440" y1="128" x2="440" y2="158" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow3)"/>
+  <path d="M440 212 L440 230 L220 230 L220 248" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow3)"/>
+  <path d="M440 212 L440 230 L660 230 L660 248" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow3)"/>
+  <line x1="220" y1="302" x2="220" y2="320" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow3)"/>
+  <line x1="660" y1="302" x2="660" y2="320" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow3)"/>
+  <path d="M220 378 L220 394 L380 394 L412 408" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow3)"/>
+  <path d="M660 378 L660 394 L500 394 L468 408" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow3)"/>
+  <line x1="440" y1="460" x2="440" y2="474" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow3)"/>
+</svg>

@@ -1,0 +1,70 @@
+dibranmulder:
+  name: Dibran Mulder
+  title: CTO @ Caesar Groep
+  url: https://github.com/dibranmulder
+  image_url: https://github.com/dibranmulder.png
+  page: true
+  socials:
+    x: dibranmulder
+    github: dibranmulder
+    linkedin: dibranmulder
+
+saravahdatipour:
+  name: Sara Vahdati Pour
+  title: Developer @ Yivi
+  url: https://github.com/saravahdatipour
+  image_url: https://github.com/saravahdatipour.png
+  page: true
+  socials:
+    github: saravahdatipour
+    linkedin: saravahdatipour
+
+wouterensink:
+  name: Wouter Ensink
+  title: Developer @ Yivi
+  url: https://github.com/w-ensink
+  image_url: https://github.com/w-ensink.png
+  page: true
+  socials:
+    github: w-ensink
+    linkedin: wouter-ensink-748b65191
+
+jaspervanderlinden:
+  name: Jasper van der Linden
+  title: Developer @ Caesar Groep
+  url: https://github.com/jappe999
+  image_url: https://github.com/jappe999.png
+  page: true
+  socials:
+    github: jappe999
+    linkedin: jasper-van-der-linden
+
+martijnkamphuis:
+  name: Martijn Kamphuis
+  title: Lead Developer @ Yivi
+  url: https://github.com/kamphuisem
+  image_url: https://github.com/kamphuisem.png
+  page: true
+  socials:
+    github: kamphuisem
+    linkedin: kamphuisem
+
+rubenhensen:
+  name: Ruben Hensen
+  title: Developer @ Yivi
+  url: https://github.com/rubenhensen
+  image_url: https://github.com/rubenhensen.png
+  page: true
+  socials: 
+    github: rubenhensen
+    linkedin: ruben-hensen
+
+danielbaay:
+  name: Daniël Baay
+  title: Intern @ Yivi
+  url: https://github.com/danielbaay
+  image_url: https://github.com/danielbaay.png
+  page: true
+  socials: 
+    github: danielbaay
+    linkedin: daniël-baay
