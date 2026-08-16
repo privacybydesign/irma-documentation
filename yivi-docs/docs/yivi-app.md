@@ -26,6 +26,20 @@ While developer mode is disabled (default), the Yivi app will:
 
 Developer mode thus enables performing IRMA sessions with locally running IRMA servers, during development of an application using IRMA. After it has been enabled, a toggle will appear in the "Settings" screen with which it can be disabled again.
 
+### What developer mode relaxes for OpenID4VP and OpenID4VCI
+
+Besides the IRMA behaviour above, developer mode also relaxes the checks the app performs on [OpenID4VP](openid4vp-introduction.md) verifiers and [OpenID4VCI](openid4vci-introduction.md) issuers. While it is enabled, the app additionally:
+- Accepts OpenID4VCI credential issuers reachable over plain HTTP instead of requiring `https`.
+- Accepts verifiers using the `decentralized_identifier` client identifier prefix whose `did:web` document is served over plain HTTP.
+- Loads the Yivi *staging* trust anchors alongside the production ones, so issuer and verifier certificate chains issued by the Yivi staging CA are accepted.
+- Relaxes the key-usage constraints applied when validating those certificate chains.
+
+Each of these is a security check that protects the user's attributes, so none of them holds while developer mode is off. Use a staging or locally issued certificate together with developer mode for testing, and validate your integration against the production trust anchors before going live.
+
+:::note
+Applying the setting in full requires Yivi app 8.2.0 or later (which bundles `irmago` v1.3.0). In earlier versions only the staging trust anchors were loaded when the app started with developer mode already enabled, and switching developer mode off did not take effect until the app was restarted. On an older app, toggle developer mode off and on again after every restart, and restart the app after switching it off. See [irmago#699](https://github.com/privacybydesign/irmago/pull/699).
+:::
+
 For normal users this feature is made difficult to discover by design, for their protection. On the other hand, developers will notice its existence as soon as they try to do an IRMA session with a locally running IRMA server, by the error message displayed by the app.
 
 > Use developer mode with care: when enabled, the Yivi app will not protect you from accidentally sending your attributes unencrypted over the internet.
