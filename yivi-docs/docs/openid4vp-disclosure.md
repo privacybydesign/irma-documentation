@@ -188,7 +188,20 @@ Certificates can be revoked using a certificate refocation list, after which the
 
 For the authorization request url we currently support the `openid4vp://` and `eudi-openid4vp://` schemes.
 Any url using this scheme can open the Yivi app and is assumed to be an OpenID4VP session.
-We support both the response type `direct_post` as well as `direct_post.jwt` for an extra layer of encryption.
+We support both the response mode `direct_post` as well as `direct_post.jwt` for an extra layer of encryption.
+The url must carry a `request_uri`: the Yivi app fetches the signed authorization request from it with an HTTP GET, so only `request_uri_method` `get` is supported.
+
+#### W3C Digital Credentials API
+
+`irmago` v1.3.0 implements OpenID4VP over the [W3C Digital Credentials API](https://www.w3.org/TR/digital-credentials/) (OpenID4VP 1.0 [Appendix A](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-w3c-digital-credentials-api)), so that a wallet can serve a request the browser or the operating system hands it through the platform credential chooser. It accepts the `openid4vp-v1-signed` and `openid4vp-v1-unsigned` protocols, answers with response mode `dc_api` or `dc_api.jwt`, and returns the Authorization Response to the caller instead of posting it to a `response_uri`. `openid4vp-v1-multisigned` is not implemented and is rejected.
+
+:::note
+The Yivi app does not register itself as a credential provider yet, so as a verifier you cannot invoke it over the Digital Credentials API today. Keep using the `openid4vp://` and `eudi-openid4vp://` schemes described above. Progress on the app side is tracked in [irmamobile#677](https://github.com/privacybydesign/irmamobile/issues/677); the library support landed in [irmago#648](https://github.com/privacybydesign/irmago/pull/648).
+:::
+
+Two differences matter once that flow becomes available, because they change what a verifier has to send and what it gets back:
+- The presentation is bound to the caller origin: the audience of the Key Binding JWT is `origin:<origin>`, not your client identifier (Appendix A.4).
+- A signed request must list the origins it may be sent from in `expected_origins`. In an unsigned request the app drops `client_id` and `expected_origins`, since neither was authenticated, and identifies you to the user by origin host only — an unsigned request can never show a verifier name from `client_metadata.client_name`, nor the verified badge.
 
 ### DCQL queries
 For the time being all SD-JWT instances in the Yivi app will be tied to our scheme.
