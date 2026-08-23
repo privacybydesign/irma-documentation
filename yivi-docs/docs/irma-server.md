@@ -298,6 +298,22 @@ You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` op
 
 Alternatively, if your IRMA server is connected to the internet through a reverse proxy then your reverse proxy probably handles TLS for you.
 
+### Outgoing HTTP proxies
+
+The server's outgoing HTTP(S) traffic honours the standard `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` environment variables, so the server can run in an environment where outbound traffic has to pass through a proxy. This covers the [scheme](schemes.md) downloads and updates the server performs at startup and periodically, as well as the requests it makes to keyshare and revocation servers and the requestor callbacks it sends.
+
+Loopback destinations (`localhost`, `127.0.0.1`) are never proxied. Use `NO_PROXY` to keep other internal traffic off the proxy while still reaching the internet for scheme updates:
+
+```shell
+export HTTPS_PROXY=http://proxy.internal.example.com:3128
+export NO_PROXY=keyshare.internal.example.com,revocation.internal.example.com
+irma server
+```
+
+:::note Unreleased
+The requests made through `irma.HTTPTransport` ignored these variables up to and including `irmago` v1.3.0; the fix ([irmago#439](https://github.com/privacybydesign/irmago/pull/439)) is merged but not yet part of a release. Traffic that does not go through that transport already followed the environment. On a released version, route outbound traffic with firewall or DNS rules rather than with proxy environment variables.
+:::
+
 ### Logging and verbosity
 
 The server's verbosity can be increased by two degrees:
