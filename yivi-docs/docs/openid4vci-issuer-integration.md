@@ -132,6 +132,38 @@ Three consequences to plan for:
 Deriving the grant type from authorization server metadata, and rejecting an empty `pre-authorized_code` during parsing, landed in irmago after `v1.2.0` ([irmago#644](https://github.com/privacybydesign/irmago/pull/644)). On an app built against `v1.2.0` or earlier, an offer without a `grants` member crashes the app process rather than failing the session, and an empty `pre-authorized_code` is sent to the token endpoint as-is. Send an explicit, fully populated `grants` member until the app version you target ships that fix.
 :::
 
+## Holder key binding
+
+Before the Yivi app downloads a credential it reads the credential configuration from your issuer metadata and picks a key binding method and a proof type. A configuration the app cannot satisfy fails the session, so the credential configuration must satisfy all of the following:
+
+- `cryptographic_binding_methods_supported` contains at least one of `jwk`, `did:key` or `did:jwk`. When more than one is present the app picks in that order. `cose_key` is not supported.
+- `proof_types_supported` contains `jwt`, and its `proof_signing_alg_values_supported` contains `ES256`. The app's holder keys are P-256 keys, so no other proof signing algorithm is accepted.
+- `proof_types_supported` is present whenever `cryptographic_binding_methods_supported` is, otherwise the configuration is rejected.
+
+```json
+{
+  "cryptographic_binding_methods_supported": ["jwk"],
+  "proof_types_supported": {
+    "jwt": {
+      "proof_signing_alg_values_supported": ["ES256"]
+    }
+  }
+}
+```
+
+The app then sends a `jwt` proof whose header identifies the holder key according to the method it picked: the key itself in `jwk`, a `kid` of `did:key:z<multibase>` without a fragment for `did:key`, and a `kid` of `did:jwk:<base64url>#0` for `did:jwk`.
+
+The credential you issue must bind that same key in its `cnf` claim. The app matches `cnf` against the keys it holds and discards a credential it cannot match (`no matching holder binding key found`):
+
+- `cnf.jwk` is matched on the SHA-256 JWK thumbprint of the key.
+- `cnf.kid` is matched against the DID URL the proof used.
+
+:::note Unreleased
+Two fixes to DID URL handling are merged but not yet released. Since [irmago#692](https://github.com/privacybydesign/irmago/pull/692) a `cnf.kid` that echoes a `did:key` DID URL with the verification method fragment appended (`did:key:z…#z…`) matches the fragmentless DID URL the proof sent; up to and including `irmago` v1.3.0 the two strings had to be equal, so adding or dropping the fragment broke issuance. Since [irmago#690](https://github.com/privacybydesign/irmago/pull/690) a `did:jwk` DID URL resolves only with the fragment `#0` or with no fragment at all, and a `did:jwk` that encodes a private or symmetric key is rejected.
+
+Until you can require an app version carrying those fixes, echo the `kid` from the proof header back in `cnf.kid` byte for byte.
+:::
+
 ## Polling for issuance completion
 
 The Yivi app talks directly to the issuer over the OpenID4VCI HTTP endpoints; the frontend stays out of that loop and only watches for completion:
