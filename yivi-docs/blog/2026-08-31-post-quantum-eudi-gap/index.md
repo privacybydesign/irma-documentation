@@ -134,9 +134,10 @@ Credentials get the attention. The plumbing does not, and the plumbing is where 
 Think about everything that has to hold a key pair for the EUDI wallet to function:
 
 - **Issuer certificates**, chaining to the trust anchors published by member states, that let a wallet decide an issuer is authorised to issue what it issues.
-- **Relying-party and access certificates**, the registration certificates that authorise a verifier to ask for specific attributes, which form the backbone of the whole "who is allowed to request what" model.
+- **The signed trust lists** themselves, where what matters is the signature over the list rather than how it is distributed: that signature is what tells a wallet which issuers and which certificate authorities to trust in the first place.
+- **Access and registration certificates**. In the ARF these are two distinct things: an access certificate authenticates the party, while a registration certificate states what it is registered to request or issue. Both relying parties and attestation providers hold both of them, and an attestation provider holds an issuer certificate on top, so a single provider can sit behind three separate certificate chains. Together they form the backbone of the whole "who is allowed to request what" model.
 - **Wallet and key attestations** proving a wallet instance is genuine and that its keys live in secure hardware.
-- **The (mutual) TLS** between every component: wallet to issuer, wallet to verifier, the backend-to-backend traffic, and the trust-list distribution.
+- **The (mutual) TLS** between every component: wallet to issuer, wallet to verifier, and the backend-to-backend traffic.
 
 Every one of those is RSA or elliptic curve today. Every one of those falls to the same quantum adversary. Making the EUDI wallet post-quantum is therefore not a matter of swapping the credential signature algorithm. It is re-issuing an entire continental PKI, redefining certificate profiles, and negotiating new cipher suites on every channel. That is a migration of the same shape and size as the one Cloudflare has been grinding through for years, except spread across dozens of member states and hundreds of trust service providers who all have to move roughly in step.
 
