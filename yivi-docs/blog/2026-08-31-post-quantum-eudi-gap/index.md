@@ -200,7 +200,7 @@ The **holder-binding** signature doubles the difficulty. In SD-JWT VC the holder
 
 Encryption is a slightly happier story, but only slightly. HAIP mandates `ECDH-ES` over P-256 for encrypted OpenID4VP responses. Making that hybrid means combining ML-KEM with the classical ECDH through a key combiner, which again needs new hybrid key-agreement identifiers in JOSE and COSE that no profile mandates yet. The one genuinely mature piece is the **transport**: hybrid key exchange in TLS, such as `X25519MLKEM768`, is already shipping in browsers and CDNs (the [IETF TLS hybrid design](https://datatracker.ietf.org/doc/draft-ietf-tls-hybrid-design/) and Cloudflare's rollout), so the (mutual) TLS channel can go hybrid with comparatively little ceremony. The application-layer encryption inside OpenID4VP cannot ride on that TLS work; it is its own problem.
 
-<div className="pq-scroll">
+<div className="pq-scroll" role="region" aria-label="Hybridisation demands per protocol layer" tabIndex={0}>
 <table className="pq-table">
 <thead>
 <tr><th>Where the crypto lives</th><th>Today</th><th>What hybridisation demands</th><th>Status</th></tr>
