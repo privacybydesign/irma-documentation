@@ -22,6 +22,16 @@ tags: [security, crypto, post-quantum, eudi-wallet, haip, analysis]
   [data-theme='dark'] .pq-safe { color: #63c3a8; }
   .pq-player { display: flex; justify-content: center; margin: 1.75rem 0; }
   .pq-player iframe { width: 100%; max-width: 560px; height: 352px; border: 0; }
+  .pq-fig { margin: 1.75rem 0; }
+  .pq-fig img { border: 1px solid var(--ifm-color-emphasis-300); border-radius: 4px; background: #fff; }
+  .pq-fig figcaption { font-size: 0.82rem; color: var(--ifm-color-emphasis-700); margin-top: 0.6rem; text-align: center; }
+  .pq-sev { display: inline-block; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.16rem 0.45rem; border-radius: 2px; white-space: nowrap; }
+  .pq-sev.first { color: #b3261e; background: #fbe6e4; }
+  .pq-sev.heavy { color: #8f6212; background: #faf0dd; }
+  .pq-sev.gov { color: #5c6472; background: #eceef3; }
+  [data-theme='dark'] .pq-sev.first { color: #f2b8b5; background: #2a1614; }
+  [data-theme='dark'] .pq-sev.heavy { color: #d9a441; background: #2a2113; }
+  [data-theme='dark'] .pq-sev.gov { color: #98a1b3; background: #1d222c; }
 `}</style>
 
 ## "Only God knows if encryption is really safe"
@@ -48,7 +58,7 @@ Start with the thing the wallet exists to carry: credentials.
 
 A EUDI credential, whether an SD-JWT VC or an ISO mdoc, is fundamentally a set of attributes with an **issuer's digital signature** over them. That signature is what makes the credential trustworthy. It is how a verifier knows the PID came from a member state's identity provider and was not fabricated. There is a second signature in the flow too: the **holder binding** or device key that proves the wallet presenting the credential is the one it was issued to.
 
-Both of those are asymmetric signatures, and the [OpenID4VC High Assurance Interoperability Profile (HAIP)](https://openid.net/specs/openid4vc-high-assurance-interoperability-profile-1_0-final.html) is explicit about which ones. Its baseline is `ES256`, meaning ECDSA over the NIST P-256 curve with SHA-256, required across issuers, verifiers and wallets, with `ECDH-ES` over P-256 for response encryption. These are excellent classical choices. They are also precisely the primitives that [Shor's algorithm](https://en.wikipedia.org/wiki/Shor%27s_algorithm) dismantles on a cryptographically relevant quantum computer. Search the HAIP specification, or the underlying [OpenID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) and [OpenID4VP](https://openid.net/specs/openid-4-verifiable-presentation-1_0.html) specifications, for "post-quantum" and you will find nothing at all.
+Both of those are asymmetric signatures, and the [OpenID4VC High Assurance Interoperability Profile (HAIP)](https://openid.net/specs/openid4vc-high-assurance-interoperability-profile-1_0-final.html) is explicit about which ones. Its baseline is `ES256`, meaning ECDSA over the NIST P-256 curve with SHA-256, required across issuers, verifiers and wallets, with `ECDH-ES` over P-256 for response encryption. These are excellent classical choices. They are also precisely the primitives that [Shor's algorithm](https://en.wikipedia.org/wiki/Shor%27s_algorithm) dismantles on a cryptographically relevant quantum computer. Search the HAIP specification, or the underlying [OpenID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) and [OpenID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html) specifications, for "post-quantum" and you will find nothing at all.
 
 The threat here is not abstract. If an adversary can forge an issuer signature, they can mint credentials that are cryptographically indistinguishable from genuine ones: a synthetic PID for anyone they like, accepted by every verifier in the ecosystem. Credentials are also long lived. A document issued today may be valid for years, and the issuer keys behind them for longer still. A migration that "starts when quantum arrives" starts too late for anything already in the field.
 
@@ -101,6 +111,66 @@ Second, notice what is not on the post-quantum side: any zero-knowledge or anony
 
 And even the parts that are covered are not free. As Cloudflare put it in [ML-DSA will have to do](https://blog.cloudflare.com/ml-dsa-will-have-to-do/), "you go to war with the algorithms you have, not the ones you wish you had." ML-DSA is deployable today, but an ML-DSA-44 signature is around 2,420 bytes against Ed25519's 64, with a 1,312-byte public key. Multiply that across every credential, every certificate in a chain, and every attestation in a presentation, and the size and performance budget of the whole protocol changes. The signature schemes that would ease that pain, such as FN-DSA, SQIsign and the multivariate candidates, are by NIST's own timelines standardised somewhere between 2027 and the early 2030s, and widely available even later. For the EUDI window, ML-DSA and SLH-DSA are what there is.
 
+## Who this actually lands on: the EUDI roles in the blast radius
+
+It is tempting to treat "go post-quantum" as one project. The [ARF's model of the ecosystem](https://eudi.dev/3.0.0/main/03-roles-within-the-eudi-wallet-ecosystem/#roles-introduction) makes clear that it is not. It is a coordinated migration across roughly twenty distinct roles, each holding its own keys, certificates and certification obligations, and each of which has to move for the whole to be secure. The figure below is the ARF's own overview of those roles. The analysis after it groups them by how directly the quantum threat lands on them.
+
+<figure className="pq-fig">
+
+![Overview of the EUDI Wallet ecosystem roles and components](./arf-roles-figure.png)
+
+<figcaption>Figure 1, "Overview of the EUDI Wallet ecosystem roles and components", from the <a href="https://eudi.dev/3.0.0/main/03-roles-within-the-eudi-wallet-ecosystem/">EU Digital Identity Wallet Architecture and Reference Framework</a>. The numbers below refer to the roles as labelled here.</figcaption>
+
+</figure>
+
+Read through the lens of cryptography, those roles fall into a handful of layers, and they do not carry equal weight. The ones that mint signatures everyone else trusts, and the ones bound to hardware, have the longest lead times and therefore have to move first.
+
+<div className="pq-scroll">
+<table className="pq-table">
+<thead>
+<tr><th>Layer</th><th>Roles</th><th>Asymmetric crypto in their hands</th><th>Priority</th></tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Trust anchors and PKI</th>
+<td>Access Certificate Authority (17), Provider of Registration Certificates (18), Trusted List / LoTE Provider (4), Registrar (16)</td>
+<td>The root and issuing keys, and the certificate and trusted-list signatures, that every other party chains up to. If these can be forged, the entire trust fabric can be too.</td>
+<td><span className="pq-sev first">Move first</span></td>
+</tr>
+<tr>
+<th scope="row">Credential issuers</th>
+<td>PID Provider (3), QEAA Provider (5), PuB-EAA Provider (6), EAA Provider (7), QESRC Provider (8)</td>
+<td>Issuer signing keys over PIDs and attestations (`ES256` today). QESRC additionally creates qualified signatures that must stay valid for the long term, exactly where "harvest now" bites hardest.</td>
+<td><span className="pq-sev heavy">Heavy</span></td>
+</tr>
+<tr>
+<th scope="row">Wallet and device</th>
+<td>Wallet Provider (2), Wallet Unit, Device Manufacturers and Subsystems (13)</td>
+<td>Wallet attestation keys and the holder-binding / device keys held in the secure element. Post-quantum signing has to happen inside that secure hardware.</td>
+<td><span className="pq-sev first">Move first</span></td>
+</tr>
+<tr>
+<th scope="row">Relying parties</th>
+<td>Relying Party (10), its Relying Party Instances, and Intermediaries</td>
+<td>Access certificates, registration certificates, (mutual) TLS, and verification of every issuer and trust-chain signature they receive.</td>
+<td><span className="pq-sev heavy">Heavy</span></td>
+</tr>
+<tr>
+<th scope="row">Governance and assurance</th>
+<td>Conformity Assessment Body (11), Supervisory Body (12), National Accreditation Body (15), Attestation Scheme Provider (14)</td>
+<td>None directly, but they define and certify what counts as acceptable cryptography for everyone above.</td>
+<td><span className="pq-sev gov">The gate</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+Two roles sit slightly outside this crypto blast radius. The **User (1)** does not manage any of these keys, but feels the migration through re-issuance of credentials and through larger, slower attestations. The **Authentic Source (9)** mostly feeds data into issuers rather than signing anything the wallet checks, so it is largely spared.
+
+The uncomfortable part is the ordering. The two layers marked "move first" are the ones with multi-year lead times. Certificate authorities cannot simply flip an algorithm: they have to re-key roots, redefine certificate profiles, and re-issue down entire chains, all while old and new coexist. Secure-element hardware is worse still, because post-quantum signatures such as ML-DSA are heavy, and a large share of the secure elements shipping in phones today cannot generate them at all. That is a silicon roadmap problem, measured in device generations, not a software release.
+
+And none of it ships until the governance layer moves. The Conformity Assessment Bodies, Supervisory Bodies and scheme owners have to rewrite certification criteria and rulebooks to first allow, and eventually require, post-quantum and hybrid mechanisms. Re-certification is the real gate: until the criteria change, a wallet provider that wants to be post-quantum ready cannot be certified for it. That is precisely why the moment to bake crypto-agility into every one of these roles is now, while the ecosystem is still being stood up, rather than after twenty categories of party have each hardened around classical cryptography.
+
 ## Level of Assurance "high" changes the risk calculus
 
 Here is the argument I most want to land.
@@ -125,7 +195,7 @@ We have been building Yivi toward exactly that kind of agility. [Yivi 8.0 was fr
 
 - [OpenID4VC High Assurance Interoperability Profile (HAIP) 1.0 (final)](https://openid.net/specs/openid4vc-high-assurance-interoperability-profile-1_0-final.html)
 - [OpenID for Verifiable Credential Issuance (OpenID4VCI)](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
-- [OpenID for Verifiable Presentations (OpenID4VP)](https://openid.net/specs/openid-4-verifiable-presentation-1_0.html)
+- [OpenID for Verifiable Presentations (OpenID4VP)](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
 - [EU Digital Identity Wallet Architecture and Reference Framework (ARF)](https://eudi.dev/3.0.0/main/)
 - [BBS Signatures (IRTF CFRG draft)](https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-08.html)
 
