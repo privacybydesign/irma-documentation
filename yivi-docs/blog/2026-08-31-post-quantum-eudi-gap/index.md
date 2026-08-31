@@ -182,7 +182,7 @@ The single most consequential line in the ECCG guidance is the hybridisation req
 >
 > *ECCG Agreed Cryptographic Mechanisms v2.0, section 1.4*
 
-The rule, in short, is that a lattice-based mechanism "shouldn't be used in a standalone way", but combined with a classical one, so that an attacker has to break both. For signatures this means carrying two signatures and accepting only if both verify. For key agreement it means combining a post-quantum KEM with a classical one through a key combiner.
+For signatures the rule means carrying two signatures and accepting only if both verify. For key agreement it means combining a post-quantum KEM with a classical one through a key combiner.
 
 Now look at where the OpenID4VC stack actually keeps its cryptography.
 
