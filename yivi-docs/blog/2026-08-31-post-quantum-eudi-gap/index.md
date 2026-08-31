@@ -54,6 +54,74 @@ Now put the EUDI clock next to it. The ecosystem is aiming to reach production m
 
 Two clocks, and they do not line up.
 
+## What a quantum computer actually puts at risk
+
+Before drilling into credentials and certificates, it is worth asking a blunt question: which of the wallet's cryptography is exposed, and on what timeline? Not all of it is threatened the same way. The standard way to sequence a post-quantum migration, set out in [NIST's transition guidance](https://csrc.nist.gov/pubs/ir/8547/ipd), is to split cryptographic uses into two categories, **confidentiality** and **authentication**, because a quantum computer threatens them on very different clocks. That split is a legitimate prioritisation tool. It is also where the most expensive misjudgements about the EUDI wallet tend to hide.
+
+**Confidentiality is the urgent half, because of "harvest now, decrypt later".** An adversary can record encrypted traffic today and simply keep it until a quantum computer exists, then decrypt it retroactively. The damage is done at capture time, so the migration has to happen before the first capable machine appears, not after. In the wallet ecosystem the confidentiality surface is large: the (mutual) TLS that carries PID and attribute disclosures between wallet, issuers, verifiers and the wallet provider; the encrypted OpenID4VP responses that carry disclosed attributes to a verifier; the issuance channel; the wallet-to-provider messaging; and anything stored encrypted at rest. The payload underneath is identity data that never changes and is of obvious value to a state-level collector. This is the sharpest risk in the whole system, and, happily, also the one with a fix that ships today, since hybrid ML-KEM key exchange is already deployable.
+
+**Authentication looks like the relaxed half, and that is the trap.** For a signature whose only job is to prove something in the moment, NIST's guidance is that you may keep using a quantum-vulnerable algorithm until a quantum computer actually exists, then disable it. Nothing recorded today lets an attacker forge a new authentication tomorrow, so there is no harvest-now pressure. This is the reasoning behind treating the wallet as low-urgency, and Eric Verheul applies it carefully to the HSM-based wallet in his [SECDSA analysis](https://wellet.nl/SECDSA-EUDI-wallet-latest.pdf). The problem is that only a few of the wallet's signatures are genuinely momentary.
+
+<div className="pq-scroll">
+<table className="pq-table">
+<thead>
+<tr><th>Where the wallet uses crypto</th><th>Kind</th><th>Quantum exposure</th><th>When to act</th></tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Transport (mutual) TLS carrying PID</th>
+<td>Confidentiality</td>
+<td>Harvest now, decrypt later</td>
+<td><span className="pq-sev first">Now</span></td>
+</tr>
+<tr>
+<th scope="row">OpenID4VP response encryption</th>
+<td>Confidentiality</td>
+<td>Harvest now, decrypt later</td>
+<td><span className="pq-sev first">Now</span></td>
+</tr>
+<tr>
+<th scope="row">Wallet-to-provider messaging, data at rest</th>
+<td>Confidentiality</td>
+<td>Harvest now, decrypt later</td>
+<td><span className="pq-sev first">Now</span></td>
+</tr>
+<tr>
+<th scope="row">Holder binding, session authentication</th>
+<td>Authentication, momentary</td>
+<td>Real-time forgery only</td>
+<td><span className="pq-sev ok">Only if agile</span></td>
+</tr>
+<tr>
+<th scope="row">Issuer signatures on credentials</th>
+<td>Signature, credential lifetime</td>
+<td>Forgeable while still valid</td>
+<td><span className="pq-sev heavy">Plan cutover</span></td>
+</tr>
+<tr>
+<th scope="row">Access and registration certs, trust lists</th>
+<td>Signature, multi-year</td>
+<td>Forged trust fabric</td>
+<td><span className="pq-sev heavy">Plan cutover</span></td>
+</tr>
+<tr>
+<th scope="row">Qualified electronic signatures</th>
+<td>Signature, long-term legal</td>
+<td>Retroactive doubt</td>
+<td><span className="pq-sev first">Now</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+The risks that follow all come from getting that split wrong:
+
+- **Under-protecting confidentiality because the wallet is "an authentication device".** The framing invites treating the whole system as deferrable, while its transport and response-encryption layers are prime harvest-now targets for long-lived identity data. This is the biggest and most overlooked gap, and the cheapest to close.
+- **Treating long-lived signatures as if they were momentary.** Issuer signatures live as long as the credential, access certificates and trust lists live for years and anchor everyone else, and a qualified electronic signature has to stay unforgeable for the legal life of a document. "Disable on the day a quantum computer arrives" does nothing for the millions of these already in the field on that day. It sets up a cliff of simultaneous revocation and re-issuance, and for qualified signatures it means retroactive doubt over documents signed long before.
+- **Confidentiality and authentication ride the same protocols.** TLS bundles key exchange with certificate authentication, and OpenID4VP bundles response encryption with request and response signing. The key-agreement half can go hybrid now while the signature half lags, which leaves a channel half-migrated and easy to mistake for finished.
+
+The distinction is genuinely useful for ordering the work: do the confidentiality parts now, because they are both the most exposed and the most ready. What it must not become is a licence to file the rest of the wallet under "authentication, later". The next two sections look at that signature surface, in the credentials and in the PKI, and neither turns out to be as momentary as the label suggests.
+
 ## Aspect 1: credentials are asymmetric signatures, all the way down
 
 Start with the thing the wallet exists to carry: credentials.
@@ -284,6 +352,11 @@ We have been building Yivi toward exactly that kind of agility. [Yivi 8.0 was fr
 **European cryptographic guidance**
 
 - [ECCG Agreed Cryptographic Mechanisms v2.0 (April 2025, ENISA)](https://certification.enisa.europa.eu/document/download/a845662b-aee0-484e-9191-890c4cfa7aaa_en?filename=ECCG%20Agreed%20Cryptographic%20Mechanisms%20version%202.pdf)
+
+**Transition guidance and analysis**
+
+- [NIST IR 8547: Transition to Post-Quantum Cryptography Standards (initial public draft)](https://csrc.nist.gov/pubs/ir/8547/ipd)
+- [Eric Verheul, SECDSA and the HSM-based EUDI wallet (appendix C on the PQC transition)](https://wellet.nl/SECDSA-EUDI-wallet-latest.pdf)
 
 **Post-quantum algorithm standards**
 
