@@ -36,7 +36,7 @@ The uncomfortable part, for anyone building in the European digital identity spa
 
 ## Two clocks that do not line up
 
-Cloudflare is about as well positioned as an organisation can be to migrate to post-quantum cryptography. It controls both ends of a huge share of the connections it serves, it can ship changes to its edge continuously, and it has some of the best cryptographers in the world on staff. Even so, its stated goal is to be [fully post-quantum secure by 2029](https://blog.cloudflare.com/pq-2024/), covering both key agreement and signatures, and that is described as an ambitious target. Key agreement is largely done: a majority of Cloudflare's traffic already uses hybrid [ML-KEM key exchange](https://blog.cloudflare.com/post-quantum-for-all/), and the company has extended the same approach into [post-quantum IPsec tunnels](https://blog.cloudflare.com/post-quantum-ipsec/). Signatures, the harder half, are the reason 2029 is a stretch rather than a done deal.
+Cloudflare is about as well positioned as an organisation can be to migrate to post-quantum cryptography. It controls both ends of a huge share of the connections it serves, it can ship changes to its edge continuously, and it has some of the best cryptographers in the world on staff. Even so, its stated goal is to be [fully post-quantum secure by 2029](https://blog.cloudflare.com/post-quantum-roadmap/), covering both key agreement and signatures, and that is described as an ambitious target. Key agreement is largely done: a majority of Cloudflare's traffic already uses hybrid [ML-KEM key exchange](https://blog.cloudflare.com/post-quantum-for-all/), and the company has extended the same approach into [post-quantum IPsec tunnels](https://blog.cloudflare.com/post-quantum-ipsec/). Signatures, the harder half, are the reason 2029 is a stretch rather than a done deal.
 
 Now put the EUDI clock next to it. The ecosystem is aiming to reach production maturity over the next couple of years. The interoperability profiles, the trust frameworks and the certificate policies that member states and wallet providers implement against are being written now, and they are classical. If everything goes to plan, we roll out a continent-scale, high-assurance identity ecosystem built entirely on pre-quantum cryptography at roughly the same moment Cloudflare is congratulating itself on finishing the opposite migration. And then we would need to start overhauling the freshly built EUDI stack immediately to make it quantum resistant.
 
@@ -114,3 +114,42 @@ Now ask the obvious question. Who is most likely to field a cryptographically re
 None of this is an argument against building the EUDI wallet, and it is certainly not an argument for waiting. It is an argument for **crypto-agility from day one**, meaning the ability to swap signature and key-agreement algorithms without re-architecting the wallet, and for putting a hybrid post-quantum path on the roadmap now, while the certificate profiles and interoperability profiles are still being written, rather than after they have hardened across dozens of member states. It is a great deal cheaper to leave room for ML-DSA and ML-KEM in a design than to retrofit them into a deployed one.
 
 We have been building Yivi toward exactly that kind of agility. [Yivi 8.0 was framed around a crypto-agile foundation](/blog/2026-yivi-8-0-crypto-agility) precisely so that the algorithms underneath our credentials are things we can change rather than things we are stuck with. The EUDI ecosystem as a whole will need the same instinct. Because only God knows whether today's encryption is really safe forever, but we already know it is not safe against a large quantum computer, and we already know who is most motivated to build one.
+
+## Sources and further reading
+
+**Podcast**
+
+- [De Technoloog (BNR): "Alleen God weet of encryptie echt veilig is", with Bas Westerbaan](https://www.bnr.nl/podcast/de-technoloog/10609122/alleen-god-weet-of-encryptie-echt-veilig-is)
+
+**Standards and specifications**
+
+- [OpenID4VC High Assurance Interoperability Profile (HAIP) 1.0 (final)](https://openid.net/specs/openid4vc-high-assurance-interoperability-profile-1_0-final.html)
+- [OpenID for Verifiable Credential Issuance (OpenID4VCI)](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
+- [OpenID for Verifiable Presentations (OpenID4VP)](https://openid.net/specs/openid-4-verifiable-presentation-1_0.html)
+- [EU Digital Identity Wallet Architecture and Reference Framework (ARF)](https://eudi.dev/3.0.0/main/)
+- [BBS Signatures (IRTF CFRG draft)](https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-08.html)
+
+**European cryptographic guidance**
+
+- [ECCG Agreed Cryptographic Mechanisms v2.0 (April 2025, ENISA)](https://certification.enisa.europa.eu/document/download/a845662b-aee0-484e-9191-890c4cfa7aaa_en?filename=ECCG%20Agreed%20Cryptographic%20Mechanisms%20version%202.pdf)
+
+**Post-quantum algorithm standards**
+
+- [FIPS 203: ML-KEM (Module-Lattice-Based Key-Encapsulation Mechanism)](https://csrc.nist.gov/pubs/fips/203/final)
+- [FIPS 204: ML-DSA (Module-Lattice-Based Digital Signature Algorithm)](https://csrc.nist.gov/pubs/fips/204/final)
+- [FIPS 205: SLH-DSA (Stateless Hash-Based Digital Signature Algorithm)](https://csrc.nist.gov/pubs/fips/205/final)
+- [SP 800-208: Stateful Hash-Based Signature Schemes (XMSS / LMS)](https://csrc.nist.gov/pubs/sp/800/208/final)
+- [FrodoKEM](https://frodokem.org/)
+
+**Cloudflare on the post-quantum migration**
+
+- [The post-quantum state of the internet in 2024 and our roadmap](https://blog.cloudflare.com/post-quantum-roadmap/)
+- [ML-DSA will have to do](https://blog.cloudflare.com/ml-dsa-will-have-to-do/)
+- [Post-quantum cryptography for all](https://blog.cloudflare.com/post-quantum-for-all/)
+- [Post-quantum IPsec](https://blog.cloudflare.com/post-quantum-ipsec/)
+- [Bas Westerbaan on the Cloudflare blog](https://blog.cloudflare.com/author/bas-westerbaan/)
+
+**Background**
+
+- [Shor's algorithm](https://en.wikipedia.org/wiki/Shor%27s_algorithm)
+- [IRMA / Yivi](https://www.irmalliance.org/)
