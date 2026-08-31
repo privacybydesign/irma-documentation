@@ -29,9 +29,11 @@ tags: [security, crypto, post-quantum, eudi-wallet, haip, analysis]
   .pq-sev.first { color: #b3261e; background: #fbe6e4; }
   .pq-sev.heavy { color: #8f6212; background: #faf0dd; }
   .pq-sev.gov { color: #5c6472; background: #eceef3; }
+  .pq-sev.ok { color: #1c6b58; background: #e6f2ee; }
   [data-theme='dark'] .pq-sev.first { color: #f2b8b5; background: #2a1614; }
   [data-theme='dark'] .pq-sev.heavy { color: #d9a441; background: #2a2113; }
   [data-theme='dark'] .pq-sev.gov { color: #98a1b3; background: #1d222c; }
+  [data-theme='dark'] .pq-sev.ok { color: #63c3a8; background: #14261f; }
 `}</style>
 
 ## "Only God knows if encryption is really safe"
@@ -110,6 +112,70 @@ First, the ECCG does not tell you to simply replace the classical primitive with
 Second, notice what is not on the post-quantum side: any zero-knowledge or anonymous-credential scheme. The agreed list gives us quantum-resistant signatures and key agreement. It does not give us quantum-resistant selective disclosure. Which brings us back to the ZKP gap: the ecosystem can go post-quantum for authenticity and confidentiality well before it can go post-quantum without sacrificing privacy.
 
 And even the parts that are covered are not free. As Cloudflare put it in [ML-DSA will have to do](https://blog.cloudflare.com/ml-dsa-will-have-to-do/), "you go to war with the algorithms you have, not the ones you wish you had." ML-DSA is deployable today, but an ML-DSA-44 signature is around 2,420 bytes against Ed25519's 64, with a 1,312-byte public key. Multiply that across every credential, every certificate in a chain, and every attestation in a presentation, and the size and performance budget of the whole protocol changes. The signature schemes that would ease that pain, such as FN-DSA, SQIsign and the multivariate candidates, are by NIST's own timelines standardised somewhere between 2027 and the early 2030s, and widely available even later. For the EUDI window, ML-DSA and SLH-DSA are what there is.
+
+## Hybridisation is not a config flag: what it does to the protocols
+
+The single most consequential line in the ECCG guidance is the hybridisation requirement, and it is worth taking seriously at the protocol level, because it sounds like a footnote and behaves like a redesign. The rule is that a lattice-based mechanism "shouldn't be used in a standalone way", but combined with a classical one, so that an attacker has to break both. For signatures this means carrying two signatures and accepting only if both verify. For key agreement it means combining a post-quantum KEM with a classical one through a key combiner.
+
+Now look at where the OpenID4VC stack actually keeps its cryptography.
+
+A credential today carries **one** signature. An [SD-JWT VC](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/) is a JWS in compact serialization: one `alg` header, one signature. An ISO mdoc is a `COSE_Sign1` structure: again, one signer. The compact and `COSE_Sign1` forms are, structurally, single-signature containers. A hybrid credential has to hold `ES256` **and** ML-DSA at once, and there are only two honest ways to do that. Either define a single **composite** algorithm identifier that internally concatenates both signatures, mirroring the [IETF LAMPS composite-signature work](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/) being done for X.509 and CMS, and register it in the JOSE and COSE algorithm registries. Or abandon compact serialization for a multi-signature form, which breaks the tilde-delimited shape that SD-JWT VC and its selective-disclosure machinery depend on. Neither exists in HAIP, OpenID4VCI, OpenID4VP or the SD-JWT VC draft today.
+
+There is a subtlety here that makes "just check two signatures" the wrong mental model. Hybrid verification has to be **atomic**: a verifier that understands only the classical half, and silently ignores the post-quantum half, must not be able to accept. Otherwise the whole point is lost to a downgrade. That is exactly why the composite approach binds both signatures under one algorithm identifier that a verifier either fully supports or fully rejects. "Accept only if both hold" has to be one indivisible operation, not two optional checks that an implementation can quietly reduce to one.
+
+The **holder-binding** signature doubles the difficulty. In SD-JWT VC the holder signs a Key Binding JWT, and in mdoc the device produces a device signature, both with a key that lives in the phone's secure element. A hybrid holder binding means that secure element has to generate an ML-DSA signature alongside the classical one, in hardware that today, in most shipping devices, cannot do it at all.
+
+Encryption is a slightly happier story, but only slightly. HAIP mandates `ECDH-ES` over P-256 for encrypted OpenID4VP responses. Making that hybrid means combining ML-KEM with the classical ECDH through a key combiner, which again needs new hybrid key-agreement identifiers in JOSE and COSE that no profile mandates yet. The one genuinely mature piece is the **transport**: hybrid key exchange in TLS, such as `X25519MLKEM768`, is already shipping in browsers and CDNs (the [IETF TLS hybrid design](https://datatracker.ietf.org/doc/draft-ietf-tls-hybrid-design/) and Cloudflare's rollout), so the (mutual) TLS channel can go hybrid with comparatively little ceremony. The application-layer encryption inside OpenID4VP cannot ride on that TLS work; it is its own problem.
+
+<div className="pq-scroll">
+<table className="pq-table">
+<thead>
+<tr><th>Where the crypto lives</th><th>Today</th><th>What hybridisation demands</th><th>Status</th></tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">SD-JWT VC, issuer signature</th>
+<td>JWS compact, single <code>ES256</code></td>
+<td>Two signatures, or one composite <code>alg</code>, verified atomically</td>
+<td><span className="pq-sev first">Undefined</span></td>
+</tr>
+<tr>
+<th scope="row">SD-JWT VC / mdoc, holder binding</th>
+<td>KB-JWT or device <code>COSE_Sign1</code>, holder key</td>
+<td>Hybrid signature generated inside the secure element</td>
+<td><span className="pq-sev first">Undefined + hardware-limited</span></td>
+</tr>
+<tr>
+<th scope="row">ISO mdoc, issuer auth</th>
+<td>Single-signer <code>COSE_Sign1</code></td>
+<td>Composite COSE algorithm identifier</td>
+<td><span className="pq-sev first">Undefined</span></td>
+</tr>
+<tr>
+<th scope="row">OpenID4VP response encryption</th>
+<td>JWE, <code>ECDH-ES</code> over P-256</td>
+<td>ML-KEM combined with ECDH via a key combiner</td>
+<td><span className="pq-sev first">Undefined</span></td>
+</tr>
+<tr>
+<th scope="row">OpenID4VCI proof of possession</th>
+<td>Proof JWT, holder key, <code>ES256</code></td>
+<td>Hybrid proof signature and negotiated algorithms</td>
+<td><span className="pq-sev first">Undefined</span></td>
+</tr>
+<tr>
+<th scope="row">Transport (mutual) TLS</th>
+<td>Classical ECDHE</td>
+<td>Hybrid ML-KEM key exchange (<code>X25519MLKEM768</code>)</td>
+<td><span className="pq-sev ok">Shipping</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+Two cross-cutting effects sit underneath that table. The first is **size**. Hybrid means classical plus post-quantum, added together: an ML-DSA-65 signature of roughly 3.3 KB carried next to a 64-byte ECDSA one, in every credential, every proof and every presentation. For the QR-initiated and NFC or Bluetooth mdoc flows this runs straight into QR-code density and message-size limits, and selective disclosure, with its many per-claim digests, only compounds it. The second is **negotiation**. Every layer of OpenID4VC agrees on algorithms through metadata: the issuer advertises proof signing algorithms in OpenID4VCI, the verifier advertises supported algorithms in OpenID4VP. Hybrid means new algorithm values that every party has to publish, recognise and agree on, and since HAIP currently pins `ES256`, the profile itself has to be reopened to allow them.
+
+So the hybridisation sentence in the ECCG document is not a switch to flip once the algorithms are ready. It reaches into the credential data model, the serialization, the secure element, the size budget and the negotiation metadata of OpenID4VCI, OpenID4VP and both credential formats at once. It has to be designed in, and none of these specifications define it yet.
 
 ## Who this actually lands on: the EUDI roles in the blast radius
 
@@ -197,7 +263,11 @@ We have been building Yivi toward exactly that kind of agility. [Yivi 8.0 was fr
 - [OpenID for Verifiable Credential Issuance (OpenID4VCI)](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
 - [OpenID for Verifiable Presentations (OpenID4VP)](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
 - [EU Digital Identity Wallet Architecture and Reference Framework (ARF)](https://eudi.dev/3.0.0/main/)
+- [ARF: roles within the EUDI Wallet ecosystem](https://eudi.dev/3.0.0/main/03-roles-within-the-eudi-wallet-ecosystem/)
+- [SD-JWT-based Verifiable Credentials (SD-JWT VC)](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/)
 - [BBS Signatures (IRTF CFRG draft)](https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-08.html)
+- [Composite ML-DSA signatures (IETF LAMPS)](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/)
+- [Hybrid key exchange in TLS 1.3 (IETF TLS)](https://datatracker.ietf.org/doc/draft-ietf-tls-hybrid-design/)
 
 **European cryptographic guidance**
 
