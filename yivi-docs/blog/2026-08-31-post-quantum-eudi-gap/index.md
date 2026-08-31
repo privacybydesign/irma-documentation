@@ -62,7 +62,7 @@ Before drilling into credentials and certificates, it is worth asking a blunt qu
 
 **Authentication looks like the lower risk, and that is the trap.** A signature whose only job is to prove something in the moment is not exposed retroactively: nothing recorded today lets an attacker forge a new authentication tomorrow, so there is no harvest-now pressure. NIST's guidance reflects this, allowing quantum-vulnerable algorithms to keep being used for such cases until a quantum computer actually exists. This is the reasoning behind treating the wallet as low-risk, and Eric Verheul applies it carefully to the HSM-based wallet in his [SECDSA analysis](https://wellet.nl/SECDSA-EUDI-wallet-latest.pdf). The problem is that only a few of the wallet's signatures are genuinely momentary.
 
-<div className="pq-scroll">
+<div className="pq-scroll" role="region" aria-label="Quantum exposure by cryptographic use" tabIndex={0}>
 <table className="pq-table">
 <thead>
 <tr><th>Where the wallet uses crypto</th><th>Kind</th><th>What a quantum computer exposes</th></tr>
