@@ -115,13 +115,25 @@ And even the parts that are covered are not free. As Cloudflare put it in [ML-DS
 
 ## Hybridisation is not a config flag: what it does to the protocols
 
-The single most consequential line in the ECCG guidance is the hybridisation requirement, and it is worth taking seriously at the protocol level, because it sounds like a footnote and behaves like a redesign. The rule is that a lattice-based mechanism "shouldn't be used in a standalone way", but combined with a classical one, so that an attacker has to break both. For signatures this means carrying two signatures and accepting only if both verify. For key agreement it means combining a post-quantum KEM with a classical one through a key combiner.
+The single most consequential line in the ECCG guidance is the hybridisation requirement, and it is worth taking seriously at the protocol level, because it sounds like a footnote and behaves like a redesign. The document is explicit that this is the recommended approach:
+
+> The approach recommended in this document is to prioritize mitigating the quantum threat in applications where confidentiality is to be protected in the long term, by rolling out post-quantum secure cryptography in hybrid mode alongside existing classically secure asymmetric cryptography and/or symmetric keying. These hybrid modes shall ensure that all combined pre or post-quantum cryptographic mechanisms need to be broken simultaneously for the hybrid mode to be broken.
+>
+> *ECCG Agreed Cryptographic Mechanisms v2.0, section 1.4*
+
+The rule, in short, is that a lattice-based mechanism "shouldn't be used in a standalone way", but combined with a classical one, so that an attacker has to break both. For signatures this means carrying two signatures and accepting only if both verify. For key agreement it means combining a post-quantum KEM with a classical one through a key combiner.
 
 Now look at where the OpenID4VC stack actually keeps its cryptography.
 
 A credential today carries **one** signature. An [SD-JWT VC](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/) is a JWS in compact serialization: one `alg` header, one signature. An ISO mdoc is a `COSE_Sign1` structure: again, one signer. The compact and `COSE_Sign1` forms are, structurally, single-signature containers. A hybrid credential has to hold `ES256` **and** ML-DSA at once, and there are only two honest ways to do that. Either define a single **composite** algorithm identifier that internally concatenates both signatures, mirroring the [IETF LAMPS composite-signature work](https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/) being done for X.509 and CMS, and register it in the JOSE and COSE algorithm registries. Or abandon compact serialization for a multi-signature form, which breaks the tilde-delimited shape that SD-JWT VC and its selective-disclosure machinery depend on. Neither exists in HAIP, OpenID4VCI, OpenID4VP or the SD-JWT VC draft today.
 
-There is a subtlety here that makes "just check two signatures" the wrong mental model. Hybrid verification has to be **atomic**: a verifier that understands only the classical half, and silently ignores the post-quantum half, must not be able to accept. Otherwise the whole point is lost to a downgrade. That is exactly why the composite approach binds both signatures under one algorithm identifier that a verifier either fully supports or fully rejects. "Accept only if both hold" has to be one indivisible operation, not two optional checks that an implementation can quietly reduce to one.
+There is a subtlety here that makes "just check two signatures" the wrong mental model. The ECCG describes the signature construction in exactly these terms:
+
+> For digital signatures, hybridization can consist in concatenating signatures from different schemes, the verification function accepting if and only if all signatures are correct.
+>
+> *ECCG Agreed Cryptographic Mechanisms v2.0, section 5.2*
+
+That "if and only if all signatures are correct" is doing a lot of work. Hybrid verification has to be **atomic**: a verifier that understands only the classical half, and silently ignores the post-quantum half, must not be able to accept. Otherwise the whole point is lost to a downgrade. That is exactly why the composite approach binds both signatures under one algorithm identifier that a verifier either fully supports or fully rejects. "Accept only if both hold" has to be one indivisible operation, not two optional checks that an implementation can quietly reduce to one.
 
 The **holder-binding** signature doubles the difficulty. In SD-JWT VC the holder signs a Key Binding JWT, and in mdoc the device produces a device signature, both with a key that lives in the phone's secure element. A hybrid holder binding means that secure element has to generate an ML-DSA signature alongside the classical one, in hardware that today, in most shipping devices, cannot do it at all.
 
