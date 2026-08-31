@@ -264,7 +264,7 @@ It is tempting to treat "go post-quantum" as one project. The [ARF's model of th
 
 Read through the lens of cryptography, those roles fall into a handful of layers, and they do not carry equal weight. The ones that mint signatures everyone else trusts, and the ones bound to hardware, have the longest lead times and therefore have to move first.
 
-<div className="pq-scroll">
+<div className="pq-scroll" role="region" aria-label="EUDI roles and the asymmetric cryptography they hold" tabIndex={0}>
 <table className="pq-table">
 <thead>
 <tr><th>Layer</th><th>Roles</th><th>Asymmetric crypto in their hands</th><th>Priority</th></tr>
