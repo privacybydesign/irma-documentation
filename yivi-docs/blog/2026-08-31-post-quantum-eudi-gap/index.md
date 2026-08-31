@@ -146,7 +146,7 @@ The transport layer also carries the classic **"harvest now, decrypt later"** ri
 
 The good news is that Europe has already written down the destination. The [ECCG Agreed Cryptographic Mechanisms v2.0](https://certification.enisa.europa.eu/document/download/a845662b-aee0-484e-9191-890c4cfa7aaa_en?filename=ECCG%20Agreed%20Cryptographic%20Mechanisms%20version%202.pdf) (April 2025), the reference for what counts as "agreed" cryptography under the EU certification framework, already lists the post-quantum mechanisms an EUDI stack would migrate to:
 
-<div className="pq-scroll">
+<div className="pq-scroll" role="region" aria-label="Classical to post-quantum mechanism mapping" tabIndex={0}>
 <table className="pq-table">
 <thead>
 <tr><th>Purpose</th><th>Classical (today, HAIP)</th><th>Post-quantum (ECCG agreed)</th></tr>
