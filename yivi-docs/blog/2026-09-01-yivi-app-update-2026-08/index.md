@@ -5,7 +5,7 @@ authors: [wouterensink]
 tags: [yivi, update, ux, security, openid4vp, openid4vci, sdjwtvc]
 ---
 
-*August brought one Yivi app release and one release of the Go library underneath it. App version 8.2.0 was published on 14 August and is live on the App Store, Google Play and F-Droid. Version 1.3.0 of `irmago`, the Go implementation doing the wallet's actual work, was published on 12 August, and app 8.2.0 pins that version.*
+*August brought one Yivi app release and one release of the Go library underneath it. App version 8.2.0 was published on 14 August and reached the App Store, Google Play and F-Droid. Version 1.3.0 of `irmago`, the Go implementation doing the wallet's actual work, was published on 12 August, and app 8.2.0 pins that version.*
 
 <!-- truncate -->
 
@@ -73,7 +73,7 @@ Some of 8.2.0 is hardening you will not see. The passport-reading library `vcmrt
 
 Issuers who put a credential logo on the OpenID4VCI `credential_metadata` side while their VCT type metadata omits it will find that the logo now survives, because displays are merged per field rather than per locale entry. Operators running the Yivi server get three fixes: Redis Sentinel deployments no longer wait for a replica, Redis writes are no longer discarded on an optimistic-locking conflict, and a non-200 response that is not an `irma.RemoteError` is reported by status code rather than as a decoding failure.
 
-No new issuers or verifiers were added to the production Yivi schemes in August; the one change to `pbdf-requestors`, deployed on 25 August, was a capitalisation fix in an existing entry. And a note on dates: both store builds of 8.2.0 went live slightly before the GitHub tag existed, on 13 August on Google Play and 14 August on the App Store. A store publication is not an installation, though. When 8.2.0 reaches a given phone depends on when that phone updates.
+No new issuers or verifiers were added to the production Yivi schemes in August; the one change to `pbdf-requestors`, deployed on 25 August, was a capitalisation fix in an existing entry. And a note on dates: both store builds of 8.2.0 went live slightly before the GitHub tag existed, on 13 August on Google Play and 14 August on the App Store. A store publication is not an installation, though. When 8.2.0 reaches a given phone depends on when that phone updates. It has since been succeeded: as of 2 September the App Store and Google Play serve 8.2.1, which carries everything described here; F-Droid is still on 8.2.0.
 
 ### Sources
 
