@@ -298,6 +298,22 @@ You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` op
 
 Alternatively, if your IRMA server is connected to the internet through a reverse proxy then your reverse proxy probably handles TLS for you.
 
+### Outgoing HTTP proxies
+
+The IRMA server makes outbound HTTP requests of its own: it downloads [IRMA schemes](#irma-schemes), fetches [revocation](revocation.md) updates, and posts session results to the `callbackUrl` and the next-session URL of a session request.
+
+From irmago [v1.3.1](https://github.com/privacybydesign/irmago/releases/tag/v1.3.1) onwards, all of these honour the standard proxy environment variables ([irmago#439](https://github.com/privacybydesign/irmago/pull/439)):
+
+* `HTTP_PROXY` — the proxy to use for plain HTTP requests.
+* `HTTPS_PROXY` — the proxy to use for HTTPS requests.
+* `NO_PROXY` — a comma-separated list of hosts that must be reached directly. Each entry is a domain name, an IP address, an IP address prefix in CIDR notation, or `*` to disable proxying altogether.
+
+The lowercase spellings `http_proxy`, `https_proxy` and `no_proxy` are accepted as well. Each proxy value is either a complete URL or a `host[:port]` pair. Requests to `localhost` and to loopback addresses are never sent to a proxy, and the environment is read once per process, so changing these variables requires a server restart.
+
+Up to and including irmago v1.3.0 these variables were ignored for the requests listed above, while the rest of irmago already honoured them. If you run the IRMA server behind an egress proxy, upgrading to v1.3.1 changes which route those requests take.
+
+Session results contain the attributes that were disclosed, so a session result posted to a `callbackUrl` through a proxy is personal data passing through that proxy. If your proxy is not part of your own trusted infrastructure, you ***must*** exclude your requestor callback endpoints, and any revocation or keyshare server you operate yourself, with `NO_PROXY`.
+
 ### Logging and verbosity
 
 The server's verbosity can be increased by two degrees:
