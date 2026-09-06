@@ -128,8 +128,10 @@ Three consequences to plan for:
 - An authorization server that does not advertise `authorization_code` fails the session, with the error naming the grant types it does advertise. Omitting `grant_types_supported` entirely means `["authorization_code", "implicit"]` per [RFC 8414 § 2](https://www.rfc-editor.org/rfc/rfc8414.html#section-2), so the derivation still succeeds; an explicitly empty list means no grant type is supported and it does not.
 - A derived grant carries no `issuer_state` and no `authorization_server` hint, because both are members of an offered grant. The app therefore uses the first entry of the credential issuer metadata's `authorization_servers`, or the credential issuer itself when that member is absent.
 
-:::note Unreleased
-Deriving the grant type from authorization server metadata, and rejecting an empty `pre-authorized_code` during parsing, landed in irmago after `v1.2.0` ([irmago#644](https://github.com/privacybydesign/irmago/pull/644)). On an app built against `v1.2.0` or earlier, an offer without a `grants` member crashes the app process rather than failing the session, and an empty `pre-authorized_code` is sent to the token endpoint as-is. Send an explicit, fully populated `grants` member until the app version you target ships that fix.
+:::note Minimum versions
+Deriving the grant type from authorization server metadata, and rejecting an empty `pre-authorized_code` while parsing the offer, shipped in irmago [v1.3.0](https://github.com/privacybydesign/irmago/releases/tag/v1.3.0) ([irmago#644](https://github.com/privacybydesign/irmago/pull/644)). The wallet gets it from **Yivi app 8.2.0**, the first app release built on irmago v1.3.0; the current release is [8.2.1](https://github.com/privacybydesign/irmamobile/releases/tag/v8.2.1), published on 2 September 2026 and available on the App Store, Google Play and F-Droid.
+
+Yivi app 8.1.2 and earlier are built on irmago v1.2.0 or older. On those versions an offer without a `grants` member crashes the app process rather than failing the session, and an empty `pre-authorized_code` is sent to the token endpoint as-is. Send an explicit, fully populated `grants` member if you must support them.
 :::
 
 ## Polling for issuance completion
