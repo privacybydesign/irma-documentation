@@ -116,7 +116,7 @@ The IRMA server also supports Redis in Sentinel mode for high availability. Inst
 
 Please note that if you use Redis in Sentinel mode, you need to consider whether you accept the risk of losing session state in case of a failover. Redis does not guarantee strong consistency in these setups: a write that the master has acknowledged can still be lost when that master is replaced by a replica which never received it. For example, this might be problematic if you want to guarantee that a credential is not issued twice or if you need a session QR to have a long lifetime but you do want the session to be finished soon after the QR is scanned. If you require IRMA sessions to be highly consistent, you should use the default in-memory store or Redis in standalone mode. If you accept this risk, then you can enable Sentinel mode support by setting the `redis_accept_inconsistency_risk` to true.
 
-Up to and including irmago v1.2.0, the IRMA server reduced this risk by waiting, after each session write, until the write had also reached at least one replica. That per-write wait has been removed ([irmago#398](https://github.com/privacybydesign/irmago/pull/398), merged but not part of a release at the time of writing), so session writes are no longer confirmed by a replica before the server continues. Configuring at least two replicas per master node is still recommended for availability, and the IRMA server logs a warning at startup when fewer than two replicas acknowledge, but it is not a consistency guarantee.
+Up to and including irmago v1.2.0, the IRMA server reduced this risk by waiting, after each session write, until the write had also reached at least one replica. That per-write wait was removed in irmago [v1.3.0](https://github.com/privacybydesign/irmago/releases/tag/v1.3.0) ([irmago#398](https://github.com/privacybydesign/irmago/pull/398)), so from that version on, session writes are no longer confirmed by a replica before the server continues. Configuring at least two replicas per master node is still recommended for availability, and the IRMA server logs a warning at startup when fewer than two replicas acknowledge, but it is not a consistency guarantee.
 
 If you use a managed Redis service, be aware that its high availability tier usually runs Redis Sentinel behind a single endpoint. When you connect to such a service through `redis_addr`, the IRMA server does not detect the failover setup and therefore does not require you to set `redis_accept_inconsistency_risk`, while the same inconsistency risk applies.
 
@@ -297,6 +297,22 @@ The [IRMA protocol](irma-protocol.md) relies on TLS for encryption of the attrib
 You can enable TLS in the `irma server` with the `tls_cert` and `tls_privkey` options (or the `_file` equivalents), specifying a PEM certificate (chain) and PEM private key. If you use [separate requestor and app endpoints](#http-server-endpoints), additionally use `client_tls_cert` and `client_tls_privkey`.
 
 Alternatively, if your IRMA server is connected to the internet through a reverse proxy then your reverse proxy probably handles TLS for you.
+
+### Outgoing HTTP proxies
+
+The IRMA server makes outbound HTTP requests of its own: it downloads [IRMA schemes](#irma-schemes), fetches [revocation](revocation.md) updates, and posts session results to the `callbackUrl` and the next-session URL of a session request.
+
+From irmago [v1.3.1](https://github.com/privacybydesign/irmago/releases/tag/v1.3.1) onwards, all of these honour the standard proxy environment variables ([irmago#439](https://github.com/privacybydesign/irmago/pull/439)):
+
+* `HTTP_PROXY` — the proxy to use for plain HTTP requests.
+* `HTTPS_PROXY` — the proxy to use for HTTPS requests.
+* `NO_PROXY` — a comma-separated list of hosts that must be reached directly. Each entry is a domain name, an IP address, an IP address prefix in CIDR notation, or `*` to disable proxying altogether.
+
+The lowercase spellings `http_proxy`, `https_proxy` and `no_proxy` are accepted as well. Each proxy value is either a complete URL or a `host[:port]` pair. Requests to `localhost` and to loopback addresses are never sent to a proxy, and the environment is read once per process, so changing these variables requires a server restart.
+
+Up to and including irmago v1.3.0 these variables were ignored for the requests listed above, while the rest of irmago already honoured them. If you run the IRMA server behind an egress proxy, upgrading to v1.3.1 changes which route those requests take.
+
+Session results contain the attributes that were disclosed, so a session result posted to a `callbackUrl` through a proxy is personal data passing through that proxy. If your proxy is not part of your own trusted infrastructure, you ***must*** exclude your requestor callback endpoints, and any revocation or keyshare server you operate yourself, with `NO_PROXY`.
 
 ### Logging and verbosity
 
