@@ -3,3 +3,5 @@
 **/.git
 **/.DS_Store
 website/build
+**/.docusaurus
+**/build
