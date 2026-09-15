@@ -41,7 +41,7 @@ tags: [yivi, eudi-wallet, openid4vci, arf, credentials, analysis]
   [data-theme='dark'] .ci-pill.ci-v-replace { color: #98a1b3; background: #1d222c; }
 `}</style>
 
-## You change departments
+## A new credential can mean two things
 
 You transfer from Finance to Legal. Your employer issues a fresh employee credential with your new department. That is exactly what should happen.
 
@@ -245,7 +245,7 @@ The result carries no more context than a first-time issuance. The provider must
 
 ## Technical details
 
-The following details explain why Yivi hashes type, issuer, and attributes, and why protocol identifiers do not fill the missing relationship. They support the rule; they do not determine validity.
+The following details explain why Yivi hashes type, issuer, and attributes, and why the issuer input must remain stable. They support the rule; they do not determine validity.
 
 ### Why type and issuer both matter
 
@@ -261,29 +261,21 @@ Consider two `age_verification` credentials that say `age_over_18: true`. One co
 
 They make the same statement, but at different trust levels. A verifier may accept one issuer and reject the other, as the [trust levels post](/blog/who-vouches-for-you) explains.
 
-### Why issuance identifiers do not replace revocation
+### Why issuers are fragile
 
-IRMA, the protocol Yivi grew out of, lets a credential type be marked as a singleton. The wallet then replaces every previous instance when another credential of that type arrives.
+The hash assumes that Yivi derives the same identity every time the same provider issues a credential. That assumption is more fragile than it looks.
 
-That shortcut fails for diplomas, employee roles, and other types that may have one valid instance or several. Revocation targets the exact credential that became obsolete.
+For SD-JWT VC, a changed `iss` value changes the issuer input. For mdoc, a changed name in the signing certificate can do the same.
 
-Several EUDI and OpenID4VCI identifiers look like replacement signals, but each identifies a type or one delivery:
+When the credential issuer URL is the fallback, a new domain, path, or trailing slash can also produce a different issuer identity.
 
-**[`credential_configuration_id`][vci-terminology].** This describes a kind of credential. Two email addresses and a corrected address can all use the same configuration.
+If the type and attributes stay the same but the derived issuer identity changes, the complete hash changes. Yivi then treats the new technical credentials as a different logical credential.
 
-**[`credential_identifiers`][vci-token-response].** These can identify datasets only within the access token returned for that authorization. A later issuance cannot use them to refer to a stored credential.
+The new credential may still be valid and verifiable. The failure is local continuity: the incoming batch no longer replaces the existing card, so the wallet keeps both.
 
-**[SD-JWT VC type metadata][sdjwt-type-metadata].** This describes claims and presentation. It does not say how many instances a person may hold or whether one supersedes another.
+Rotating keys or certificates is harmless to grouping only when the issuer identity that Yivi derives remains unchanged.
 
-**[`credential_reuse_policy`][issu-39].** This selects a reuse method. Related requirements define batch size and re-issuance timing, but do not relate two logical credentials.
-
-**[The credential itself][sdjwt-registered-claims].** It has no stable credential identifier that survives re-issuance. The `sub` claim identifies the subject, not the credential.
-
-In OpenID4VCI, a Credential Dataset is a set of claims about a subject. A department transfer and an additional department both create a new dataset.
-
-The model expresses no relationship between those datasets. Available identifiers name a **type** or a **delivery**, not a logical credential over time.
-
-That absence does not make replacement a wallet decision. During ordinary issuance, revocation of the exact old credential is the authoritative signal that it became obsolete.
+Today, issuers must keep that identity stable across renewals. Supporting intentional changes would require an explicit migration or alias mechanism; content hashing alone cannot connect the old and new identities.
 
 ## If you issue credentials
 
@@ -292,6 +284,7 @@ Credential replacement starts with the issuer:
 1. Issue the updated credential.
 2. Revoke the obsolete technical copies when their claims are no longer true.
 3. Support automatic refresh so the wallet can update its local record without interrupting the user.
+4. Keep the issuer identity stable across renewals as much as possible.
 
 Do not rely on matching type, issuer, or attributes to make a wallet invalidate an old credential. Those fields cannot distinguish a department transfer from an additional department.
 
@@ -303,14 +296,12 @@ If you run an issuer and want to discuss your re-issuance flow, or think we have
 
 ## Sources
 
-* [OpenID for Verifiable Credential Issuance 1.0](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-final.html) — Credential Configuration and Credential Dataset terminology, batch issuance, and refreshing issued credentials
+* [OpenID for Verifiable Credential Issuance 1.0](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-final.html) — batch issuance and refreshing issued credentials
 * [EUDI Architecture and Reference Framework](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework) — logical versus technical attestations, [`VCR_03`][vcr-03], [`VCR_09`][vcr-09], [`VCR_19`][vcr-19], [`ISSU_59`][issu-59], [`ISSU_62`][issu-62], [`ISSU_65`][issu-65], [`PAD_02`][pad-02]
 * [ARF discussion topic B: re-issuance and batch issuance of PIDs and attestations](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/blob/main/docs/discussion-topics/b-re-issuance-and-batch-issuance-of-pids-and-attestations.md)
-* [SD-JWT-based Verifiable Credentials](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/) — type metadata and the issuer-identifier tracking considerations
-* ETSI TS 119 472-3 — `credential_reuse_policy`
+* [SD-JWT-based Verifiable Credentials](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/) — `vct` and `iss` claims
 * [Who vouches for you? How the Yivi wallet will decide whom to trust](/blog/who-vouches-for-you)
 
-[issu-39]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_39
 [issu-59]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_59
 [issu-62]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_62
 [issu-65]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_65
@@ -318,7 +309,3 @@ If you run an issuer and want to discuss your re-issuance flow, or think we have
 [vcr-03]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#VCR_03
 [vcr-09]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#VCR_09
 [vcr-19]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#VCR_19
-[vci-terminology]: https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-final.html#name-terminology
-[vci-token-response]: https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-final.html#name-successful-token-response
-[sdjwt-type-metadata]: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc#name-sd-jwt-vc-type-metadata
-[sdjwt-registered-claims]: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc#name-registered-jwt-claims
