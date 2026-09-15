@@ -8,3 +8,4 @@ services:
     volumes:
       - ./yivi-docs:/app
       - /app/node_modules
+      - /app/.docusaurus

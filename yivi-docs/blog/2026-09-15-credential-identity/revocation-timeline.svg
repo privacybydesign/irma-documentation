@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="878" height="338" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="440" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Revocation, step by step</text>
+  <text x="440" y="64" text-anchor="middle" font-size="13" fill="#64748b">What each party does after you transfer departments</text>
+
+  <!-- Party headers -->
+  <rect x="56" y="84" width="362" height="26" rx="13" fill="#eaf1fb" stroke="#3b6fd4" stroke-width="1.3"/>
+  <text x="237" y="101" text-anchor="middle" font-size="11.5" font-weight="700" letter-spacing="0.6" fill="#1e3a8a">PROVIDER &#183; the only party that can revoke &#183; VCR_03</text>
+  <rect x="458" y="84" width="362" height="26" rx="13" fill="#e7f6ee" stroke="#2e9e6b" stroke-width="1.3"/>
+  <text x="639" y="101" text-anchor="middle" font-size="11.5" font-weight="700" letter-spacing="0.6" fill="#14532d">WALLET &#183; follows the status the provider publishes</text>
+
+  <!-- Step 1 -->
+  <rect x="56" y="124" width="170" height="104" rx="10" fill="#eaf1fb" stroke="#3b6fd4" stroke-width="1.5"/>
+  <circle cx="82" cy="150" r="14" fill="#3b6fd4"/>
+  <text x="82" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">1</text>
+  <text x="72" y="190" font-size="13.5" font-weight="700" fill="#0f172a">Issues new credential</text>
+  <text x="72" y="210" font-size="11.5" fill="#475569">department: Legal</text>
+
+  <!-- Step 2 -->
+  <rect x="248" y="124" width="170" height="104" rx="10" fill="#eaf1fb" stroke="#3b6fd4" stroke-width="1.5"/>
+  <circle cx="274" cy="150" r="14" fill="#3b6fd4"/>
+  <text x="274" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">2</text>
+  <rect x="300" y="139" width="62" height="22" rx="11" fill="#ffffff" stroke="#3b6fd4" stroke-width="1.2"/>
+  <text x="331" y="154" text-anchor="middle" font-size="11" font-weight="700" fill="#1e3a8a">VCR_09</text>
+  <text x="264" y="190" font-size="13.5" font-weight="700" fill="#0f172a">Revokes old copies</text>
+  <text x="264" y="210" font-size="11.5" fill="#475569">the copies it signed</text>
+
+  <!-- Step 3 -->
+  <rect x="458" y="124" width="170" height="104" rx="10" fill="#e7f6ee" stroke="#2e9e6b" stroke-width="1.5"/>
+  <circle cx="484" cy="150" r="14" fill="#2e9e6b"/>
+  <text x="484" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">3</text>
+  <rect x="510" y="139" width="62" height="22" rx="11" fill="#ffffff" stroke="#2e9e6b" stroke-width="1.2"/>
+  <text x="541" y="154" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">VCR_19</text>
+  <text x="474" y="190" font-size="13.5" font-weight="700" fill="#0f172a">Checks status</text>
+  <text x="474" y="210" font-size="11.5" fill="#475569">and notifies you</text>
+
+  <!-- Step 4 -->
+  <rect x="650" y="124" width="170" height="104" rx="10" fill="#e7f6ee" stroke="#2e9e6b" stroke-width="1.5"/>
+  <circle cx="676" cy="150" r="14" fill="#2e9e6b"/>
+  <text x="676" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff">4</text>
+  <rect x="702" y="139" width="68" height="22" rx="11" fill="#ffffff" stroke="#2e9e6b" stroke-width="1.2"/>
+  <text x="736" y="154" text-anchor="middle" font-size="11" font-weight="700" fill="#14532d">ISSU_62</text>
+  <text x="666" y="190" font-size="13.5" font-weight="700" fill="#0f172a">Stops presenting</text>
+  <text x="666" y="210" font-size="11.5" fill="#475569">and should delete it</text>
+
+  <!-- Flow -->
+  <path d="M228 176 L242 176" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M420 176 L452 176" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M630 176 L644 176" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Caveats -->
+  <rect x="48" y="252" width="784" height="72" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="440" y="276" text-anchor="middle" font-size="13" font-weight="600" fill="#0f172a">Revocation does not name the replacement &#8212; it only makes the former statement invalid.</text>
+  <text x="440" y="296" text-anchor="middle" font-size="12.5" fill="#475569">A verifier that checks status rejects any surviving copy.</text>
+  <text x="440" y="314" text-anchor="middle" font-size="12.5" fill="#475569">VCR_09 binds only a revocable credential still valid for at least 24 hours; otherwise expiry limits the overlap.</text>
+</svg>
