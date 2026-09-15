@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 350" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="878" height="348" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="440" y="40" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">Where the answer exists, and where it is thrown away</text>
+  <text x="440" y="64" text-anchor="middle" font-size="13" fill="#64748b">One re-issuance, left to right</text>
+
+  <!-- Stage 1: issuance starts -->
+  <rect x="40" y="92" width="230" height="100" rx="10" fill="#e7f6ee" stroke="#2e9e6b" stroke-width="1.5"/>
+  <text x="155" y="124" text-anchor="middle" font-size="15" font-weight="600" fill="#14532d">Issuance starts</text>
+  <text x="155" y="148" text-anchor="middle" font-size="12" fill="#475569">refresh token, bound to the</text>
+  <text x="155" y="166" text-anchor="middle" font-size="12" fill="#475569">credential it refreshes</text>
+
+  <!-- Stage 2: issuer signs -->
+  <rect x="325" y="92" width="230" height="100" rx="10" fill="#eaf1fb" stroke="#3b6fd4" stroke-width="1.5"/>
+  <text x="440" y="124" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a8a">Issuer signs</text>
+  <text x="440" y="148" text-anchor="middle" font-size="12" fill="#475569">fresh keys, fresh timestamps,</text>
+  <text x="440" y="166" text-anchor="middle" font-size="12" fill="#475569">attribute values may differ</text>
+
+  <!-- Stage 3: wallet stores -->
+  <rect x="610" y="92" width="230" height="100" rx="10" fill="#fdf3e3" stroke="#d99a2b" stroke-width="1.5"/>
+  <text x="725" y="124" text-anchor="middle" font-size="15" font-weight="600" fill="#7c4a03">Wallet stores</text>
+  <text x="725" y="148" text-anchor="middle" font-size="12" fill="#475569">hash(type, issuer, attributes)</text>
+  <text x="725" y="166" text-anchor="middle" font-size="12" fill="#475569">same hash means replace</text>
+
+  <!-- Flow arrows -->
+  <path d="M270 142 L319 142" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M555 142 L604 142" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Tags -->
+  <rect x="70" y="208" width="170" height="26" rx="13" fill="#e7f6ee" stroke="#2e9e6b" stroke-width="1.2"/>
+  <text x="155" y="226" text-anchor="middle" font-size="12" font-weight="600" fill="#14532d">the answer is here</text>
+
+  <rect x="640" y="208" width="170" height="26" rx="13" fill="#fdf3e3" stroke="#d99a2b" stroke-width="1.2"/>
+  <text x="725" y="226" text-anchor="middle" font-size="12" font-weight="600" fill="#7c4a03">the answer is gone</text>
+
+  <!-- Dropped binding -->
+  <path d="M155 234 L155 272 L412 272" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="6 5"/>
+  <path d="M424 265 L438 279 M438 265 L424 279" stroke="#dc2626" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="456" y="268" font-size="12.5" fill="#475569">the link to the credential being replaced</text>
+  <text x="456" y="286" font-size="12.5" fill="#475569">never reaches the storage step</text>
+
+  <text x="440" y="326" text-anchor="middle" font-size="13" fill="#475569">So the wallet asks "is this the same content?" when it could have been told "this replaces that one".</text>
+</svg>
