@@ -87,6 +87,20 @@ Type, provider, attribute values. The same three.
 
 This gets renewals right, and renewals are the common case by a wide margin. Credentials expire. Batches of single-use copies run out, and the wallet goes back to the issuer for more. The issuer signs fresh copies with fresh keys and fresh timestamps — and **the attribute values do not move**, because not moving is what makes it a renewal. An age credential says `age_over_18: true` for as long as it exists. So the hash matches, the new copies replace the old, and you hold one card rather than twelve. OpenID4VCI is blunt about the alternative: a wallet that files every issuance as new "might end up with more than one Credential of the same type, without knowing which one is the latest".
 
+## The two names on a credential
+
+Two of those three inputs are less obvious than they look, and most of what follows turns on them, so they are worth pinning down.
+
+**The type** says what kind of credential this is — not who it is about, not who issued it. Every credential of a type carries the same claim structure, so knowing the type tells you what questions the credential can answer. In SD-JWT VC it is the `vct` claim, a string that is usually an HTTPS URL, and that URL commonly resolves to the type metadata document describing the type's claims and how they should be displayed. In mdoc it is the `docType`, a dotted name like `org.iso.18013.5.1.mDL`, with no document behind it. Either way the type is a *kind*, shared by every credential of that kind in the world.
+
+**The issuer** sounds like the simplest field on a credential, and it is not a field at all. It is a name the wallet has to work out, and each format answers differently:
+
+* **SD-JWT VC** carries an `iss` claim, and when it is present that is the answer. When it is absent, the issuer is whoever the certificate that signed the credential names.
+* **mdoc** has no issuer field in the document whatsoever. Issuer identity lives entirely in the certificate chain the document was signed under.
+* When neither yields a usable name, what is left is the credential issuer URL from the issuance protocol — the endpoint the wallet fetched the credential from.
+
+So "the issuer" in the rule above is not a value read off the credential. It is a name *derived* from it, by a procedure that differs per format and that occasionally has to fall back on where the credential came from rather than who signed it. Every use of the issuer in the rest of this post — including the question of whether two credentials are the same credential at all — rests on that derivation being stable. We will come back to what happens when it is not.
+
 ## Why the issuer has to be in there
 
 Two credentials, both of type `age_verification`, each carrying exactly one claim: `age_over_18: true`. Byte for byte, their claims are identical. One is issued by the Dutch state; the other by a supermarket's loyalty programme.
@@ -237,15 +251,15 @@ OpenID4VCI describes two ways a credential gets updated. In the first, the walle
 
 So at the moment the session starts, the wallet knows the answer. It then discards it, and tries to reconstruct it at storage time by comparing hashes, which cannot work. Comparing content after the fact cannot recover information that was available at the start and thrown away.
 
-The fix follows: carry "this issuance replaces credential X" through the session from the moment it begins, and act on it when storing. Not implemented in Yivi today, and stated here as where this has to go rather than as a shipped feature. Today a re-issuance that changes an attribute value leaves both credentials in the wallet, and nothing at issuance time tells you the new one differs from the one you already hold — a second missed requirement, since `ISSU_59` says the wallet SHALL compare the values and notify you of any differences.
+The mechanism follows: carry "this issuance replaces credential X" through the session from the moment it begins, and act on it when storing. Where a refresh token is what started the session, that is dependable — the binding is already there, and all that is needed is not throwing it away.
 
-## What that would not fix
+It stops being dependable the moment the user starts the issuance themselves. Opening a universal link, scanning a QR code on the issuer's website, tapping through from an email: each of these produces an ordinary authorization rather than a refresh, and the session begins with nothing bound to it. The wallet receives a credential carrying no more context than any first-time issuance does. Someone re-issuing their own PID after moving house is doing precisely this — which puts the mechanism at its weakest in the case that motivated it.
 
-Now the uncomfortable half. OpenID4VCI's *second* update path is ordinary issuance, started over from the beginning with the user involved. There is no refresh token, no binding, nothing to carry.
+It is also why `ISSU_59` is a harder requirement than it reads. It obliges a wallet to compare a re-issued credential's attribute values against "those of the existing" one and notify the user of any difference, and in doing so quietly presupposes that the wallet knows which of the credentials it holds is *the existing* one. That is exactly what is not being carried.
 
-That path is the scene this post opened with. You move house, you go through issuance again, and the wallet receives a PID with no more context than any first-time issuance carries. Carrying the intent through the session fixes the automatic refresh, which is real and worth doing. It does not fix the case where you did it by hand.
+## What is still missing
 
-Closing that one needs something the specifications do not currently have: a way for an issuance to say *this supersedes that*, surviving across sessions, naming a logical credential rather than a type or a delivery. It is a small thing to add to a data model and a large thing to add to a data model that has already shipped. Until then, every wallet in the ecosystem is guessing in the same band, and content identity is the best guess available — right for renewals, right for different issuers, silent in the middle.
+Closing the user-initiated case needs something the specifications do not currently have: a way for an issuance to say *this supersedes that*, surviving across sessions, naming a logical credential rather than a type or a delivery. It is a small thing to add to a data model and a large thing to add to a data model that has already shipped. Until then, every wallet in the ecosystem is guessing in the same band, and content identity is the best guess available — right for renewals, right for different issuers, silent in the middle.
 
 ## The mirror image
 
@@ -255,7 +269,7 @@ The identity rule is only as stable as the issuer name we feed it. If an issuer'
 
 That is the same disease with the symptom reversed. In the blind band, two different credentials look identical to the wallet. Here, one credential fails to be recognised as itself. Both are the wallet having no durable notion of a logical credential over time.
 
-We should be honest about where our own footing is weakest. SD-JWT VC gives us the `iss` claim, and the signing certificate when it is absent. **mdoc has no issuer field in the document at all** — issuer identity lives in the certificate chain — and we currently fall back to the credential issuer URL from the issuance protocol, which names the endpoint the wallet fetched from rather than the entity that signed the document. That is a fallback, not an answer, and making it a real one is on us rather than on the specs.
+We should be honest about which of the three ways of naming an issuer is weakest, and it is the last one. The credential issuer URL names the endpoint the wallet fetched from, not the entity that signed the document. Those are usually the same party, and nothing requires them to be. That is a fallback, not an answer, and turning it into one is on us rather than on the specs.
 
 Worth noting too that SD-JWT VC treats a shifting issuer identifier as a warning sign rather than routine churn: its security considerations describe issuers that rotate identifiers, or use a different one per holder, as a tracking risk verifiers should watch for. An issuer name that moves is something to notice, not something to normalise away.
 
