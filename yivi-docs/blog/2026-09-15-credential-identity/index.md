@@ -55,11 +55,17 @@ The wallet is using all the information it received. The issuance simply did not
 
 These two cards are not interchangeable. One contains an address that is no longer true, yet the wallet offers both as equals until the old credential expires.
 
-The ARF assigns this job to the wallet. `ISSU_62` says it SHALL stop presenting an obsolete credential and SHOULD delete it. But the wallet first needs to know which credential became obsolete.
+The ARF assigns this job to the wallet. [`ISSU_62`][issu-62] says it SHALL stop presenting an obsolete credential and SHOULD delete it. But the wallet first needs to know which credential became obsolete.
 
 :::
 
 ## One decision hides two questions
+
+Here, a **logical credential** is the unit shown to the user as one card: one credential type from one provider with one set of attribute values.
+
+Behind that card, the wallet may store several signed technical copies. Their salts, keys, signatures, and validity timestamps may differ, but each makes the same statement.
+
+When attribute values change, the result is a new logical credential. The remaining question is whether it supersedes an old logical credential or belongs beside it.
 
 When a credential arrives, the wallet must make one practical decision:
 
@@ -69,8 +75,8 @@ Answer *yes* incorrectly and the wallet deletes something you needed. Answer *no
 
 That decision hides two different questions:
 
-1. Does it have the same **content identity** as a credential already stored?
-2. Does it **supersede** a credential already stored?
+1. Does it have the same **content identity**, and therefore belong to the same logical credential, as something already stored?
+2. Does it **supersede** a logical credential already stored?
 
 Content identity is calculated from the credential itself. Supersession is a relationship between an old issuance and a new one.
 
@@ -88,7 +94,7 @@ The wallet hashes those inputs. If the hash matches, the new batch replaces the 
 
 The hash omits salts, digests, holder keys, signatures, and validity timestamps. Those values change between issuances, even when the logical credential does not.
 
-The ARF describes the same rule in a note attached to `PAD_02`:
+The ARF describes the same rule in a note attached to [`PAD_02`][pad-02]:
 
 > Physical PIDs or attestations correspond to a logical one if they have not only the same attestation type and **Provider**, but also the same attribute values.
 
@@ -230,6 +236,20 @@ Content identity handles the first two and last two rows correctly. Matching con
 
 The middle three rows share one observable shape but require different outcomes. With the current data model, no wallet can resolve **same type, same issuer, different attribute values** in every case.
 
+## Replacement is not revocation
+
+When changed values make an old credential obsolete, replacement and revocation do different jobs.
+
+Under ARF [`VCR_09`][vcr-09], a provider must revoke a revocable PID or attestation when its attributes changed and it would otherwise remain valid for at least 24 hours.
+
+ARF [`ISSU_62`][issu-62] separately requires the wallet to stop presenting the obsolete credential and recommends deleting it. Deletion changes local storage; revocation changes the status published by the issuer.
+
+If an old technical copy survives, a verifier that checks its status can reject it after revocation. But the status only says that the copy is no longer valid. It does not identify its replacement.
+
+Revocation can mark an obsolete credential as invalid, but it cannot tell the wallet which new logical credential supersedes it.
+
+For a revocable, longer-lived credential, a complete update needs both the correct replacement link and revocation of the old copies.
+
 ## Why the credential cannot close the gap
 
 IRMA, the protocol Yivi grew out of, has a partial answer. A credential type can be marked as a singleton, so issuing a new one replaces every previous instance of that type.
@@ -244,7 +264,7 @@ The EUDI specifications contain no such relationship. Several identifiers look p
 
 **SD-JWT VC type metadata.** This describes a type's claims and presentation. It says nothing about how many instances a person may hold or whether one supersedes another.
 
-**`credential_reuse_policy`** (ARF `ISSU_39`, ETSI TS 119 472-3). This controls technical copies, batch size, and refresh triggers. It does not relate two logical credentials.
+**`credential_reuse_policy`** (ARF [`ISSU_39`][issu-39], ETSI TS 119 472-3). This selects a reuse method. Related requirements define batch size and re-issuance timing. None relates two logical credentials.
 
 **The credential itself.** It has no stable credential identifier that survives re-issuance. The `sub` claim identifies the subject, not the credential.
 
@@ -252,21 +272,27 @@ The OpenID4VCI data model exposes the underlying problem. A Credential Dataset i
 
 The model expresses no relationship between those datasets. It cannot say that one supersedes another. Every available identifier names a **type** or a **delivery**, not a logical credential over time.
 
-Yet the ARF requires the missing behavior. `ISSU_62` says a wallet SHALL stop presenting an obsolete credential, while `ISSU_59` says it SHALL compare old and new values and notify the user.
+Yet the ARF requires the missing behavior. [`ISSU_62`][issu-62] says a wallet SHALL stop presenting an obsolete credential, while [`ISSU_59`][issu-59] says it SHALL compare old and new values and notify the user.
 
 Both requirements assume the wallet already knows which stored credential is the old one. The data model gives it no general way to know.
 
-## The issuance sometimes carries the answer
+## A refresh can preserve a local answer
 
-The missing relationship can exist in the issuance context even when it is absent from the credential.
+The missing relationship can exist in the wallet's local issuance context even when neither the protocol nor the credential carries it.
 
-![A refresh begins with a stored credential, but its identity is lost before the new copies reach storage.](./reissuance-timeline.svg)
+![Yivi can start a refresh from a stored credential, but lose that local association before the new copies reach storage.](./reissuance-timeline.svg)
 
-In a refresh, the wallet uses an existing token to fetch a new version of a credential it already holds. ARF `ISSU_65` requires the provider to return it to the same wallet unit.
+OpenID4VCI lets a wallet obtain an updated credential with a valid access token, or by using a refresh token to obtain one.
 
-The refresh begins with a specific stored credential. At that moment, the wallet knows what the result should replace. Today, Yivi loses that context and later tries to reconstruct it from the content hash.
+For a device-bound PID or attestation, ARF [`ISSU_65`][issu-65] requires the provider to verify that the re-issued technical PID or attestation goes to the same Wallet Unit.
 
-Yivi can improve this path by carrying “this issuance replaces credential X” through the session and using it during storage. Content comparison cannot recover that information after it has been discarded.
+Neither the refresh mechanism nor `ISSU_65` identifies a particular stored credential as the predecessor. A refresh token is not, by itself, a stable pointer to one logical credential.
+
+Yivi can still know more locally. If the wallet starts a refresh from a stored credential and retains that association, it can carry “this issuance replaces credential X” through the session and use it during storage.
+
+Today, Yivi discards that context and later tries to reconstruct it from the content hash. Content comparison cannot recover the association after it has been discarded.
+
+That makes refresh an implementation opportunity, not a protocol-level supersession signal.
 
 User-initiated issuance is different. A universal link, QR code, or link in an email starts an ordinary authorization with no stored credential attached.
 
@@ -280,19 +306,28 @@ That is a small concept and a substantial change to a data model that has alread
 
 ## If you issue credentials
 
-Issuers can already preserve the answer in one important case.
+Issuers can support the one case where a wallet may already hold useful context.
 
-**When changed attributes require re-issuance, use the refresh path instead of starting a fresh authorization.** A refresh lets the wallet retain the identity of what is being replaced. A new authorization makes it guess.
+**When changed attributes require re-issuance, support refresh instead of forcing a fresh authorization.** A wallet can then preserve an association it already holds between the refresh session and a stored credential.
 
-Content identity remains the best fallback: it handles unchanged renewals and separates issuers correctly. In the blind band, preserving issuance context is the only reliable signal available today.
+Refresh alone does not create that association, so an issuer should not assume that it tells the wallet what to replace.
+
+Content identity remains the best fallback: it handles unchanged renewals and separates issuers correctly. Within a Yivi-managed refresh, retaining the local association supplies the missing signal. Other issuance paths remain ambiguous.
 
 If you run an issuer and want to talk about how your re-issuance flow behaves, or you think we have this wrong, we would like to hear it: [support@yivi.app](mailto:support@yivi.app).
 
 ## Sources
 
-* [OpenID for Verifiable Credential Issuance 1.0](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) — Credential Configuration and Credential Dataset terminology, batch issuance, and refreshing issued credentials
-* [EUDI Architecture and Reference Framework](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework) — logical versus technical attestations, `ISSU_59`, `ISSU_62`, `ISSU_65`, `PAD_02`
+* [OpenID for Verifiable Credential Issuance 1.0](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-final.html) — Credential Configuration and Credential Dataset terminology, batch issuance, and refreshing issued credentials
+* [EUDI Architecture and Reference Framework](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework) — logical versus technical attestations, [`VCR_09`][vcr-09], [`ISSU_59`][issu-59], [`ISSU_62`][issu-62], [`ISSU_65`][issu-65], [`PAD_02`][pad-02]
 * [ARF discussion topic B: re-issuance and batch issuance of PIDs and attestations](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/blob/main/docs/discussion-topics/b-re-issuance-and-batch-issuance-of-pids-and-attestations.md)
 * [SD-JWT-based Verifiable Credentials](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/) — type metadata and the issuer-identifier tracking considerations
 * ETSI TS 119 472-3 — `credential_reuse_policy`
 * [Who vouches for you? How the Yivi wallet will decide whom to trust](/blog/who-vouches-for-you)
+
+[issu-39]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_39
+[issu-59]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_59
+[issu-62]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_62
+[issu-65]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_65
+[pad-02]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#PAD_02
+[vcr-09]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#VCR_09
