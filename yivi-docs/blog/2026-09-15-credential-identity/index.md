@@ -1,11 +1,11 @@
 ---
 slug: same-credential
-title: "Is this the same credential? How the Yivi wallet decides what to replace, and where it cannot tell"
+title: "The Credential Replacement Problem"
 authors: [wouterensink]
 tags: [yivi, eudi-wallet, openid4vci, arf, credentials, analysis]
 ---
 
-*Every new credential forces a wallet to decide what it replaces. This post explains Yivi's rule, why the issuer matters, and where today's specifications leave every wallet guessing.*
+*An issuer knows when a credential has become obsolete. This post explains why revocation should drive replacement, and why Yivi should only infer it during an automatic background refresh.*
 
 <!-- truncate -->
 
@@ -41,48 +41,50 @@ tags: [yivi, eudi-wallet, openid4vci, arf, credentials, analysis]
   [data-theme='dark'] .ci-pill.ci-v-replace { color: #98a1b3; background: #1d222c; }
 `}</style>
 
-## You move house
+## You change departments
 
-You move house. A few weeks later, your PID provider issues a fresh PID with your new address. That is exactly what should happen.
+You transfer from Finance to Legal. Your employer issues a fresh employee credential with your new department. That is exactly what should happen.
 
-Your wallet now holds two PIDs. One says Oude Gracht 1; the other says Nieuwe Gracht 5. Both are validly signed, neither has expired, and neither says which one is current.
+Your wallet now holds two employee credentials. One says Finance; the other says Legal. The old credential is still signed, unexpired, and not revoked.
 
-The next time a verifier asks where you live, the wallet offers both. It presents your former address as an equally legitimate answer and asks you to choose.
+The next time a verifier asks for your department, the wallet may offer both. Your employer has left Finance valid, so the wallet has no authoritative reason to suppress it.
 
-The wallet is using all the information it received. The issuance simply did not say that the new PID supersedes the old one. Today's specifications provide no general way to say so.
+![Two employee credentials in the wallet after a department transfer. Both have the same type and employer and are signed, unexpired and not revoked, so either can be offered.](./two-valid-employee-credentials.svg)
 
-:::warning An obsolete credential is more than clutter
+This is an issuer-side failure. The employer knows which credential contains your former department. When it issues the updated credential, it should revoke the obsolete one.
 
-These two cards are not interchangeable. One contains an address that is no longer true, yet the wallet offers both as equals until the old credential expires.
+:::warning Replacement starts with the issuer
 
-The ARF assigns this job to the wallet. [`ISSU_62`][issu-62] says it SHALL stop presenting an obsolete credential and SHOULD delete it. But the wallet first needs to know which credential became obsolete.
+The ARF assigns complementary jobs. [`VCR_03`][vcr-03] makes the PID or attestation provider the only ecosystem party responsible for executing revocation.
+
+Under [`VCR_09`][vcr-09], that provider revokes an applicable credential after its attributes change. Under [`VCR_19`][vcr-19], the wallet should regularly check status and notify the user.
 
 :::
 
-## One decision hides two questions
+## Replacement hides two mechanisms
 
 Here, a **logical credential** is the unit shown to the user as one card: one credential type from one provider with one set of attribute values.
 
 Behind that card, the wallet may store several signed technical copies. Their salts, keys, signatures, and validity timestamps may differ, but each makes the same statement.
 
-When attribute values change, the result is a new logical credential. The remaining question is whether it supersedes an old logical credential or belongs beside it.
+![One logical credential shown as a card, backed by four signed technical copies. Type, issuer and attribute values are identical across the copies and are the three inputs Yivi hashes; salts, digests, holder keys, signatures and validity timestamps differ per copy and are omitted.](./logical-credential.svg)
 
-When a credential arrives, the wallet must make one practical decision:
+When attribute values change, the result is a new logical credential. The issuer determines whether an older credential remains valid by leaving it valid, letting it expire, or revoking it.
 
-> **Does this replace what I already hold?**
+The wallet has a narrower decision when signed copies arrive during an automatic background refresh:
 
-Answer *yes* incorrectly and the wallet deletes something you needed. Answer *no* incorrectly and it keeps an obsolete credential without telling you which one is current.
+> **Do these copies refresh a logical credential already stored?**
 
-That decision hides two different questions:
+The word *replacement* therefore covers two different mechanisms:
 
-1. Does it have the same **content identity**, and therefore belong to the same logical credential, as something already stored?
-2. Does it **supersede** a logical credential already stored?
+1. **Content identity** groups new technical copies with the same logical credential during refresh.
+2. **Revocation status** tells wallets and verifiers that an old logical credential is no longer valid.
 
-Content identity is calculated from the credential itself. Supersession is a relationship between an old issuance and a new one.
+Content identity is calculated from the credential. Revocation is an issuer action on a credential it previously issued.
 
-For a routine renewal, both answers are *yes*. For a second email address, both are *no*. After a change of address, the answers are *no* and *yes*. That last combination is where wallets become blind.
+For a routine renewal, fresh copies refresh the stored batch. A second department may remain valid beside the first. After a transfer, the employer issues a new credential and revokes the old one.
 
-## How the wallet decides today
+## What content matching can decide
 
 Yivi treats an arriving credential as another copy of a stored logical credential when three things match:
 
@@ -90,7 +92,7 @@ Yivi treats an arriving credential as another copy of a stored logical credentia
 2. the **issuer**,
 3. the **attribute values**.
 
-The wallet hashes those inputs. If the hash matches, the new batch replaces the stored batch. If it differs, the wallet keeps both.
+The wallet hashes those inputs. If the hash matches, the new batch can refresh the stored batch. If it differs, the result is a different logical credential.
 
 The hash omits salts, digests, holder keys, signatures, and validity timestamps. Those values change between issuances, even when the logical credential does not.
 
@@ -100,9 +102,11 @@ The ARF describes the same rule in a note attached to [`PAD_02`][pad-02]:
 
 Type, provider, and attribute values: the same three inputs.
 
-This works well for routine renewals. Credentials expire, and batches of single-use copies run out. The wallet returns to the issuer for fresh copies with new keys and timestamps but unchanged attributes.
+This works well for automatic background refresh. Credentials expire, and batches of single-use copies run out. The wallet fetches fresh copies with new keys and timestamps but unchanged attributes.
 
-An age credential, for example, keeps saying `age_over_18: true`. Its hash still matches, so the fresh copies replace the old ones and the wallet shows one card rather than twelve.
+An age credential, for example, keeps saying `age_over_18: true`. Its hash still matches, so the fresh copies refresh the old batch and the wallet shows one card rather than twelve.
+
+In an ordinary issuance, content identity may help group duplicates. It must not decide that a different logical credential has become obsolete. Only the issuer can make that decision through revocation.
 
 OpenID4VCI describes the alternative plainly: a wallet may end up with several credentials of the same type "without knowing which one is the latest".
 
@@ -122,48 +126,50 @@ Consider two `age_verification` credentials that both say `age_over_18: true`. O
 
 They are different statements. A verifier may accept one issuer and refuse the other. Merging the credentials would discard the source of their authority, as the [trust levels post](/blog/who-vouches-for-you) explains.
 
-It would also create a security problem because replacement deletes every stored copy and holder-binding key in the old batch.
+It would also create a security problem because refreshing a batch deletes its stored copies and holder-binding keys.
 
-Without the issuer in the hash, any issuer could delete another issuer's credential by issuing the same type and attributes. For a one-boolean age credential, a hostile issuer would not even need to guess the values.
+Without the issuer in the hash, copies from one issuer could be grouped with another issuer's credential. If that grouping replaced the old batch, a hostile issuer could delete it without even guessing the values.
 
 The rule therefore depends on a stable issuer identity. If a domain changes, a certificate uses a different name, or a trailing slash appears, a renewal gets a new hash. The wallet then stores it beside the old batch.
 
-This is the mirror image of the address problem: one logical credential fails to be recognized as itself. Both failures reveal the absence of a durable identity across issuances.
+This is the mirror image of the department problem: one logical credential fails to be recognized as itself. Both failures reveal the absence of a durable identity across issuances.
 
 The credential issuer URL is the weakest fallback. It names the endpoint used to fetch a credential, which need not be the entity that signed it. Treating that URL as identity is a Yivi limitation rather than a specification gap.
 
 SD-JWT VC also treats shifting issuer identifiers as a tracking risk for verifiers to notice. An issuer name that changes is not routine churn that a wallet can safely normalize away.
 
-## Where the rule becomes blind
+## Why the wallet must not guess
 
-Issuer identity prevents different issuers from overwriting each other. Attribute values distinguish many credentials from the same issuer. But changed attributes create one band where identity and replacement diverge.
+Issuer identity prevents different issuers from being grouped together. Attribute values distinguish logical credentials from the same issuer.
+
+Changed attributes still leave the wallet unable to decide whether an older credential remains valid.
 
 <div className="ci-cards">
   <div className="ci-card ci-keep">
-    <div className="ci-title">You add a second email address</div>
+    <div className="ci-title">You join a second department</div>
     <dl>
       <dt>Type</dt><dd>same as one you hold</dd>
       <dt>Issuer</dt><dd>same as one you hold</dd>
       <dt>Attributes</dt><dd><strong>differ</strong> from the stored credential</dd>
     </dl>
-    <div className="ci-verdict">Correct answer: keep both</div>
+    <div className="ci-verdict">Issuer action: keep both valid</div>
   </div>
   <div className="ci-card ci-replace">
-    <div className="ci-title">You move house</div>
+    <div className="ci-title">You transfer departments</div>
     <dl>
       <dt>Type</dt><dd>same as one you hold</dd>
       <dt>Issuer</dt><dd>same as one you hold</dd>
       <dt>Attributes</dt><dd><strong>differ</strong> from the stored credential</dd>
     </dl>
-    <div className="ci-verdict">Correct answer: replace</div>
+    <div className="ci-verdict">Issuer action: revoke the old credential</div>
   </div>
 </div>
 
-You may hold valid credentials for both a personal and a work email address. Adding the second must keep the first. But after you move house, your old home address should be replaced.
+Some employees work in both Finance and Legal. Joining a second department keeps the first credential valid. After a transfer, the employer revokes the credential for the former department.
 
-The wallet observes the same pattern in both cases: same type, same issuer, different attributes. The correct outcomes are opposite.
+The wallet observes the same pattern in both cases: same type, same issuer, different attributes. Only the issuer knows whether the older statement remains true.
 
-Attribute names do not help. A field describes its value, not whether the new credential adds to or replaces one already stored. That relationship is absent from both credentials.
+Attribute names do not help. A field describes its value, not whether an older credential should remain valid. The wallet must follow credential status instead of inferring the issuer's intent.
 
 The complete matrix makes the blind band visible:
 
@@ -175,7 +181,7 @@ The complete matrix makes the blind band visible:
         <th>Type</th>
         <th>Issuer</th>
         <th>Attributes</th>
-        <th>Correct answer</th>
+        <th>Required handling</th>
       </tr>
     </thead>
     <tbody>
@@ -184,99 +190,109 @@ The complete matrix makes the blind band visible:
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-same">Same</span></td>
-        <td><span className="ci-pill ci-v-replace">Replace</span></td>
+        <td><span className="ci-pill ci-v-replace">Refresh copies</span></td>
       </tr>
       <tr>
         <th scope="row">Email credential re-issued unchanged</th>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-same">Same</span></td>
-        <td><span className="ci-pill ci-v-replace">Replace</span></td>
+        <td><span className="ci-pill ci-v-replace">Refresh copies</span></td>
       </tr>
       <tr className="ci-blind">
-        <th scope="row">You move house</th>
+        <th scope="row">You transfer departments</th>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-differ">Differ</span></td>
-        <td><span className="ci-pill ci-v-replace">Replace</span></td>
+        <td><span className="ci-pill ci-v-replace">Revoke old</span></td>
       </tr>
       <tr className="ci-blind">
-        <th scope="row">You add a second email address</th>
+        <th scope="row">You join a second department</th>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-differ">Differ</span></td>
-        <td><span className="ci-pill ci-v-keep">Keep both</span></td>
+        <td><span className="ci-pill ci-v-keep">Keep both valid</span></td>
       </tr>
       <tr className="ci-blind">
         <th scope="row">A second diploma from the same university</th>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-differ">Differ</span></td>
-        <td><span className="ci-pill ci-v-keep">Keep both</span></td>
+        <td><span className="ci-pill ci-v-keep">Keep both valid</span></td>
       </tr>
       <tr>
         <th scope="row">Age credential from the state and from a shop</th>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-differ">Differ</span></td>
         <td><span className="ci-pill ci-same">Same</span></td>
-        <td><span className="ci-pill ci-v-keep">Keep both</span></td>
+        <td><span className="ci-pill ci-v-keep">Keep both valid</span></td>
       </tr>
       <tr>
         <th scope="row">Email attested by your employer and by the state</th>
         <td><span className="ci-pill ci-same">Same</span></td>
         <td><span className="ci-pill ci-differ">Differ</span></td>
         <td><span className="ci-pill ci-same">Same</span></td>
-        <td><span className="ci-pill ci-v-keep">Keep both</span></td>
+        <td><span className="ci-pill ci-v-keep">Keep both valid</span></td>
       </tr>
     </tbody>
   </table>
 </div>
 
-Content identity handles the first two and last two rows correctly. Matching content replaces routine renewals; a different issuer keeps distinct claims apart.
+Content identity handles technical refresh in the first two rows and keeps different issuers apart in the last two.
 
-The middle three rows share one observable shape but require different outcomes. With the current data model, no wallet can resolve **same type, same issuer, different attribute values** in every case.
+The middle three rows share one observable shape but require different issuer actions. A wallet cannot resolve **same type, same issuer, different attribute values** by inspecting content.
 
-## Replacement is not revocation
+It should not try. The issuer must revoke the old credential when its statement is no longer true and leave it valid when both statements remain true.
 
-When changed values make an old credential obsolete, replacement and revocation do different jobs.
+## Revocation is the replacement signal
+
+When changed values make an old credential obsolete, the provider should issue the updated credential and revoke the old one.
+
+![Four steps after a department transfer. The employer issues the updated credential and revokes the old copies under VCR_09; the wallet checks status under VCR_19, then stops presenting the obsolete credential under ISSU_62.](./revocation-timeline.svg)
 
 Under ARF [`VCR_09`][vcr-09], a provider must revoke a revocable PID or attestation when its attributes changed and it would otherwise remain valid for at least 24 hours.
 
-ARF [`ISSU_62`][issu-62] separately requires the wallet to stop presenting the obsolete credential and recommends deleting it. Deletion changes local storage; revocation changes the status published by the issuer.
+The provider controls the status of the credentials it issued. It can invalidate the exact old technical copies without asking the wallet to infer a relationship from the contents of the new credential.
 
-If an old technical copy survives, a verifier that checks its status can reject it after revocation. But the status only says that the copy is no longer valid. It does not identify its replacement.
+After revocation, the old copies are no longer valid. Under [`VCR_19`][vcr-19], the wallet should regularly check their status and notify the user if one is revoked.
 
-Revocation can mark an obsolete credential as invalid, but it cannot tell the wallet which new logical credential supersedes it.
+Under [`ISSU_62`][issu-62], the wallet stops presenting the obsolete credential and should delete it. A verifier that checks status can reject any surviving copy.
 
-For a revocable, longer-lived credential, a complete update needs both the correct replacement link and revocation of the old copies.
+Revocation does not name the replacement. It still solves the safety problem: the former statement is invalid, while the newly issued statement is valid.
 
-## Why the credential cannot close the gap
+[`ISSU_59`][issu-59] also requires the wallet to compare old and new values during re-issuance and notify the user. That comparison needs linked process context, such as an automatic background refresh.
 
-IRMA, the protocol Yivi grew out of, has a partial answer. A credential type can be marked as a singleton, so issuing a new one replaces every previous instance of that type.
+It does not authorize the wallet to compare arbitrary credentials and decide which one the issuer meant to invalidate.
 
-That handles types for which a person can hold only one credential. It fails for diplomas, addresses, and other types that may have one valid instance or several. The needed relationship belongs to the credential, not its type.
+The `VCR_09` mandate applies when the credential is revocable and would remain valid for at least 24 hours. Otherwise, expiry limits the overlap. The wallet still cannot declare it invalid on the issuer's behalf.
 
-The EUDI specifications contain no such relationship. Several identifiers look promising, but each names either a type or one delivery:
+## Issuance identifiers do not replace revocation
 
-**`credential_configuration_id`.** This describes a kind of credential offered by an issuer. Two email addresses and a corrected email address can all use the same configuration.
+IRMA, the protocol Yivi grew out of, lets a credential type be marked as a singleton. The wallet then replaces every previous instance when another credential of that type arrives.
 
-**`credential_identifiers`.** These can identify datasets, but only within the access token returned for that authorization. A later issuance cannot use them to refer back to a stored credential.
+That is a wallet-side shortcut based on the type. It fails for diplomas, employee roles, and other types that may have one valid instance or several. Revocation targets the exact credential that became obsolete.
 
-**SD-JWT VC type metadata.** This describes a type's claims and presentation. It says nothing about how many instances a person may hold or whether one supersedes another.
+Several EUDI and OpenID4VCI identifiers also look like possible replacement signals, but each names either a type or one delivery:
 
-**`credential_reuse_policy`** (ARF [`ISSU_39`][issu-39], ETSI TS 119 472-3). This selects a reuse method. Related requirements define batch size and re-issuance timing. None relates two logical credentials.
+**[`credential_configuration_id`][vci-terminology].** This describes a kind of credential offered by an issuer. Two email addresses and a corrected email address can all use the same configuration.
 
-**The credential itself.** It has no stable credential identifier that survives re-issuance. The `sub` claim identifies the subject, not the credential.
+**[`credential_identifiers`][vci-token-response].** These can identify datasets, but only within the access token returned for that authorization. A later issuance cannot use them to refer back to a stored credential.
 
-The OpenID4VCI data model exposes the underlying problem. A Credential Dataset is a set of claims about a subject. Both a changed address and a second email address create a new dataset.
+**[SD-JWT VC type metadata][sdjwt-type-metadata].** This describes a type's claims and presentation. It says nothing about how many instances a person may hold or whether one supersedes another.
 
-The model expresses no relationship between those datasets. It cannot say that one supersedes another. Every available identifier names a **type** or a **delivery**, not a logical credential over time.
+**[`credential_reuse_policy`][issu-39]** (ARF `ISSU_39`, ETSI TS 119 472-3). This selects a reuse method. Related requirements define batch size and re-issuance timing. None relates two logical credentials.
 
-Yet the ARF requires the missing behavior. [`ISSU_62`][issu-62] says a wallet SHALL stop presenting an obsolete credential, while [`ISSU_59`][issu-59] says it SHALL compare old and new values and notify the user.
+**[The credential itself][sdjwt-registered-claims].** It has no stable credential identifier that survives re-issuance. The `sub` claim identifies the subject, not the credential.
 
-Both requirements assume the wallet already knows which stored credential is the old one. The data model gives it no general way to know.
+The OpenID4VCI data model explains why none can carry the decision. A Credential Dataset is a set of claims about a subject. Both a department transfer and an additional department create a new dataset.
 
-## A refresh can preserve a local answer
+The model expresses no relationship between those datasets. Every available identifier names a **type** or a **delivery**, not a logical credential over time.
+
+That absence does not make replacement a wallet decision. During ordinary issuance, the provider's revocation of the exact old credential is the authoritative signal that it became obsolete.
+
+The missing relationship still matters for the before-and-after comparison in `ISSU_59`. It does not need to determine whether the old credential remains valid.
+
+## Background refresh is the exception
 
 The missing relationship can exist in the wallet's local issuance context even when neither the protocol nor the credential carries it.
 
@@ -288,38 +304,36 @@ For a device-bound PID or attestation, ARF [`ISSU_65`][issu-65] requires the pro
 
 Neither the refresh mechanism nor `ISSU_65` identifies a particular stored credential as the predecessor. A refresh token is not, by itself, a stable pointer to one logical credential.
 
-Yivi can still know more locally. If the wallet starts a refresh from a stored credential and retains that association, it can carry “this issuance replaces credential X” through the session and use it during storage.
+Yivi can still know more locally. If an automatic refresh starts from a stored credential and retains that association, it can carry “this issuance replaces credential X” through the session and use it during storage.
 
 Today, Yivi discards that context and later tries to reconstruct it from the content hash. Content comparison cannot recover the association after it has been discarded.
 
-That makes refresh an implementation opportunity, not a protocol-level supersession signal.
+This is the one path where Yivi can safely replace a local credential from process context. It knows which credential initiated the refresh rather than guessing from type, issuer, and attributes.
 
 User-initiated issuance is different. A universal link, QR code, or link in an email starts an ordinary authorization with no stored credential attached.
 
-The resulting credential carries no more context than a first-time issuance. Someone requesting a new PID after moving house may use exactly this path, where the wallet has the least information.
-
-## What the ecosystem still needs
-
-The user-initiated case needs a durable way for an issuance to say **this supersedes that**. It must name a logical credential across sessions rather than a type or one delivery.
-
-That is a small concept and a substantial change to a data model that has already shipped. Until it exists, every wallet must guess when type and issuer match but attributes differ.
+The resulting credential carries no more context than a first-time issuance. In this path, the provider must revoke the obsolete credential. Yivi should store the new one and follow the status of the old one without guessing.
 
 ## If you issue credentials
 
-Issuers can support the one case where a wallet may already hold useful context.
+Credential replacement starts with the issuer:
 
-**When changed attributes require re-issuance, support refresh instead of forcing a fresh authorization.** A wallet can then preserve an association it already holds between the refresh session and a stored credential.
+1. Issue the updated credential.
+2. Revoke the obsolete technical copies when their claims are no longer true.
+3. Support automatic refresh so the wallet can update its local record without interrupting the user.
 
-Refresh alone does not create that association, so an issuer should not assume that it tells the wallet what to replace.
+Do not rely on matching type, issuer, or attributes to make a wallet invalidate an old credential. Those fields cannot distinguish a department transfer from an additional department.
 
-Content identity remains the best fallback: it handles unchanged renewals and separates issuers correctly. Within a Yivi-managed refresh, retaining the local association supplies the missing signal. Other issuance paths remain ambiguous.
+Yivi should follow revocation status during ordinary issuance. Only an automatic background refresh may use its retained local association to replace the credential that initiated that refresh.
+
+If a credential cannot be revoked, its validity period determines how long an obsolete value may remain usable. That is part of the issuer's credential design.
 
 If you run an issuer and want to talk about how your re-issuance flow behaves, or you think we have this wrong, we would like to hear it: [support@yivi.app](mailto:support@yivi.app).
 
 ## Sources
 
 * [OpenID for Verifiable Credential Issuance 1.0](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-final.html) — Credential Configuration and Credential Dataset terminology, batch issuance, and refreshing issued credentials
-* [EUDI Architecture and Reference Framework](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework) — logical versus technical attestations, [`VCR_09`][vcr-09], [`ISSU_59`][issu-59], [`ISSU_62`][issu-62], [`ISSU_65`][issu-65], [`PAD_02`][pad-02]
+* [EUDI Architecture and Reference Framework](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework) — logical versus technical attestations, [`VCR_03`][vcr-03], [`VCR_09`][vcr-09], [`VCR_19`][vcr-19], [`ISSU_59`][issu-59], [`ISSU_62`][issu-62], [`ISSU_65`][issu-65], [`PAD_02`][pad-02]
 * [ARF discussion topic B: re-issuance and batch issuance of PIDs and attestations](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework/blob/main/docs/discussion-topics/b-re-issuance-and-batch-issuance-of-pids-and-attestations.md)
 * [SD-JWT-based Verifiable Credentials](https://datatracker.ietf.org/doc/draft-ietf-oauth-sd-jwt-vc/) — type metadata and the issuer-identifier tracking considerations
 * ETSI TS 119 472-3 — `credential_reuse_policy`
@@ -330,4 +344,10 @@ If you run an issuer and want to talk about how your re-issuance flow behaves, o
 [issu-62]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_62
 [issu-65]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#ISSU_65
 [pad-02]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#PAD_02
+[vcr-03]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#VCR_03
 [vcr-09]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#VCR_09
+[vcr-19]: https://eudi.dev/3.0.0/annexes/annex-2/annex-2.03-high-level-requirements-by-category/#VCR_19
+[vci-terminology]: https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-final.html#name-terminology
+[vci-token-response]: https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0-final.html#name-successful-token-response
+[sdjwt-type-metadata]: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc#name-sd-jwt-vc-type-metadata
+[sdjwt-registered-claims]: https://datatracker.ietf.org/doc/html/draft-ietf-oauth-sd-jwt-vc#name-registered-jwt-claims

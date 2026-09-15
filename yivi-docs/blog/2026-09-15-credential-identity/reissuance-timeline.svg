@@ -14,11 +14,11 @@
   <text x="155" y="148" text-anchor="middle" font-size="12" fill="#475569">from a stored credential</text>
   <text x="155" y="166" text-anchor="middle" font-size="12" fill="#475569">using an existing token</text>
 
-  <!-- Stage 2: issuer signs -->
+  <!-- Stage 2: issuer updates -->
   <rect x="325" y="92" width="230" height="100" rx="10" fill="#eaf1fb" stroke="#3b6fd4" stroke-width="1.5"/>
-  <text x="440" y="124" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a8a">Issuer signs</text>
-  <text x="440" y="148" text-anchor="middle" font-size="12" fill="#475569">fresh keys, fresh timestamps,</text>
-  <text x="440" y="166" text-anchor="middle" font-size="12" fill="#475569">attribute values may differ</text>
+  <text x="440" y="124" text-anchor="middle" font-size="15" font-weight="600" fill="#1e3a8a">Issuer updates</text>
+  <text x="440" y="148" text-anchor="middle" font-size="12" fill="#475569">signs fresh copies; revokes</text>
+  <text x="440" y="166" text-anchor="middle" font-size="12" fill="#475569">old ones if obsolete</text>
 
   <!-- Stage 3: wallet stores -->
   <rect x="610" y="92" width="230" height="100" rx="10" fill="#fdf3e3" stroke="#d99a2b" stroke-width="1.5"/>
