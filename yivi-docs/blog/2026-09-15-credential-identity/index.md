@@ -1,5 +1,5 @@
 ---
-slug: same-credential
+slug: credential-replacement
 title: "Who decides when a credential has been replaced?"
 authors: [wouterensink]
 tags: [yivi, eudi-wallet, openid4vci, arf, credentials, analysis]
