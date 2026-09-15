@@ -5,7 +5,7 @@ authors: [wouterensink]
 tags: [yivi, eudi-wallet, openid4vci, arf, credentials, analysis]
 ---
 
-*Every time a credential arrives, a wallet has to decide whether it replaces something you already hold or sits next to it. Get it wrong one way and you collect identical cards you cannot tell apart; get it wrong the other and the wallet deletes something you needed. This post is about how the Yivi wallet decides, why the issuer has to be part of that decision, and about a band of cases where no wallet built on today's specifications can tell the difference at all.*
+*Every new credential forces a wallet to decide what it replaces. This post explains Yivi's rule, why the issuer matters, and where today's specifications leave every wallet guessing.*
 
 <!-- truncate -->
 
@@ -43,77 +43,94 @@ tags: [yivi, eudi-wallet, openid4vci, arf, credentials, analysis]
 
 ## You move house
 
-You move house. A few weeks later your PID provider issues you a fresh PID with the new address on it, which is exactly what should happen.
+You move house. A few weeks later, your PID provider issues a fresh PID with your new address. That is exactly what should happen.
 
-Your wallet now holds two PIDs. One says you live at Oude Gracht 1. The other says Nieuwe Gracht 5. Both are validly signed, neither has expired, and there is nothing in either of them that marks one as current. So the next time a verifier asks where you live, the wallet offers you both and asks you to choose — presenting an address you moved out of as an equally legitimate answer, and putting it back on the list every time you are asked, for as long as the credential has left to run.
+Your wallet now holds two PIDs. One says Oude Gracht 1; the other says Nieuwe Gracht 5. Both are validly signed, neither has expired, and neither says which one is current.
 
-Nobody implemented this wrong. The wallet is doing the best that can be done with what the issuance told it, and the issuance did not tell it much. The gap is not in anyone's code. It is in what today's specifications let an issuance say at all.
+The next time a verifier asks where you live, the wallet offers both. It presents your former address as an equally legitimate answer and asks you to choose.
 
-:::warning This is not a tidiness problem
+The wallet is using all the information it received. The issuance simply did not say that the new PID supersedes the old one. Today's specifications provide no general way to say so.
 
-It is tempting to read the symptom as clutter: two cards where there should be one, mildly annoying, a thing for a future release to clean up. It is not. The two cards are not interchangeable — one of them is simply wrong — and the wallet offers them to you as equals, every time, indefinitely.
+:::warning An obsolete credential is more than clutter
 
-Working out which of your own credentials is current is the job a wallet exists to do, and here it is quietly handed back to you. The ARF is unambiguous about whose job it is: `ISSU_62` says a wallet SHALL no longer present an obsolete credential, and SHOULD delete it. Yours keeps offering it.
+These two cards are not interchangeable. One contains an address that is no longer true, yet the wallet offers both as equals until the old credential expires.
+
+The ARF assigns this job to the wallet. `ISSU_62` says it SHALL stop presenting an obsolete credential and SHOULD delete it. But the wallet first needs to know which credential became obsolete.
 
 :::
 
-## The question every issuance asks
+## One decision hides two questions
 
-Strip away the formats and the flows and a wallet receiving a credential has exactly one decision to make:
+When a credential arrives, the wallet must make one practical decision:
 
 > **Does this replace what I already hold?**
 
-Answer *yes* when the truth was *no*, and the wallet deletes a credential you wanted to keep. Answer *no* when the truth was *yes*, and you accumulate identical-looking cards with nothing to say which one is live. Neither failure announces itself, and both are the wallet's fault from the user's point of view, whatever the specification says.
+Answer *yes* incorrectly and the wallet deletes something you needed. Answer *no* incorrectly and it keeps an obsolete credential without telling you which one is current.
 
-The Yivi wallet answers that question by comparing content. And comparing content, it turns out, answers a question sitting right next to it: *is this the same thing as something I already have?* Those two look like one question. They agree almost all of the time. Everything interesting in this post lives in the place where they come apart.
+That decision hides two different questions:
+
+1. Does it have the same **content identity** as a credential already stored?
+2. Does it **supersede** a credential already stored?
+
+Content identity is calculated from the credential itself. Supersession is a relationship between an old issuance and a new one.
+
+For a routine renewal, both answers are *yes*. For a second email address, both are *no*. After a change of address, the answers are *no* and *yes*. That last combination is where wallets become blind.
 
 ## How the wallet decides today
 
-Two credentials are the same credential when three things match:
+Yivi treats an arriving credential as another copy of a stored logical credential when three things match:
 
 1. the **type** (`vct` for SD-JWT VC, `docType` for mdoc),
 2. the **issuer**,
 3. the **attribute values**.
 
-The wallet hashes those three things together. Same hash, and the arriving credential replaces the stored one. Different hash, and both are kept.
+The wallet hashes those inputs. If the hash matches, the new batch replaces the stored batch. If it differs, the wallet keeps both.
 
-Everything that changes on every issuance is deliberately left out of the hash: salts, digests, holder keys, signatures, validity timestamps. Two issuances of the same credential differ in all of them, and none of them says anything about what the credential *means*.
+The hash omits salts, digests, holder keys, signatures, and validity timestamps. Those values change between issuances, even when the logical credential does not.
 
-The rule is not ours. The ARF states it in a note attached to `PAD_02`, a requirement about deletion, of all places:
+The ARF describes the same rule in a note attached to `PAD_02`:
 
 > Physical PIDs or attestations correspond to a logical one if they have not only the same attestation type and **Provider**, but also the same attribute values.
 
-Type, provider, attribute values. The same three.
+Type, provider, and attribute values: the same three inputs.
 
-This gets renewals right, and renewals are the common case by a wide margin. Credentials expire. Batches of single-use copies run out, and the wallet goes back to the issuer for more. The issuer signs fresh copies with fresh keys and fresh timestamps — and **the attribute values do not move**, because not moving is what makes it a renewal. An age credential says `age_over_18: true` for as long as it exists. So the hash matches, the new copies replace the old, and you hold one card rather than twelve. OpenID4VCI is blunt about the alternative: a wallet that files every issuance as new "might end up with more than one Credential of the same type, without knowing which one is the latest".
+This works well for routine renewals. Credentials expire, and batches of single-use copies run out. The wallet returns to the issuer for fresh copies with new keys and timestamps but unchanged attributes.
 
-## The two names on a credential
+An age credential, for example, keeps saying `age_over_18: true`. Its hash still matches, so the fresh copies replace the old ones and the wallet shows one card rather than twelve.
 
-Two of those three inputs are less obvious than they look, and most of what follows turns on them, so they are worth pinning down.
+OpenID4VCI describes the alternative plainly: a wallet may end up with several credentials of the same type "without knowing which one is the latest".
 
-**The type** says what kind of credential this is — not who it is about, not who issued it. Every credential of a type carries the same claim structure, so knowing the type tells you what questions the credential can answer. In SD-JWT VC it is the `vct` claim, a string that is usually an HTTPS URL, and that URL commonly resolves to the type metadata document describing the type's claims and how they should be displayed. In mdoc it is the `docType`, a dotted name like `org.iso.18013.5.1.mDL`, with no document behind it. Either way the type is a *kind*, shared by every credential of that kind in the world.
+## Why type and issuer both matter
 
-**The issuer** sounds like the simplest field on a credential, and it is not a field at all. It is a name the wallet has to work out, and each format answers differently:
+The type says what kind of credential this is. It does not identify the subject or issuer. Every credential of that type shares its claim structure.
+
+In SD-JWT VC, the type is the `vct` claim, usually an HTTPS URL. In mdoc, it is the `docType`, such as `org.iso.18013.5.1.mDL`. Either way, it names a kind, not one person's credential.
+
+The issuer says who stands behind the claims. That identity is not always a single field; the wallet derives it differently by format:
 
 * **SD-JWT VC** carries an `iss` claim, and when it is present that is the answer. When it is absent, the issuer is whoever the certificate that signed the credential names.
 * **mdoc** has no issuer field in the document whatsoever. Issuer identity lives entirely in the certificate chain the document was signed under.
 * When neither yields a usable name, what is left is the credential issuer URL from the issuance protocol — the endpoint the wallet fetched the credential from.
 
-So "the issuer" in the rule above is not a value read off the credential. It is a name *derived* from it, by a procedure that differs per format and that occasionally has to fall back on where the credential came from rather than who signed it. Every use of the issuer in the rest of this post — including the question of whether two credentials are the same credential at all — rests on that derivation being stable. We will come back to what happens when it is not.
+Consider two `age_verification` credentials that both say `age_over_18: true`. One comes from the Dutch state and one from a supermarket loyalty programme.
 
-## Why the issuer has to be in there
+They are different statements. A verifier may accept one issuer and refuse the other. Merging the credentials would discard the source of their authority, as the [trust levels post](/blog/who-vouches-for-you) explains.
 
-Two credentials, both of type `age_verification`, each carrying exactly one claim: `age_over_18: true`. Byte for byte, their claims are identical. One is issued by the Dutch state; the other by a supermarket's loyalty programme.
+It would also create a security problem because replacement deletes every stored copy and holder-binding key in the old batch.
 
-They are not the same credential. "Over 18, according to the Dutch state" and "over 18, according to a supermarket" are different statements, and — as the [trust levels post](/blog/who-vouches-for-you) argued at length — a verifier is entitled to accept one and refuse the other. A wallet that collapsed them would be discarding the part of the credential that carries its weight.
+Without the issuer in the hash, any issuer could delete another issuer's credential by issuing the same type and attributes. For a one-boolean age credential, a hostile issuer would not even need to guess the values.
 
-That is the obvious argument, and it is not the strongest one. The strongest one is that **replacement is destructive**. When the wallet decides an arriving credential replaces a stored one, it deletes the stored batch, and the deletion cascades to every copy and every holder binding key. If the issuer were not part of the identity, then any issuer your wallet talks to could delete a credential belonging to any *other* issuer, just by issuing the same type with the same attributes.
+The rule therefore depends on a stable issuer identity. If a domain changes, a certificate uses a different name, or a trailing slash appears, a renewal gets a new hash. The wallet then stores it beside the old batch.
 
-For an age attestation that is trivial to do. The attribute set is one boolean; there is nothing to guess, and every issuer of that type mints identical claims for every user over eighteen. A hostile issuer could reliably destroy your government-issued credential, you would have no way back except returning to the government issuer, and from inside the wallet nothing unusual would appear to have happened.
+This is the mirror image of the address problem: one logical credential fails to be recognized as itself. Both failures reveal the absence of a durable identity across issuances.
 
-## Two events the wallet cannot tell apart
+The credential issuer URL is the weakest fallback. It names the endpoint used to fetch a credential, which need not be the entity that signed it. Treating that URL as identity is a Yivi limitation rather than a specification gap.
 
-Now the part the rule cannot reach.
+SD-JWT VC also treats shifting issuer identifiers as a tracking risk for verifiers to notice. An issuer name that changes is not routine churn that a wallet can safely normalize away.
+
+## Where the rule becomes blind
+
+Issuer identity prevents different issuers from overwriting each other. Attribute values distinguish many credentials from the same issuer. But changed attributes create one band where identity and replacement diverge.
 
 <div className="ci-cards">
   <div className="ci-card ci-keep">
@@ -136,15 +153,13 @@ Now the part the rule cannot reach.
   </div>
 </div>
 
-You have a work address and a home address, and a credential for each. Both are current, both are correct, and you would be furious if adding the second had deleted the first. You also have one address you live at, and when you move, the old one is not a second home that also happens to be true. It is simply wrong.
+You may hold valid credentials for both a personal and a work email address. Adding the second must keep the first. But after you move house, your old home address should be replaced.
 
-The three facts the wallet can observe are identical. The required outcomes are opposite.
+The wallet observes the same pattern in both cases: same type, same issuer, different attributes. The correct outcomes are opposite.
 
-And it is not that the two cases differ in some subtle way we could look harder for. In both, the attribute that changed can literally be called `address`. The only thing separating them is what the credential *means* — and meaning is not a field.
+Attribute names do not help. A field describes its value, not whether the new credential adds to or replaces one already stored. That relationship is absent from both credentials.
 
-## The whole picture
-
-Every situation, laid out by what the wallet can actually see:
+The complete matrix makes the blind band visible:
 
 <div className="ci-scroll" role="region" aria-label="What the wallet can observe" tabIndex={0}>
   <table className="ci-matrix">
@@ -211,73 +226,65 @@ Every situation, laid out by what the wallet can actually see:
   </table>
 </div>
 
-The first two rows agree with each other. The last two agree with each other. Content identity gets all four right, and it gets them right for the right reasons.
+Content identity handles the first two and last two rows correctly. Matching content replaces routine renewals; a different issuer keeps distinct claims apart.
 
-The three rows in the middle have exactly the same observable shape and do not share an answer. That band — **same type, same issuer, different attribute values** — is where every wallet is blind.
+The middle three rows share one observable shape but require different outcomes. With the current data model, no wallet can resolve **same type, same issuer, different attribute values** in every case.
 
-## Why nothing in the specs closes it
+## Why the credential cannot close the gap
 
-IRMA, the protocol Yivi grew out of, solved this years ago with a flag. A credential type could be marked as a singleton in the scheme, meaning the wallet holds at most one. When such a credential is issued, the wallet drops every previous instance of that type whatever its values, and tells you up front which card is about to disappear. The moved-house case, handled, with no content comparison anywhere.
+IRMA, the protocol Yivi grew out of, has a partial answer. A credential type can be marked as a singleton, so issuing a new one replaces every previous instance of that type.
 
-There is nothing like it in the EUDI world. No per-type flag in OpenID4VCI Credential Issuer Metadata, none in an attestation rulebook, none in the ARF. There is simply nothing to read.
+That handles types for which a person can hold only one credential. It fails for diplomas, addresses, and other types that may have one valid instance or several. The needed relationship belongs to the credential, not its type.
 
-And here is the awkward part: adding one would not fix this. Go back to the ARF's own example, two diplomas from the same university. A flag on the diploma *type* cannot tell "the new address replaces the old address" apart from "this is a second diploma", because both are the same type from the same issuer with different values. Being a singleton is a property of the specific credential, not of its type. Even if the whole ecosystem agreed to add the flag tomorrow, it would give the wrong answer for every type a person can legitimately hold more than one of.
+The EUDI specifications contain no such relationship. Several identifiers look promising, but each names either a type or one delivery:
 
-So what else is there? It is worth walking the candidates, because several look promising:
+**`credential_configuration_id`.** This describes a kind of credential offered by an issuer. Two email addresses and a corrected email address can all use the same configuration.
 
-**`credential_configuration_id`.** A Credential Configuration is the issuer's description of "a particular kind of Credential" it offers. A kind, not an instance. Your two email addresses come from the same configuration, and so does your corrected one.
+**`credential_identifiers`.** These can identify datasets, but only within the access token returned for that authorization. A later issuance cannot use them to refer back to a stored credential.
 
-**`credential_identifiers`.** These do point at specific datasets, which is encouraging, until you read the scope: each one identifies a dataset issuable "using the Access Token returned in this response". Token-scoped. They cannot be stored now and matched against an issuance next month.
+**SD-JWT VC type metadata.** This describes a type's claims and presentation. It says nothing about how many instances a person may hold or whether one supersedes another.
 
-**SD-JWT VC type metadata.** Describes which claims a type has and how to display them. Silent on how many you may hold.
+**`credential_reuse_policy`** (ARF `ISSU_39`, ETSI TS 119 472-3). This controls technical copies, batch size, and refresh triggers. It does not relate two logical credentials.
 
-**`credential_reuse_policy`** (ARF `ISSU_39`, ETSI TS 119 472-3). The closest thing in the ecosystem, and it answers a different question: how many *technical copies* of one logical credential to keep, and when to refresh them. Batch size and refresh triggers. Not whether a second logical credential of the type is legitimate.
+**The credential itself.** It has no stable credential identifier that survives re-issuance. The `sub` claim identifies the subject, not the credential.
 
-**The credential itself.** There is no stable per-credential identifier that survives re-issuance. `sub` identifies the subject, not the credential.
+The OpenID4VCI data model exposes the underlying problem. A Credential Dataset is a set of claims about a subject. Both a changed address and a second email address create a new dataset.
 
-**The OpenID4VCI data model.** This is the deepest reason and the one that makes the search futile. A Credential is "an instance of a Credential Configuration with a particular Credential Dataset", and a Credential Dataset is "a set of one or more claims about a subject". A changed address produces a new dataset. A second email address produces a new dataset. The model expresses no relationship *between* datasets — nothing that says one supersedes another. The distinction we need does not exist in the vocabulary, so no field could carry it.
+The model expresses no relationship between those datasets. It cannot say that one supersedes another. Every available identifier names a **type** or a **delivery**, not a logical credential over time.
 
-The pattern is consistent. Every identifier the specs offer names either a **type** or a **single delivery**. None of them names *a logical credential over time*, which is precisely the thing we would need.
+Yet the ARF requires the missing behavior. `ISSU_62` says a wallet SHALL stop presenting an obsolete credential, while `ISSU_59` says it SHALL compare old and new values and notify the user.
 
-Which does not stop the specs asking for the behaviour. ARF `ISSU_62` says a wallet that re-issued a credential with changed attribute values "SHALL no longer present the (now obsolete) pre-existing" one and "SHOULD delete it", and `ISSU_59` says the wallet SHALL diff the values and notify you. Required to spot it, required to say so, required to stop presenting the old one — and given no mechanism for working out which credential the new one replaces.
+Both requirements assume the wallet already knows which stored credential is the old one. The data model gives it no general way to know.
 
-## The one place the answer does exist
+## The issuance sometimes carries the answer
 
-The signal is not in the credential. It never was. It is in how the issuance happened.
+The missing relationship can exist in the issuance context even when it is absent from the credential.
 
-![A re-issuance runs left to right: the session begins with a refresh token bound to a specific stored credential, the issuer signs fresh copies, and the wallet stores them by hashing type, issuer and attributes. The binding to the credential being replaced is never carried to the storage step.](./reissuance-timeline.svg)
+![A refresh begins with a stored credential, but its identity is lost before the new copies reach storage.](./reissuance-timeline.svg)
 
-OpenID4VCI describes two ways a credential gets updated. In the first, the wallet uses a token it already holds to fetch a new version of a credential it already holds, with no user interaction — and ARF `ISSU_65` requires the provider to check that the result goes back to the same wallet unit, pointing at exactly that mechanism. A refresh is performed *against a specific credential*. That is what the refresh token is bound to.
+In a refresh, the wallet uses an existing token to fetch a new version of a credential it already holds. ARF `ISSU_65` requires the provider to return it to the same wallet unit.
 
-So at the moment the session starts, the wallet knows the answer. It then discards it, and tries to reconstruct it at storage time by comparing hashes, which cannot work. Comparing content after the fact cannot recover information that was available at the start and thrown away.
+The refresh begins with a specific stored credential. At that moment, the wallet knows what the result should replace. Today, Yivi loses that context and later tries to reconstruct it from the content hash.
 
-The mechanism follows: carry "this issuance replaces credential X" through the session from the moment it begins, and act on it when storing. Where a refresh token is what started the session, that is dependable — the binding is already there, and all that is needed is not throwing it away.
+Yivi can improve this path by carrying “this issuance replaces credential X” through the session and using it during storage. Content comparison cannot recover that information after it has been discarded.
 
-It stops being dependable the moment the user starts the issuance themselves. Opening a universal link, scanning a QR code on the issuer's website, tapping through from an email: each of these produces an ordinary authorization rather than a refresh, and the session begins with nothing bound to it. The wallet receives a credential carrying no more context than any first-time issuance does. Someone re-issuing their own PID after moving house is doing precisely this — which puts the mechanism at its weakest in the case that motivated it.
+User-initiated issuance is different. A universal link, QR code, or link in an email starts an ordinary authorization with no stored credential attached.
 
-It is also why `ISSU_59` is a harder requirement than it reads. It obliges a wallet to compare a re-issued credential's attribute values against "those of the existing" one and notify the user of any difference, and in doing so quietly presupposes that the wallet knows which of the credentials it holds is *the existing* one. That is exactly what is not being carried.
+The resulting credential carries no more context than a first-time issuance. Someone requesting a new PID after moving house may use exactly this path, where the wallet has the least information.
 
-## What is still missing
+## What the ecosystem still needs
 
-Closing the user-initiated case needs something the specifications do not currently have: a way for an issuance to say *this supersedes that*, surviving across sessions, naming a logical credential rather than a type or a delivery. It is a small thing to add to a data model and a large thing to add to a data model that has already shipped. Until then, every wallet in the ecosystem is guessing in the same band, and content identity is the best guess available — right for renewals, right for different issuers, silent in the middle.
+The user-initiated case needs a durable way for an issuance to say **this supersedes that**. It must name a logical credential across sessions rather than a type or one delivery.
 
-## The mirror image
-
-There is a second way this missing concept shows up, and it runs the other way.
-
-The identity rule is only as stable as the issuer name we feed it. If an issuer's identifier moves — a changed domain, a rotated certificate carrying a different name, a trailing slash that was not there last time — then a renewal stops matching the credential it was meant to renew, and the wallet files it as a second card. The old one is never matched again and sits there until it expires.
-
-That is the same disease with the symptom reversed. In the blind band, two different credentials look identical to the wallet. Here, one credential fails to be recognised as itself. Both are the wallet having no durable notion of a logical credential over time.
-
-We should be honest about which of the three ways of naming an issuer is weakest, and it is the last one. The credential issuer URL names the endpoint the wallet fetched from, not the entity that signed the document. Those are usually the same party, and nothing requires them to be. That is a fallback, not an answer, and turning it into one is on us rather than on the specs.
-
-Worth noting too that SD-JWT VC treats a shifting issuer identifier as a warning sign rather than routine churn: its security considerations describe issuers that rotate identifiers, or use a different one per holder, as a tracking risk verifiers should watch for. An issuer name that moves is something to notice, not something to normalise away.
+That is a small concept and a substantial change to a data model that has already shipped. Until it exists, every wallet must guess when type and issuer match but attributes differ.
 
 ## If you issue credentials
 
-There is one thing issuers can do today that costs nothing and removes a whole class of this problem.
+Issuers can already preserve the answer in one important case.
 
-**When you re-issue a credential because its attribute values changed, do it over the refresh path rather than sending the user through a fresh authorization.** Same credential, same wallet, same outcome on your side — but one path carries the identity of what is being replaced and the other destroys it. An issuer that refreshes is handing the wallet the answer. An issuer that restarts issuance is asking every wallet in the ecosystem to guess — and when the guess is wrong, the person holding the phone is the one left to sort it out.
+**When changed attributes require re-issuance, use the refresh path instead of starting a fresh authorization.** A refresh lets the wallet retain the identity of what is being replaced. A new authorization makes it guess.
+
+Content identity remains the best fallback: it handles unchanged renewals and separates issuers correctly. In the blind band, preserving issuance context is the only reliable signal available today.
 
 If you run an issuer and want to talk about how your re-issuance flow behaves, or you think we have this wrong, we would like to hear it: [support@yivi.app](mailto:support@yivi.app).
 
