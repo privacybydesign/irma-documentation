@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 270" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#e2001a"/>
+    </marker>
+  </defs>
+
+  <rect x="1" y="1" width="958" height="268" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="480" y="42" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">One online path from issuer to verifier</text>
+
+  <rect x="46" y="84" width="220" height="148" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="156" y="118" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Issuer</text>
+  <text x="156" y="150" text-anchor="middle" font-size="13" fill="#475569">One mdoc or a batch</text>
+  <text x="156" y="173" text-anchor="middle" font-size="13" fill="#475569">of single-use copies</text>
+  <text x="156" y="205" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b">Issuer chooses the batch size</text>
+
+  <path d="M274 158 H356" fill="none" stroke="#e2001a" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="315" y="137" text-anchor="middle" font-size="12" font-weight="700" fill="#b30014">OpenID4VCI</text>
+
+  <rect x="366" y="74" width="228" height="168" rx="16" fill="#fff0f2" stroke="#e2001a" stroke-width="2"/>
+  <text x="480" y="112" text-anchor="middle" font-size="18" font-weight="700" fill="#990011">Yivi 8.3</text>
+  <rect x="426" y="129" width="108" height="70" rx="9" fill="#ffffff" stroke="#e2001a" stroke-width="1.5"/>
+  <text x="480" y="157" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">Credential</text>
+  <text x="480" y="181" text-anchor="middle" font-size="12" fill="#64748b">one familiar card</text>
+  <text x="480" y="224" text-anchor="middle" font-size="12" font-weight="600" fill="#b30014">iOS or Android</text>
+
+  <path d="M604 158 H686" fill="none" stroke="#e2001a" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="645" y="128" text-anchor="middle" font-size="12" font-weight="700" fill="#b30014">OpenID4VP</text>
+  <text x="645" y="146" text-anchor="middle" font-size="11" fill="#64748b">DCQL</text>
+
+  <rect x="696" y="84" width="220" height="148" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="806" y="118" text-anchor="middle" font-size="16" font-weight="700" fill="#0f172a">Verifier</text>
+  <text x="806" y="150" text-anchor="middle" font-size="13" fill="#475569">Requests combinations</text>
+  <text x="806" y="173" text-anchor="middle" font-size="13" fill="#475569">across mdoc and SD-JWT VC</text>
+  <text x="806" y="205" text-anchor="middle" font-size="12" font-weight="600" fill="#64748b">Receives selected attributes</text>
+
+</svg>
