@@ -16,7 +16,7 @@ tags: [yivi, eudi, age-verification, zkp]
 
 When someone proves they are over 18 without revealing their date of birth, the phone has to do a large piece of mathematics first. The software that does it is Longfellow (google/longfellow-zk), a library written by Google. The European Age Verification rules name this exact proof system: the AV profile's Annex A states that "the only Zero-Knowledge Proof system in scope is the system identified by `longfellow-libzk-v1`", and the technical specification's [Annex B on zero-knowledge proofs](https://ageverification.dev/av-doc-technical-specification/docs/annexes/annex-B/annex-B-zkp/) selects the scheme behind it, ECDSA Anonymous Credentials (the "Longfellow" scheme). The scheme is peer reviewed and published (Matteo Frigo and abhi shelat, "Anonymous Credentials from ECDSA", IACR Communications in Cryptology, May 2026); its formal standardisation is still in progress. That is why this report is about one library rather than about zero-knowledge proofs in general. Doing that mathematics is called proving, and it happens entirely on the user's own phone.
 
-Proving is expensive. It takes seconds rather than milliseconds, and it uses a large amount of the phone's memory while it runs. This report is the record of finding out exactly how expensive, fixing the one genuine waste we found, testing several other ideas that turned out not to work, and establishing why one obvious-sounding fix ("use more of the phone's processor cores") cannot work at all.
+Proving is expensive. It takes seconds rather than milliseconds, and it uses a large amount of the phone's memory while it runs. This report is the record of finding out exactly how expensive, fixing the one genuine waste we found, testing several other ideas that turned out not to work, and establishing why one obvious-sounding fix ("use more of the phone's processor cores") does not help.
 
 It also records the change that mattered more than all of those combined, and which was not about proving at all: the app used to freeze for 24 seconds on every launch before anyone had proved anything. That is §6, and a reader with time for one section should read that one.
 
@@ -118,7 +118,7 @@ The right answer replaces the limit rather than adjusting it. We know exactly wh
 
 The sizes are the unpacked sizes the compressed files declare, in the same decimal megabytes as every other figure in this report; the one-attribute version 6 circuit here, 87.7 MB, is the circuit the memory work of §2 and the experiment of §4.2 ran against. Roughly +5 MB per extra attribute and +11–12 MB per new circuit version. A future version 8 handling four attributes would land near 126 MB against a 130 MB limit, which is close enough to matter. This table also retires an old worry: proving two, three or four attributes at once was flagged as untested and probably much worse. In memory terms a second attribute costs about 7 MB and 15 milliseconds, which is negligible.
 
-## 3 The proving work uses one processor core, and cannot be made to use more
+## 3 The proving work uses one processor core
 
 Modern phones have eight processor cores. If proving could be split across them it would finish far sooner. The desktop figure of about 800 milliseconds looked as though it might already be quietly relying on lots of cores, which would mean a phone would do much worse. We tested it by restricting the program to a fixed number of cores:
 
@@ -143,7 +143,7 @@ Most of the time goes into the sumcheck (§5.1), and the sumcheck is a chain of 
 - The circuit is proved layer by layer. Proving a statement about one layer turns into a statement about the next layer down, and so on. The next layer's problem does not exist until the current one has finished producing it, so two layers can never be worked on at the same time.
 - Within a layer, each round depends on the last. Each round produces a value, and that value is fed through a scrambling function to produce the starting point for the next round. This is deliberate: it is what stops the prover from cheating by choosing convenient values in advance. But it also means the rounds form an unbreakable chain and cannot be reordered or overlapped.
 
-What is left that could be shared between cores is the number-crunching inside a single step. The hardware measurements say this is precisely the work that would not benefit:
+What is left that could be shared between cores is the number-crunching inside a single step. The hardware measurements show what that work is doing:
 
 | Hardware measurements, one proof | Sumcheck | Circuit unpacking |
 |---|---|---|
@@ -156,7 +156,7 @@ The sumcheck consumes twice the processor cycles to execute fewer instructions. 
 
 > **Conclusion**
 >
-> Using more cores is not a setting somebody forgot to switch on. It is ruled out by the structure of the mathematics at two levels, and the one remaining opportunity is the kind of work that does not speed up with more cores. The sumcheck's 39% is Google's cryptography, and it is not something we can negotiate with.
+> Using more cores is not a setting somebody forgot to switch on. The library runs the proof on one core, the layers and rounds of the sumcheck form a chain that cannot be split, and whether the arithmetic inside a single step could be spread across cores was not tested. The sumcheck's 39% is Google's cryptography, and it is not something we can negotiate with.
 
 ## 4 Four improvements we tried and rejected
 
@@ -251,7 +251,7 @@ The mapping from file to circuit identity is fixed the moment the app is built. 
 
 | At app launch | Before | After |
 |---|---|---|
-| Identifying 8 circuits | roughly 20 of the 24 s | effectively 0 |
+| Identifying 8 circuits | about 21 of the 24 s | effectively 0 |
 | Longest frozen frame | 23,963 ms | 2,878 ms |
 | Dropped frames | 2,872 | 343 |
 | "App Not Responding" reports | 2 | 0 |
@@ -274,7 +274,7 @@ About 21 seconds of the launch freeze removed, more than every other optimisatio
 |---|---|---|
 | Proving | 2074 ms | 2004 ms |
 | Verifying | 1050 ms | 997 ms |
-| Memory used | 211.0 MB | 139.0 MB |
+| Memory used | 211.0 MB | 139.9 MB |
 
 *This is a before-and-after comparison, not a statement of what proving costs. Both columns come from one interleaved sitting of the on-device test harness, with all 20 of its tests passing, including a complete presentation exchange. Read the differences only. The same harness on the same phone and circuit measured proving at 1529 ms in another sitting, 24% below the 2004 ms here, which is why no absolute from this table is quoted anywhere else in this report. What proving actually costs in the shipping wallet is §8.3.*
 
@@ -282,7 +282,7 @@ About 21 seconds of the launch freeze removed, more than every other optimisatio
 >
 > Before any of this work began, we set a threshold for when the idea would have to be abandoned: if proving took around 8 seconds, or ran out of memory, on a phone from 2022, then the fallback of handing over the date of birth in the ordinary way would become the common case rather than the exception.
 >
-> The shipping wallet proves in about 1.1 seconds (§8.3). The 139 MB memory peak above was measured with the version 6 circuit the test harness uses; the shipping wallet's version 7 circuit unpacks about 10 MB larger (§2.4), which puts its peak near 150 MB. It passes with room to spare on both counts.
+> The shipping wallet proves in about 1.1 seconds (§8.3). The 139 MB memory peak above was measured with the version 6 circuit the test harness uses; the shipping wallet's version 7 circuit unpacks about 11 MB larger (§2.4), which puts its peak near 150 MB. It passes with room to spare on both counts.
 >
 > One estimate made at that time turned out to be wrong, and is worth correcting: the "88 MB in use during proving" we assumed is the temporary unpacked circuit rather than the actual peak, which is roughly 150–210 MB on top of the host app.
 
@@ -302,7 +302,7 @@ The wallet now measures and displays this itself. It records the moment the user
 
 > **What the number does and does not include**
 >
-> Included: choosing which credential to use, unpacking and reading the circuit, generating the zero-knowledge proof, signing, and sealing the response for transmission. Excluded: the time the user spent reading the consent screen, which is by far the largest and least interesting quantity; and the relying party's verifying of the proof, which happens on the other side after the wallet's work is finished.
+> Included: choosing which credential to use, unpacking and reading the circuit, generating the zero-knowledge proof, signing, and sealing the response for transmission. Excluded: the time the user spent reading the consent screen, which is not work the wallet does; and the relying party's verifying of the proof, which happens on the other side after the wallet's work is finished.
 
 > **These are the figures this report stands on**
 >
