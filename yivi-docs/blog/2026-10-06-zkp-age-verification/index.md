@@ -33,7 +33,7 @@ It also records the change that mattered more than all of those combined, and wh
 | **Verifying** | The other side checking that the proof is genuine. Roughly half the cost of proving. |
 | **Circuit** | A large data file describing the calculation to be proved. Ours are 88–115 MB once unpacked, and ship inside the app. |
 | **Memory used** | How much of the phone's RAM the work occupies at its worst moment. If this goes too high, Android kills the app. |
-| **Sumcheck** | The mathematical engine at the heart of the proof. The single biggest cost, and part of Google's library rather than ours. |
+| **Sumcheck** | The mathematical engine at the heart of the proof. 38.9% of the time for one proof and check (§5), and part of Google's library rather than ours. |
 | **Ligero** | The part that packages the finished proof for sending. Cheap in time, but responsible for most of the proof's size. |
 | **Profiling** | Sampling the program hundreds of times a second to find out which routines the time is actually being spent in. |
 
@@ -152,7 +152,7 @@ What is left that could be shared between cores is the number-crunching inside a
 | Work done per cycle | 1.49 | 3.31 |
 | Rate of waiting on memory | 1.40% | 0.23% |
 
-The sumcheck consumes twice the processor cycles to execute fewer instructions. The counters do not say exactly why: a rate of 1.49 instructions per cycle is consistent both with waiting on data arriving from memory and with the dependent chain described above, where each operation must wait for the result of the one before it. Either reading leads to the same conclusion. The sumcheck is limited by how fast a single core can feed itself, not by how much raw arithmetic is available, and adding cores to work of that shape adds queuing without adding progress, on a phone where all cores share one connection to memory. That matches the one-versus-twenty-four-core result exactly: the only part that could be parallelised is the part that would gain nothing from it.
+The sumcheck consumes twice the processor cycles to execute fewer instructions. The counters do not say exactly why: a rate of 1.49 instructions per cycle is consistent both with waiting on data arriving from memory and with the dependent chain described above, where each operation must wait for the result of the one before it. Either reading leads to the same conclusion. The sumcheck is limited by how fast a single core can feed itself, not by how much raw arithmetic is available. The counters do not show whether the sumcheck would speed up across several cores, and that was not tested. The one-versus-twenty-four-core result stands on its own: the library uses one core, and giving it more changed nothing.
 
 > **Conclusion**
 >
@@ -243,7 +243,7 @@ Everything so far has been about the seconds a proof takes. One improvement remo
 
 The first build with proving wired in locked the Yivi app on launch. Not a pause: a freeze, with Android reporting a single frozen frame of 23,963 milliseconds, 2,872 dropped frames, and its watchdog twice filing the app as Not Responding. A user meeting that would conclude the app was broken and uninstall it.
 
-The cause is a step that has nothing to do with proving. Before the library will use a circuit, it has to confirm which circuit the file is, and the only trustworthy way to do that is to unpack the file and compute a fingerprint over its real contents. That costs about 1.2 seconds per circuit on the PC; §8.3's circuit loading, 12 to 14 seconds per process for the eight, says the same thing. Nobody timed a single identification on the phone, but the two endpoints pin the total: of the 23,963 ms frozen frame, 2,878 ms remained after the fix (§6.2), so identifying the eight circuits cost the phone about 21 seconds, around 2.6 seconds per circuit, one and a half to two times the PC's per-circuit cost. That gap is larger than the 20% proving gap of §8.2, and the hardware counters in §3.1 say why it should be: identification is dominated by decompression and parsing, which runs at high efficiency per cycle, so the PC's much higher clock speed shows in full, while proving spends its time waiting on memory, where that clock buys little. So every launch spent about twenty-one seconds proving to itself something that could not have changed since the app was built, and it did so on the thread that draws the screen.
+The cause is a step that has nothing to do with proving. Before the library will use a circuit, it has to confirm which circuit the file is, and the only trustworthy way to do that is to unpack the file and compute a fingerprint over its real contents. On the PC, loading the eight circuits takes 12 to 14 seconds per process (§8.3), which is 1.5 to 1.75 seconds per circuit. Nobody timed a single identification on the phone, but the two endpoints pin the total: of the 23,963 ms frozen frame, 2,878 ms remained after the fix (§6.2), so identifying the eight circuits cost the phone about 21 seconds, around 2.6 seconds per circuit, roughly one and a half to one and three quarter times the PC's per-circuit cost. Why the phone is that much slower here, when it proves only about 20% slower than the PC (§8.2), was not measured. So every launch spent about twenty-one seconds proving to itself something that could not have changed since the app was built, and it did so on the thread that draws the screen.
 
 ### 6.2 The fix: the MapCache, worked out at build time
 
@@ -378,7 +378,7 @@ That matters for one figure and not the others. Proving and verifying are unaffe
 
 ### 8.5 Why the two halves do not overlap
 
-Proving and verifying never happen at the same time. The proof has to exist and reach the other side before verifying can begin, so the total time a relying party waits is proving, plus transmission, plus verifying, in that order. In the flow Yivi uses, the wallet and the website are on the same phone and the response passes between apps rather than across a network, so transmission is effectively free. Proving therefore accounts for roughly two thirds of the total, which is why it received all of the optimisation effort described in this report.
+Proving and verifying never happen at the same time. The proof has to exist and reach the other side before verifying can begin, so the total time a relying party waits is proving, plus transmission, plus verifying, in that order. In the flow Yivi uses, the wallet hands the response to the browser on the same phone through the operating system, but the browser still has to send the 360 KB response to the relying party's server, and that upload was not measured (§8.4). Leaving transmission out, proving accounts for roughly two thirds of the total, which is why it received all of the optimisation effort described in this report.
 
 ---
 
