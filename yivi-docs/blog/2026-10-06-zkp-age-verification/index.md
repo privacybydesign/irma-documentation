@@ -14,7 +14,7 @@ tags: [yivi, eudi, age-verification, zkp]
 - **Phone:** MediaTek Dimensity 8100 (CPH2423) · Android 15 · 11.7 GB; 4 × Cortex-A55 @ 2.0 GHz (cores 0–3, power-saving) · 4 × Cortex-A78 @ 2.85 GHz (cores 4–7, performance)
 - **PC:** Intel Core i7-13700HX · 16 cores / 24 threads · 15.7 GB
 
-When someone proves they are over 18 without revealing their date of birth, the phone has to do a large piece of mathematics first. The software that does it is Longfellow (google/longfellow-zk), a library written by Google. The European Age Verification technical specification does not merely permit it: its [Annex B on zero-knowledge proofs](https://ageverification.dev/av-doc-technical-specification/docs/annexes/annex-B/annex-B-zkp/) names this exact proof system, `longfellow-libzk-v1`, while candidly noting that the scheme has not been peer reviewed and that a suitable standard is some way off. That is why this report is about one library rather than about zero-knowledge proofs in general. Doing that mathematics is called proving, and it happens entirely on the user's own phone.
+When someone proves they are over 18 without revealing their date of birth, the phone has to do a large piece of mathematics first. The software that does it is Longfellow (google/longfellow-zk), a library written by Google. The European Age Verification rules name this exact proof system: the AV profile's Annex A states that "the only Zero-Knowledge Proof system in scope is the system identified by `longfellow-libzk-v1`", and the technical specification's [Annex B on zero-knowledge proofs](https://ageverification.dev/av-doc-technical-specification/docs/annexes/annex-B/annex-B-zkp/) selects the scheme behind it, ECDSA Anonymous Credentials (the "Longfellow" scheme). The scheme is peer reviewed and published (Matteo Frigo and abhi shelat, "Anonymous Credentials from ECDSA", IACR Communications in Cryptology, May 2026); its formal standardisation is still in progress. That is why this report is about one library rather than about zero-knowledge proofs in general. Doing that mathematics is called proving, and it happens entirely on the user's own phone.
 
 Proving is expensive. It takes seconds rather than milliseconds, and it uses a large amount of the phone's memory while it runs. This report is the record of finding out exactly how expensive, fixing the one genuine waste we found, testing several other ideas that turned out not to work, and establishing why one obvious-sounding fix ("use more of the phone's processor cores") cannot work at all.
 
@@ -31,7 +31,7 @@ It also records the change that mattered more than all of those combined, and wh
 |---|---|
 | **Proving** | The phone doing the mathematics that produces the proof. The slow, expensive half. |
 | **Verifying** | The other side checking that the proof is genuine. Roughly half the cost of proving. |
-| **Circuit** | A large data file describing the calculation to be proved. Ours are 84–110 MB once unpacked, and ship inside the app. |
+| **Circuit** | A large data file describing the calculation to be proved. Ours are 88–115 MB once unpacked, and ship inside the app. |
 | **Memory used** | How much of the phone's RAM the work occupies at its worst moment. If this goes too high, Android kills the app. |
 | **Sumcheck** | The mathematical engine at the heart of the proof. The single biggest cost, and part of Google's library rather than ours. |
 | **Ligero** | The part that packages the finished proof for sending. Cheap in time, but responsible for most of the proof's size. |
@@ -69,7 +69,7 @@ Before the library can use a circuit, it has to unpack it from its compressed fo
 std::vector<uint8_t> bytes(kCircuitSizeMax); // 130,000,000 bytes
 ```
 
-Two things are wrong with this. The block is 130 MB regardless of need, while the circuits we actually ship unpack to 84–110 MB (§2.4), so between 20 and 45 MB is reserved for nothing. Worse, this particular way of reserving memory writes a zero into every single byte. Merely reserving space would cost little; writing to all of it forces the operating system to genuinely hand over all 130 MB of physical memory. We pay for the safety limit in full, every time.
+Two things are wrong with this. The block is 130 MB regardless of need, while the circuits we actually ship unpack to 88–115 MB (§2.4), so between 15 and 42 MB is reserved for nothing. Worse, this particular way of reserving memory writes a zero into every single byte. Merely reserving space would cost little; writing to all of it forces the operating system to genuinely hand over all 130 MB of physical memory. We pay for the safety limit in full, every time.
 
 Separately, the verifying side of the library never released its block after it had finished unpacking: it held all 130 MB for the entire check, where the proving side already let its block go.
 
@@ -113,10 +113,10 @@ The right answer replaces the limit rather than adjusting it. We know exactly wh
 
 | Unpacked circuit size | 1 attribute | 2 | 3 | 4 |
 |---|---|---|---|---|
-| Version 6 | 83.7 MB | 88.4 | 93.1 | 97.8 |
-| Version 7 | 94.3 MB | 99.3 | 104.3 | 109.3 |
+| Version 6 | 87.7 MB | 92.7 | 97.6 | 102.5 |
+| Version 7 | 98.9 MB | 104.1 | 109.4 | 114.6 |
 
-Roughly +5 MB per extra attribute and +11–12 MB per new circuit version. A future version 8 handling four attributes would land near 121 MB against a 130 MB limit, which is close enough to matter. This table also retires an old worry: proving two, three or four attributes at once was flagged as untested and probably much worse. In memory terms a second attribute costs about 7 MB and 15 milliseconds, which is negligible.
+The sizes are the unpacked sizes the compressed files declare, in the same decimal megabytes as every other figure in this report; the one-attribute version 6 circuit here, 87.7 MB, is the circuit the memory work of §2 and the experiment of §4.2 ran against. Roughly +5 MB per extra attribute and +11–12 MB per new circuit version. A future version 8 handling four attributes would land near 126 MB against a 130 MB limit, which is close enough to matter. This table also retires an old worry: proving two, three or four attributes at once was flagged as untested and probably much worse. In memory terms a second attribute costs about 7 MB and 15 milliseconds, which is negligible.
 
 ## 3 The proving work uses one processor core, and cannot be made to use more
 
@@ -176,7 +176,7 @@ Memory does not move at all: 139.7 to 139.9 MB across every build and every run.
 
 ### 4.2 Unpacking the circuit in small pieces: BUILT, MEASURED, REVERTED
 
-Instead of unpacking the whole 88 MB circuit into memory at once, unpack it in 64-kilobyte pieces through a small window. This was written in full, checked against Google's test suite, run on the phone, and then removed on the strength of these results:
+Instead of unpacking the whole 87.7 MB circuit into memory at once, unpack it in 64-kilobyte pieces through a small window. This was written in full, checked against Google's test suite, run on the phone, and then removed on the strength of these results:
 
 | Two runs of each, alternated | Existing | With piecewise unpacking |
 |---|---|---|
@@ -217,7 +217,7 @@ Measured by sampling the program a thousand times a second on the phone, from a 
 
 ### 5.1 It is the sumcheck, and that was not obvious
 
-The library's own progress messages suggest the time goes into working through the circuit. It does not. The routine that dominates is the sumcheck engine, and the library's labels do not distinguish the two, so this only became visible by measuring rather than reading. It is the single largest cost, and per §3.1 the one we can do least about from outside.
+The library's own progress messages suggest the time goes into working through the circuit. It does not. The routine that dominates is the sumcheck engine, and the library's labels do not distinguish the two, so this only became visible by measuring rather than reading. It is 38.9% of the time, and per §3.1 it is work we cannot change from outside.
 
 ### 5.2 The part with the bad reputation is cheap, in time
 
@@ -237,13 +237,13 @@ It is recorded here as an observation rather than a recommendation, because the 
 
 ## 6 Shipping the circuit map
 
-Everything so far has been about the seconds a proof takes. The largest single improvement in this whole effort was not about proving at all, and without it the feature was unshippable, not merely slow.
+Everything so far has been about the seconds a proof takes. One improvement removed more time than all the others put together, and it was not about proving at all. Without it the feature was unshippable, not merely slow.
 
 ### 6.1 The first working build froze the app for 24 seconds
 
 The first build with proving wired in locked the Yivi app on launch. Not a pause: a freeze, with Android reporting a single frozen frame of 23,963 milliseconds, 2,872 dropped frames, and its watchdog twice filing the app as Not Responding. A user meeting that would conclude the app was broken and uninstall it.
 
-The cause is a step that has nothing to do with proving. Before the library will use a circuit, it has to confirm which circuit the file is, and the only trustworthy way to do that is to unpack the file and compute a fingerprint over its real contents. That costs about 1.2 seconds per circuit on the PC, and a single phone core is two to three times slower (§3). The wallet ships eight circuits. So every launch spent on the order of twenty seconds proving to itself something that could not have changed since the app was built, and it did so on the thread that draws the screen.
+The cause is a step that has nothing to do with proving. Before the library will use a circuit, it has to confirm which circuit the file is, and the only trustworthy way to do that is to unpack the file and compute a fingerprint over its real contents. That costs about 1.2 seconds per circuit on the PC; §8.3's circuit loading, 12 to 14 seconds per process for the eight, says the same thing. Nobody timed a single identification on the phone, but the two endpoints pin the total: of the 23,963 ms frozen frame, 2,878 ms remained after the fix (§6.2), so identifying the eight circuits cost the phone about 21 seconds, around 2.6 seconds per circuit, one and a half to two times the PC's per-circuit cost. That gap is larger than the 20% proving gap of §8.2, and the hardware counters in §3.1 say why it should be: identification is dominated by decompression and parsing, which runs at high efficiency per cycle, so the PC's much higher clock speed shows in full, while proving spends its time waiting on memory, where that clock buys little. So every launch spent about twenty-one seconds proving to itself something that could not have changed since the app was built, and it did so on the thread that draws the screen.
 
 ### 6.2 The fix: the MapCache, worked out at build time
 
@@ -276,7 +276,7 @@ About 21 seconds of the launch freeze removed, more than every other optimisatio
 | Verifying | 1050 ms | 997 ms |
 | Memory used | 211.0 MB | 139.0 MB |
 
-*This is a before-and-after comparison, not a statement of what proving costs. Both columns come from one interleaved sitting of the on-device test harness, with all 20 of its tests passing, including a complete presentation exchange. Read the differences only. The same harness on the same phone and circuit measured proving at 1529 ms in another sitting, 31% below the figure here, which is why no absolute from this table is quoted anywhere else in this report. What proving actually costs in the shipping wallet is §8.3.*
+*This is a before-and-after comparison, not a statement of what proving costs. Both columns come from one interleaved sitting of the on-device test harness, with all 20 of its tests passing, including a complete presentation exchange. Read the differences only. The same harness on the same phone and circuit measured proving at 1529 ms in another sitting, 24% below the 2004 ms here, which is why no absolute from this table is quoted anywhere else in this report. What proving actually costs in the shipping wallet is §8.3.*
 
 > **Against the target**
 >
@@ -312,7 +312,7 @@ The wallet now measures and displays this itself. It records the moment the user
 
 Proving and verifying happen on different hardware in any real deployment, and this report measures them accordingly. The phone is the user's; the verifying PC stands in for a relying party's server.
 
-| | Proving (the phone) | Verifying (the PC) |
+| Property | Proving (the phone) | Verifying (the PC) |
 |---|---|---|
 | Processor | MediaTek Dimensity 8100 | Intel Core i7-13700HX |
 | Architecture | arm64, 8 cores | x86-64, 16 cores / 24 threads |
@@ -350,7 +350,7 @@ A relying party may ask for one age threshold or several. This is what that cost
 
 Asking for four age thresholds instead of one costs about 9% more time and 1% more data. That is the practical answer: there is no reason for a relying party to ration its questions. A request for four thresholds is very nearly as cheap as a request for one, because the cost is set by the circuit's fixed structure rather than by how much is being proved.
 
-It also puts the two halves in proportion on real work. Proving is roughly twice verifying, and that understates it, because the phone doing the proving is the slower machine by a wide margin. On equal hardware the gap would be larger still.
+It also puts the two halves in proportion on real work. Proving is roughly twice verifying. Part of that gap is the phone being the slower machine: on the PC alone, proving takes 890 ms against 497 ms to verify (§8.2), a ratio of about 1.8.
 
 *The attribute count and circuit in each row are read out of the response itself rather than taken from what was asked for. Proving figures are from the wallet's own measurement on the phone; verifying figures are one verification each of the corresponding real proof, on the PC described in §8.1. Loading the circuits (12–14 s per process on the PC, and the launch cost §6 removes on the phone) is startup rather than verification and is excluded throughout.*
 
