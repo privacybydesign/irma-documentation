@@ -140,7 +140,7 @@ There was an upside to this finding. Because proving uses one core, predicting t
 
 ### 3.1 Why it cannot be split up: the shape of the mathematics
 
-About 39% of the time goes into the sumcheck (§5.1), and the sumcheck is a chain of steps where each step needs the answer from the one before it. That happens at two levels:
+Most of the proving time goes into the sumcheck. The 38.9% in §5 is its share of one proof *plus* one check; every routine in that bucket is prover-side and none of it is the checker's work, so measured against the 2132 milliseconds of proving in that same run, the sumcheck is about 60% of proving on its own (§5.1). And the sumcheck is a chain of steps where each step needs the answer from the one before it. That happens at two levels:
 
 - The circuit is proved layer by layer. Proving a statement about one layer turns into a statement about the next layer down, and so on. The next layer's problem does not exist until the current one has finished producing it, so two layers can never be worked on at the same time.
 - Within a layer, each round depends on the last. Each round produces a value, and that value is fed through a scrambling function to produce the starting point for the next round. This is deliberate: it is what stops the prover from cheating by choosing convenient values in advance. But it also means the rounds form an unbreakable chain and cannot be reordered or overlapped.
@@ -158,7 +158,7 @@ The sumcheck consumes twice the processor cycles to execute fewer instructions. 
 
 > **Conclusion**
 >
-> Using more cores is not a setting somebody forgot to switch on. The library runs the proof on one core, the layers and rounds of the sumcheck form a chain that cannot be split, and whether the arithmetic inside a single step could be spread across cores was not tested. The sumcheck's 39% is Google's cryptography, and it is not something we can negotiate with.
+> Using more cores is not a setting somebody forgot to switch on. The library runs the proof on one core, the layers and rounds of the sumcheck form a chain that cannot be split, and whether the arithmetic inside a single step could be spread across cores was not tested. The sumcheck's 60% of proving is Google's cryptography, and it is not something we can negotiate with.
 
 ## 4 Four improvements we tried and rejected
 
@@ -219,7 +219,7 @@ Measured by sampling the program a thousand times a second on the phone, from a 
 
 ### 5.1 It is the sumcheck, and that was not obvious
 
-The library's own progress messages suggest the time goes into working through the circuit. It does not. The routine that dominates is the sumcheck engine, and the library's labels do not distinguish the two, so this only became visible by measuring rather than reading. It is 38.9% of the time, and per §3.1 it is work we cannot change from outside.
+The library's own progress messages suggest the time goes into working through the circuit. It does not. The routine that dominates is the sumcheck engine, and the library's labels do not distinguish the two, so this only became visible by measuring rather than reading. It is 38.9% of one proof and check, and since every routine in that bucket is prover-side, about 60% of proving on its own (§3.1). Either way it is work we cannot change from outside.
 
 ### 5.2 The part with the bad reputation is cheap, in time
 
