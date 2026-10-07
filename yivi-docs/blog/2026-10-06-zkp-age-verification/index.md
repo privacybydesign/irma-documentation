@@ -215,7 +215,7 @@ Measured by sampling the program a thousand times a second on the phone, from a 
 | Everything else | | 2.9% |
 | Clearing memory | | 1.7% |
 
-*Time for one proof plus one verification, by activity. Cold phone, exact shares adding to 100%. "Operating system" is Android handing memory to the program; "packaging proof" is Ligero.*
+*Time for one proof plus one verification, by activity. Cold phone. Shares are rounded to one decimal and add to 100.1%. "Operating system" is Android handing memory to the program; "packaging proof" is Ligero.*
 
 ### 5.1 It is the sumcheck, and that was not obvious
 
@@ -350,7 +350,7 @@ A relying party may ask for one age threshold or several. This is what that cost
 | 4 | v1_7_4_4415_4096 | 364,612 B | 1204 ms | 546 ms | 1750 ms |
 | **1 → 4** | | **+1.1%** | **+108 ms** | **+42 ms** | **+150 ms** |
 
-Asking for four age thresholds instead of one cost about 9% more time and 1% more data in these runs. Read the time as a bound on a small effect rather than a price list. Each row is a single live disclosure. Run-to-run variation is about 5% on the desktop (§3), and the eight repeat verifications in §8.2 spread over 469–540 ms, so the table cannot separate one attribute from two: the two-attribute row came in 19 ms *faster* than the one-attribute row, which is noise rather than a saving, and verifying is noisier still, with three attributes checking slower than four. The 108 ms proving gap between one and four is about twice the desktop's 5%, and the 42 ms verifying gap is inside the §8.2 spread. The proof sizes, which are exact byte counts, are the firm half of the table.
+Asking for four age thresholds instead of one cost about 9% more time and 1% more data in these runs. Read the time as a bound on a small effect rather than a price list. Each row is a single live disclosure. Run-to-run variation is about 5% on the desktop (§3), and the eight repeat verifications in §8.2 spread over 469–540 ms, so the table cannot separate one attribute from two: the two-attribute row came in 19 ms *faster* than the one-attribute row, which is noise rather than a saving, and verifying is noisier still, with three attributes checking slower than four. The 108 ms proving gap between one and four is about 10%, the same size as the 104 ms spread of the eight repeat proofs on the PC in §8.2 (842–946 ms), and the phone rows here are single runs, so the table does not show that it is more than noise. The 42 ms verifying gap is inside the §8.2 spread. The proof sizes, which are exact byte counts, are the firm half of the table.
 
 That makes the practical answer stronger rather than weaker: there is no reason for a relying party to ration its questions. A request for four thresholds is very nearly as cheap as a request for one, because the cost is set by the circuit's fixed structure rather than by how much is being proved.
 
