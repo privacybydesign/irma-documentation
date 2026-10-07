@@ -128,9 +128,11 @@ Modern phones have eight processor cores. If proving could be split across them 
 | 4 | 750 ms | 503 ms | 111 MB |
 | 1 | 830 ms | 473 ms | 104 MB |
 
-Normal variation between runs is about 5%, so all three rows are the same result. Giving the program twenty-four times as many cores changes nothing measurable. The memory column confirms it independently: memory falls as cores are taken away (117 → 111 → 104 MB), which means the extra memory on more cores was housekeeping for threads that were not doing useful work.
+*Version 6 circuit, one attribute, on the desktop machine (x86-64, Linux under WSL), with the program pinned to 24, 4 and 1 cores. It was measured through a Java test harness against the unmodified library, before any of the fixes in §2. The memory column is the peak of that harness process, not the library's own peak: the same circuit measured natively, with no Java in the way, peaks at 211.8 MB unpatched (§2.1). The two are not comparable, and only §2's figures describe what the library itself uses.*
 
-There was an upside to this finding. Because proving uses one core, predicting the phone figure became simple arithmetic: take the desktop time and scale it by how much slower a single phone core is. That predicted 2.5 to 3.5 seconds, and the shipping wallet came in at about 1.1 seconds (§8.3), comfortably under it. The prediction was the right shape and pessimistic, which is the useful direction to be wrong in.
+Normal variation between runs is about 5%, so all three rows are the same result. Giving the program twenty-four times as many cores changes nothing measurable. The memory column points the same way within the table — it falls as cores are taken away (117 → 111 → 104 MB), which is what per-thread housekeeping looks like rather than parallel work — but because it is the harness's figure and not the library's, the conclusion rests on the timings.
+
+There was an upside to this finding. Because proving uses one core, predicting the phone figure became simple arithmetic: take the desktop time and scale it by how much slower a single phone core is. That predicted 2.5 to 3.5 seconds, and the shipping wallet came in at about 1.1 seconds (§8.3). The prediction was two to three times too pessimistic, which is the useful direction to be wrong in.
 
 > **A related dead end: choosing which cores**
 >
@@ -183,9 +185,9 @@ Instead of unpacking the whole 87.7 MB circuit into memory at once, unpack it in
 | Memory during unpacking | 119.5 / 119.2 MB | 40.0 / 40.1 MB (−67%) |
 | Worst moment overall | 140.0 / 139.7 MB | 139.8 / 139.9 MB (no change) |
 | Proving | 1875 / 1856 ms | 1930 / 1922 ms (+3%) |
-| Verifying | 1052 / 1053 ms | 1121 / 1129 ms (+6.5%) |
+| Verifying | 1052 / 1053 ms | 1121 / 1129 ms (+7%) |
 
-The idea worked exactly as designed, and that is why it failed. Unpacking is not the moment of highest memory use; proving is. Cutting unpacking by two thirds lowers a peak that nobody was worried about and leaves the figure everyone actually quotes untouched, while costing around 55 milliseconds of proving and 70 of verifying in exchange.
+The idea worked exactly as designed, and that is why it failed. Unpacking is not the moment of highest memory use; proving is. Cutting unpacking by two thirds lowers a peak that nobody was worried about and leaves the figure everyone actually quotes untouched, while costing around 60 milliseconds of proving and just over 70 of verifying in exchange.
 
 The desktop run had shown a 7.4 MB saving, which turned out to be a quirk of how the desktop system recycles memory and did not exist on the phone.
 
@@ -282,7 +284,7 @@ About 21 seconds of the launch freeze removed, more than every other optimisatio
 >
 > Before any of this work began, we set a threshold for when the idea would have to be abandoned: if proving took around 8 seconds, or ran out of memory, on a phone from 2022, then the fallback of handing over the date of birth in the ordinary way would become the common case rather than the exception.
 >
-> The shipping wallet proves in about 1.1 seconds (§8.3). The 139 MB memory peak above was measured with the version 6 circuit the test harness uses; the shipping wallet's version 7 circuit unpacks about 11 MB larger (§2.4), which puts its peak near 150 MB. It passes with room to spare on both counts.
+> The shipping wallet proves in about 1.1 seconds (§8.3). The 139 MB memory peak above was measured with the version 6 circuit the test harness uses; the shipping wallet uses a version 7 circuit, and the same probe on the same phone measures 165.0 MB with that one (median of ten runs, spread 165.0–165.1 MB). That is 25 MB above version 6 rather than the 11 MB the unpacked sizes in §2.4 would lead you to expect, so estimating this figure from the circuit sizes understates it; 165 MB is the measured number and the one to use. Both are the library's own peak, not the whole app's. It passes with room to spare on both counts.
 >
 > One estimate made at that time turned out to be wrong, and is worth correcting: the "88 MB in use during proving" we assumed is the temporary unpacked circuit rather than the actual peak, which is roughly 150–210 MB on top of the host app.
 
@@ -348,7 +350,9 @@ A relying party may ask for one age threshold or several. This is what that cost
 | 4 | v1_7_4_4415_4096 | 364,612 B | 1204 ms | 546 ms | 1750 ms |
 | **1 → 4** | | **+1.1%** | **+108 ms** | **+42 ms** | **+150 ms** |
 
-Asking for four age thresholds instead of one costs about 9% more time and 1% more data. That is the practical answer: there is no reason for a relying party to ration its questions. A request for four thresholds is very nearly as cheap as a request for one, because the cost is set by the circuit's fixed structure rather than by how much is being proved.
+Asking for four age thresholds instead of one cost about 9% more time and 1% more data in these runs. Read the time as a bound on a small effect rather than a price list. Each row is a single live disclosure, and run-to-run variation on this phone is about 5% (§1.2), so the table cannot separate one attribute from two: the two-attribute row came in 19 ms *faster* than the one-attribute row, which is noise rather than a saving, and verifying is noisier still, with three attributes checking slower than four. Only the gap between one and four is wider than the variation, and not by much. The proof sizes, which are exact byte counts, are the firm half of the table.
+
+That makes the practical answer stronger rather than weaker: there is no reason for a relying party to ration its questions. A request for four thresholds is very nearly as cheap as a request for one, because the cost is set by the circuit's fixed structure rather than by how much is being proved.
 
 It also puts the two halves in proportion on real work. Proving is roughly twice verifying. Part of that gap is the phone being the slower machine: on the PC alone, proving takes 890 ms against 497 ms to verify (§8.2), a ratio of about 1.8.
 
