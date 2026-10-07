@@ -140,7 +140,7 @@ There was an upside to this finding. Because proving uses one core, predicting t
 
 ### 3.1 Why it cannot be split up: the shape of the mathematics
 
-Most of the time goes into the sumcheck (§5.1), and the sumcheck is a chain of steps where each step needs the answer from the one before it. That happens at two levels:
+About 39% of the time goes into the sumcheck (§5.1), and the sumcheck is a chain of steps where each step needs the answer from the one before it. That happens at two levels:
 
 - The circuit is proved layer by layer. Proving a statement about one layer turns into a statement about the next layer down, and so on. The next layer's problem does not exist until the current one has finished producing it, so two layers can never be worked on at the same time.
 - Within a layer, each round depends on the last. Each round produces a value, and that value is fed through a scrambling function to produce the starting point for the next round. This is deliberate: it is what stops the prover from cheating by choosing convenient values in advance. But it also means the rounds form an unbreakable chain and cannot be reordered or overlapped.
