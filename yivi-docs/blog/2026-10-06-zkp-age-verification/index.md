@@ -128,7 +128,7 @@ Modern phones have eight processor cores. If proving could be split across them 
 | 4 | 750 ms | 503 ms | 111 MB |
 | 1 | 830 ms | 473 ms | 104 MB |
 
-*Version 6 circuit, one attribute, on the desktop machine (x86-64, Linux under WSL), with the program pinned to 24, 4 and 1 cores. It was measured through a Java test harness against the unmodified library, before any of the fixes in §2. The memory column is the peak of that harness process, not the library's own peak: the same circuit measured natively, with no Java in the way, peaks at 211.8 MB unpatched (§2.1). The two are not comparable, and only §2's figures describe what the library itself uses.*
+*Version 6 circuit, one attribute, on the desktop machine (x86-64, Linux under WSL), with the program pinned to 24, 4 and 1 cores. It was measured through a Java test harness against the unmodified library, before any of the fixes in §2. The memory column is not the library's own peak: the same circuit measured natively, with no Java in the way, peaks at 211.8 MB unpatched (§2.1), well above anything in this column. The two are not comparable, and only §2's figures describe what the library itself uses.*
 
 Normal variation between runs is about 5%, so all three rows are the same result. Giving the program twenty-four times as many cores changes nothing measurable. The memory column points the same way within the table (it falls as cores are taken away, 117 → 111 → 104 MB, which is what per-thread housekeeping looks like rather than parallel work), but because it is the harness's figure and not the library's, the conclusion rests on the timings.
 
