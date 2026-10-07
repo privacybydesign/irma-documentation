@@ -286,7 +286,7 @@ About 21 seconds of the launch freeze removed, more than every other optimisatio
 >
 > The shipping wallet proves in about 1.1 seconds (§8.3). The 139 MB memory peak above was measured with the version 6 circuit the test harness uses; the shipping wallet uses a version 7 circuit, and the same probe on the same phone measures 165.0 MB with that one (median of ten runs, spread 165.0–165.1 MB). That is 25 MB above version 6 rather than the 11 MB the unpacked sizes in §2.4 would lead you to expect, so estimating this figure from the circuit sizes understates it; 165 MB is the measured number and the one to use. Both are the library's own peak, not the whole app's. It passes with room to spare on both counts.
 >
-> One estimate made at that time turned out to be wrong, and is worth correcting: the "88 MB in use during proving" we assumed is the temporary unpacked circuit rather than the actual peak, which is roughly 150–210 MB on top of the host app.
+> One estimate made at that time turned out to be wrong, and is worth correcting: the "88 MB in use during proving" we assumed is the temporary unpacked circuit rather than the actual peak, which is 140 MB with the version 6 circuit (211 MB before the fixes) and 165 MB with the shipping version 7 circuit, on top of the host app.
 
 ### 7.1 What would move the remaining 140 MB
 
