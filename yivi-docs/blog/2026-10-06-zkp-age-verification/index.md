@@ -128,9 +128,9 @@ Modern phones have eight processor cores. If proving could be split across them 
 | 4 | 750 ms | 503 ms | 111 MB |
 | 1 | 830 ms | 473 ms | 104 MB |
 
-*Version 6 circuit, one attribute, on the desktop machine (x86-64, Linux under WSL), with the program pinned to 24, 4 and 1 cores. It was measured through a Java test harness against the unmodified library, before any of the fixes in §2. The memory column is not the library's own peak: the same circuit measured natively, with no Java in the way, peaks at 211.8 MB unpatched (§2.1), well above anything in this column. The two are not comparable, and only §2's figures describe what the library itself uses.*
+*Version 6 circuit, one attribute, on the desktop machine (x86-64, Linux under WSL), with the program pinned to 24, 4 and 1 cores. It was measured through a Java test harness against the unmodified library, before any of the fixes in §2. The memory column is the peak resident memory of the Java process the timing tool wrapped, which is the one that drives the test rather than the one the proving happens in: the harness runs the test in a worker process it starts itself. So the prover's own allocations are outside these figures, and the proof of that is §2.1, where the identical circuit measured natively peaks at 211.8 MB, about 95 MB above anything in this column. What the column does track is the Java runtime's own per-thread overhead, which is why it shrinks as cores are taken away. Only §2's figures describe what the library itself uses.*
 
-Normal variation between runs is about 5%, so all three rows are the same result. Giving the program twenty-four times as many cores changes nothing measurable. The memory column points the same way within the table (it falls as cores are taken away, 117 → 111 → 104 MB, which is what per-thread housekeeping looks like rather than parallel work), but because it is the harness's figure and not the library's, the conclusion rests on the timings.
+Normal variation between runs is about 5%, so all three rows are the same result. Giving the program twenty-four times as many cores changes nothing measurable. The conclusion rests on the timings alone; the memory column is reproduced because it was part of what the run recorded, but it describes the harness rather than the library and carries no weight here.
 
 There was an upside to this finding. Because proving uses one core, predicting the phone figure became simple arithmetic: take the desktop time and scale it by how much slower a single phone core is. That predicted 2.5 to 3.5 seconds, and the shipping wallet came in at about 1.1 seconds (§8.3). The prediction was two to three times too pessimistic, which is the useful direction to be wrong in.
 
@@ -212,10 +212,11 @@ Measured by sampling the program a thousand times a second on the phone, from a 
 | Unpacking circuit | 478 ms | 14.3% |
 | Basic arithmetic | 320 ms | 9.6% |
 | Packaging proof | 170 ms | 5.1% |
-| Everything else | | 2.9% |
-| Clearing memory | | 1.7% |
+| Clearing memory | 55 ms | 1.7% |
+| Everything else | 95 ms | 2.8% |
+| **Total** | **3332 ms** | **100.0%** |
 
-*Time for one proof plus one verification, by activity. Cold phone. Shares are rounded to one decimal and add to 100.1%. "Operating system" is Android handing memory to the program; "packaging proof" is Ligero.*
+*Time for one proof plus one verification, by activity. Cold phone. The profiler took 3332 samples at one per millisecond with nothing excluded and nothing below a cutoff discarded, so the time column is a count of samples and adds up exactly. The share column is that column as a percentage, rounded to one decimal, with "everything else" carrying the rounding. "Operating system" is Android handing memory to the program; "packaging proof" is Ligero.*
 
 ### 5.1 It is the sumcheck, and that was not obvious
 
