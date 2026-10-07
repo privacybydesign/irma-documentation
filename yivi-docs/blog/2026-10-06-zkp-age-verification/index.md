@@ -20,7 +20,7 @@ Proving is expensive. It takes seconds rather than milliseconds, and it uses a l
 
 It also records the change that mattered more than all of those combined, and which was not about proving at all: the app used to freeze for 24 seconds on every launch before anyone had proved anything. That is §6, and a reader with time for one section should read that one.
 
-- **Memory used:** −34%, 211 MB down to 140 MB
+- **Memory used:** −34% on the test circuit, 211 MB down to 140 MB (165 MB with the shipping circuit)
 - **Time to make a proof:** 1.1 s in the wallet; budget allowed 8 s
 - **From 1 core to 24:** no gain, identical speed
 - **App launch freeze:** −21 s, 24 s down to 2.9 s
