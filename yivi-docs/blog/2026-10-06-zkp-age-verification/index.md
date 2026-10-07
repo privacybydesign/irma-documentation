@@ -276,7 +276,7 @@ About 21 seconds of the launch freeze removed, more than every other optimisatio
 |---|---|---|
 | Proving | 2074 ms | 2004 ms |
 | Verifying | 1050 ms | 997 ms |
-| Memory used | 211.0 MB | 139.9 MB |
+| Memory used | 211.0 MB | 139.0 MB |
 
 *This is a before-and-after comparison, not a statement of what proving costs. Both columns come from one interleaved sitting of the on-device test harness, with all 20 of its tests passing, including a complete presentation exchange. Read the differences only. The same harness on the same phone and circuit measured proving at 1529 ms in another sitting, 24% below the 2004 ms here, which is why no absolute from this table is quoted anywhere else in this report. What proving actually costs in the shipping wallet is §8.3.*
 
