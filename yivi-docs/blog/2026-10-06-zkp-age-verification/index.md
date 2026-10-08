@@ -7,6 +7,8 @@ tags: [yivi, eudi, age-verification, zkp]
 
 *Where the memory went, where the time goes, and why extra processor cores do not help*
 
+Yivi is working towards being a wallet that conforms to the European Age Verification profile, and a recent revision of the profile settled how such a wallet proves someone's age. Annex A §A.8 now says that "where the User's device provides the necessary platform support, the AVI SHALL support the generation of Zero-Knowledge Proofs". The AVI is the Age Verification App Instance, which here means the Yivi app on the user's phone. The clause names exactly one system for doing so: `longfellow-libzk-v1`, which is Google's Longfellow library. That turns zero-knowledge proofs from something a wallet might offer into something a conformant one has to do, so the question is no longer whether Yivi implements zero-knowledge age proofs, but whether they are affordable on a phone an ordinary person already owns. This report is the measurement that answers that.
+
 <!-- truncate -->
 
 - **Project:** Longfellow prover investigation, google/longfellow-zk, proof system `longfellow-libzk-v1`
@@ -14,7 +16,9 @@ tags: [yivi, eudi, age-verification, zkp]
 - **Phone:** MediaTek Dimensity 8100 (CPH2423) · Android 15 · 11.7 GB; 4 × Cortex-A55 @ 2.0 GHz (cores 0–3, power-saving) · 4 × Cortex-A78 @ 2.85 GHz (cores 4–7, performance)
 - **PC:** Intel Core i7-13700HX · 16 cores / 24 threads · 15.7 GB
 
-When someone proves they are over 18 without revealing their date of birth, the phone has to do a large piece of mathematics first. The software that does it is Longfellow (google/longfellow-zk), a library written by Google. The European Age Verification rules name this exact proof system: the AV profile's Annex A states that "the only Zero-Knowledge Proof system in scope is the system identified by `longfellow-libzk-v1`", and the technical specification's [Annex B on zero-knowledge proofs](https://ageverification.dev/av-doc-technical-specification/docs/annexes/annex-B/annex-B-zkp/) selects the scheme behind it, ECDSA Anonymous Credentials (the "Longfellow" scheme). The scheme is peer reviewed and published (Matteo Frigo and abhi shelat, "Anonymous Credentials from ECDSA", IACR Communications in Cryptology, May 2026); its formal standardisation is still in progress. That is why this report is about one library rather than about zero-knowledge proofs in general. Doing that mathematics is called proving, and it happens entirely on the user's own phone.
+When someone proves they are over 18 without revealing their date of birth, the phone has to do a large piece of mathematics first. The software that does it is Longfellow (google/longfellow-zk), a library written by Google. As above, the AV profile names this exact proof system, and adds that "Support for any other Zero-Knowledge Proof system does not constitute conformance with this profile". The technical specification's [Annex B on zero-knowledge proofs](https://ageverification.dev/av-doc-technical-specification/docs/annexes/annex-B/annex-B-zkp/) selects the scheme behind it, ECDSA Anonymous Credentials (the "Longfellow" scheme). The scheme is peer reviewed and published (Matteo Frigo and abhi shelat, "Anonymous Credentials from ECDSA", IACR Communications in Cryptology, May 2026); its formal standardisation is still in progress. That is why this report is about one library rather than about zero-knowledge proofs in general. Doing that mathematics is called proving, and it happens entirely on the user's own phone.
+
+The profile fixes the way the proof travels as well. A website asks for it through the W3C Digital Credentials API as specified in ISO/IEC 18013-7 Annex C, using the `org-iso-mdoc` protocol, with OpenID for Verifiable Presentations as a fallback. Building that transport is the other half of the work. This report is about the first half: what the proof itself costs on the phone.
 
 Proving is expensive. It takes seconds rather than milliseconds, and it uses a large amount of the phone's memory while it runs. This report is the record of finding out exactly how expensive, fixing the one genuine waste we found, testing several other ideas that turned out not to work, and establishing why one obvious-sounding fix ("use more of the phone's processor cores") does not help.
 
@@ -384,6 +388,30 @@ That matters for one figure and not the others. Proving and verifying are unaffe
 ### 8.5 Why the two halves do not overlap
 
 Proving and verifying never happen at the same time. The proof has to exist and reach the other side before verifying can begin, so the total time a relying party waits is proving, plus transmission, plus verifying, in that order. In the flow Yivi uses, the wallet hands the response to the browser on the same phone through the operating system, but the browser still has to send the 360 KB response to the relying party's server, and that upload was not measured (§8.4). Leaving transmission out, proving accounts for roughly two thirds of the total, which is why it received all of the optimisation effort described in this report.
+
+## 9 What this changes for the Yivi wallet
+
+These measurements were taken to settle design questions, not for their own sake. This is what they settle.
+
+**Zero-knowledge proofs become the normal path rather than the exception.** The threshold set before the work started was around 8 seconds on a phone from 2022, beyond which handing over the date of birth in the ordinary way would become the common case. The shipping wallet proves in about 1.1 seconds (§8.3), and the library peaks at 165 MB (§7). The profile still requires the plain mdoc fallback for devices that cannot generate a proof at all (Annex A §A.6, and §A.9 forbids a relying party from refusing a presentation merely because it used that fallback), so Yivi implements both paths. On the hardware measured here, the fallback stays a fallback.
+
+**Parallelism is not a direction to spend effort on.** The library proves on one core, and giving it twenty-four changed nothing (§3); whether the arithmetic inside a single step could be spread across cores was not tested (§3.1). Picking cores by hand is worse than letting Android pick (§3). That closes off an obvious-looking direction, and it is why the effort went into memory instead, where there was something to win.
+
+**The wallet proves in the foreground, while the user is on the consent screen.** The same proof takes three times as long on the power-saving cores, and that is where Android moves work the user is not looking at (§8.4). Proving at the moment of consent, with the screen on, is both the quicker arrangement and the one a real disclosure happens under.
+
+**Both memory fixes ship, and the strict one stays ours.** The Yivi build carries the two fixes from §2. The narrow one, reserving what the file needs instead of a fixed 130 MB limit, is what we propose back to Google. The stricter check, comparing the size a circuit claims against the known size of the specific circuit we ship, belongs in our own wrapper, because only the wallet knows which circuits those are (§2.3).
+
+**The circuit map is a build step, and it has to stay part of the build.** Without it the app freezes for 24 seconds on every launch (§6). Adding a circuit, or loading one by a path that does not consult the map, brings that back in full. It is not a setting somebody can turn on afterwards.
+
+**Relying parties have no reason to ration what they ask for.** Four age thresholds cost very nearly what one costs (§8.3), and everything a verifier does apart from checking the proof costs about a millisecond (§8.2). There is no performance argument for cutting corners on the issuer and trust checks, which are what stop a proof made under a self-issued credential from being accepted.
+
+**What remains expensive is size, not time.** A proof is around 360 KB, of which the packaging step accounts for about 88% (§5.2). That is a concern for the upload from the browser to the relying party's server, a leg this report did not measure (§8.4), and not something the user waits for.
+
+Two things are still open: iPhone is unmeasured and needs a Mac to test (§7.2), and the handover between browser, operating system and wallet was simulated rather than measured (§8.4).
+
+### 9.1 What to expect next
+
+Everything measured here is wired into the Yivi Android app, together with the transport around it: the `org-iso-mdoc` protocol over the W3C Digital Credentials API, which is how a website asks for an age proof and how the answer travels back. Both have been exercised end to end on a real phone, with a real age-verification attestation from Yivi's own issuer, and the proofs the wallet produces are accepted by Google's own reference verifier. The measurements in §8 were taken with a script standing in for the website; the same flow has since been run through a browser on the phone, which is how it will work in practice. A release of the Yivi app with zero-knowledge age proofs and `org-iso-mdoc` support is coming soon, on Android first.
 
 ---
 
