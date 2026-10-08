@@ -405,7 +405,7 @@ These measurements were taken to settle design questions, not for their own sake
 
 **Relying parties have no reason to ration what they ask for.** Four age thresholds cost very nearly what one costs (§8.3), and everything a verifier does apart from checking the proof costs about a millisecond (§8.2). There is no performance argument for cutting corners on the issuer and trust checks, which are what stop a proof made under a self-issued credential from being accepted.
 
-**What remains expensive is size, not time.** A proof is around 360 KB, of which the packaging step accounts for about 88% (§5.2). That is a concern for the upload from the browser to the relying party's server, a leg this report did not measure (§8.4). It is not time the wallet spends proving.
+**Size is the open question, not proving time.** A proof is around 360 KB, of which the packaging step accounts for about 88% (§5.2). That may matter for the upload from the browser to the relying party's server, a leg this report did not measure (§8.4). It is not time the wallet spends proving.
 
 Two things are still open: iPhone is unmeasured and needs a Mac to test (§7.2), and the handover between browser, operating system and wallet was simulated rather than measured (§8.4).
 
