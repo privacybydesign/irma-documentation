@@ -397,7 +397,7 @@ These measurements were taken to settle design questions, not for their own sake
 
 **Parallelism is not a direction to spend effort on.** The library proves on one core, and giving it twenty-four changed nothing (§3); whether the arithmetic inside a single step could be spread across cores was not tested (§3.1). Picking cores by hand is never better than letting Android pick, and can be three times worse (§3). That closes off an obvious-looking direction, and it is why the effort went into memory instead, where there was something to win.
 
-**The wallet proves in the foreground, while the user is on the consent screen.** The same proof takes three times as long on the power-saving cores, and that is where Android moves work the user is not looking at (§8.4). Proving at the moment of consent, with the screen on, is both the quicker arrangement and the one a real disclosure happens under.
+**The measurements were taken with the wallet in the foreground, while the user is on the consent screen.** The same proof takes three times as long on the power-saving cores, and Android can move work there when the user is not looking at it (§8.4). Proving at the moment of consent, with the screen on, is both the quicker arrangement and the one a real disclosure happens under.
 
 **Both memory fixes ship, and the strict size check stays ours.** The Yivi build carries Fix A and Fix B from §2.1. Fix A, reserving what the file needs instead of a fixed 130 MB limit, is what we propose back to Google. The stricter check, comparing the size a circuit claims against the known size of the specific circuit we ship, belongs in our own wrapper, because only the wallet knows which circuits those are (§2.3).
 
