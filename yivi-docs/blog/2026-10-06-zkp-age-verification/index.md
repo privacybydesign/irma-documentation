@@ -411,7 +411,7 @@ Two things are still open: iPhone is unmeasured and needs a Mac to test (§7.2),
 
 ### 9.1 What to expect next
 
-Everything measured here is wired into the Yivi Android app, together with the transport around it: the `org-iso-mdoc` protocol over the W3C Digital Credentials API, which is how a website asks for an age proof and how the answer travels back. Both have been exercised end to end on a real phone, with a real age-verification attestation from the issuer on Yivi's staging cluster, and the proofs the wallet produces are accepted by Google's own reference verifier. The measurements in §8 were taken with a script standing in for the website; the same flow has since been run through a browser on the phone, which is how it will work in practice. A release of the Yivi app with Zero-Knowledge Age Proofs and `org-iso-mdoc` support is proposed to ship soon, on Android first.
+Everything measured here is wired into the Yivi Android app, together with the transport around it: the `org-iso-mdoc` protocol over the W3C Digital Credentials API, which is how a website asks for an age proof and how the answer travels back. Both have been exercised end to end on a real phone, with a real age-verification attestation from the issuer on Yivi's staging cluster, and the proofs the wallet produces are accepted by Google's own reference verifier. The measurements in §8 were taken with a script standing in for the website; the same flow has since been run through a browser on the phone, which is how it will work in practice. A release of the Yivi app with Zero-Knowledge Age Proofs and `org-iso-mdoc` support is proposed to ship soon, on both Android and iOS.
 
 ---
 
