@@ -59,6 +59,15 @@ rubenhensen:
     github: rubenhensen
     linkedin: ruben-hensen
 
+ashwinkhan:
+  name: Ashwin Khan
+  title: Application Developer @ Yivi
+  url: https://github.com/khancak
+  image_url: https://github.com/khancak.png
+  page: true
+  socials:
+    github: khancak
+
 danielbaay:
   name: Daniël Baay
   title: Intern @ Yivi
