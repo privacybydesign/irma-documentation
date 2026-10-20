@@ -2,10 +2,10 @@
 slug: custom-attribute-rendering
 title: "Credentials don't have to be endless lists"
 authors: [dibranmulder]
-tags: [yivi, ux, driving-license, mrtd, update]
+tags: [yivi, ux, driver-license, mrtd, update]
 ---
 
-*A credential is more than a list of keys and values. With Yivi app 8.3.2 the wallet can draw a set of related attributes as one purpose-built view. The first credential to get one is the Dutch driving licence: its categories now appear as a table with vehicle pictograms and issue and expiry dates, laid out like the back of the physical card.*
+*A credential is more than a list of keys and values. With Yivi app 8.3.2 the wallet can draw a set of related attributes as one dedicated view. The first credential to get one is the Dutch driving licence: its categories now appear as a table with vehicle pictograms and issue and expiry dates, laid out like the back of the physical card.*
 
 <!-- truncate -->
 
@@ -13,7 +13,7 @@ tags: [yivi, ux, driving-license, mrtd, update]
 
 A wallet knows what a credential contains, but not what it means. For years, the honest way to show a credential was to print every attribute as a label with a value under it, in the order the scheme defines. For an email address or a phone number that works fine. For anything richer, it turns into a long list of attributes that is hard to read.
 
-The Dutch driving licence makes that painfully clear. Each of the sixteen categories on the card, from AM (moped) to T (tractor), is issued as three attributes: whether you hold the category, when it was issued and when it expires. That makes 48 rows on a single credential. Someone who holds only a car licence scrolls past dozens of "No" values and empty dates to find the two that matter. The information is all there, but you can't see what you're allowed to drive at a glance.
+The Dutch driving licence shows the problem. Each of the sixteen categories on the card, from AM (moped) to T (tractor), is issued as three attributes: whether you hold the category, when it was issued and when it expires. That makes 48 rows on a single credential. Someone who holds only a car licence scrolls past dozens of "No" values and empty dates to find the two that matter. The information is all there, but you can't see what you're allowed to drive at a glance.
 
 We think credentials should be user friendly. You should recognise your driving licence in your wallet as quickly as you recognise the card in your physical wallet.
 
