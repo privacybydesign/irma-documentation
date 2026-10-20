@@ -21,9 +21,15 @@ We think credentials should be user friendly. You should recognise your driving 
 
 The first step came with Yivi 8.0 in June. As part of [schema independence](/blog/2026-yivi-8-0-crypto-agility), the wallet stopped thinking of a credential as a flat list. Attributes are addressed by their path inside the credential, so a credential can hold nested objects and arrays, and the redesigned credential card shows that structure. An address shows as one group with its street, city and country underneath, instead of as separate unrelated rows. Arrays are numbered and can nest: an organisation credential lists each faculty, each faculty its departments, and each department its courses.
 
-<div class="center-container">
-    <img src="/img/attribute-rendering/02_hierarchy_address.png" class="ss" alt="Yivi app - Credential with a nested address object" />
-    <img src="/img/attribute-rendering/01_hierarchy_organization.png" class="ss" alt="Yivi app - Credential with nested arrays of faculties, departments and courses" />
+<div class="center-container" style={{alignItems: 'flex-start'}}>
+    <figure style={{margin: '0 0.5rem', textAlign: 'center'}}>
+        <img src="/img/attribute-rendering/02_hierarchy_address.png" class="ss" alt="Yivi app - Credential with a nested address object" />
+        <figcaption style={{maxWidth: '15em', margin: '0.25rem auto 0', fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)'}}>A nested object: the address groups street, city and country.</figcaption>
+    </figure>
+    <figure style={{margin: '0 0.5rem', textAlign: 'center'}}>
+        <img src="/img/attribute-rendering/01_hierarchy_organization.png" class="ss" alt="Yivi app - Credential with nested arrays of faculties, departments and courses" />
+        <figcaption style={{maxWidth: '15em', margin: '0.25rem auto 0', fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)'}}>Nested arrays: faculties contain departments, departments contain courses.</figcaption>
+    </figure>
 </div>
 
 Hierarchy lets an issuer organise information. But it is still a generic layout: every group looks the same whatever it contains. Some information has a shape of its own, and deserves a view that matches it.
@@ -51,9 +57,15 @@ The first renderer is for the Dutch driving licence credential (`pbdf.pbdf.drivi
 
 The categories follow the order of the licence card: the rows of the EU model licence from Directive 2006/126/EC, plus the Dutch T category.
 
-<div class="center-container">
-    <img src="/img/attribute-rendering/03_edl_collapsed.png" class="ss" alt="Yivi app - Driving licence categories, collapsed to the categories held" />
-    <img src="/img/attribute-rendering/04_edl_expanded.png" class="ss" alt="Yivi app - Driving licence categories, all categories expanded" />
+<div class="center-container" style={{alignItems: 'flex-start'}}>
+    <figure style={{margin: '0 0.5rem', textAlign: 'center'}}>
+        <img src="/img/attribute-rendering/03_edl_collapsed.png" class="ss" alt="Yivi app - Driving licence categories, collapsed to the categories held" />
+        <figcaption style={{maxWidth: '15em', margin: '0.25rem auto 0', fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)'}}>Collapsed to the categories held, with the other 14 one tap away.</figcaption>
+    </figure>
+    <figure style={{margin: '0 0.5rem', textAlign: 'center'}}>
+        <img src="/img/attribute-rendering/04_edl_expanded.png" class="ss" alt="Yivi app - Driving licence categories, all categories expanded" />
+        <figcaption style={{maxWidth: '15em', margin: '0.25rem auto 0', fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)'}}>Expanded: all 16 categories in the order of the licence card.</figcaption>
+    </figure>
 </div>
 
 ### Only what you hold, until you ask for more
@@ -66,10 +78,11 @@ If you hold every category, or none, there is nothing to hide and the table show
 
 When a verifier asks for driving licence categories, the table adapts to the request. It never collapses on a disclosure, because it shows exactly the categories being shared. It only shows the date columns that were requested. If the verifier asks whether you hold a category but not for any date, the table shows a **Status** column with *Held* or *Not held* instead. A car-sharing service that only needs to know you hold category B sees one row. You see the same one row before you agree to share it.
 
-In the example below, a verifier asks for your name and whether you hold categories A and B. The wallet shows exactly those two categories with their status, and nothing else from the licence.
-
-<div class="center-container">
-    <img src="/img/attribute-rendering/05_edl_disclosure.png" class="ss" alt="Yivi app - Disclosing driving licence categories A and B with a Status column" />
+<div class="center-container" style={{alignItems: 'flex-start'}}>
+    <figure style={{margin: '0 0.5rem', textAlign: 'center'}}>
+        <img src="/img/attribute-rendering/05_edl_disclosure.png" class="ss" alt="Yivi app - Disclosing driving licence categories A and B with a Status column" />
+        <figcaption style={{maxWidth: '15em', margin: '0.25rem auto 0', fontSize: '0.85rem', color: 'var(--ifm-color-emphasis-700)'}}>A verifier asks for your name and categories A and B. The wallet shows only those, with their status.</figcaption>
+    </figure>
 </div>
 
 The same view is used in the activity log, so a disclosure you made last week reads the same way it did when you approved it.
