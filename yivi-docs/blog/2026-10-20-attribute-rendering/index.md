@@ -66,6 +66,12 @@ If you hold every category, or none, there is nothing to hide and the table show
 
 When a verifier asks for driving licence categories, the table adapts to the request. It never collapses on a disclosure, because it shows exactly the categories being shared. It only shows the date columns that were requested. If the verifier asks whether you hold a category but not for any date, the table shows a **Status** column with *Held* or *Not held* instead. A car-sharing service that only needs to know you hold category B sees one row. You see the same one row before you agree to share it.
 
+In the example below, a verifier asks for your name and whether you hold categories A and B. The wallet shows exactly those two categories with their status, and nothing else from the licence.
+
+<div class="center-container">
+    <img src="/img/attribute-rendering/05_edl_disclosure.png" class="ss" alt="Yivi app - Disclosing driving licence categories A and B with a Status column" />
+</div>
+
 The same view is used in the activity log, so a disclosure you made last week reads the same way it did when you approved it.
 
 ## What developers and organisations should know
