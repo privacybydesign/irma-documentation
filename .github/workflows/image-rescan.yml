@@ -1,0 +1,21 @@
+# Weekly re-scan of the PUBLISHED images (all platforms) for new CVEs.
+name: Image rescan
+
+on:
+  schedule:
+    - cron: "23 6 * * 1" # Mondays 06:23 UTC
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  rescan:
+    uses: privacybydesign/github-workflows/.github/workflows/image-rescan.yml@v1
+    permissions:
+      contents: read
+      packages: read
+      security-events: write
+    with:
+      # :edge runs on docs.staging.yivi.app; :latest (prod) is the latest release.
+      tags: edge latest-release
+      severity-cutoff: high
