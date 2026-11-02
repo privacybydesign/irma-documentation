@@ -44,17 +44,17 @@ Each server signs its reports with an ES256 (P-256) account key. The key must su
 **Option A: a state directory (recommended for a single server).** The server creates the key in this directory the first time it needs one. It also writes reports that it could not send yet to the directory, so they survive a restart.
 
 ```shell
-yivi irma server usage-key --usage-reporting-state-dir /var/lib/irma/usage
+yivi irma server usage keygen --usage-reporting-state-dir /var/lib/irma/usage
 ```
 
-**Option B: a key file you manage yourself**, for example a Kubernetes secret or a file from your secrets manager. The key must be a PEM-encoded P-256 private key, in SEC 1 (`EC PRIVATE KEY`) or PKCS #8 (`PRIVATE KEY`) format:
+**Option B: a key file you manage yourself**, for example a Kubernetes secret or a file from your secrets manager. The key must be a PEM-encoded P-256 private key in SEC 1 (`EC PRIVATE KEY`) format, as `openssl ecparam` creates it:
 
 ```shell
 openssl ecparam -name prime256v1 -genkey -noout -out usage-account.key
-yivi irma server usage-key --usage-reporting-account-key-file usage-account.key
+yivi irma server usage keygen --usage-reporting-account-key-file usage-account.key
 ```
 
-Either way, `usage-key` prints the public key and its JWK thumbprint:
+Either way, `usage keygen` prints the public key and its JWK thumbprint:
 
 ```text
 -----BEGIN PUBLIC KEY-----
@@ -63,7 +63,7 @@ MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...
 JWK thumbprint: 3q2-7wK1h1nZ...
 ```
 
-Keep this output. You paste it into the Portal in the next step. You can run `usage-key` again at any time: it loads the existing key and prints the same output.
+Keep this output. You paste it into the Portal in the next step. You can run `usage keygen` again at any time: it loads the existing key and prints the same output.
 
 :::warning
 The private key (`account.key` in the state directory, or your key file) is what proves to the Portal that reports come from your organization. Treat it like any other secret. Don't commit it to version control and don't bake it into a container image.
@@ -75,15 +75,15 @@ The private key (`account.key` in the state directory, or your key file) is what
 2. Click your profile and pick your organization.
 3. Select **Usage**.
 4. Click **Register key**.
-5. Paste the **full output** of `yivi irma server usage-key` into the **Public key** field. The thumbprint line is fine to include.
+5. Paste the **full output** of `yivi irma server usage keygen` into the **Public key** field. The thumbprint line is fine to include.
 6. Optionally, add a **Label** such as `production` or `acceptance`, so you can tell your keys apart later.
 7. Click **Register**.
 
-The key now shows up in the list as **Active**, with its thumbprint and the date you registered it. Check that the thumbprint matches the one `usage-key` printed.
+The key now shows up in the list as **Active**, with its thumbprint and the date you registered it. Check that the thumbprint matches the one `usage keygen` printed.
 
 ## Step 3: configure and start the server
 
-Start the server with the same key setting you used for `usage-key`:
+Start the server with the same key setting you used for `usage keygen`:
 
 ```shell
 yivi irma server --production \
@@ -125,7 +125,7 @@ If you start the server before you register the key, it logs an error with the p
 | `--usage-reporting-state-dir` | `IRMASERVER_USAGE_REPORTING_STATE_DIR` | | Directory for the account key (`account.key`) and for reports that have not been sent yet. |
 | `--usage-reporting-account-key-file` | `IRMASERVER_USAGE_REPORTING_ACCOUNT_KEY_FILE` | `account.key` in the state dir | PEM file with the P-256 account key. If set, this file is used and must exist. |
 | `--usage-reporting-server-instance` | `IRMASERVER_USAGE_REPORTING_SERVER_INSTANCE` | hostname | Name of this server instance in the reports. Useful to tell replicas apart. |
-| `--usage-reporting-interval` | `IRMASERVER_USAGE_REPORTING_INTERVAL` | `5m` | How often the counts are put into a report. Must be at least `1s`. |
+| `--usage-reporting-interval` | `IRMASERVER_USAGE_REPORTING_INTERVAL` | `5m` | How often the counts are put into a report. Must be between `1m` and `6h`. |
 | `--usage-reporting-count-issuance` | `IRMASERVER_USAGE_REPORTING_COUNT_ISSUANCE` | `false` | Also count issuance sessions. |
 | `--usage-reporting-portal-url` | `IRMASERVER_USAGE_REPORTING_PORTAL_URL` | `https://portal.yivi.app/usage/v1/directory` in production mode | Usage directory URL of the Portal. Outside production mode, setting this turns reporting on. |
 | `--usage-reporting-disabled` | `IRMASERVER_USAGE_REPORTING_DISABLED` | `false` | Turn usage reporting off, also in production mode. Only meant for Yivi's own internal services. |
@@ -150,14 +150,14 @@ A future major version will require it, so set it up now.
 
 ### Docker
 
-Mount the state directory as a volume, so the key and the unsent reports survive when the container is recreated. The `ghcr.io/privacybydesign/yivi` image runs as user `irma` (UID 1000), so first make the new volume writable for that user. Then run `usage-key` against the same volume:
+Mount the state directory as a volume, so the key and the unsent reports survive when the container is recreated. The `ghcr.io/privacybydesign/yivi` image runs as user `irma` (UID 1000), so first make the new volume writable for that user. Then run `usage keygen` against the same volume:
 
 ```shell
 docker volume create yivi-usage
 docker run --rm -v yivi-usage:/usage alpine chown 1000:1000 /usage
 
 docker run --rm -v yivi-usage:/usage ghcr.io/privacybydesign/yivi:latest \
-  irma server usage-key --usage-reporting-state-dir /usage
+  irma server usage keygen --usage-reporting-state-dir /usage
 
 docker run -d -v yivi-usage:/usage -p 8088:8088 ghcr.io/privacybydesign/yivi:latest \
   irma server --production --usage-reporting-state-dir /usage ...
@@ -218,4 +218,4 @@ conf := &server.Configuration{
 }
 ```
 
-The same rules apply as for the `irma server` command. Call `Stop()` on the `irmaserver.Server` when you shut down, so the final report is sent. To create or inspect the key, use `usage.LoadOrCreateKey`, `usage.PublicKeyPEM` and `usage.Thumbprint`, or run `yivi irma server usage-key` with the same state dir.
+The same rules apply as for the `irma server` command. Call `Stop()` on the `irmaserver.Server` when you shut down, so the final report is sent. To create or inspect the key, use `usage.LoadOrCreateKey`, `usage.PublicKeyPEM` and `usage.Thumbprint`, or run `yivi irma server usage keygen` with the same state dir.
