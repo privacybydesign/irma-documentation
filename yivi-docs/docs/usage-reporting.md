@@ -150,18 +150,17 @@ A future major version will require it, so set it up now.
 
 ### Docker
 
-Mount the state directory as a volume, so the key and the unsent reports survive when the container is recreated. Run `usage-key` against the same volume:
+Mount the state directory as a volume, so the key and the unsent reports survive when the container is recreated. The `ghcr.io/privacybydesign/yivi` image runs as user `irma` (UID 1000), so first make the new volume writable for that user. Then run `usage-key` against the same volume:
 
 ```shell
-# The image runs as user irma (UID 1000): make the new volume writable for it.
-docker volume create irma-usage
-docker run --rm -v irma-usage:/usage alpine chown 1000:1000 /usage
+docker volume create yivi-usage
+docker run --rm -v yivi-usage:/usage alpine chown 1000:1000 /usage
 
-docker run --rm -v irma-usage:/usage ghcr.io/privacybydesign/irma:latest \
-  server usage-key --usage-reporting-state-dir /usage
+docker run --rm -v yivi-usage:/usage ghcr.io/privacybydesign/yivi:latest \
+  irma server usage-key --usage-reporting-state-dir /usage
 
-docker run -d -v irma-usage:/usage -p 8088:8088 ghcr.io/privacybydesign/irma:latest \
-  server --production --usage-reporting-state-dir /usage ...
+docker run -d -v yivi-usage:/usage -p 8088:8088 ghcr.io/privacybydesign/yivi:latest \
+  irma server --production --usage-reporting-state-dir /usage ...
 ```
 
 ### Kubernetes and multiple replicas
