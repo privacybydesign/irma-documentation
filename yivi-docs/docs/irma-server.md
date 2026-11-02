@@ -68,6 +68,9 @@ When running the server in production, you should enable the `production` option
 
 In addition, when [developer mode is not enabled in the Yivi app](yivi-app.md#developer-mode) (the default setting), the Yivi app wil refuse to perform sessions with IRMA servers not running in `production` mode. Since the majority of the Yivi app users will not have developer mode enabled, this requires IRMA servers facing those users to enable `production` mode.
 
+### Usage reporting
+In `production` mode the server can report how many disclosure and signing sessions it handled to the [Yivi Portal](https://portal.yivi.app). It sends only counts, never attribute values or other personal data. To turn it on, create an account key with `yivi irma server usage-key --usage-reporting-state-dir <dir>`, register the printed public key with your organization in the Yivi Portal, and start the server with the same `--usage-reporting-state-dir`. A production server without usage reporting configured logs a warning at startup; this will become required in a future version. See [Usage reporting](usage-reporting.md) for all steps and options.
+
 ### Stateless mode
 
 For each IRMA session the IRMA server needs to keep track of the [session state](irma-protocol.md#the-session-state). By default the session state is kept in memory, which requires no extra setup but cannot be shared between multiple IRMA servers and is lost when the server restarts or crashes. From version 0.9.0 the IRMA server can run in *stateless* mode, in which the session state is decoupled from the server and stored in a Redis data store instead. This unlocks:
