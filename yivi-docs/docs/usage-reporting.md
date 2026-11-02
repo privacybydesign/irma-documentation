@@ -153,6 +153,10 @@ A future major version will require it, so set it up now.
 Mount the state directory as a volume, so the key and the unsent reports survive when the container is recreated. Run `usage-key` against the same volume:
 
 ```shell
+# The image runs as user irma (UID 1000): make the new volume writable for it.
+docker volume create irma-usage
+docker run --rm -v irma-usage:/usage alpine chown 1000:1000 /usage
+
 docker run --rm -v irma-usage:/usage ghcr.io/privacybydesign/irma:latest \
   server usage-key --usage-reporting-state-dir /usage
 
