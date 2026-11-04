@@ -102,8 +102,8 @@ This approach allows us to retain Yivi's strengths while offering compatibility 
 
 ### 3. Issue SD-JWT VC credentials over OpenID4VCI
 
-:::info Private Beta
-This milestone is currently in private beta.
+:::tip Operational
+This milestone is operational and available in Yivi app version 8.0.0+ and irmago version 1.0+. The Yivi app also accepts mdoc credentials over OpenID4VCI from version 8.3.0, and SD-JWT-secured W3C VCDM credentials from version 8.4.0.
 :::
 
 The third milestone is standardizing issuance using industry protocols. We will adopt OpenID for Verifiable Credential Issuance (OpenID4VCI) to enable issuance of SD-JWT VCs in line with Dutch and European expectations.

@@ -183,7 +183,7 @@ which means we identify and verify verifiers by a x.509 certificate.
 
 Additionally we put some metadata about the verifier inside of this certificate,
 including their origanization information, a logo and permissions for what credentials and attributes they're allowed to ask.
-Authorization requests that don't come with a valid certificate are denied by the Yivi app.
+Signed authorization requests that don't come with a valid certificate are denied by the Yivi app. The one exception is an unsigned request using the `redirect_uri:` client identifier prefix (supported since Yivi app 8.3.0): the app accepts it, but shows the verifier as unverified, without a logo, named by the address the response is sent to.
 Certificates can be revoked using a certificate refocation list, after which the Yivi app will refuse to share any data with the verifier.
 
 For the authorization request url we currently support the `openid4vp://` and `eudi-openid4vp://` schemes.

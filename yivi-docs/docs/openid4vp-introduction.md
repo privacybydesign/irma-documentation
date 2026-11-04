@@ -21,9 +21,10 @@ OpenID4VP disclosure is available from Yivi app version `7.10.0` and `irmago` ve
 ## What's in this section
 
 - [Disclosing SD-JWT VCs over OpenID4VP](openid4vp-disclosure.md) — protocol details, verifier certificates, and DCQL examples.
+- [Verifier Integration Guide](openid4vp-verifier-integration.md#supported-credential-formats) also lists the other formats the Yivi app can present: ISO 18013-5 mdocs (`mso_mdoc`) and SD-JWT-secured W3C VCDM credentials (`vc+sd-jwt`).
 - [Verifier Integration Guide](openid4vp-verifier-integration.md) — end-to-end frontend example based on the [openid4vp-demo-frontend](https://github.com/privacybydesign/openid4vp-demo-frontend) reference implementation.
 
 ## What's not supported (yet)
 
 - Issuance over OpenID4VP — see [OpenID4VCI](openid4vci-introduction.md) instead.
-- Idemix credentials over OpenID4VP — for now OpenID4VP carries only SD-JWT VC. Idemix disclosure continues to use the IRMA protocol.
+- Idemix credentials over OpenID4VP — OpenID4VP carries SD-JWT VC, mdoc and SD-JWT-secured VCDM credentials. Idemix disclosure continues to use the IRMA protocol.
