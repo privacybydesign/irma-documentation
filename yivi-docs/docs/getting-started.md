@@ -36,7 +36,7 @@ Pick the section that matches your protocol of choice:
 - **[Verifying over IRMA](#verifying-over-irma)** — full step-by-step quickstart on this page.
 - **[Issuing over IRMA](#issuing-over-irma)** — extends the IRMA quickstart with issuance.
 - **[Verifying over OpenID4VP](#verifying-over-openid4vp)** — pointers to the dedicated guide.
-- **[Issuing over OpenID4VCI](#issuing-over-openid4vci)** — pointers to the dedicated guide (private beta).
+- **[Issuing over OpenID4VCI](#issuing-over-openid4vci)** — pointers to the dedicated guide.
 
 ## Verifying over IRMA
 
@@ -254,13 +254,9 @@ OpenID4VP carries SD-JWT VCs and is the right choice when you want the broadest 
 
 ## Issuing over OpenID4VCI
 
-OpenID4VCI is the standards-based path to issuing SD-JWT VCs into Yivi (and any other EUDI-compliant wallet).
-
-:::info Private Beta
-OpenID4VCI issuance is currently in [private beta](what-is-yivi.md#3-issue-sd-jwt-vc-credentials-over-openid4vci). Reach out to Yivi support if you would like to participate. If you are an existing Yivi issuer and want something operational today, prefer [Issuing over IRMA](#issuing-over-irma) instead.
-:::
+OpenID4VCI is the standards-based path to issuing SD-JWT VCs, mdocs and SD-JWT-secured W3C VCDM credentials into Yivi (and any other EUDI-compliant wallet). It is supported from Yivi app 8.0.0. If you are an existing Yivi issuer of Idemix credentials, [Issuing over IRMA](#issuing-over-irma) lets you add SD-JWT VC alongside them instead.
 
 To get started:
 
-1. Read the [OpenID4VCI Introduction](openid4vci-introduction.md) for an overview of the pre-authorized code flow and what's in scope for the private beta.
+1. Read the [OpenID4VCI Introduction](openid4vci-introduction.md) for an overview of the pre-authorized code flow and what is not supported yet.
 2. Follow the [Issuer Integration Guide](openid4vci-issuer-integration.md) for credential offer creation, the optional `tx_code` step, and polling for issuance completion. The code samples mirror the [openid4vp-demo-frontend](https://github.com/privacybydesign/openid4vp-demo-frontend) reference repository.

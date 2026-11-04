@@ -4,10 +4,10 @@ title: OpenID4VCI Introduction
 
 [OpenID for Verifiable Credential Issuance (OpenID4VCI)](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) is the open standard for issuing verifiable credentials into a wallet. It is the issuance counterpart to [OpenID4VP](openid4vp-introduction.md) and is one of the core building blocks of the EUDI-wallet framework.
 
-OpenID4VCI is [milestone 3](what-is-yivi.md#3-issue-sd-jwt-vc-credentials-over-openid4vci) of Yivi's [crypto agility roadmap](what-is-yivi.md#crypto-agile-and-open-standards). It enables Yivi to receive SD-JWT VCs from external issuers — for example a Dutch PID Provider or a public-sector EAA issuer — using the same standardized issuance protocol that other EUDI wallets support.
+OpenID4VCI is [milestone 3](what-is-yivi.md#3-issue-sd-jwt-vc-credentials-over-openid4vci) of Yivi's [crypto agility roadmap](what-is-yivi.md#crypto-agile-and-open-standards). It enables Yivi to receive credentials from external issuers — for example a Dutch PID Provider or a public-sector EAA issuer — using the same standardized issuance protocol that other EUDI wallets support.
 
-:::info Private Beta
-OpenID4VCI issuance is currently in private beta. The API and integration story may still change. Reach out to Yivi support if you would like to participate.
+:::tip Operational
+OpenID4VCI issuance is available in Yivi app 8.0.0+ (irmago v1.0.0+). mdoc credentials are supported from Yivi app 8.3.0 and SD-JWT-secured W3C VCDM credentials from Yivi app 8.4.0. Reach out to Yivi support if you want to issue into Yivi.
 :::
 
 ## How it works at a glance
@@ -25,11 +25,13 @@ Yivi already supports issuing SD-JWT VCs **over the IRMA protocol** today — se
 
 Both paths produce the same SD-JWT VCs in the Yivi app. Once in the wallet, SD-JWT VCs are disclosed over OpenID4VP regardless of which protocol issued them.
 
+Unlike IRMA issuance, OpenID4VCI is not limited to SD-JWT VC: the Yivi app also accepts ISO 18013-5 mdocs (`mso_mdoc`) and SD-JWT-secured W3C VCDM 2.0 credentials (`vc+sd-jwt`), such as Open Badges. See [Supported credential formats](openid4vci-issuer-integration.md#supported-credential-formats).
+
 ## What's in this section
 
-- [Issuer Integration Guide](openid4vci-issuer-integration.md) — credential offer creation, pre-authorized code flow, and the `tx_code` extension.
+- [Issuer Integration Guide](openid4vci-issuer-integration.md) — supported credential formats, credential offer creation, pre-authorized code flow, and the `tx_code` extension.
 
 ## What's not supported (yet)
 
-- Issuing Idemix credentials over OpenID4VCI. OpenID4VCI carries SD-JWT VC only.
-- Issuer trust list management via the Yivi portal — issuer onboarding is still a manual process during the private beta.
+- Issuing Idemix credentials over OpenID4VCI. Idemix issuance continues to use the IRMA protocol.
+- Issuer trust list management via the Yivi portal — issuer onboarding is still a manual process; contact Yivi support.

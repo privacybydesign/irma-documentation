@@ -2,15 +2,27 @@
 title: OpenID4VCI Issuer Integration
 ---
 
-:::info Private Beta
-OpenID4VCI issuance is currently in private beta. The endpoints, request shapes, and integration steps below describe the reference setup we use for demos and are subject to change.
+This guide walks through integrating a frontend with an OpenID4VCI-compatible issuer backend, using the pre-authorized code flow. The shape of the requests follows the [Veramo](https://veramo.io/)-based issuer that the [openid4vp-demo-frontend](https://github.com/privacybydesign/openid4vp-demo-frontend) reference implementation talks to (the same repository also contains the verifier-side examples for [OpenID4VP](openid4vp-verifier-integration.md)).
+
+## Supported credential formats
+
+The Yivi app accepts the following [credential formats](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-credential-format-profiles) over OpenID4VCI:
+
+| Format identifier | Credential | Since |
+| --- | --- | --- |
+| `dc+sd-jwt` | IETF SD-JWT VC | Yivi app 8.0.0 (irmago v1.0.0) |
+| `mso_mdoc` | ISO/IEC 18013-5 mdoc (for example a PID, mDL or age verification credential) | Yivi app 8.3.0 (irmago v1.4.0) |
+| `vc+sd-jwt` | SD-JWT-secured W3C VCDM 2.0 credential (for example an Open Badges 3.0 credential) | Yivi app 8.4.0 (irmago v1.5.0) |
+
+:::caution `vc+sd-jwt` is not SD-JWT VC
+OpenID4VCI drafts up to 13 used `vc+sd-jwt` for IETF SD-JWT VC. Since irmago v1.5.0 the Yivi app only reads `vc+sd-jwt` as W3C VCDM, as OpenID4VCI 1.0 does. An issuer that still offers an SD-JWT VC under `vc+sd-jwt`, or signs one with that JWS `typ`, is refused: offer it as `dc+sd-jwt` instead.
 :::
 
-This guide walks through integrating a frontend with an OpenID4VCI-compatible issuer backend, using the pre-authorized code flow. The shape of the requests follows the reference implementation that ships with the [openid4vp-demo-frontend](https://github.com/privacybydesign/openid4vp-demo-frontend) repository (which also contains the verifier-side examples for [OpenID4VP](openid4vp-verifier-integration.md)).
+The wallet verifies each credential before the user is asked to accept it. An SD-JWT VC or mdoc signed with an `x5c` certificate chain must chain to one of the wallet's trust anchors; a credential signed with a DID key is resolved through `did:web`, `did:key` or `did:jwk`. A batch whose instances are not copies of one credential (differing in claims or validity) is refused, as is a credential whose status list marks it as revoked.
 
 ## Architecture
 
-The OpenID4VCI specification defines the **wallet↔issuer** interaction — the credential offer URI, the token endpoint, and the credential endpoint. It does **not** specify how a frontend talks to its own issuer backend to create offers or check their status. The diagram below therefore mixes two kinds of interactions: the standardized wallet↔issuer steps (3 and 4), and the frontend↔issuer steps (1, 2, and 5) which are specific to the reference issuer backend used in our demos. If you integrate with a different OpenID4VCI issuer, expect the frontend-facing parts to differ.
+The OpenID4VCI specification defines the **wallet↔issuer** interaction — the credential offer URI, the token endpoint, and the credential endpoint. It does **not** specify how a frontend talks to its own issuer backend to create offers or check their status. The diagram below therefore mixes two kinds of interactions: the standardized wallet↔issuer steps (3 and 4), and the frontend↔issuer steps (1, 2, and 5) which are specific to the Veramo issuer used in our demos. If you integrate with a different OpenID4VCI issuer, expect the frontend-facing parts to differ.
 
 ```mermaid
 sequenceDiagram
@@ -29,7 +41,13 @@ sequenceDiagram
 
 ## Creating a credential offer
 
-The frontend asks the issuer backend to create an offer for a specific credential type. The minimal payload below issues a pre-configured `EmailCredentialSdJwt` with one year of validity. As noted above, the request shape is specific to our reference issuer backend, not OpenID4VCI itself:
+The frontend asks the issuer backend to create an offer for a specific credential type. The minimal payload below issues a pre-configured `EmailCredentialSdJwt` with one year of validity. As noted above, the request shape is specific to the Veramo issuer, not OpenID4VCI itself.
+
+:::warning Keep the admin token on your server
+The `create-offer` and `check-offer` endpoints are protected by the issuer's admin token. Never ship that token to the browser: call these endpoints from your own backend, and let the frontend talk to that backend instead. The demo frontend does this with a small proxy (`apiProxy.js`) that exposes `POST /api/issuer/:key/offer` and `POST /api/issuer/:key/offer/check` and adds the token server-side.
+:::
+
+The snippets below run on that backend:
 
 ```ts
 const offer = {
@@ -78,7 +96,7 @@ Use `https://open.staging.yivi.app/-/openid-credential-offer` for staging. The c
 
 A `tx_code` adds an extra confirmation step: the issuer's frontend displays a short numeric code that the user must type into the wallet before the credential is downloaded. Useful when the offer is delivered out-of-band (email, printed letter) and you want to ensure the right person redeems it.
 
-The example below extends the same reference-issuer offer shape introduced above; how a `tx_code` is requested and surfaced is therefore also reference-issuer-specific:
+The example below extends the same Veramo offer shape introduced above; how a `tx_code` is requested and surfaced is therefore also specific to that issuer:
 
 ```ts
 const offerWithTxCode = {
@@ -93,6 +111,8 @@ const offerWithTxCode = {
 ```
 
 The issuer backend returns the generated code as `txCode` in the response — show it next to the QR so the user can copy it into the Yivi app.
+
+On the wallet side this part is standard OpenID4VCI. The Yivi app asks for digits only when `input_mode` is `"numeric"` (the default when it is absent) and opens a regular keyboard for `"text"`; it uses `length` and `description` when given. If the token endpoint rejects the code with `invalid_grant` or `invalid_request`, the user may try again, up to three attempts in total. The authorization server stays responsible for locking out repeated guesses; the wallet's limit is only a usability guardrail.
 
 ## How the Yivi app picks a grant type
 
@@ -129,7 +149,7 @@ Three consequences to plan for:
 - A derived grant carries no `issuer_state` and no `authorization_server` hint, because both are members of an offered grant. The app therefore uses the first entry of the credential issuer metadata's `authorization_servers`, or the credential issuer itself when that member is absent.
 
 :::note Minimum versions
-Deriving the grant type from authorization server metadata, and rejecting an empty `pre-authorized_code` while parsing the offer, shipped in irmago [v1.3.0](https://github.com/privacybydesign/irmago/releases/tag/v1.3.0) ([irmago#644](https://github.com/privacybydesign/irmago/pull/644)). The wallet gets it from **Yivi app 8.2.0**, the first app release built on irmago v1.3.0; the current release is [8.2.1](https://github.com/privacybydesign/irmamobile/releases/tag/v8.2.1), published on 2 September 2026 and available on the App Store, Google Play and F-Droid.
+Deriving the grant type from authorization server metadata, and rejecting an empty `pre-authorized_code` while parsing the offer, shipped in irmago [v1.3.0](https://github.com/privacybydesign/irmago/releases/tag/v1.3.0) ([irmago#644](https://github.com/privacybydesign/irmago/pull/644)). The wallet gets it from **Yivi app 8.2.0**, the first app release built on irmago v1.3.0. The latest release is [8.4.0](https://github.com/privacybydesign/irmamobile/releases/tag/v8.4.0) (3 November 2026), built on irmago [v1.5.0](https://github.com/privacybydesign/irmago/releases/tag/v1.5.0).
 
 Yivi app 8.1.2 and earlier are built on irmago v1.2.0 or older. On those versions an offer without a `grants` member crashes the app process rather than failing the session, and an empty `pre-authorized_code` is sent to the token endpoint as-is. Send an explicit, fully populated `grants` member if you must support them.
 :::
@@ -158,10 +178,10 @@ const id_ = setInterval(async () => {
 }, 500)
 ```
 
-Polling keeps the example minimal; what you use in production depends on your issuer setup.
+Polling keeps the example minimal; what you use in production depends on your issuer setup. If your frontend polls through your backend, have the backend make this call and return only the status.
 
 ## Where to go next
 
-- [OpenID4VCI Introduction](openid4vci-introduction.md) — protocol overview, flow choice, scope of the private beta.
+- [OpenID4VCI Introduction](openid4vci-introduction.md) — protocol overview, flow choice, and what is not supported yet.
 - [Issuing SD-JWT VC over IRMA](sdjwtvc-issuance.md) — the operational alternative for existing Yivi issuers.
-- [openid4vp-demo-frontend](https://github.com/privacybydesign/openid4vp-demo-frontend) — the reference implementation (`src/issuers.ts` contains the full issuance example).
+- [openid4vp-demo-frontend](https://github.com/privacybydesign/openid4vp-demo-frontend) — the reference implementation (`src/issuers.ts` contains the full issuance examples: the Veramo issuer with both grant types, the [EUDI reference issuer](https://github.com/eu-digital-identity-wallet/eudi-srv-web-issuing-eudiw-py) for mdoc and SD-JWT VC, and IRMA issuance for comparison).
