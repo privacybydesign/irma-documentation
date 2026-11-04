@@ -18,7 +18,7 @@ The Yivi app accepts the following [credential formats](https://openid.net/specs
 OpenID4VCI drafts up to 13 used `vc+sd-jwt` for IETF SD-JWT VC. Since irmago v1.5.0 the Yivi app only reads `vc+sd-jwt` as W3C VCDM, as OpenID4VCI 1.0 does. An issuer that still offers an SD-JWT VC under `vc+sd-jwt`, or signs one with that JWS `typ`, is refused: offer it as `dc+sd-jwt` instead.
 :::
 
-The wallet verifies each credential before the user is asked to accept it. An SD-JWT VC or mdoc signed with an `x5c` certificate chain must chain to one of the wallet's trust anchors; a credential signed with a DID key is resolved through `did:web`, `did:key` or `did:jwk`. A batch whose instances are not copies of one credential (differing in claims or validity) is refused, as is a credential whose status list marks it as revoked.
+The wallet verifies each credential before the user is asked to accept it. An SD-JWT VC or mdoc signed with an `x5c` certificate chain must chain to one of the wallet's trust anchors; a credential signed with a DID key is resolved through `did:web` or `did:jwk` (`did:key` is accepted for holder binding only, not for the issuer signature). A batch whose instances are not copies of one credential (differing in claims or validity) is refused, as is a credential whose status list marks it as revoked.
 
 ## Architecture
 
