@@ -28,6 +28,13 @@ One practical application of W3C credentials is [Open Badges 3.0](https://www.1e
 
 Yivi 8.4 understands that structure. Objects are grouped under their own headings, list entries are kept together and numbered within their list, and ordinary values appear before nested sections and images. The technical `credentialSubject` wrapper is left out, because it adds no meaning for the person viewing the card. If an issuer did not provide a display label, Yivi turns a key such as `targetCode` into “Target code” instead of exposing the raw key.
 
+<figure style={{textAlign: 'center', marginBottom: '1.5rem'}}>
+  <video autoPlay muted loop playsInline style={{width: '100%', maxWidth: '290px', display: 'block', margin: '0 auto'}}>
+    <source src="/img/yivi-8-4-open-badge-demo.mp4" type="video/mp4" />
+  </video>
+  <figcaption style={{marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--ifm-color-emphasis-600)'}}>An Open Badge being added to Yivi, with its achievement details grouped under their own heading.</figcaption>
+</figure>
+
 Images can now be claims in their own right. Yivi recognises image data embedded in a credential and image URLs used by Open Badges, downloads remote claim images over HTTPS and shows them on the issuance, credential, disclosure and activity screens. SVG images are rendered as SVG rather than as blank bitmap placeholders. Invalid logos are simply omitted instead of leaving a grey error box.
 
 These changes are not limited to badges. They improve any SD-JWT or mdoc credential with structured attributes, portraits or other visual claims, while the permission screen still makes clear which claims will be shared.
