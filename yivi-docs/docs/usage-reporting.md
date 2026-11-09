@@ -35,7 +35,8 @@ OpenID4VP sessions are not counted yet.
 * Your organization must be **verified** in the Yivi Portal. You can only register usage keys for a verified organization. If your organization is not verified yet, the Usage page in the Portal says so instead of showing the keys and the chart.
 * You must be able to manage your organization in the Portal.
 * Your server must run an irmago version that supports usage reporting. Run `yivi irma server -h` and look for the `--usage-reporting-*` flags.
-* The server must be able to make outgoing HTTPS requests to `https://portal.yivi.app`. If it uses an [outgoing HTTP proxy](irma-server.md#outgoing-http-proxies), set `HTTPS_PROXY`. The reporter uses it, and it respects `NO_PROXY`.
+* The server must be able to make outgoing HTTPS requests to `https://api.yivi.app`. If it uses an [outgoing HTTP proxy](irma-server.md#outgoing-http-proxies), set `HTTPS_PROXY`. The reporter uses it, and it respects `NO_PROXY`.
+* On irmago 1.5.0, also set `--usage-reporting-portal-url https://api.yivi.app/usage/v1/directory`. The default of that version points to the wrong address, so its reports never arrive.
 
 ## Step 1: create the account key
 
@@ -127,7 +128,7 @@ If you start the server before you register the key, it logs an error with the p
 | `--usage-reporting-server-instance` | `IRMASERVER_USAGE_REPORTING_SERVER_INSTANCE` | hostname | Name of this server instance in the reports. Useful to tell replicas apart. |
 | `--usage-reporting-interval` | `IRMASERVER_USAGE_REPORTING_INTERVAL` | `5m` | How often the counts are put into a report. Must be between `1m` and `6h`. |
 | `--usage-reporting-count-issuance` | `IRMASERVER_USAGE_REPORTING_COUNT_ISSUANCE` | `false` | Also count issuance sessions. |
-| `--usage-reporting-portal-url` | `IRMASERVER_USAGE_REPORTING_PORTAL_URL` | `https://portal.yivi.app/usage/v1/directory` in production mode | Usage directory URL of the Portal. Outside production mode, setting this turns reporting on. |
+| `--usage-reporting-portal-url` | `IRMASERVER_USAGE_REPORTING_PORTAL_URL` | `https://api.yivi.app/usage/v1/directory` in production mode | Usage directory URL of the Portal. Outside production mode, setting this turns reporting on. |
 | `--usage-reporting-disabled` | `IRMASERVER_USAGE_REPORTING_DISABLED` | `false` | Turn usage reporting off, also in production mode. Only meant for Yivi's own internal services. |
 
 ### When is reporting on?
