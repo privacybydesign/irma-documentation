@@ -61,7 +61,7 @@ These are the original documents of the NL EUDI Wallet certification system as p
 
 ## External requirement sets {#external}
 
-Requirement sets published by others that the scheme documents use. They are not hosted here; the links go to the official copies.
+Requirement sets published by others that the scheme documents use. They are not hosted here; the links go to the official copies. Other standards and frameworks the documents rely on are listed under [external sources](/edi-stelsel-certification/external-sources).
 
 | Set | Version | Used in | Official sources |
 |---|---|---|---|

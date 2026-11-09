@@ -113,6 +113,7 @@ const sidebars: SidebarsConfig = {
     },
     "glossary",
     "legal-basis",
+    "external-sources",
     "downloads",
   ],
 };
