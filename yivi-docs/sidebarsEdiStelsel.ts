@@ -91,7 +91,15 @@ const sidebars: SidebarsConfig = {
       label: "Requirements",
       collapsed: true,
       link: { type: "doc", id: "requirements/index" },
-      items: requirementPages.map((slug) => `requirements/${slug}`),
+      items: [
+        ...requirementPages.map((slug) => `requirements/${slug}`),
+        {
+          type: "category",
+          label: "External requirement sets",
+          collapsed: false,
+          items: ["requirements/owasp-mas-eudiw"],
+        },
+      ],
     },
     {
       type: "category",

@@ -59,11 +59,19 @@ These are the original documents of the NL EUDI Wallet certification system as p
 | [NL-P-04P Part 1](/edi-stelsel-certification/documents/nl-p-04p-part-1) | PID Issuance & Lifecycle Management Requirements, Part 1 | RC1.0 | 57 | [PDF, 897 kB](pathname:///files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part1_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel-certification/text/nl-p-04p-part-1) |
 | [NL-P-04P Part 2](/edi-stelsel-certification/documents/nl-p-04p-part-2) | PID Issuance & Lifecycle Management Requirements, Part 2 | RC1.0 | 33 | [PDF, 557 kB](pathname:///files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part2_-_RC1.0_for_pub.pdf) | [Read](/edi-stelsel-certification/text/nl-p-04p-part-2) |
 
+## External requirement sets {#external}
+
+Requirement sets published by others that the scheme documents use. They are not hosted here; the links go to the official copies.
+
+| Set | Version | Used in | Official sources |
+|---|---|---|---|
+| [OWASP MAS EUDI Wallet profile](/edi-stelsel-certification/requirements/owasp-mas-eudiw) | v1.0 (Final, 15.09.2026) | [NL-CS Part 1 §4.4](/edi-stelsel-certification/text/nl-cs-part-1#s-4-4) | [Web page](https://mas.owasp.org/Profiles/MAS-EUDIW/) · [Requirements Catalogue](https://docs.google.com/spreadsheets/d/1VQrZSr0ErR0RH1tl4QS42_K27sZH8Cad678l0BB3sFs/) · [Practical Guidelines](https://drive.google.com/file/d/1cXAYSe6MsWJ03tiCmlwV_k8Rb30w6rdW/view) |
+
 ## Requirement data {#data}
 
-All 1123 requirements of the [requirement catalogues](/edi-stelsel-certification/requirements), one record per requirement with document, ID, kind, obligation, section, PDF page, text and legal references:
+All 1123 requirements of the [requirement catalogues](/edi-stelsel-certification/requirements), plus the 78 requirements of the [OWASP MAS EUDI Wallet profile](/edi-stelsel-certification/requirements/owasp-mas-eudiw), one record per requirement with document, ID, kind, obligation, section, PDF page, text and legal references:
 
-- [requirements.json](pathname:///files/edi-stelsel/2026-11-06/requirements.json) (990 kB)
-- [requirements.csv](pathname:///files/edi-stelsel/2026-11-06/requirements.csv) (596 kB)
+- [requirements.json](pathname:///files/edi-stelsel/2026-11-06/requirements.json) (1.0 MB)
+- [requirements.csv](pathname:///files/edi-stelsel/2026-11-06/requirements.csv) (620 kB)
 
 The requirements were extracted automatically from the documents and checked against the PDFs. If a requirement differs from the PDF, the PDF applies.

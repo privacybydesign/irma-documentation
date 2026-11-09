@@ -8,9 +8,9 @@ import RequirementExplorer from "@site/src/components/EdiStelsel/RequirementExpl
 import DocumentTable from "@site/src/components/EdiStelsel/DocumentTable";
 import { RequirementCount, CatalogueCount } from "@site/src/components/EdiStelsel/Stats";
 
-This page brings together the <RequirementCount /> requirements of the <CatalogueCount /> requirement documents in the release. Each document has its own list, with every requirement on its own anchor, its PDF page and the requirements that refer to it. Use the search below to filter across all of them. Click an ID to open the requirement in its document's list.
+This page brings together the <RequirementCount /> requirements of the <CatalogueCount /> requirement documents in the release. Each document has its own list, with every requirement on its own anchor, its PDF page and the requirements that refer to it. The search below also includes the requirements of the [OWASP MAS EUDI Wallet profile](/edi-stelsel-certification/requirements/owasp-mas-eudiw), an [external requirement set](#external-requirement-sets) that the cybersecurity certification uses. Use it to filter across all of them. Click an ID to open the requirement in its list.
 
-The requirements were extracted automatically from the documents and then checked against the PDFs. The PDF is authoritative: every requirement links to the page it is on. The complete set is available as [JSON and CSV](/edi-stelsel-certification/downloads#data).
+The requirements of the scheme documents were extracted automatically and then checked against the PDFs. The PDF is authoritative: every requirement links to the page it is on. The complete set is available as [JSON and CSV](/edi-stelsel-certification/downloads#data).
 
 <RequirementExplorer />
 
@@ -32,5 +32,11 @@ The requirements were extracted automatically from the documents and then checke
 | [NL-P-04W](/edi-stelsel-certification/requirements/nl-p-04w) | Wallet onboarding and lifecycle management requirements for Wallet Providers |
 | [NL-P-04P Part 1](/edi-stelsel-certification/requirements/nl-p-04p-part-1) | PID issuance and lifecycle management requirements for PID Providers |
 | [NL-P-04P Part 2](/edi-stelsel-certification/requirements/nl-p-04p-part-2) | PID revocation, expiry and deletion requirements for PID Providers |
+
+## External requirement sets
+
+| Set | What its requirements are |
+|---|---|
+| [OWASP MAS EUDI Wallet profile](/edi-stelsel-certification/requirements/owasp-mas-eudiw) | The wallet-specific OWASP Mobile Application Security requirements. NL-CS Part 1 §4.4 builds the required test set of the cybersecurity certification on OWASP MAS, with this profile "applied on top". Published by OWASP, not part of the Dutch scheme documents. |
 
 The other documents (the system framework, NL-TL, NL-FS, NL-CS Parts 1 and 2, NL-P-W and NL-P-P) have no requirement list on this site. Their content is explained on their [document pages](/edi-stelsel-certification/system/documents) and in [how the system works](/edi-stelsel-certification/system/overview).

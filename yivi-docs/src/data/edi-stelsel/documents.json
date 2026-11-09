@@ -1857,5 +1857,14 @@
     }
   ],
   "terms": 119,
-  "acronyms": 32
+  "acronyms": 32,
+  "external": [
+    {
+      "id": "OWASP-MAS-EUDIW",
+      "label": "OWASP MAS EUDI Wallet profile",
+      "url": "/edi-stelsel-certification/requirements/owasp-mas-eudiw",
+      "version": "v1.0",
+      "count": 78
+    }
+  ]
 }
