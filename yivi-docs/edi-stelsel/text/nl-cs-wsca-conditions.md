@@ -10,7 +10,7 @@ toc_max_heading_level: 3
 
 :::note[Converted text]
 
-This is the text of **[NL-CS-WSCA conditions](/edi-stelsel/documents/nl-cs-wsca-conditions)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WSCA-conditions-RC1.1_-_for_publ.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images. The individual [requirements](/edi-stelsel/requirements/nl-cs-wsca-conditions) are listed separately.
+This is the text of **[NL-CS-WSCA conditions](/edi-stelsel-certification/documents/nl-cs-wsca-conditions)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WSCA-conditions-RC1.1_-_for_publ.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images. The individual [requirements](/edi-stelsel-certification/requirements/nl-cs-wsca-conditions) are listed separately.
 
 :::
 

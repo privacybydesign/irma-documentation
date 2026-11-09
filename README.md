@@ -24,7 +24,7 @@ https://github.com/privacybydesign/irma-documentation/pkgs/container/irma-docume
 When the `delivery.yml` pipeline is run from the master branch, it will use the latest tag. If the pipeline is not run from the master branch, it will use the staging tag.
 
 ## EDI-stelsel section
-The `EDI-stelsel` section (`yivi-docs/edi-stelsel`, served under `/edi-stelsel`) explains the Dutch certification system for EUDI Wallets. It is a separate docs instance with its own sidebar (`yivi-docs/sidebarsEdiStelsel.ts`) and React components in `yivi-docs/src/components/EdiStelsel`.
+The `EDI-stelsel` section (`yivi-docs/edi-stelsel`, served under `/edi-stelsel-certification`) explains the Dutch certification system for EUDI Wallets. It is a separate docs instance with its own sidebar (`yivi-docs/sidebarsEdiStelsel.ts`) and React components in `yivi-docs/src/components/EdiStelsel`.
 
 - **Hand-written pages:** `index.mdx`, `system/*.mdx` and `documents/*.mdx`. Every statement cites the section and PDF page of the scheme document it comes from (`<Cite doc="NL-TL" page={23}>§8.6</Cite>`).
 - **Generated pages, do not edit by hand:**

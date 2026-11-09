@@ -13,57 +13,57 @@ These are the original documents of the NL EUDI Wallet certification system as p
 
 | Document | Title | Version | Pages | PDF | Text |
 |---|---|---|---:|---|---|
-| [NL-SYS-01](/edi-stelsel/documents/nl-sys-01) | NL EUDI Wallet Certification System | RC1.1 | 41 | [PDF, 3.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-01_EUDI_Wallet_System_RC1.1_EUDIW-NL-CS_-_for_publication.pdf) | [Read](/edi-stelsel/text/nl-sys-01) |
-| [NL-SYS-02](/edi-stelsel/documents/nl-sys-02) | Vocabulary | RC1.0 | 29 | [PDF, 2.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-02_Vocabulary_RC1.0_EUDIW-NL-CS_-_for_publication.pdf) | [Read](/edi-stelsel/text/nl-sys-02) |
-| [NL-SYS-03](/edi-stelsel/documents/nl-sys-03) | Organization and Support for the NL EUDI Certification System Owner | RC1.1 | 19 | [PDF, 2.6 MB](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-03_Org_Tech_Proc_System_Owner_RC1.1_EUDIW-NL-CS_-_for_pub.pdf) | [Read](/edi-stelsel/text/nl-sys-03) |
-| [NL-SYS-04](/edi-stelsel/documents/nl-sys-04) | Developing and maintaining the risk register for EUDI Wallet implementation and certification | – | – | *Under construction, not published* | – |
-| [NL-SYS-05](/edi-stelsel/documents/nl-sys-05) | Accreditation requirements for CABs | RC1.1 | 30 | [PDF, 2.6 MB](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-05-Accreditation_CAB_RC1.1_EUDIW-NL-CS_-_for_publication.pdf) | [Read](/edi-stelsel/text/nl-sys-05) |
+| [NL-SYS-01](/edi-stelsel-certification/documents/nl-sys-01) | NL EUDI Wallet Certification System | RC1.1 | 41 | [PDF, 3.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-01_EUDI_Wallet_System_RC1.1_EUDIW-NL-CS_-_for_publication.pdf) | [Read](/edi-stelsel-certification/text/nl-sys-01) |
+| [NL-SYS-02](/edi-stelsel-certification/documents/nl-sys-02) | Vocabulary | RC1.0 | 29 | [PDF, 2.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-02_Vocabulary_RC1.0_EUDIW-NL-CS_-_for_publication.pdf) | [Read](/edi-stelsel-certification/text/nl-sys-02) |
+| [NL-SYS-03](/edi-stelsel-certification/documents/nl-sys-03) | Organization and Support for the NL EUDI Certification System Owner | RC1.1 | 19 | [PDF, 2.6 MB](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-03_Org_Tech_Proc_System_Owner_RC1.1_EUDIW-NL-CS_-_for_pub.pdf) | [Read](/edi-stelsel-certification/text/nl-sys-03) |
+| [NL-SYS-04](/edi-stelsel-certification/documents/nl-sys-04) | Developing and maintaining the risk register for EUDI Wallet implementation and certification | – | – | *Under construction, not published* | – |
+| [NL-SYS-05](/edi-stelsel-certification/documents/nl-sys-05) | Accreditation requirements for CABs | RC1.1 | 30 | [PDF, 2.6 MB](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-05-Accreditation_CAB_RC1.1_EUDIW-NL-CS_-_for_publication.pdf) | [Read](/edi-stelsel-certification/text/nl-sys-05) |
 
 ## NL Top-Level Certification Scheme (NL-TL) {#tl}
 
 | Document | Title | Version | Pages | PDF | Text |
 |---|---|---|---:|---|---|
-| [NL-TL](/edi-stelsel/documents/nl-tl) | National Top-Level EUDIW Certification Scheme | RC1.1 | 35 | [PDF, 2.5 MB](pathname:///files/edi-stelsel/2026-11-06/NL-TL_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publication.pdf) | [Read](/edi-stelsel/text/nl-tl) |
+| [NL-TL](/edi-stelsel-certification/documents/nl-tl) | National Top-Level EUDIW Certification Scheme | RC1.1 | 35 | [PDF, 2.5 MB](pathname:///files/edi-stelsel/2026-11-06/NL-TL_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publication.pdf) | [Read](/edi-stelsel-certification/text/nl-tl) |
 
 ## NL Functional Certification Scheme (NL-FS) {#fs}
 
 | Document | Title | Version | Pages | PDF | Text |
 |---|---|---|---:|---|---|
-| [NL-FS](/edi-stelsel/documents/nl-fs) | EUDI Wallet Functional Certification Scheme | RC1.0 | 31 | [PDF, 804 kB](pathname:///files/edi-stelsel/2026-11-06/NL-FS_EUDI_Wallet_Functional_Certification_Scheme_RC1.0_20261106.pdf) | [Read](/edi-stelsel/text/nl-fs) |
-| [NL-FS-W](/edi-stelsel/documents/nl-fs-w) | Wallet Solution Conformance (Presentation Requirements) | RC1.0 | 18 | [PDF, 342 kB](pathname:///files/edi-stelsel/2026-11-06/NL-FS-W_EUDI_Wallet_Functional_Certification_-_Wallet_Solution_Conformance_RC1.0_20261106.pdf) | [Read](/edi-stelsel/text/nl-fs-w) |
-| [NL-FS-P](/edi-stelsel/documents/nl-fs-p) | PID Issuance Service Conformance (Issuance Requirements) | RC1.0 | 14 | [PDF, 275 kB](pathname:///files/edi-stelsel/2026-11-06/NL-FS-P_EUDI_Wallet_Functional_Certification_-_PID_Issuance_Service_Conformance_RC1.0_20261106.pdf) | [Read](/edi-stelsel/text/nl-fs-p) |
+| [NL-FS](/edi-stelsel-certification/documents/nl-fs) | EUDI Wallet Functional Certification Scheme | RC1.0 | 31 | [PDF, 804 kB](pathname:///files/edi-stelsel/2026-11-06/NL-FS_EUDI_Wallet_Functional_Certification_Scheme_RC1.0_20261106.pdf) | [Read](/edi-stelsel-certification/text/nl-fs) |
+| [NL-FS-W](/edi-stelsel-certification/documents/nl-fs-w) | Wallet Solution Conformance (Presentation Requirements) | RC1.0 | 18 | [PDF, 342 kB](pathname:///files/edi-stelsel/2026-11-06/NL-FS-W_EUDI_Wallet_Functional_Certification_-_Wallet_Solution_Conformance_RC1.0_20261106.pdf) | [Read](/edi-stelsel-certification/text/nl-fs-w) |
+| [NL-FS-P](/edi-stelsel-certification/documents/nl-fs-p) | PID Issuance Service Conformance (Issuance Requirements) | RC1.0 | 14 | [PDF, 275 kB](pathname:///files/edi-stelsel/2026-11-06/NL-FS-P_EUDI_Wallet_Functional_Certification_-_PID_Issuance_Service_Conformance_RC1.0_20261106.pdf) | [Read](/edi-stelsel-certification/text/nl-fs-p) |
 
 ## NL Cybersecurity Certification Scheme (NL-CS) {#cs}
 
 | Document | Title | Version | Pages | PDF | Text |
 |---|---|---|---:|---|---|
-| [NL-CS Part 1](/edi-stelsel/documents/nl-cs-part-1) | NL-CS Scheme Specification | RC1.0 | 28 | [PDF, 2.1 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part1-RC1.0_EUDIW_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-cs-part-1) |
-| [NL-CS Part 2](/edi-stelsel/documents/nl-cs-part-2) | NL-CS Scheme Procedures | RC1.0 | 28 | [PDF, 2.2 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part2-RC1.0_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-cs-part-2) |
-| [NL-CS Part 3](/edi-stelsel/documents/nl-cs-part-3) | NL-CS Evaluation Instruction for Evaluation Laboratories | RC1.0 | 17 | [PDF, 2.1 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part3-RC1.0_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-cs-part-3) |
-| [NL-CS Part 4](/edi-stelsel/documents/nl-cs-part-4) | NL-CS Audit Instruction for Operational Processes | RC1.0 | 19 | [PDF, 2.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part4-RC1.0_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-cs-part-4) |
-| [NL-CS-WI](/edi-stelsel/documents/nl-cs-wi) | EN 17640 FITCEM Protection Profile for EUDI Wallet Instance in a remote HSM architecture | RC1.1 | 69 | [PDF, 2.9 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WI-RC1.1_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-cs-wi) |
-| [NL-CS-WI conditions](/edi-stelsel/documents/nl-cs-wi-conditions) | Conditions on the Underlying Mobile System for Wallet Instances in a remote HSM architecture | RC1.1 | 14 | [PDF, 2.1 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WI-conditions-RC1.1_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-cs-wi-conditions) |
-| [NL-CS-WSCA](/edi-stelsel/documents/nl-cs-wsca) | Protection Profile for WSCA in a remote HSM architecture | RC1.1 | 72 | [PDF, 3.2 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WSCA-RC1.1_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-cs-wsca) |
-| [NL-CS-WSCA conditions](/edi-stelsel/documents/nl-cs-wsca-conditions) | Conditions for the Underlying Platform Supporting AVA\_VAN.5 Evaluation | RC1.1 | 31 | [PDF, 2.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WSCA-conditions-RC1.1_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-cs-wsca-conditions) |
+| [NL-CS Part 1](/edi-stelsel-certification/documents/nl-cs-part-1) | NL-CS Scheme Specification | RC1.0 | 28 | [PDF, 2.1 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part1-RC1.0_EUDIW_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-cs-part-1) |
+| [NL-CS Part 2](/edi-stelsel-certification/documents/nl-cs-part-2) | NL-CS Scheme Procedures | RC1.0 | 28 | [PDF, 2.2 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part2-RC1.0_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-cs-part-2) |
+| [NL-CS Part 3](/edi-stelsel-certification/documents/nl-cs-part-3) | NL-CS Evaluation Instruction for Evaluation Laboratories | RC1.0 | 17 | [PDF, 2.1 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part3-RC1.0_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-cs-part-3) |
+| [NL-CS Part 4](/edi-stelsel-certification/documents/nl-cs-part-4) | NL-CS Audit Instruction for Operational Processes | RC1.0 | 19 | [PDF, 2.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part4-RC1.0_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-cs-part-4) |
+| [NL-CS-WI](/edi-stelsel-certification/documents/nl-cs-wi) | EN 17640 FITCEM Protection Profile for EUDI Wallet Instance in a remote HSM architecture | RC1.1 | 69 | [PDF, 2.9 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WI-RC1.1_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-cs-wi) |
+| [NL-CS-WI conditions](/edi-stelsel-certification/documents/nl-cs-wi-conditions) | Conditions on the Underlying Mobile System for Wallet Instances in a remote HSM architecture | RC1.1 | 14 | [PDF, 2.1 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WI-conditions-RC1.1_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-cs-wi-conditions) |
+| [NL-CS-WSCA](/edi-stelsel-certification/documents/nl-cs-wsca) | Protection Profile for WSCA in a remote HSM architecture | RC1.1 | 72 | [PDF, 3.2 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WSCA-RC1.1_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-cs-wsca) |
+| [NL-CS-WSCA conditions](/edi-stelsel-certification/documents/nl-cs-wsca-conditions) | Conditions for the Underlying Platform Supporting AVA\_VAN.5 Evaluation | RC1.1 | 31 | [PDF, 2.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-CS-WSCA-conditions-RC1.1_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-cs-wsca-conditions) |
 
 ## NL Wallet and PID Provider Certification Scheme (NL-P) {#p}
 
 | Document | Title | Version | Pages | PDF | Text |
 |---|---|---|---:|---|---|
-| [NL-P-W](/edi-stelsel/documents/nl-p-w) | Wallet Provider Certification Scheme | RC1.1 | 38 | [PDF, 549 kB](pathname:///files/edi-stelsel/2026-11-06/NL-P-W_Wallet_Provider_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-p-w) |
-| [NL-P-P](/edi-stelsel/documents/nl-p-p) | PID Provider Certification Scheme | RC1.1 | 39 | [PDF, 2.6 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-P_PID_Provider_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publ.pdf) | [Read](/edi-stelsel/text/nl-p-p) |
-| [NL-P-01](/edi-stelsel/documents/nl-p-01) | Wallet and PID Provider Requirements | RC1.0 | 28 | [PDF, 2.5 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-01_Wallet_and_PID_Provider_Requirements_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel/text/nl-p-01) |
-| [NL-P-02](/edi-stelsel/documents/nl-p-02) | Essential Entity Requirements | RC1.0 | 176 | [PDF, 3.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-02_Essential_Entity_Requirements_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel/text/nl-p-02) |
-| [NL-P-03](/edi-stelsel/documents/nl-p-03) | Secure Software Development & Vulnerability Management Practices for Wallet and PID Providers | RC1.0 | 75 | [PDF, 2.8 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-03_-_SecSoftDev__VulnMngt_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel/text/nl-p-03) |
-| [NL-P-04W](/edi-stelsel/documents/nl-p-04w) | EUDI Wallet Lifecycle Specification | RC1.0 | 124 | [PDF, 3.5 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-04W_Wallet_Onboarding__Lifecycle_Mngt_-_reqs_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel/text/nl-p-04w) |
-| [NL-P-04P Part 1](/edi-stelsel/documents/nl-p-04p-part-1) | PID Issuance & Lifecycle Management Requirements, Part 1 | RC1.0 | 57 | [PDF, 897 kB](pathname:///files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part1_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel/text/nl-p-04p-part-1) |
-| [NL-P-04P Part 2](/edi-stelsel/documents/nl-p-04p-part-2) | PID Issuance & Lifecycle Management Requirements, Part 2 | RC1.0 | 33 | [PDF, 557 kB](pathname:///files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part2_-_RC1.0_for_pub.pdf) | [Read](/edi-stelsel/text/nl-p-04p-part-2) |
+| [NL-P-W](/edi-stelsel-certification/documents/nl-p-w) | Wallet Provider Certification Scheme | RC1.1 | 38 | [PDF, 549 kB](pathname:///files/edi-stelsel/2026-11-06/NL-P-W_Wallet_Provider_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-p-w) |
+| [NL-P-P](/edi-stelsel-certification/documents/nl-p-p) | PID Provider Certification Scheme | RC1.1 | 39 | [PDF, 2.6 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-P_PID_Provider_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publ.pdf) | [Read](/edi-stelsel-certification/text/nl-p-p) |
+| [NL-P-01](/edi-stelsel-certification/documents/nl-p-01) | Wallet and PID Provider Requirements | RC1.0 | 28 | [PDF, 2.5 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-01_Wallet_and_PID_Provider_Requirements_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel-certification/text/nl-p-01) |
+| [NL-P-02](/edi-stelsel-certification/documents/nl-p-02) | Essential Entity Requirements | RC1.0 | 176 | [PDF, 3.4 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-02_Essential_Entity_Requirements_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel-certification/text/nl-p-02) |
+| [NL-P-03](/edi-stelsel-certification/documents/nl-p-03) | Secure Software Development & Vulnerability Management Practices for Wallet and PID Providers | RC1.0 | 75 | [PDF, 2.8 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-03_-_SecSoftDev__VulnMngt_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel-certification/text/nl-p-03) |
+| [NL-P-04W](/edi-stelsel-certification/documents/nl-p-04w) | EUDI Wallet Lifecycle Specification | RC1.0 | 124 | [PDF, 3.5 MB](pathname:///files/edi-stelsel/2026-11-06/NL-P-04W_Wallet_Onboarding__Lifecycle_Mngt_-_reqs_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel-certification/text/nl-p-04w) |
+| [NL-P-04P Part 1](/edi-stelsel-certification/documents/nl-p-04p-part-1) | PID Issuance & Lifecycle Management Requirements, Part 1 | RC1.0 | 57 | [PDF, 897 kB](pathname:///files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part1_-_RC1.0_-_for_pub.pdf) | [Read](/edi-stelsel-certification/text/nl-p-04p-part-1) |
+| [NL-P-04P Part 2](/edi-stelsel-certification/documents/nl-p-04p-part-2) | PID Issuance & Lifecycle Management Requirements, Part 2 | RC1.0 | 33 | [PDF, 557 kB](pathname:///files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part2_-_RC1.0_for_pub.pdf) | [Read](/edi-stelsel-certification/text/nl-p-04p-part-2) |
 
 ## Requirement data {#data}
 
-All 1123 requirements of the [requirement catalogues](/edi-stelsel/requirements), one record per requirement with document, ID, kind, obligation, section, PDF page, text and legal references:
+All 1123 requirements of the [requirement catalogues](/edi-stelsel-certification/requirements), one record per requirement with document, ID, kind, obligation, section, PDF page, text and legal references:
 
-- [requirements.json](pathname:///files/edi-stelsel/2026-11-06/requirements.json) (974 kB)
-- [requirements.csv](pathname:///files/edi-stelsel/2026-11-06/requirements.csv) (581 kB)
+- [requirements.json](pathname:///files/edi-stelsel/2026-11-06/requirements.json) (990 kB)
+- [requirements.csv](pathname:///files/edi-stelsel/2026-11-06/requirements.csv) (596 kB)
 
 The requirements were extracted automatically from the documents and checked against the PDFs. If a requirement differs from the PDF, the PDF applies.

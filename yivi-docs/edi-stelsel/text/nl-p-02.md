@@ -10,7 +10,7 @@ toc_max_heading_level: 3
 
 :::note[Converted text]
 
-This is the text of **[NL-P-02](/edi-stelsel/documents/nl-p-02)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-P-02_Essential_Entity_Requirements_-_RC1.0_-_for_pub.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images. The individual [requirements](/edi-stelsel/requirements/nl-p-02) are listed separately.
+This is the text of **[NL-P-02](/edi-stelsel-certification/documents/nl-p-02)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-P-02_Essential_Entity_Requirements_-_RC1.0_-_for_pub.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images. The individual [requirements](/edi-stelsel-certification/requirements/nl-p-02) are listed separately.
 
 :::
 

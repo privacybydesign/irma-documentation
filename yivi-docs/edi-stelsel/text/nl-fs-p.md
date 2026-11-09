@@ -10,7 +10,7 @@ toc_max_heading_level: 3
 
 :::note[Converted text]
 
-This is the text of **[NL-FS-P](/edi-stelsel/documents/nl-fs-p)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-FS-P_EUDI_Wallet_Functional_Certification_-_PID_Issuance_Service_Conformance_RC1.0_20261106.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images. The individual [requirements](/edi-stelsel/requirements/nl-fs-p) are listed separately.
+This is the text of **[NL-FS-P](/edi-stelsel-certification/documents/nl-fs-p)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-FS-P_EUDI_Wallet_Functional_Certification_-_PID_Issuance_Service_Conformance_RC1.0_20261106.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images. The individual [requirements](/edi-stelsel-certification/requirements/nl-fs-p) are listed separately.
 
 :::
 

@@ -10,7 +10,7 @@ toc_max_heading_level: 3
 
 :::note[Converted text]
 
-This is the text of **[NL-SYS-01](/edi-stelsel/documents/nl-sys-01)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-01_EUDI_Wallet_System_RC1.1_EUDIW-NL-CS_-_for_publication.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images.
+This is the text of **[NL-SYS-01](/edi-stelsel-certification/documents/nl-sys-01)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-SYS-01_EUDI_Wallet_System_RC1.1_EUDIW-NL-CS_-_for_publication.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images.
 
 :::
 

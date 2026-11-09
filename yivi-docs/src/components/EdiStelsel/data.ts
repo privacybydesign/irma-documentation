@@ -40,4 +40,4 @@ export function getDocument(id: string): SchemeDocument {
   return doc;
 }
 
-export const documentUrl = (doc: SchemeDocument) => `/edi-stelsel/documents/${doc.slug}`;
+export const documentUrl = (doc: SchemeDocument) => `/edi-stelsel-certification/documents/${doc.slug}`;

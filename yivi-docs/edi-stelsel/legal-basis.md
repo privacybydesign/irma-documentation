@@ -15,8 +15,8 @@ The documents also refer to Dutch national law that is not yet available: NL-SYS
 
 Regulation (EU) No 910/2014 on electronic identification and trust services (as amended by Regulation (EU) 2024/1183). [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32014R0910)
 
-- **Legal basis of:** [NL-CS-WI](/edi-stelsel/requirements/nl-cs-wi), [NL-FS-P](/edi-stelsel/requirements/nl-fs-p), [NL-FS-W](/edi-stelsel/requirements/nl-fs-w), [NL-P-01](/edi-stelsel/requirements/nl-p-01), [NL-P-04P Part 1](/edi-stelsel/requirements/nl-p-04p-part-1), [NL-P-04P Part 2](/edi-stelsel/requirements/nl-p-04p-part-2), [NL-P-04W](/edi-stelsel/requirements/nl-p-04w)
-- **Cited by requirements in:** [NL-FS-P](/edi-stelsel/requirements/nl-fs-p) (1), [NL-FS-W](/edi-stelsel/requirements/nl-fs-w) (24)
+- **Legal basis of:** [NL-CS-WI](/edi-stelsel-certification/requirements/nl-cs-wi), [NL-FS-P](/edi-stelsel-certification/requirements/nl-fs-p), [NL-FS-W](/edi-stelsel-certification/requirements/nl-fs-w), [NL-P-01](/edi-stelsel-certification/requirements/nl-p-01), [NL-P-04P Part 1](/edi-stelsel-certification/requirements/nl-p-04p-part-1), [NL-P-04P Part 2](/edi-stelsel-certification/requirements/nl-p-04p-part-2), [NL-P-04W](/edi-stelsel-certification/requirements/nl-p-04w)
+- **Cited by requirements in:** [NL-FS-P](/edi-stelsel-certification/requirements/nl-fs-p) (1), [NL-FS-W](/edi-stelsel-certification/requirements/nl-fs-w) (24)
 
 ## eIDAS 2 (amending) {#eu-2024-1183}
 
@@ -28,15 +28,15 @@ Regulation (EU) 2024/1183 amending Regulation (EU) No 910/2014 as regards establ
 
 Commission Implementing Regulation (EU) 2024/2977 - person identification data and electronic attestations of attributes issued to EUDI Wallets. [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2977)
 
-- **Legal basis of:** [NL-FS-P](/edi-stelsel/requirements/nl-fs-p), [NL-FS-W](/edi-stelsel/requirements/nl-fs-w), [NL-P-04P Part 1](/edi-stelsel/requirements/nl-p-04p-part-1), [NL-P-04P Part 2](/edi-stelsel/requirements/nl-p-04p-part-2), [NL-P-04W](/edi-stelsel/requirements/nl-p-04w)
-- **Cited by requirements in:** [NL-FS-P](/edi-stelsel/requirements/nl-fs-p) (2), [NL-FS-W](/edi-stelsel/requirements/nl-fs-w) (8)
+- **Legal basis of:** [NL-FS-P](/edi-stelsel-certification/requirements/nl-fs-p), [NL-FS-W](/edi-stelsel-certification/requirements/nl-fs-w), [NL-P-04P Part 1](/edi-stelsel-certification/requirements/nl-p-04p-part-1), [NL-P-04P Part 2](/edi-stelsel-certification/requirements/nl-p-04p-part-2), [NL-P-04W](/edi-stelsel-certification/requirements/nl-p-04w)
+- **Cited by requirements in:** [NL-FS-P](/edi-stelsel-certification/requirements/nl-fs-p) (2), [NL-FS-W](/edi-stelsel-certification/requirements/nl-fs-w) (8)
 
 ## CIR 2024/2979 {#eu-2024-2979}
 
 Commission Implementing Regulation (EU) 2024/2979 - integrity and core functionalities of EUDI Wallets. [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2979)
 
-- **Legal basis of:** [NL-CS-WI](/edi-stelsel/requirements/nl-cs-wi), [NL-CS-WSCA](/edi-stelsel/requirements/nl-cs-wsca), [NL-FS-P](/edi-stelsel/requirements/nl-fs-p), [NL-FS-W](/edi-stelsel/requirements/nl-fs-w), [NL-P-01](/edi-stelsel/requirements/nl-p-01), [NL-P-04W](/edi-stelsel/requirements/nl-p-04w)
-- **Cited by requirements in:** [NL-FS-W](/edi-stelsel/requirements/nl-fs-w) (18)
+- **Legal basis of:** [NL-CS-WI](/edi-stelsel-certification/requirements/nl-cs-wi), [NL-CS-WSCA](/edi-stelsel-certification/requirements/nl-cs-wsca), [NL-FS-P](/edi-stelsel-certification/requirements/nl-fs-p), [NL-FS-W](/edi-stelsel-certification/requirements/nl-fs-w), [NL-P-01](/edi-stelsel-certification/requirements/nl-p-01), [NL-P-04W](/edi-stelsel-certification/requirements/nl-p-04w)
+- **Cited by requirements in:** [NL-FS-W](/edi-stelsel-certification/requirements/nl-fs-w) (18)
 
 ## CIR 2024/2980 {#eu-2024-2980}
 
@@ -48,15 +48,15 @@ Commission Implementing Regulation (EU) 2024/2980 - notifications to the Commiss
 
 Commission Implementing Regulation (EU) 2024/2981 - certification of EUDI Wallets. [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2981)
 
-- **Legal basis of:** [NL-CS Part 3](/edi-stelsel/requirements/nl-cs-part-3), [NL-CS Part 4](/edi-stelsel/requirements/nl-cs-part-4), [NL-CS-WI conditions](/edi-stelsel/requirements/nl-cs-wi-conditions), [NL-CS-WI](/edi-stelsel/requirements/nl-cs-wi), [NL-CS-WSCA conditions](/edi-stelsel/requirements/nl-cs-wsca-conditions), [NL-CS-WSCA](/edi-stelsel/requirements/nl-cs-wsca), [NL-FS-W](/edi-stelsel/requirements/nl-fs-w), [NL-P-01](/edi-stelsel/requirements/nl-p-01), [NL-P-03](/edi-stelsel/requirements/nl-p-03), [NL-P-04P Part 1](/edi-stelsel/requirements/nl-p-04p-part-1), [NL-P-04P Part 2](/edi-stelsel/requirements/nl-p-04p-part-2)
-- **Cited by requirements in:** [NL-CS Part 4](/edi-stelsel/requirements/nl-cs-part-4) (9)
+- **Legal basis of:** [NL-CS Part 3](/edi-stelsel-certification/requirements/nl-cs-part-3), [NL-CS Part 4](/edi-stelsel-certification/requirements/nl-cs-part-4), [NL-CS-WI conditions](/edi-stelsel-certification/requirements/nl-cs-wi-conditions), [NL-CS-WI](/edi-stelsel-certification/requirements/nl-cs-wi), [NL-CS-WSCA conditions](/edi-stelsel-certification/requirements/nl-cs-wsca-conditions), [NL-CS-WSCA](/edi-stelsel-certification/requirements/nl-cs-wsca), [NL-FS-W](/edi-stelsel-certification/requirements/nl-fs-w), [NL-P-01](/edi-stelsel-certification/requirements/nl-p-01), [NL-P-03](/edi-stelsel-certification/requirements/nl-p-03), [NL-P-04P Part 1](/edi-stelsel-certification/requirements/nl-p-04p-part-1), [NL-P-04P Part 2](/edi-stelsel-certification/requirements/nl-p-04p-part-2)
+- **Cited by requirements in:** [NL-CS Part 4](/edi-stelsel-certification/requirements/nl-cs-part-4) (9)
 
 ## CIR 2024/2982 {#eu-2024-2982}
 
 Commission Implementing Regulation (EU) 2024/2982 - protocols and interfaces to be supported by the European Digital Identity Framework. [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2982)
 
-- **Legal basis of:** [NL-FS-P](/edi-stelsel/requirements/nl-fs-p), [NL-FS-W](/edi-stelsel/requirements/nl-fs-w)
-- **Cited by requirements in:** [NL-FS-P](/edi-stelsel/requirements/nl-fs-p) (2), [NL-FS-W](/edi-stelsel/requirements/nl-fs-w) (17)
+- **Legal basis of:** [NL-FS-P](/edi-stelsel-certification/requirements/nl-fs-p), [NL-FS-W](/edi-stelsel-certification/requirements/nl-fs-w)
+- **Cited by requirements in:** [NL-FS-P](/edi-stelsel-certification/requirements/nl-fs-p) (2), [NL-FS-W](/edi-stelsel-certification/requirements/nl-fs-w) (17)
 
 ## CIR 2025/848 {#eu-2025-848}
 
@@ -86,26 +86,26 @@ Commission Implementing Regulation (EU) 2026/1731 amending Regulations (EU) 2024
 
 Commission Implementing Regulation (EU) 2015/1502 - minimum technical specifications and procedures for assurance levels for electronic identification means. [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32015R1502)
 
-- **Legal basis of:** [NL-P-04P Part 1](/edi-stelsel/requirements/nl-p-04p-part-1), [NL-P-04P Part 2](/edi-stelsel/requirements/nl-p-04p-part-2)
-- **Cited by requirements in:** [NL-CS-WI](/edi-stelsel/requirements/nl-cs-wi) (1)
+- **Legal basis of:** [NL-P-04P Part 1](/edi-stelsel-certification/requirements/nl-p-04p-part-1), [NL-P-04P Part 2](/edi-stelsel-certification/requirements/nl-p-04p-part-2)
+- **Cited by requirements in:** [NL-CS-WI](/edi-stelsel-certification/requirements/nl-cs-wi) (1)
 
 ## CIR 2024/2690 {#eu-2024-2690}
 
 Commission Implementing Regulation (EU) 2024/2690 - technical and methodological requirements of cybersecurity risk-management measures (NIS2) for certain entities. [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2690)
 
-- **Legal basis of:** [NL-P-01](/edi-stelsel/requirements/nl-p-01), [NL-P-02](/edi-stelsel/requirements/nl-p-02)
+- **Legal basis of:** [NL-P-01](/edi-stelsel-certification/requirements/nl-p-01), [NL-P-02](/edi-stelsel-certification/requirements/nl-p-02)
 
 ## NIS2 {#eu-2022-2555}
 
 Directive (EU) 2022/2555 on measures for a high common level of cybersecurity across the Union (NIS2). [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555)
 
-- **Legal basis of:** [NL-P-02](/edi-stelsel/requirements/nl-p-02)
+- **Legal basis of:** [NL-P-02](/edi-stelsel-certification/requirements/nl-p-02)
 
 ## CRA {#eu-2024-2847}
 
 Regulation (EU) 2024/2847 on horizontal cybersecurity requirements for products with digital elements (Cyber Resilience Act). [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R2847)
 
-- **Legal basis of:** [NL-CS Part 4](/edi-stelsel/requirements/nl-cs-part-4), [NL-P-03](/edi-stelsel/requirements/nl-p-03)
+- **Legal basis of:** [NL-CS Part 4](/edi-stelsel-certification/requirements/nl-cs-part-4), [NL-P-03](/edi-stelsel-certification/requirements/nl-p-03)
 
 ## Cybersecurity Act {#eu-2019-881}
 
@@ -117,8 +117,8 @@ Regulation (EU) 2019/881 (Cybersecurity Act). [Read on EUR-Lex](https://eur-lex.
 
 Commission Implementing Regulation (EU) 2024/482 - European Common Criteria-based cybersecurity certification scheme (EUCC). [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R0482)
 
-- **Legal basis of:** [NL-CS-WSCA](/edi-stelsel/requirements/nl-cs-wsca)
-- **Cited by requirements in:** [NL-P-03](/edi-stelsel/requirements/nl-p-03) (1)
+- **Legal basis of:** [NL-CS-WSCA](/edi-stelsel-certification/requirements/nl-cs-wsca)
+- **Cited by requirements in:** [NL-P-03](/edi-stelsel-certification/requirements/nl-p-03) (1)
 
 ## Accreditation Regulation {#eu-765-2008}
 
@@ -130,4 +130,4 @@ Regulation (EC) No 765/2008 setting out the requirements for accreditation. [Rea
 
 Regulation (EU) 2016/679 (General Data Protection Regulation). [Read on EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679)
 
-- **Cited by requirements in:** [NL-P-04W](/edi-stelsel/requirements/nl-p-04w) (1)
+- **Cited by requirements in:** [NL-P-04W](/edi-stelsel-certification/requirements/nl-p-04w) (1)

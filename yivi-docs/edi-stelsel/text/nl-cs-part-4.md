@@ -10,7 +10,7 @@ toc_max_heading_level: 3
 
 :::note[Converted text]
 
-This is the text of **[NL-CS Part 4](/edi-stelsel/documents/nl-cs-part-4)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part4-RC1.0_-_for_publ.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images. The individual [requirements](/edi-stelsel/requirements/nl-cs-part-4) are listed separately.
+This is the text of **[NL-CS Part 4](/edi-stelsel-certification/documents/nl-cs-part-4)**, converted automatically from the [PDF](pathname:///files/edi-stelsel/2026-11-06/NL-CS-part4-RC1.0_-_for_publ.pdf) so you can read and search it here. The PDF is authoritative. Tables with merged cells can be flattened, and text inside diagrams is only in the images. The individual [requirements](/edi-stelsel-certification/requirements/nl-cs-part-4) are listed separately.
 
 :::
 

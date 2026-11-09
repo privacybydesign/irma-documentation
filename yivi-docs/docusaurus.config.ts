@@ -56,7 +56,7 @@ const config: Config = {
             // tools/docs_site.py in the EUDI-Wallet-Certification-System repository.
             id: "edi-stelsel",
             path: "edi-stelsel",
-            routeBasePath: "edi-stelsel",
+            routeBasePath: "edi-stelsel-certification",
             sidebarPath: "./sidebarsEdiStelsel.ts",
             editUrl:
               "https://github.com/privacybydesign/irma-documentation/tree/master/yivi-docs/",
@@ -129,7 +129,7 @@ const config: Config = {
           sidebarId: "ediStelselSidebar",
           docsPluginId: "edi-stelsel",
           position: "left",
-          label: "EDI-stelsel",
+          label: "edi-stelsel-certification",
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
@@ -167,8 +167,8 @@ const config: Config = {
               to: "/trusted-verifier",
             },
             {
-              label: "EDI-stelsel certification",
-              to: "/edi-stelsel",
+              label: "edi-stelsel-certification",
+              to: "/edi-stelsel-certification",
             },
           ],
         },

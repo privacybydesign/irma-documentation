@@ -75,7 +75,7 @@
       "pages": 41,
       "pdfSize": "3.4 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-SYS-01_EUDI_Wallet_System_RC1.1_EUDIW-NL-CS_-_for_publication.pdf",
-      "text": "/edi-stelsel/text/nl-sys-01",
+      "text": "/edi-stelsel-certification/text/nl-sys-01",
       "requirements": []
     },
     {
@@ -151,7 +151,7 @@
       "pages": 29,
       "pdfSize": "2.4 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-SYS-02_Vocabulary_RC1.0_EUDIW-NL-CS_-_for_publication.pdf",
-      "text": "/edi-stelsel/text/nl-sys-02",
+      "text": "/edi-stelsel-certification/text/nl-sys-02",
       "requirements": []
     },
     {
@@ -227,7 +227,7 @@
       "pages": 19,
       "pdfSize": "2.6 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-SYS-03_Org_Tech_Proc_System_Owner_RC1.1_EUDIW-NL-CS_-_for_pub.pdf",
-      "text": "/edi-stelsel/text/nl-sys-03",
+      "text": "/edi-stelsel-certification/text/nl-sys-03",
       "requirements": []
     },
     {
@@ -318,7 +318,7 @@
       "pages": 30,
       "pdfSize": "2.6 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-SYS-05-Accreditation_CAB_RC1.1_EUDIW-NL-CS_-_for_publication.pdf",
-      "text": "/edi-stelsel/text/nl-sys-05",
+      "text": "/edi-stelsel-certification/text/nl-sys-05",
       "requirements": []
     },
     {
@@ -394,7 +394,7 @@
       "pages": 35,
       "pdfSize": "2.5 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-TL_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publication.pdf",
-      "text": "/edi-stelsel/text/nl-tl",
+      "text": "/edi-stelsel-certification/text/nl-tl",
       "requirements": []
     },
     {
@@ -470,7 +470,7 @@
       "pages": 31,
       "pdfSize": "804 kB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-FS_EUDI_Wallet_Functional_Certification_Scheme_RC1.0_20261106.pdf",
-      "text": "/edi-stelsel/text/nl-fs",
+      "text": "/edi-stelsel-certification/text/nl-fs",
       "requirements": []
     },
     {
@@ -546,11 +546,11 @@
       "pages": 18,
       "pdfSize": "342 kB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-FS-W_EUDI_Wallet_Functional_Certification_-_Wallet_Solution_Conformance_RC1.0_20261106.pdf",
-      "text": "/edi-stelsel/text/nl-fs-w",
+      "text": "/edi-stelsel-certification/text/nl-fs-w",
       "requirements": [
         {
           "catalogue": "NL-FS-W",
-          "url": "/edi-stelsel/requirements/nl-fs-w",
+          "url": "/edi-stelsel-certification/requirements/nl-fs-w",
           "count": 37
         }
       ]
@@ -628,11 +628,11 @@
       "pages": 14,
       "pdfSize": "275 kB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-FS-P_EUDI_Wallet_Functional_Certification_-_PID_Issuance_Service_Conformance_RC1.0_20261106.pdf",
-      "text": "/edi-stelsel/text/nl-fs-p",
+      "text": "/edi-stelsel-certification/text/nl-fs-p",
       "requirements": [
         {
           "catalogue": "NL-FS-P",
-          "url": "/edi-stelsel/requirements/nl-fs-p",
+          "url": "/edi-stelsel-certification/requirements/nl-fs-p",
           "count": 4
         }
       ]
@@ -705,7 +705,7 @@
       "pages": 28,
       "pdfSize": "2.1 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-part1-RC1.0_EUDIW_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-cs-part-1",
+      "text": "/edi-stelsel-certification/text/nl-cs-part-1",
       "requirements": []
     },
     {
@@ -776,7 +776,7 @@
       "pages": 28,
       "pdfSize": "2.2 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-part2-RC1.0_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-cs-part-2",
+      "text": "/edi-stelsel-certification/text/nl-cs-part-2",
       "requirements": []
     },
     {
@@ -847,11 +847,11 @@
       "pages": 17,
       "pdfSize": "2.1 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-part3-RC1.0_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-cs-part-3",
+      "text": "/edi-stelsel-certification/text/nl-cs-part-3",
       "requirements": [
         {
           "catalogue": "NL-CS-P3",
-          "url": "/edi-stelsel/requirements/nl-cs-part-3",
+          "url": "/edi-stelsel-certification/requirements/nl-cs-part-3",
           "count": 15
         }
       ]
@@ -924,11 +924,11 @@
       "pages": 19,
       "pdfSize": "2.4 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-part4-RC1.0_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-cs-part-4",
+      "text": "/edi-stelsel-certification/text/nl-cs-part-4",
       "requirements": [
         {
           "catalogue": "NL-CS-P4",
-          "url": "/edi-stelsel/requirements/nl-cs-part-4",
+          "url": "/edi-stelsel-certification/requirements/nl-cs-part-4",
           "count": 24
         }
       ]
@@ -1001,11 +1001,11 @@
       "pages": 69,
       "pdfSize": "2.9 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-WI-RC1.1_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-cs-wi",
+      "text": "/edi-stelsel-certification/text/nl-cs-wi",
       "requirements": [
         {
           "catalogue": "NL-CS-WI",
-          "url": "/edi-stelsel/requirements/nl-cs-wi",
+          "url": "/edi-stelsel-certification/requirements/nl-cs-wi",
           "count": 41
         }
       ]
@@ -1078,11 +1078,11 @@
       "pages": 14,
       "pdfSize": "2.1 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-WI-conditions-RC1.1_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-cs-wi-conditions",
+      "text": "/edi-stelsel-certification/text/nl-cs-wi-conditions",
       "requirements": [
         {
           "catalogue": "NL-CS-WI-COND",
-          "url": "/edi-stelsel/requirements/nl-cs-wi-conditions",
+          "url": "/edi-stelsel-certification/requirements/nl-cs-wi-conditions",
           "count": 12
         }
       ]
@@ -1155,11 +1155,11 @@
       "pages": 72,
       "pdfSize": "3.2 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-WSCA-RC1.1_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-cs-wsca",
+      "text": "/edi-stelsel-certification/text/nl-cs-wsca",
       "requirements": [
         {
           "catalogue": "NL-CS-WSCA",
-          "url": "/edi-stelsel/requirements/nl-cs-wsca",
+          "url": "/edi-stelsel-certification/requirements/nl-cs-wsca",
           "count": 59
         }
       ]
@@ -1232,11 +1232,11 @@
       "pages": 31,
       "pdfSize": "2.4 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-WSCA-conditions-RC1.1_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-cs-wsca-conditions",
+      "text": "/edi-stelsel-certification/text/nl-cs-wsca-conditions",
       "requirements": [
         {
           "catalogue": "NL-CS-WSCA-COND",
-          "url": "/edi-stelsel/requirements/nl-cs-wsca-conditions",
+          "url": "/edi-stelsel-certification/requirements/nl-cs-wsca-conditions",
           "count": 110
         }
       ]
@@ -1314,7 +1314,7 @@
       "pages": 38,
       "pdfSize": "549 kB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-P-W_Wallet_Provider_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-p-w",
+      "text": "/edi-stelsel-certification/text/nl-p-w",
       "requirements": []
     },
     {
@@ -1390,7 +1390,7 @@
       "pages": 39,
       "pdfSize": "2.6 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-P-P_PID_Provider_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publ.pdf",
-      "text": "/edi-stelsel/text/nl-p-p",
+      "text": "/edi-stelsel-certification/text/nl-p-p",
       "requirements": []
     },
     {
@@ -1461,11 +1461,11 @@
       "pages": 28,
       "pdfSize": "2.5 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-P-01_Wallet_and_PID_Provider_Requirements_-_RC1.0_-_for_pub.pdf",
-      "text": "/edi-stelsel/text/nl-p-01",
+      "text": "/edi-stelsel-certification/text/nl-p-01",
       "requirements": [
         {
           "catalogue": "NL-P-01",
-          "url": "/edi-stelsel/requirements/nl-p-01",
+          "url": "/edi-stelsel-certification/requirements/nl-p-01",
           "count": 102
         }
       ]
@@ -1538,11 +1538,11 @@
       "pages": 176,
       "pdfSize": "3.4 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-P-02_Essential_Entity_Requirements_-_RC1.0_-_for_pub.pdf",
-      "text": "/edi-stelsel/text/nl-p-02",
+      "text": "/edi-stelsel-certification/text/nl-p-02",
       "requirements": [
         {
           "catalogue": "NL-P-02",
-          "url": "/edi-stelsel/requirements/nl-p-02",
+          "url": "/edi-stelsel-certification/requirements/nl-p-02",
           "count": 218
         }
       ]
@@ -1615,11 +1615,11 @@
       "pages": 75,
       "pdfSize": "2.8 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-P-03_-_SecSoftDev__VulnMngt_-_RC1.0_-_for_pub.pdf",
-      "text": "/edi-stelsel/text/nl-p-03",
+      "text": "/edi-stelsel-certification/text/nl-p-03",
       "requirements": [
         {
           "catalogue": "NL-P-03",
-          "url": "/edi-stelsel/requirements/nl-p-03",
+          "url": "/edi-stelsel-certification/requirements/nl-p-03",
           "count": 122
         }
       ]
@@ -1692,11 +1692,11 @@
       "pages": 124,
       "pdfSize": "3.5 MB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-P-04W_Wallet_Onboarding__Lifecycle_Mngt_-_reqs_-_RC1.0_-_for_pub.pdf",
-      "text": "/edi-stelsel/text/nl-p-04w",
+      "text": "/edi-stelsel-certification/text/nl-p-04w",
       "requirements": [
         {
           "catalogue": "NL-P-04W",
-          "url": "/edi-stelsel/requirements/nl-p-04w",
+          "url": "/edi-stelsel-certification/requirements/nl-p-04w",
           "count": 201
         }
       ]
@@ -1769,11 +1769,11 @@
       "pages": 57,
       "pdfSize": "897 kB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part1_-_RC1.0_-_for_pub.pdf",
-      "text": "/edi-stelsel/text/nl-p-04p-part-1",
+      "text": "/edi-stelsel-certification/text/nl-p-04p-part-1",
       "requirements": [
         {
           "catalogue": "NL-P-04P-1",
-          "url": "/edi-stelsel/requirements/nl-p-04p-part-1",
+          "url": "/edi-stelsel-certification/requirements/nl-p-04p-part-1",
           "count": 126
         }
       ]
@@ -1846,11 +1846,11 @@
       "pages": 33,
       "pdfSize": "557 kB",
       "pdf": "/files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part2_-_RC1.0_for_pub.pdf",
-      "text": "/edi-stelsel/text/nl-p-04p-part-2",
+      "text": "/edi-stelsel-certification/text/nl-p-04p-part-2",
       "requirements": [
         {
           "catalogue": "NL-P-04P-2",
-          "url": "/edi-stelsel/requirements/nl-p-04p-part-2",
+          "url": "/edi-stelsel-certification/requirements/nl-p-04p-part-2",
           "count": 52
         }
       ]
