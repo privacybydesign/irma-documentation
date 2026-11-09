@@ -4452,7 +4452,7 @@
    "id": "ICS-26",
    "kind": "ICS statement",
    "title": "Wallet solution supports remote attestation presentation using OpenID4VP and API…",
-   "text": "Wallet solution supports remote attestation presentation using OpenID4VP and API-mediated transmission (i.e., the W3C Digital Credentials API)3",
+   "text": "Wallet solution supports remote attestation presentation using OpenID4VP and API-mediated transmission (i.e., the W3C Digital Credentials API)",
    "section": "6.3 Requirements from CIR 2024/2982 (Protocols and interfaces)",
    "page": 12,
    "obligation": "recommended",

@@ -28,7 +28,7 @@ Wallet solution supports wallet user authentication
 
 
 
-### ICS-02 {#ics-02}
+### ICS-02 — Wallet solution supports wallet secure cryptographic devices and wallet secure cryptographic applications {#ics-02}
 
 Wallet solution supports wallet secure cryptographic devices and wallet secure cryptographic applications
 
@@ -61,7 +61,7 @@ Wallet solution supports key attestations
 
 
 
-### ICS-05 {#ics-05}
+### ICS-05 — Wallet solution supports revocation of wallet instance attestations and key attestations {#ics-05}
 
 Wallet solution supports revocation of wallet instance attestations and key attestations
 
@@ -197,7 +197,7 @@ Wallet solution support attestation issuance using OpenID4VCI
 
 
 
-### ICS-17 {#ics-17}
+### ICS-17 — Wallet solution support PID issuance using the NL-specific issuance specification {#ics-17}
 
 Wallet solution support PID issuance using the NL-specific issuance specification
 
@@ -284,7 +284,7 @@ Wallet solution supports registration certificate verification
 
 
 
-### ICS-25 {#ics-25}
+### ICS-25 — Wallet solution supports remote attestation presentation using OpenID4VP and non-API-mediated transmission (i.e., redirects) {#ics-25}
 
 Wallet solution supports remote attestation presentation using OpenID4VP and non-API-mediated transmission (i.e., redirects)
 
@@ -295,9 +295,9 @@ Wallet solution supports remote attestation presentation using OpenID4VP and non
 
 
 
-### ICS-26 {#ics-26}
+### ICS-26 — Wallet solution supports remote attestation presentation using OpenID4VP and API-mediated transmission (i.e., the W3C Digital Credentials API) {#ics-26}
 
-Wallet solution supports remote attestation presentation using OpenID4VP and API-mediated transmission (i.e., the W3C Digital Credentials API)3
+Wallet solution supports remote attestation presentation using OpenID4VP and API-mediated transmission (i.e., the W3C Digital Credentials API)
 
 **ICS statement** · obligation: **recommended** · [PDF page 12](pathname:///files/edi-stelsel/2026-11-06/NL-FS-W_EUDI_Wallet_Functional_Certification_-_Wallet_Solution_Conformance_RC1.0_20261106.pdf#page=12)
 
@@ -306,7 +306,7 @@ Wallet solution supports remote attestation presentation using OpenID4VP and API
 
 
 
-### ICS-27 {#ics-27}
+### ICS-27 — Wallet solution supports remote attestation presentation using ISO/IEC 18013-7 and non-API-mediated transmission (i.e., redirects) {#ics-27}
 
 Wallet solution supports remote attestation presentation using ISO/IEC 18013-7 and non-API-mediated transmission (i.e., redirects)
 
@@ -317,7 +317,7 @@ Wallet solution supports remote attestation presentation using ISO/IEC 18013-7 a
 
 
 
-### ICS-28 {#ics-28}
+### ICS-28 — Wallet solution supports remote attestation presentation using ISO/IEC 18013-7 and API-mediated transmission (i.e., the W3C Digital Credentials API) {#ics-28}
 
 Wallet solution supports remote attestation presentation using ISO/IEC 18013-7 and API-mediated transmission (i.e., the W3C Digital Credentials API)
 
@@ -387,7 +387,7 @@ Wallet solution supports the following types of QEAA: &lt;insert attestation typ
 
 
 
-### ICS-34 {#ics-34}
+### ICS-34 — Wallet solution supports the following types of PuB-EAA: &lt;insert attestation types&gt; {#ics-34}
 
 Wallet solution supports the following types of PuB-EAA: &lt;insert attestation types&gt;
 

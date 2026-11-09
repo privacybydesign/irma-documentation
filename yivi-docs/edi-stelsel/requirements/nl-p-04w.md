@@ -1019,7 +1019,7 @@ The Wallet Provider shall ensure that each update to the Wallet Instance is veri
 
 
 
-### MAINT-9.1-04 {#maint-9-1-04}
+### MAINT-9.1-04 — The Wallet Provider shall notify the Wallet User when an update to the Wallet Instance is available. {#maint-9-1-04}
 
 The Wallet Provider shall notify the Wallet User when an update to the Wallet Instance is available.
 
@@ -2173,7 +2173,7 @@ The Wallet Provider shall, upon identifying a counterfeit, modified, or lookalik
 
 
 
-### MON-13.3-03 {#mon-13-3-03}
+### MON-13.3-03 — The Wallet Provider shall monitor for websites that impersonate the Wallet Provider in order to deceive Wallet Users. {#mon-13-3-03}
 
 The Wallet Provider shall monitor for websites that impersonate the Wallet Provider in order to deceive Wallet Users.
 

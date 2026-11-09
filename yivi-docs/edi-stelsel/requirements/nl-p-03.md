@@ -924,7 +924,7 @@ The vulnerability handling policy shall describe the organization’s overall di
 
 
 
-### 7.2-CR-03 {#7-2-cr-03}
+### 7.2-CR-03 — Continuous monitoring shall be in place whether the vulnerability handling process is operating effectively. {#7-2-cr-03}
 
 Continuous monitoring shall be in place whether the vulnerability handling process is operating effectively.
 
@@ -1008,7 +1008,7 @@ A disclosure process shall be established so that details about a vulnerability 
 
 
 
-### 7.3-CR-06 {#7-3-cr-06}
+### 7.3-CR-06 — Secure communication mechanisms for vulnerability disclosure shall be made known to reporters and stakeholders. {#7-3-cr-06}
 
 Secure communication mechanisms for vulnerability disclosure shall be made known to reporters and stakeholders.
 
@@ -1100,7 +1100,7 @@ A structured triage of each reported vulnerability shall be performed.
 
 
 
-### 7.4-CR-03 {#7-4-cr-03}
+### 7.4-CR-03 — Risk resulting from the vulnerability shall be evaluated aligned with the methodology specified in 5.4 to 5.7. {#7-4-cr-03}
 
 Risk resulting from the vulnerability shall be evaluated aligned with the methodology specified in 5.4 to 5.7.
 
@@ -1224,7 +1224,7 @@ Security updates shall be made available at no cost, except where a manufacturer
 
 
 
-### 7.7-CR-02 {#7-7-cr-02}
+### 7.7-CR-02 — After a security update has been made ready, it shall be released to users without undue delay. {#7-7-cr-02}
 
 After a security update has been made ready, it shall be released to users without undue delay.
 

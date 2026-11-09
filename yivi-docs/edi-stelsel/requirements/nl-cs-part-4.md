@@ -47,7 +47,7 @@ The signing key and the signing process are controlled, and a change of the sign
 
 
 
-### VC4 {#vc4}
+### VC4 — The list of third-party components, libraries and SDKs per release is maintained. {#vc4}
 
 The list of third-party components, libraries and SDKs per release is maintained.
 
@@ -61,7 +61,7 @@ The list of third-party components, libraries and SDKs per release is maintained
 
 [Read section 4.2 in the full text](/edi-stelsel/text/nl-cs-part-4#s-4-2)
 
-### CM1 {#cm1}
+### CM1 — Planned changes to the certified product are notified to the CB before implementation. {#cm1}
 
 Planned changes to the certified product are notified to the CB before implementation.
 
@@ -137,7 +137,7 @@ Updates are produced from controlled builds, signed with the controlled key, and
 
 
 
-### UD3 {#ud3}
+### UD3 — The distribution channel is the one stated in the FIT ST and any change of channel is notified (\[NP001\] section 6.6). {#ud3}
 
 The distribution channel is the one stated in the FIT ST and any change of channel is notified (\[NP001\] section 6.6).
 
@@ -193,7 +193,7 @@ Sources of vulnerability information (public databases, dependency advisories, p
 
 
 
-### VM3 {#vm3}
+### VM3 — Each vulnerability is assessed for severity and impact in the context of the certified wallet. {#vm3}
 
 Each vulnerability is assessed for severity and impact in the context of the certified wallet.
 
@@ -224,7 +224,7 @@ A vulnerability impact analysis report is prepared for any vulnerability that af
 
 
 
-### VM6 {#vm6}
+### VM6 — Remediation is carried out commensurately with severity and potential impact, with remediation delays recorded. {#vm6}
 
 Remediation is carried out commensurately with severity and potential impact, with remediation delays recorded.
 
@@ -235,7 +235,7 @@ Remediation is carried out commensurately with severity and potential impact, wi
 
 
 
-### VM7 {#vm7}
+### VM7 — Publicly known and remediated vulnerabilities are disclosed and registered in the repositories of Annex V. {#vm7}
 
 Publicly known and remediated vulnerabilities are disclosed and registered in the repositories of Annex V.
 

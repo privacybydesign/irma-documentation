@@ -137,7 +137,7 @@ The PID Provider shall periodically verify the validity status of each Wallet Un
 
 
 
-### REV-4.2-07 {#rev-4-2-07}
+### REV-4.2-07 — The PID Provider shall determine the interval of the verification under REV4.2-06 as part of its risk assessment. {#rev-4-2-07}
 
 The PID Provider shall determine the interval of the verification under REV4.2-06 as part of its risk assessment.
 
@@ -323,7 +323,7 @@ The PID Provider shall determine, as part of its risk assessment, the maximum ti
 
 
 
-### REV-4.4-04 {#rev-4-4-04}
+### REV-4.4-04 — The revocation notification shall identify the revoked PID and state that it can no longer be used. {#rev-4-4-04}
 
 The revocation notification shall identify the revoked PID and state that it can no longer be used.
 
@@ -355,7 +355,7 @@ The PID Provider shall state in the revocation notification the Wallet Provider 
 
 [Read section 6.1 in the full text](/edi-stelsel/text/nl-p-04p-part-2#s-6-1)
 
-### EXP-5.1-01 {#exp-5-1-01}
+### EXP-5.1-01 — The PID Provider shall detect, in its administration, when the validity period of a Technical PID has ended. {#exp-5-1-01}
 
 The PID Provider shall detect, in its administration, when the validity period of a Technical PID has ended.
 
@@ -391,7 +391,7 @@ The PID Provider shall determine, as part of its risk assessment, how far in adv
 
 [Read section 6.2 in the full text](/edi-stelsel/text/nl-p-04p-part-2#s-6-2)
 
-### EXP-5.2-01 {#exp-5-2-01}
+### EXP-5.2-01 — The PID Provider shall not revoke a Technical PID solely because its validity period has ended. {#exp-5-2-01}
 
 The PID Provider shall not revoke a Technical PID solely because its validity period has ended.
 
@@ -451,7 +451,7 @@ The PID Provider shall not remove records that are required for audit or statusp
 
 [Read section 7.1 in the full text](/edi-stelsel/text/nl-p-04p-part-2#s-7-1)
 
-### DEL-6.1-01 {#del-6-1-01}
+### DEL-6.1-01 — The Wallet Unit shall allow the Wallet User to delete a PID it holds, on the user's own initiative. {#del-6-1-01}
 
 The Wallet Unit shall allow the Wallet User to delete a PID it holds, on the user's own initiative.
 
@@ -467,7 +467,7 @@ When a PID is deleted, the Wallet Unit shall erase the PID's attribute data and 
 
 
 
-### DEL-6.1-03 {#del-6-1-03}
+### DEL-6.1-03 — The Wallet Unit shall obtain confirmation from the Wallet User before deleting a PID. {#del-6-1-03}
 
 The Wallet Unit shall obtain confirmation from the Wallet User before deleting a PID.
 
@@ -479,7 +479,7 @@ The Wallet Unit shall obtain confirmation from the Wallet User before deleting a
 
 [Read section 7.2 in the full text](/edi-stelsel/text/nl-p-04p-part-2#s-7-2)
 
-### DEL-6.2-01 {#del-6-2-01}
+### DEL-6.2-01 — The Wallet Unit shall not notify the PID Provider of a user-initiated deletion of a PID. {#del-6-2-01}
 
 The Wallet Unit shall not notify the PID Provider of a user-initiated deletion of a PID.
 

@@ -313,7 +313,7 @@ The PID Provider shall populate each mandatory PID attribute in accordance with 
 
 
 
-### ISS-5.5-03 {#iss-5-5-03}
+### ISS-5.5-03 — The PID Provider shall not fetch, process, or store any optional attribute that has been excluded at national level. {#iss-5-5-03}
 
 The PID Provider shall not fetch, process, or store any optional attribute that has been excluded at national level.
 
@@ -321,7 +321,7 @@ The PID Provider shall not fetch, process, or store any optional attribute that 
 
 
 
-### ISS-5.5-04 {#iss-5-5-04}
+### ISS-5.5-04 — The PID Provider shall bind the PID to the dedicated PID binding public key provided for that PID and to no other key. {#iss-5-5-04}
 
 The PID Provider shall bind the PID to the dedicated PID binding public key provided for that PID and to no other key.
 
@@ -337,7 +337,7 @@ The PID Provider shall sign the PID using a signing key whose certificate chains
 
 
 
-### ISS-5.5-06 {#iss-5-5-06}
+### ISS-5.5-06 — The PID Provider shall use the PID signing key only within the authorised issuance process. {#iss-5-5-06}
 
 The PID Provider shall use the PID signing key only within the authorised issuance process.
 
@@ -373,7 +373,7 @@ The PID Provider shall not release a PID to the Wallet Unit before authenticatio
 
 
 
-### ISS-5.6-02 {#iss-5-6-02}
+### ISS-5.6-02 — The PID Provider shall deliver the PID to the Wallet Unit using the issuance protocol specified in \[5\]. {#iss-5-6-02}
 
 The PID Provider shall deliver the PID to the Wallet Unit using the issuance protocol specified in \[5\].
 
@@ -417,7 +417,7 @@ The PID Provider shall register each issued PID, including its identifier, its v
 
 
 
-### ISS-5.7-02 {#iss-5-7-02}
+### ISS-5.7-02 — The PID Provider shall record, for each issued PID, the Wallet Unit to which that PID was issued. {#iss-5-7-02}
 
 The PID Provider shall record, for each issued PID, the Wallet Unit to which that PID was issued.
 
@@ -761,7 +761,7 @@ ISS-4.6-02 applies also in the context of replenishment.
 
 
 
-### REP-6.2-02 {#rep-6-2-02}
+### REP-6.2-02 — The PID Provider shall verify the authenticity and integrity of the refresh token presented in a replenishment request. {#rep-6-2-02}
 
 The PID Provider shall verify the authenticity and integrity of the refresh token presented in a replenishment request.
 
@@ -777,7 +777,7 @@ The PID Provider shall verify that the refresh token is cryptographically bound 
 
 
 
-### REP-6.2-04 {#rep-6-2-04}
+### REP-6.2-04 — The PID Provider shall reject a replenishment request whose refresh token is expired or has been revoked. {#rep-6-2-04}
 
 The PID Provider shall reject a replenishment request whose refresh token is expired or has been revoked.
 
@@ -877,7 +877,7 @@ The PID Provider shall retain the audit log entries relating to a Technical PID 
 
 
 
-### REP-6.4-03 {#rep-6-4-03}
+### REP-6.4-03 — The PID Provider shall determine the retention period referred to in REP-5.4-02 as part of its risk assessment. {#rep-6-4-03}
 
 The PID Provider shall determine the retention period referred to in REP-5.4-02 as part of its risk assessment.
 

@@ -45,7 +45,7 @@ The organisation shall demonstrate it understands and considers the needs and ex
 
 [Read section 4.1.3 in the full text](/edi-stelsel/text/nl-p-02#s-4-1-3)
 
-### GV.OC-03.1 {#gv-oc-03-1}
+### GV.OC-03.1 — Legal and regulatory requirements regarding information and cybersecurity shall be identified and implemented. {#gv-oc-03-1}
 
 Legal and regulatory requirements regarding information and cybersecurity shall be identified and implemented.
 
@@ -259,7 +259,7 @@ The organisation shall assign roles and responsibilities for reviewing and updat
 
 [Read section 4.3.4 in the full text](/edi-stelsel/text/nl-p-02#s-4-3-4)
 
-### GV.RR-04.1 {#gv-rr-04-1}
+### GV.RR-04.1 — Personnel with access to the organisation’s most critical information or technology shall be authenticated. {#gv-rr-04-1}
 
 Personnel with access to the organisation’s most critical information or technology shall be authenticated.
 
@@ -321,7 +321,7 @@ The information and cybersecurity risk management strategy shall be reviewed and
 
 [Read section 4.5.2 in the full text](/edi-stelsel/text/nl-p-02#s-4-5-2)
 
-### GV.OV-03.1 {#gv-ov-03-1}
+### GV.OV-03.1 — The organisation's cybersecurity risk management performance shall be evaluated, reviewed and adjusted when necessary {#gv-ov-03-1}
 
 The organisation's cybersecurity risk management performance shall be evaluated, reviewed and adjusted when necessary
 
@@ -647,7 +647,7 @@ The organisation shall map, document and authorise the flow of information to/fr
 
 [Read section 5.1.7 in the full text](/edi-stelsel/text/nl-p-02#s-5-1-7)
 
-### ID.AM-08.2 {#id-am-08-2}
+### ID.AM-08.2 — Patches and security updates for Operating Systems and critical system components shall be installed. {#id-am-08-2}
 
 Patches and security updates for Operating Systems and critical system components shall be installed.
 
@@ -677,7 +677,7 @@ The organisation shall ensure that the necessary measures are taken to deal with
 
 
 
-### ID.AM-08.5 {#id-am-08-5}
+### ID.AM-08.5 — The organisation shall ensure that disposal actions are approved, tracked, documented, and verified. {#id-am-08-5}
 
 The organisation shall ensure that disposal actions are approved, tracked, documented, and verified.
 
@@ -727,7 +727,7 @@ The organisation shall verify security controls following maintenance or repairs
 
 
 
-### ID.AM-08.11 {#id-am-08-11}
+### ID.AM-08.11 — Remote maintenance and diagnostic activities of organisational assets shall be pre-approved and the performance logged. {#id-am-08-11}
 
 Remote maintenance and diagnostic activities of organisational assets shall be pre-approved and the performance logged.
 
@@ -887,7 +887,7 @@ The organisation shall conduct and document risk assessments in which risk is de
 
 [Read section 5.2.5 in the full text](/edi-stelsel/text/nl-p-02#s-5-2-5)
 
-### ID.RA-06.1 {#id-ra-06-1}
+### ID.RA-06.1 — Risk responses shall be identified, prioritised, planned, tracked and communicated. {#id-ra-06-1}
 
 Risk responses shall be identified, prioritised, planned, tracked and communicated.
 
@@ -1023,7 +1023,7 @@ The organisation shall conduct specialised assessments including in-depth monito
 
 [Read section 5.3.3 in the full text](/edi-stelsel/text/nl-p-02#s-5-3-3)
 
-### ID.IM-04.1 {#id-im-04-1}
+### ID.IM-04.1 — Contingency and continuity plans shall be established, communicated, maintained, tested, validated, and improved. {#id-im-04-1}
 
 Contingency and continuity plans shall be established, communicated, maintained, tested, validated, and improved.
 
@@ -1047,7 +1047,7 @@ The organisation shall coordinate the development and the testing of Incident Re
 
 [Read section 6.1.1 in the full text](/edi-stelsel/text/nl-p-02#s-6-1-1)
 
-### PR.AA-01.1 {#pr-aa-01-1}
+### PR.AA-01.1 — Identities and credentials for authorised users, services, and hardware shall be managed. {#pr-aa-01-1}
 
 Identities and credentials for authorised users, services, and hardware shall be managed.
 
@@ -1135,7 +1135,7 @@ All wireless access points used by the organisation, including those providing g
 
 
 
-### PR.AA-03.2 {#pr-aa-03-2}
+### PR.AA-03.2 — Multi-Factor Authentication (MFA) shall be required to access the organisation's networks remotely. {#pr-aa-03-2}
 
 Multi-Factor Authentication (MFA) shall be required to access the organisation's networks remotely.
 
@@ -1165,7 +1165,7 @@ Remote access to the organisation’s critical systems shall be monitored and cr
 
 
 
-### PR.AA-03.5 {#pr-aa-03-5}
+### PR.AA-03.5 — The security for connections with external systems shall be verified and framed by documented agreements. {#pr-aa-03-5}
 
 The security for connections with external systems shall be verified and framed by documented agreements.
 
@@ -1179,7 +1179,7 @@ The security for connections with external systems shall be verified and framed 
 
 [Read section 6.1.5 in the full text](/edi-stelsel/text/nl-p-02#s-6-1-5)
 
-### PR.AA-05.1 {#pr-aa-05-1}
+### PR.AA-05.1 — Access permissions, rights, and authorisations shall be defined, managed, enforced and reviewed. {#pr-aa-05-1}
 
 Access permissions, rights, and authorisations shall be defined, managed, enforced and reviewed.
 
@@ -1263,7 +1263,7 @@ Physical access controls shall include specific procedures for emergency situati
 
 
 
-### PR.AA-06.3 {#pr-aa-06-3}
+### PR.AA-06.3 — Critical zones shall have additional physical access controls beyond those applied to general facilities. {#pr-aa-06-3}
 
 Critical zones shall have additional physical access controls beyond those applied to general facilities.
 
@@ -1273,7 +1273,7 @@ Critical zones shall have additional physical access controls beyond those appli
 
 
 
-### PR.AA-06.4 {#pr-aa-06-4}
+### PR.AA-06.4 — Assets located within critical zones shall be physically protected against unauthorised access, damage, or interference. {#pr-aa-06-4}
 
 Assets located within critical zones shall be physically protected against unauthorised access, damage, or interference.
 
@@ -1419,7 +1419,7 @@ The organisation shall only allow the use of removable media when absolutely nec
 
 [Read section 6.3.2 in the full text](/edi-stelsel/text/nl-p-02#s-6-3-2)
 
-### PR.DS-02.1 {#pr-ds-02-1}
+### PR.DS-02.1 — Portable storage devices containing system data shall be controlled and protected while in transit and in storage. {#pr-ds-02-1}
 
 Portable storage devices containing system data shall be controlled and protected while in transit and in storage.
 
@@ -1491,7 +1491,7 @@ Backups of critical systems (such as operating systems, configurations, and appl
 
 [Read section 6.4.1 in the full text](/edi-stelsel/text/nl-p-02#s-6-4-1)
 
-### PR.PS-01.1 {#pr-ps-01-1}
+### PR.PS-01.1 — The organisation shall develop, document, and maintain a baseline configuration for its business critical systems. {#pr-ps-01-1}
 
 The organisation shall develop, document, and maintain a baseline configuration for its business critical systems.
 
@@ -1787,7 +1787,7 @@ Adequate resource capacity planning shall ensure that availability of organisati
 
 [Read section 7.1.1 in the full text](/edi-stelsel/text/nl-p-02#s-7-1-1)
 
-### DE.CM-01.1 {#de-cm-01-1}
+### DE.CM-01.1 — Firewalls shall be installed and operated at the network boundaries, including endpoint firewalls. {#de-cm-01-1}
 
 Firewalls shall be installed and operated at the network boundaries, including endpoint firewalls.
 
@@ -1835,7 +1835,7 @@ Physical access to the organisation's critical systems and devices, in addition 
 
 [Read section 7.1.3 in the full text](/edi-stelsel/text/nl-p-02#s-7-1-3)
 
-### DE.CM-03.1 {#de-cm-03-1}
+### DE.CM-03.1 — End point and network protection tools to monitor end-user behaviour for dangerous activity shall be implemented. {#de-cm-03-1}
 
 End point and network protection tools to monitor end-user behaviour for dangerous activity shall be implemented.
 
@@ -1849,7 +1849,7 @@ End point and network protection tools to monitor end-user behaviour for dangero
 
 [Read section 7.1.4 in the full text](/edi-stelsel/text/nl-p-02#s-7-1-4)
 
-### DE.CM-06.1 {#de-cm-06-1}
+### DE.CM-06.1 — External service provider activities and services shall be secured and monitored to find potentially adverse events. {#de-cm-06-1}
 
 External service provider activities and services shall be secured and monitored to find potentially adverse events.
 
@@ -1993,7 +1993,7 @@ Information about adverse events shall be promptly delivered to authorised perso
 
 [Read section 7.2.5 in the full text](/edi-stelsel/text/nl-p-02#s-7-2-5)
 
-### DE.AE-08.1 {#de-ae-08-1}
+### DE.AE-08.1 — Incidents shall be reported when adverse events meet defined and documented incident criteria. {#de-ae-08-1}
 
 Incidents shall be reported when adverse events meet defined and documented incident criteria.
 
@@ -2017,7 +2017,7 @@ An incident response plan, including defined roles, responsibilities, and author
 
 
 
-### RS.MA-01.2 {#rs-ma-01-2}
+### RS.MA-01.2 — The organisation shall coordinate information/cybersecurity incident response actions with all predefined stakeholders. {#rs-ma-01-2}
 
 The organisation shall coordinate information/cybersecurity incident response actions with all predefined stakeholders.
 
@@ -2059,7 +2059,7 @@ Information/cybersecurity incidents shall be categorised, prioritised and escala
 
 [Read section 8.1.4 in the full text](/edi-stelsel/text/nl-p-02#s-8-1-4)
 
-### RS.MA-05.1 {#rs-ma-05-1}
+### RS.MA-05.1 — Clear criteria shall be defined and applied to determine when incident recovery processes need to be initiated. {#rs-ma-05-1}
 
 Clear criteria shall be defined and applied to determine when incident recovery processes need to be initiated.
 
@@ -2087,7 +2087,7 @@ Actions performed during an investigation shall be recorded, and the records' in
 
 [Read section 8.2.3 in the full text](/edi-stelsel/text/nl-p-02#s-8-2-3)
 
-### RS.AN-07.1 {#rs-an-07-1}
+### RS.AN-07.1 — Incident data and metadata shall be collected and protected to ensure their accuracy, authenticity, and traceability. {#rs-an-07-1}
 
 Incident data and metadata shall be collected and protected to ensure their accuracy, authenticity, and traceability.
 
@@ -2163,7 +2163,7 @@ The organisation shall detect unauthorised access or data leakage and take appro
 
 [Read section 9.1.1 in the full text](/edi-stelsel/text/nl-p-02#s-9-1-1)
 
-### RC.RP-01.1 {#rc-rp-01-1}
+### RC.RP-01.1 — A recovery process for disasters and information/cybersecurity incidents shall be developed and executed. {#rc-rp-01-1}
 
 A recovery process for disasters and information/cybersecurity incidents shall be developed and executed.
 
@@ -2267,7 +2267,7 @@ The organisation shall implement a crisis communication strategy to mitigate neg
 
 [Read section 7.1.1 in the full text](/edi-stelsel/text/nl-p-02#s-7-1-1)
 
-### DE.CM-01.2 {#de-cm-01-2}
+### DE.CM-01.2 — Anti-virus, -spyware, and other -malware programs shall be installed and updated. {#de-cm-01-2}
 
 Anti-virus, -spyware, and other -malware programs shall be installed and updated.
 
@@ -2281,7 +2281,7 @@ Anti-virus, -spyware, and other -malware programs shall be installed and updated
 
 [Read section 4.3.2 in the full text](/edi-stelsel/text/nl-p-02#s-4-3-2)
 
-### GV.RR-02.2 {#gv-rr-02-2}
+### GV.RR-02.2 — The organisation shall appoint a senior-level executive information security officer. {#gv-rr-02-2}
 
 The organisation shall appoint a senior-level executive information security officer.
 
@@ -2309,7 +2309,7 @@ Risk assessment results shall be disseminated to relevant stakeholders.
 
 [Read section 4.6.6 in the full text](/edi-stelsel/text/nl-p-02#s-4-6-6)
 
-### GV.SC-07.3 {#gv-sc-07-3}
+### GV.SC-07.3 — The organisation shall audit business-critical third-party service providers for security compliance. {#gv-sc-07-3}
 
 The organisation shall audit business-critical third-party service providers for security compliance.
 
@@ -2323,7 +2323,7 @@ The organisation shall audit business-critical third-party service providers for
 
 [Read section 5.1.5 in the full text](/edi-stelsel/text/nl-p-02#s-5-1-5)
 
-### ID.AM-05.1 {#id-am-05-1}
+### ID.AM-05.1 — The organisation’s assets shall be prioritised based on classification, criticality, and business value. {#id-am-05-1}
 
 The organisation’s assets shall be prioritised based on classification, criticality, and business value.
 
@@ -2347,7 +2347,7 @@ Data that the organisation stores and uses shall be identified.
 
 
 
-### ID.AM-07.2 {#id-am-07-2}
+### ID.AM-07.2 — Inventories of data and associated metadata shall be maintained for designated data types. {#id-am-07-2}
 
 Inventories of data and associated metadata shall be maintained for designated data types.
 
@@ -2361,7 +2361,7 @@ Inventories of data and associated metadata shall be maintained for designated d
 
 [Read section 5.1.7 in the full text](/edi-stelsel/text/nl-p-02#s-5-1-7)
 
-### ID.AM-08.8 {#id-am-08-8}
+### ID.AM-08.8 — The organisation shall pre-approve, monitor and enforce maintenance tools for use on its critical systems. {#id-am-08-8}
 
 The organisation shall pre-approve, monitor and enforce maintenance tools for use on its critical systems.
 
@@ -2375,7 +2375,7 @@ The organisation shall pre-approve, monitor and enforce maintenance tools for us
 
 [Read section 5.3.2 in the full text](/edi-stelsel/text/nl-p-02#s-5-3-2)
 
-### ID.IM-03.5 {#id-im-03-5}
+### ID.IM-03.5 — Communication of effectiveness of protection technologies shall be shared with relevant stakeholders. {#id-im-03-5}
 
 Communication of effectiveness of protection technologies shall be shared with relevant stakeholders.
 
@@ -2437,7 +2437,7 @@ Privileged users shall be managed, monitored and audited.
 
 [Read section 6.3.1 in the full text](/edi-stelsel/text/nl-p-02#s-6-3-1)
 
-### PR.DS-01.6 {#pr-ds-01-6}
+### PR.DS-01.6 — The organisation shall protect the confidentiality of its critical assets while at rest. {#pr-ds-01-6}
 
 The organisation shall protect the confidentiality of its critical assets while at rest.
 
@@ -2461,7 +2461,7 @@ Enterprise assets shall be disposed of safely.
 
 [Read section 6.3.2 in the full text](/edi-stelsel/text/nl-p-02#s-6-3-2)
 
-### PR.DS-02.2 {#pr-ds-02-2}
+### PR.DS-02.2 — The organisation shall protect its critical and sensitive information while in transit. {#pr-ds-02-2}
 
 The organisation shall protect its critical and sensitive information while in transit.
 
@@ -2489,7 +2489,7 @@ The reliability and integrity of backups shall be verified and tested regularly.
 
 [Read section 6.4.4 in the full text](/edi-stelsel/text/nl-p-02#s-6-4-4)
 
-### PR.PS-04.3 {#pr-ps-04-3}
+### PR.PS-04.3 — Audit data from the organisation's critical systems shall be moved to an alternative system. {#pr-ps-04-3}
 
 Audit data from the organisation's critical systems shall be moved to an alternative system.
 
@@ -2537,7 +2537,7 @@ Installation and execution of unauthorised software shall be prevented.
 
 [Read section 6.4.6 in the full text](/edi-stelsel/text/nl-p-02#s-6-4-6)
 
-### PR.PS-06.2 {#pr-ps-06-2}
+### PR.PS-06.2 — Changes and exceptions shall be tested and validated before being implemented into operational systems. {#pr-ps-06-2}
 
 Changes and exceptions shall be tested and validated before being implemented into operational systems.
 
@@ -2565,7 +2565,7 @@ The physical environment shall be monitored to find potentially adverse events.
 
 [Read section 7.1.3 in the full text](/edi-stelsel/text/nl-p-02#s-7-1-3)
 
-### DE.CM-03.2 {#de-cm-03-2}
+### DE.CM-03.2 — End point and network protection tools that monitor end-user behaviour for dangerous activity shall be managed. {#de-cm-03-2}
 
 End point and network protection tools that monitor end-user behaviour for dangerous activity shall be managed.
 
@@ -2579,7 +2579,7 @@ End point and network protection tools that monitor end-user behaviour for dange
 
 [Read section 7.2.1 in the full text](/edi-stelsel/text/nl-p-02#s-7-2-1)
 
-### DE.AE-02.2 {#de-ae-02-2}
+### DE.AE-02.2 — The organisation shall implement automated mechanisms where feasible to review and analyse detected events. {#de-ae-02-2}
 
 The organisation shall implement automated mechanisms where feasible to review and analyse detected events.
 
@@ -2593,7 +2593,7 @@ The organisation shall implement automated mechanisms where feasible to review a
 
 [Read section 8.1.2 in the full text](/edi-stelsel/text/nl-p-02#s-8-1-2)
 
-### RS.MA-02.2 {#rs-ma-02-2}
+### RS.MA-02.2 — Automated tools shall be used to support the investigation and impact assessment of validated cybersecurity incidents. {#rs-ma-02-2}
 
 Automated tools shall be used to support the investigation and impact assessment of validated cybersecurity incidents.
 
@@ -2607,7 +2607,7 @@ Automated tools shall be used to support the investigation and impact assessment
 
 [Read section 8.2.1 in the full text](/edi-stelsel/text/nl-p-02#s-8-2-1)
 
-### RS.AN-03.1 {#rs-an-03-1}
+### RS.AN-03.1 — Each incident shall be analysed to determine what occurred and to identify its root cause. {#rs-an-03-1}
 
 Each incident shall be analysed to determine what occurred and to identify its root cause.
 

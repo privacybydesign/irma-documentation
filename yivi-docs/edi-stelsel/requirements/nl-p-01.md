@@ -227,7 +227,7 @@ The Wallet Provider shall explain wallet eligibility, onboarding, activation, re
 
 
 
-### REQ-6.2-04 {#req-6-2-04}
+### REQ-6.2-04 — The PID Provider shall explain PID issuance, validity, status, revocation, correction and user redress procedures. {#req-6-2-04}
 
 The PID Provider shall explain PID issuance, validity, status, revocation, correction and user redress procedures.
 
@@ -242,7 +242,7 @@ The PID Provider shall explain PID issuance, validity, status, revocation, corre
 
 [Read section 6.3 in the full text](/edi-stelsel/text/nl-p-01#s-6-3)
 
-### REQ-6.3-03 {#req-6-3-03}
+### REQ-6.3-03 — The Provider shall review the policy at planned intervals and after significant incidents, vulnerabilities or changes. {#req-6-3-03}
 
 The Provider shall review the policy at planned intervals and after significant incidents, vulnerabilities or changes.
 
@@ -257,7 +257,7 @@ The Provider shall review the policy at planned intervals and after significant 
 
 [Read section 7.1.1 in the full text](/edi-stelsel/text/nl-p-01#s-7-1-1)
 
-### REQ-7.1-01 {#req-7-1-01}
+### REQ-7.1-01 — The Provider shall maintain a documented organisational structure with clear accountability for the certified service. {#req-7-1-01}
 
 The Provider shall maintain a documented organisational structure with clear accountability for the certified service.
 
@@ -324,7 +324,7 @@ Personnel and contractors in trusted roles shall be screened to a level proporti
 
 
 
-### REQ-7.2-02 {#req-7-2-02}
+### REQ-7.2-02 — Role profiles shall define competence, authority, security responsibilities and required training. {#req-7-2-02}
 
 Role profiles shall define competence, authority, security responsibilities and required training.
 
@@ -428,7 +428,7 @@ Production datasets, identity evidence, PID data, wallet-unit identifiers, attes
 
 [Read section 7.4.1 in the full text](/edi-stelsel/text/nl-p-01#s-7-4-1)
 
-### REQ-7.4-01 {#req-7-4-01}
+### REQ-7.4-01 — Access shall be based on least privilege, need-to-know, role separation and explicit authorisation. {#req-7-4-01}
 
 Access shall be based on least privilege, need-to-know, role separation and explicit authorisation.
 
@@ -443,7 +443,7 @@ Access shall be based on least privilege, need-to-know, role separation and expl
 
 [Read section 7.4.2 in the full text](/edi-stelsel/text/nl-p-01#s-7-4-2)
 
-### REQ-7.4-02 {#req-7-4-02}
+### REQ-7.4-02 — User and privileged access rights shall be approved, uniquely attributable, periodically reviewed and promptly revoked. {#req-7-4-02}
 
 User and privileged access rights shall be approved, uniquely attributable, periodically reviewed and promptly revoked.
 
@@ -484,7 +484,7 @@ Administrative systems shall be isolated from ordinary user environments and pro
 
 [Read section 7.4.4 in the full text](/edi-stelsel/text/nl-p-01#s-7-4-4)
 
-### REQ-7.4-05 {#req-7-4-05}
+### REQ-7.4-05 — Identities used for operational access shall be verified before credentials are issued. {#req-7-4-05}
 
 Identities used for operational access shall be verified before credentials are issued.
 
@@ -499,7 +499,7 @@ Identities used for operational access shall be verified before credentials are 
 
 [Read section 7.4.5 in the full text](/edi-stelsel/text/nl-p-01#s-7-4-5)
 
-### REQ-7.4-06 {#req-7-4-06}
+### REQ-7.4-06 — Multi-factor authentication shall protect remote access, privileged access and access to security-critical systems. {#req-7-4-06}
 
 Multi-factor authentication shall protect remote access, privileged access and access to security-critical systems.
 
@@ -606,7 +606,7 @@ Environmental controls shall address power, fire, water, temperature, communicat
 
 
 
-### REQ-7.6-03 {#req-7-6-03}
+### REQ-7.6-03 — Physical access rights shall be approved, reviewed and revoked, and anomalies shall be investigated. {#req-7-6-03}
 
 Physical access rights shall be approved, reviewed and revoked, and anomalies shall be investigated.
 
@@ -643,7 +643,7 @@ The Provider shall maintain documented, approved and tested operating procedures
 
 
 
-### REQ-7.7-02 {#req-7-7-02}
+### REQ-7.7-02 — Changes shall be risk-assessed, authorised, tested, traceable and supported by rollback or recovery arrangements. {#req-7-7-02}
 
 Changes shall be risk-assessed, authorised, tested, traceable and supported by rollback or recovery arrangements.
 
@@ -654,7 +654,7 @@ Changes shall be risk-assessed, authorised, tested, traceable and supported by r
 
 
 
-### REQ-7.7-03 {#req-7-7-03}
+### REQ-7.7-03 — Development, test, acceptance and production environments shall be appropriately separated. {#req-7-7-03}
 
 Development, test, acceptance and production environments shall be appropriately separated.
 
@@ -665,7 +665,7 @@ Development, test, acceptance and production environments shall be appropriately
 
 
 
-### REQ-7.7-04 {#req-7-7-04}
+### REQ-7.7-04 — Secure configuration baselines shall be defined, deployed, monitored and reviewed for deviation. {#req-7-7-04}
 
 Secure configuration baselines shall be defined, deployed, monitored and reviewed for deviation.
 
@@ -687,7 +687,7 @@ Malware protection, endpoint controls, patching and vulnerability remediation sh
 
 
 
-### REQ-7.7-06 {#req-7-7-06}
+### REQ-7.7-06 — Capacity, availability, performance and security-relevant service health shall be monitored against defined thresholds. {#req-7-7-06}
 
 Capacity, availability, performance and security-relevant service health shall be monitored against defined thresholds.
 
@@ -698,7 +698,7 @@ Capacity, availability, performance and security-relevant service health shall b
 
 
 
-### REQ-7.7-07 {#req-7-7-07}
+### REQ-7.7-07 — Backup and restoration procedures shall be tested and shall preserve confidentiality, integrity and recoverability. {#req-7-7-07}
 
 Backup and restoration procedures shall be tested and shall preserve confidentiality, integrity and recoverability.
 
@@ -709,7 +709,7 @@ Backup and restoration procedures shall be tested and shall preserve confidentia
 
 
 
-### REQ-7.7-08 {#req-7-7-08}
+### REQ-7.7-08 — The Provider shall control production access by developers and shall record and review exceptional access. {#req-7-7-08}
 
 The Provider shall control production access by developers and shall record and review exceptional access.
 
@@ -724,7 +724,7 @@ The Provider shall control production access by developers and shall record and 
 
 [Read section 7.8 in the full text](/edi-stelsel/text/nl-p-01#s-7-8)
 
-### REQ-7.8-01 {#req-7-8-01}
+### REQ-7.8-01 — Networks shall be architected and segmented according to trust level, data sensitivity and service criticality. {#req-7-8-01}
 
 Networks shall be architected and segmented according to trust level, data sensitivity and service criticality.
 
@@ -735,7 +735,7 @@ Networks shall be architected and segmented according to trust level, data sensi
 
 
 
-### REQ-7.8-02 {#req-7-8-02}
+### REQ-7.8-02 — Security boundaries shall enforce authenticated and authorised communications and minimise exposed services. {#req-7-8-02}
 
 Security boundaries shall enforce authenticated and authorised communications and minimise exposed services.
 
@@ -746,7 +746,7 @@ Security boundaries shall enforce authenticated and authorised communications an
 
 
 
-### REQ-7.8-03 {#req-7-8-03}
+### REQ-7.8-03 — External and inter-provider interfaces shall be inventoried, threat-modelled, protected and monitored. {#req-7-8-03}
 
 External and inter-provider interfaces shall be inventoried, threat-modelled, protected and monitored.
 
@@ -794,7 +794,7 @@ The Provider shall collect, protect, correlate and review security logs sufficie
 
 
 
-### REQ-7.9-02 {#req-7-9-02}
+### REQ-7.9-02 — Time sources shall be synchronised and protected to support reliable event correlation. {#req-7-9-02}
 
 Time sources shall be synchronised and protected to support reliable event correlation.
 
@@ -865,7 +865,7 @@ Events shall be assessed consistently for severity, affected assets, user impact
 
 [Read section 7.9.5 in the full text](/edi-stelsel/text/nl-p-01#s-7-9-5)
 
-### REQ-7.9-08 {#req-7-9-08}
+### REQ-7.9-08 — The PID Provider shall assess systemic impact where an incident may affect multiple Wallet Providers or issued PIDs. {#req-7-9-08}
 
 The PID Provider shall assess systemic impact where an incident may affect multiple Wallet Providers or issued PIDs.
 
@@ -1065,7 +1065,7 @@ Management shall review conformity, risks, incidents, vulnerabilities, audit res
 
 
 
-### REQ-7.13-04 {#req-7-13-04}
+### REQ-7.13-04 — Nonconformities shall be recorded, root-caused, corrected and verified for effectiveness within risk-based timescales. {#req-7-13-04}
 
 Nonconformities shall be recorded, root-caused, corrected and verified for effectiveness within risk-based timescales.
 
@@ -1154,7 +1154,7 @@ The Provider shall remain accountable for outsourced activities and shall ensure
 
 
 
-### REQ-7.14-06 {#req-7-14-06}
+### REQ-7.14-06 — Supplier performance and assurance evidence shall be reviewed at planned intervals and after material events. {#req-7-14-06}
 
 Supplier performance and assurance evidence shall be reviewed at planned intervals and after material events.
 

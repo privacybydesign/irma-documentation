@@ -28,7 +28,7 @@ PID issuance service supports PID issuance using OpenID4VCI
 
 
 
-### ICS-02 {#ics-02}
+### ICS-02 — PID issuance service supports PID issuance using the NL-specific issuance specification {#ics-02}
 
 PID issuance service supports PID issuance using the NL-specific issuance specification
 

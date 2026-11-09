@@ -639,7 +639,7 @@ Access to system services shall be restricted to authorised users, processes and
 
 
 
-### OS-07 {#os-07}
+### OS-07 — System service configuration and security policies shall be protected against unauthorised modification. {#os-07}
 
 System service configuration and security policies shall be protected against unauthorised modification.
 
@@ -733,7 +733,7 @@ Execution of applications, scripts and utilities shall be restricted to authoris
 
 
 
-### APP-03 {#app-03}
+### APP-03 — Applications and utilities shall operate with the minimum privileges required for their intended functions. {#app-03}
 
 Applications and utilities shall operate with the minimum privileges required for their intended functions.
 
@@ -773,7 +773,7 @@ Applications shall have access only to the system interfaces, files, devices and
 
 
 
-### APP-07 {#app-07}
+### APP-07 — Application binaries and security-relevant configuration shall be protected against unauthorised modification. {#app-07}
 
 Application binaries and security-relevant configuration shall be protected against unauthorised modification.
 
@@ -783,7 +783,7 @@ Application binaries and security-relevant configuration shall be protected agai
 
 
 
-### APP-08 {#app-08}
+### APP-08 — Applications shall not establish network connections to untrusted networks unless explicitly required and authorised. {#app-08}
 
 Applications shall not establish network connections to untrusted networks unless explicitly required and authorised.
 
@@ -793,7 +793,7 @@ Applications shall not establish network connections to untrusted networks unles
 
 
 
-### APP-09 {#app-09}
+### APP-09 — Applications shall be prevented from accessing WSCA security-relevant data unless explicitly authorised. {#app-09}
 
 Applications shall be prevented from accessing WSCA security-relevant data unless explicitly authorised.
 
@@ -847,7 +847,7 @@ Applications in the WSCA environment shall be monitored for security-relevant an
 
 [Read section 5.6 in the full text](/edi-stelsel/text/nl-cs-wsca-conditions#s-5-6)
 
-### CONT-01 {#cont-01}
+### CONT-01 — Container images shall contain only the software, libraries and configuration required for the intended WSCA function. {#cont-01}
 
 Container images shall contain only the software, libraries and configuration required for the intended WSCA function.
 
@@ -1021,7 +1021,7 @@ The WSCA shall have access only to the platform interfaces, devices, files and s
 
 
 
-### WSCA-07 {#wsca-07}
+### WSCA-07 — WSCA binaries, libraries and security-relevant configuration shall be protected against unauthorised modification. {#wsca-07}
 
 WSCA binaries, libraries and security-relevant configuration shall be protected against unauthorised modification.
 
