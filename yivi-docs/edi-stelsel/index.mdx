@@ -1,0 +1,73 @@
+---
+title: "EDI-stelsel: certification of EUDI Wallets in the Netherlands"
+sidebar_label: "Introduction"
+slug: /
+description: "Explore the Dutch certification system for EUDI Wallets: how it works, which documents it consists of, every requirement, the full text and the original PDFs."
+---
+
+import Cite from "@site/src/components/EdiStelsel/Cite";
+import DocLink from "@site/src/components/EdiStelsel/DocLink";
+import DocumentMap from "@site/src/components/EdiStelsel/DocumentMap";
+import {
+  DocumentCount,
+  RequirementCount,
+  CatalogueCount,
+  TermCount,
+  ReleaseLabel,
+} from "@site/src/components/EdiStelsel/Stats";
+
+The Netherlands is establishing a national certification system for European Digital Identity Wallets (EUDI Wallets) <Cite doc="NL-SYS-01" page={8}>§2</Cite>. Its certification target is the European Digital Identity Wallets and the electronic identification scheme under which they are provided <Cite doc="NL-SYS-01" page={2}>cover</Cite>. NL-TL calls that national eID scheme the *stelsel*: Wallet Providers seek admission to it <Cite doc="NL-TL" page={7}>§2</Cite>. This section explains how the Dutch certification system for EUDI Wallets works and what it requires. You can search every requirement, read the full text of each document and download the original PDFs.
+
+Everything here is based on the draft documents published on <ReleaseLabel />. Each statement links to the section and page of the PDF it comes from.
+
+:::caution[Draft documents, independent guide]
+
+The documents are **release candidates**: drafts that were published for feedback. Version 1 of the schemes is expected later (see [status and feedback](#status-and-feedback)). This section is an independent guide maintained by Yivi. It is not an official publication. If anything here differs from the PDFs, [the PDFs](/edi-stelsel/downloads) apply.
+
+:::
+
+## In short
+
+- **What is certified:** the European Digital Identity Wallets and the electronic identification scheme under which they are provided. This is the certification target of the system as a whole <Cite doc="NL-SYS-01" page={2}>cover</Cite>.
+- **On what basis:** the system is established to certify EUDI Wallets for compliance with eIDAS (Regulation (EU) No 910/2014 as amended by Regulation (EU) 2024/1183). It follows the certification rules of Article 5c of eIDAS and Commission Implementing Regulation (EU) 2024/2981 <Cite doc="NL-SYS-01" page={8}>§2</Cite>.
+- **Who owns it:** the Minister of Economic Affairs, in close concertation with the Minister of the Interior. The Minister owns both the system and the top-level scheme <Cite doc="NL-SYS-01" page={9}>§3.1.1–3.1.2</Cite>.
+- **How it works:** three subordinate certifications produce their own certificates:
+  - **functional** certification of the Wallet Solution (<DocLink id="NL-FS" />);
+  - **cybersecurity** certification of the Wallet Solution (<DocLink id="NL-CS-P1">NL-CS</DocLink>);
+  - certification of the **Wallet Provider and the PID Provider** (<DocLink id="NL-P-W" /> and <DocLink id="NL-P-P" />).
+
+  A top-level certificate under <DocLink id="NL-TL" /> combines them. It is issued per Wallet Provider <Cite doc="NL-SYS-01" page={6}>§1</Cite>. It can only be issued if the PID Provider and the Wallet Provider both have an active certificate, and the Wallet Provider demonstrates that it meets the national admission conditions set in national law <Cite doc="NL-SYS-01" page={7}>§1</Cite>.
+- **Who assesses:** conformity assessment bodies (CABs), accredited by the National Accreditation Body, carry out the evaluations, tests and audits <Cite doc="NL-SYS-01" page={10}>§3.1.4–3.1.5</Cite> <Cite doc="NL-SYS-01" page={11}>§3.1.6</Cite>. For the top-level certificate, the CAB issues the certification decision and the certificate <Cite doc="NL-TL" page={11}>§6.2.1</Cite>.
+
+Read [how the system works](/edi-stelsel/system/overview) for the full picture.
+
+## The documents
+
+The release consists of <DocumentCount /> published documents. One more document, <DocLink id="NL-SYS-04" />, is listed as under construction. Click a document to see what it covers:
+
+<DocumentMap />
+
+## Explore
+
+- **[How the system works](/edi-stelsel/system/overview):** The structure, the parties involved, the certification process and the life of a certificate.
+- **[Documents](/edi-stelsel/system/documents):** One page per document: purpose, scope, contents and key points, with links to the source.
+- **[Requirements](/edi-stelsel/requirements):** Search and filter all <RequirementCount /> requirements from <CatalogueCount /> requirement documents. Each requirement links to its PDF page.
+- **[Full text](/edi-stelsel/text):** The text of every document, searchable with the search bar of this site.
+- **[Glossary](/edi-stelsel/glossary):** The <TermCount /> terms and the acronyms of the vocabulary NL-SYS-02.
+- **[Legal basis](/edi-stelsel/legal-basis):** The EU regulations the documents are built on, with links to EUR-Lex.
+- **[Downloads](/edi-stelsel/downloads):** The original PDFs and all requirements as JSON or CSV.
+
+## Status and feedback
+
+The drafts were presented at an expert meeting on 5 November 2026 and published for feedback. According to the publication:
+
+- Feedback can be sent until **31 December 2026**, using the official feedback form: one form per document and one row per comment, with a proposed change if you have one. Send the forms to [eudiw-certificatie-nl@minbzk.nl](mailto:eudiw-certificatie-nl@minbzk.nl).
+- Submissions will not be published, and there will be no individual replies per organisation or per comment.
+
+The targeted timeline in the publication:
+
+| Period | Milestone |
+|---|---|
+| 2 January – mid-February 2027 | All feedback received is registered and reviewed |
+| Mid-February 2027 | Publication of a general response to the feedback received |
+| Q1 2027 | Expected publication of Version 1 of the certification schemes |

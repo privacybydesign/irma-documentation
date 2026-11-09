@@ -1,0 +1,81 @@
+---
+title: "How the certification system works"
+sidebar_label: "Overview"
+description: "The structure of the Dutch EUDI Wallet certification system: three subordinate certifications and one top-level certificate per Wallet Provider."
+---
+
+import Cite from "@site/src/components/EdiStelsel/Cite";
+import DocLink from "@site/src/components/EdiStelsel/DocLink";
+
+The NL EUDI Wallet certification system is described in <DocLink id="NL-SYS-01" />. That document is a high-level framework that explains the certification system and ensures its conformity with related regulations <Cite doc="NL-SYS-01" page={5}>§1</Cite>. The system certifies European Digital Identity Wallets and the electronic identification scheme under which they are provided <Cite doc="NL-SYS-01" page={2}>cover</Cite>. This page explains its structure. The next pages cover [the parties involved](/edi-stelsel/system/roles), [the documents](/edi-stelsel/system/documents), [the certification process](/edi-stelsel/system/certification-process) and [the life of a certificate](/edi-stelsel/system/certificate-lifecycle).
+
+## Built on conformity assessment standards
+
+The system is based on the concept of a certification system described in ISO/IEC 17067 <Cite doc="NL-SYS-01" page={5}>§1</Cite>. Certification is performed in compliance with ISO/IEC 17065 <Cite doc="NL-SYS-01" page={16}>§4.3</Cite>. All underlying certificates and certification schemes shall comply with ISO/IEC 17067 and ISO/IEC 17065 <Cite doc="NL-SYS-01" page={5}>§1</Cite>. The system operates under the conformity assessment system described in Regulation (EC) No 765/2008 on accreditation and market surveillance <Cite doc="NL-SYS-01" page={8}>§2</Cite>.
+
+The system and its schemes will demonstrate compliance with <Cite doc="NL-SYS-01" page={8}>§2</Cite>:
+
+- the functional framework of eIDAS (Article 5a) and Implementing Regulations (EU) 2024/2977, 2024/2979 and 2024/2982;
+- the certification rules of eIDAS (Article 5c) and Implementing Regulation (EU) 2024/2981;
+- the European cybersecurity certification scheme EUCC (Implementing Regulation (EU) 2024/482);
+- Article 54 of the Cybersecurity Act (Regulation (EU) 2019/881);
+- Article 8(3) of eIDAS together with Implementing Regulation (EU) 2015/1502;
+- Regulation (EC) No 765/2008 on accreditation, in particular Articles 4 and 5.
+
+References to Dutch national law are still a placeholder in the documents <Cite doc="NL-SYS-01" page={8}>§2</Cite>. See [legal basis](/edi-stelsel/legal-basis) for links to all EU instruments.
+
+## Three certifications and one top-level certificate
+
+The certification of "the wallet and the eID scheme under which the wallet is provided" is set up as one top-level scheme. That scheme combines certificates from three subordinate certification schemes <Cite doc="NL-SYS-01" page={14}>§4.2</Cite>:
+
+| Subordinate certification | Documents | What it covers | Main evaluation activity |
+|---|---|---|---|
+| **Functional** certification of the Wallet Solution | <DocLink id="NL-FS" />, <DocLink id="NL-FS-W" />, <DocLink id="NL-FS-P" /> | Wallet functionality as required by eIDAS and its implementing acts, including the onboarding flows and the PID issuance flow. Mostly product evaluation with functional testing <Cite doc="NL-SYS-01" page={6}>§1</Cite>. | Testing |
+| **Cybersecurity** certification of the Wallet Solution | <DocLink id="NL-CS-P1">NL-CS Parts 1–4</DocLink>, <DocLink id="NL-CS-WI" />, <DocLink id="NL-CS-WSCA" /> and their conditions documents | At least two components: the WSCA and WSCD certificates under the EUCC scheme, and a cybersecurity evaluation of the Wallet Unit (Wallet Instance together with WSCA/WSCD) under a FITCEM scheme (EN 17640:2022). Mostly product evaluation with security testing <Cite doc="NL-SYS-01" page={6}>§1</Cite>. | Testing |
+| Certification of the **Wallet Provider** and the **PID Provider** (the eID scheme) | <DocLink id="NL-P-W" />, <DocLink id="NL-P-P" />, with the requirements in <DocLink id="NL-P-01" />, <DocLink id="NL-P-02" />, <DocLink id="NL-P-03" />, <DocLink id="NL-P-04W" /> and <DocLink id="NL-P-04P-1">NL-P-04P</DocLink> | The technical, procedural and organisational requirements for these providers and their services, outside the product certifications. Mostly process evaluation and auditing <Cite doc="NL-SYS-01" page={6}>§1</Cite>. | Audit |
+
+The "main evaluation activities" column comes from Table 1 of NL-SYS-01 <Cite doc="NL-SYS-01" page={16}>§4.3</Cite>.
+
+On top sits the **NL Top-Level Certification** (<DocLink id="NL-TL" />). It is the overall certificate of "the wallet and the eID-scheme under which the wallet is provided" that the regulation refers to. According to NL-SYS-01, it is the certificate the Netherlands needs to provide to Europe for each combination of wallet and eID scheme (PID Provider) <Cite doc="NL-SYS-01" page={7}>§1</Cite>. The overall certificate is issued per Wallet Provider <Cite doc="NL-SYS-01" page={6}>§1</Cite>.
+
+A top-level certificate can only be issued if <Cite doc="NL-SYS-01" page={7}>§1</Cite>:
+
+1. the PID Provider has an active certificate, **and**
+2. the Wallet Provider has an active certificate, **and**
+3. the Wallet Provider demonstrates that it meets the national admission conditions set in national law.
+
+The figure below is Figure 2 of NL-SYS-01. It shows the certificates and declarations of conformity that the system produces.
+
+![NL-SYS-01 Figure 2: set of certificates and declarations of conformity resulting from the national EUDI Wallet certification system](/img/edi-stelsel/2026-11-06/nl-sys-01/image_000001_91079d007d7d8262c94b024189ee421bfd9eae5dd5acaae808cafaaad9d2e3f7.png)
+
+*NL-SYS-01, Figure 2: Set of certificates/declarations of conformity resulting from implementation of the national EUDI Wallet certification system* <Cite doc="NL-SYS-01" page={6}>§1</Cite>
+
+## Scheme types
+
+Each scheme is an ISO/IEC 17067 product certification scheme. NL-SYS-01 assigns these types <Cite doc="NL-SYS-01" page={15}>§4.2</Cite>:
+
+- European Digital Identity Wallet Functional Certification Scheme: Type 5
+- European Digital Identity Wallet Cybersecurity Certification Scheme: Type 5
+- National eID Scheme Certification Scheme: Type 6
+
+According to NL-SYS-01, the certification scheme for the top-level certificate (NL-TL) is a Type 6 scheme, which includes initial certification and subsequent surveillance <Cite doc="NL-SYS-01" page={30}>§7.1.1</Cite>. NL-TL describes itself as a composite certification scheme that relies on certificates from the subordinate schemes <Cite doc="NL-TL" page={12}>§6.5</Cite>.
+
+## The top-level certificate builds on the others
+
+The top-level certification does not repeat assessments that valid subordinate certificates already cover adequately. The CAB checks the validity, scope, applicability and continuing status of those certificates. It evaluates whatever they do not sufficiently cover: requirements, dependencies and interfaces <Cite doc="NL-TL" page={12}>§6.5</Cite>. The CAB remains responsible for the top-level decision, however much it relies on subordinate results <Cite doc="NL-TL" page={12}>§6.5</Cite>.
+
+CABs may also rely on external assurance evidence. The status of the assurance case is the assurance outcome. There are three outcomes <Cite doc="NL-SYS-01" page={19}>§5.3</Cite>:
+
+- **Full reliance:** the evidence shows the requirement is met, so no extra evaluation is needed.
+- **Partial reliance:** the evidence covers part of the requirement or needs supplementing, so the CAB-CB performs supplementary evaluation.
+- **No reliance:** the evidence is missing, inadequate or does not cover the requirement, so the CAB-CB evaluates the requirement in full.
+
+[The certification process](/edi-stelsel/system/certification-process) explains the steps in detail.
+
+## Only remote HSM wallets in version 1
+
+Under Certification System v1, only HSM-based architectures are accepted. The Wallet Instance runs on a mobile platform that meets established conditions. It interacts with a Wallet Provider backend, where the HSM-based WSCA/WSCD run <Cite doc="NL-SYS-01" page={39}>Annex B</Cite>. See [wallet architecture](/edi-stelsel/system/wallet-architecture).
+
+## Assurance level
+
+The cover of NL-SYS-01 states assurance level High/High. The first "High" is identity proofing (Implementing Regulation (EU) 2015/1502); the second is evaluation (Regulation (EU) 2019/881) <Cite doc="NL-SYS-01" page={2}>cover</Cite>. For the cybersecurity certification, the scheme targets AVA_VAN.5 for the EUCC-related certifications, and assurance level "high" under Regulation (EU) 2019/881 for the FITCEM-related part <Cite doc="NL-SYS-01" page={34}>§7.2</Cite>. Self-assessment is not permitted for the required level of assurance <Cite doc="NL-SYS-01" page={35}>§7.2</Cite>.

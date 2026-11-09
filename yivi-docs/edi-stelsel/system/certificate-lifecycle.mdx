@@ -1,0 +1,125 @@
+---
+title: "The life of a certificate"
+sidebar_label: "Certificate lifecycle"
+description: "Validity, surveillance, changes, vulnerabilities, nonconformities, suspension, withdrawal, recertification, complaints and record keeping in the Dutch EUDI Wallet certification system."
+---
+
+import Cite from "@site/src/components/EdiStelsel/Cite";
+import DocLink from "@site/src/components/EdiStelsel/DocLink";
+
+A certificate is not a one-off. This page describes what happens after a certificate is issued, first according to the general rules of <DocLink id="NL-SYS-01" /> and the top-level scheme <DocLink id="NL-TL" />, then per subordinate scheme.
+
+## Validity {#validity}
+
+| Certificate | Validity | Source |
+|---|---|---|
+| Top-level certificate (NL-TL) | Four years | <Cite doc="NL-SYS-01" page={23}>§5.10</Cite> |
+| Wallet Provider and PID Provider certificates (NL-P-W, NL-P-P) | Four years | <Cite doc="NL-SYS-01" page={23}>§5.10</Cite> |
+| Functional certificate (NL-FS) | Expiry date at most 5 years after issuance | <Cite doc="NL-FS" page={20}>§8.4</Cite> |
+| Cybersecurity certificate of the Wallet Instance (NL-CS) | At most five years | <Cite doc="NL-CS-P1" page={18}>§6.3</Cite> |
+
+The validity period of the top-level certificate shall not exceed the period permitted by NL-SYS-01. It never extends beyond the point at which the CAB can no longer establish continuing conformity <Cite doc="NL-TL" page={24}>§8.8</Cite>. The top-level certificate remains conditional on <Cite doc="NL-TL" page={24}>§8.8</Cite>:
+
+- the continued validity and applicability of every mandatory subordinate certificate;
+- continued fulfilment of the national admission conditions;
+- continued applicability of the certified Wallet Solution and PID Provider relationship;
+- fulfilment of surveillance and change-notification obligations;
+- effective resolution of findings and corrective actions.
+
+Renewal of a subordinate certificate does not automatically renew the top-level certificate <Cite doc="NL-TL" page={24}>§8.8</Cite>. The CAB maintains a dependency register for every top-level certificate. The register lists all subordinate certificates, declarations, admission determinations, entities, versions and interfaces the certificate depends on <Cite doc="NL-TL" page={27}>§9.1</Cite>.
+
+## Surveillance {#surveillance}
+
+The top-level certificate is subject to annual surveillance by the CAB-CB. The surveillance takes into account the outcomes of surveillance under NL-FS, NL-CS and NL-P-P/W <Cite doc="NL-SYS-01" page={20}>§5.4</Cite>. NL-TL requires surveillance throughout the certificate life cycle. It is risk-based and determines whether the conditions behind the top-level decision are still met <Cite doc="NL-TL" page={24}>§8.9</Cite>. It includes at least <Cite doc="NL-TL" page={24}>§8.9</Cite>:
+
+- checking the status, validity, scope and applicability of all mandatory subordinate certificates;
+- checking that the national admission conditions are still fulfilled;
+- reviewing changes to the Wallet Provider, the Wallet Solution, the linked PID Provider, the certified versions and the relevant interfaces;
+- reviewing incidents, vulnerabilities, complaints and regulatory or supervisory information;
+- reviewing findings and surveillance results of the subordinate schemes;
+- evaluating whether the set of certificates is still complete and consistent;
+- performing supplementary evaluation where the evidence is insufficient.
+
+Each subordinate scheme has its own surveillance:
+
+- **Functional (NL-FS):** surveillance follows the certification cycle of NL-SYS-01 and takes into account how fast the requirements and specifications change <Cite doc="NL-FS" page={19}>§8.2</Cite>. A surveillance evaluation is triggered at least by a change to the object of certification that affects its functional behaviour or declared features, a change to the implementing acts or referenced specifications that materially affects the certified requirements, or a change to a test case specification that alters, adds or removes applicable test cases <Cite doc="NL-FS" page={19}>§8.2</Cite>.
+- **Cybersecurity (NL-CS):** the reference schedule of Implementing Regulation (EU) 2024/2981 Annex IX is described as a recommendation. Other schedules are possible as long as the validity does not exceed five years and each evaluation is performed within 12 months of the previous one <Cite doc="NL-CS-P2" page={19}>§7.1</Cite>. A vulnerability assessment is performed at least every two years in surveillance evaluations <Cite doc="NL-CS-P2" page={19}>§7.1</Cite>.
+
+- **Wallet Provider (NL-P-W):** the CAB conducts annual surveillance. Each surveillance activity is conducted within 12 months of the issuance of the certificate and thereafter within 12 months of the previous one. Recertification is conducted within 12 months after the last surveillance activity <Cite doc="NL-P-W" page={19}>§8.8</Cite> <Cite doc="NL-P-W" page={20}>§8.8</Cite>. A vulnerability assessment is performed at the initial evaluation, at each recertification and at least every two years during surveillance <Cite doc="NL-P-W" page={20}>§8.8</Cite>. Surveillance also verifies that the wallet solution still holds valid NL-FS and NL-CS certificates <Cite doc="NL-P-W" page={19}>§8.8</Cite>.
+
+## Changes {#changes}
+
+Changes that affect the EUDI Wallet solution, and so the top-level certificate, are handled under the CAB-CB's regular change management process. That process is part of certificate maintenance. When the certificate holder initiates a change, it notifies the CAB-CB and describes the change in an Impact Analysis Report (IAR) <Cite doc="NL-SYS-01" page={21}>§5.6</Cite>. A change resulting from a security incident or vulnerability is handled with respect to the assurance continuity principle <Cite doc="NL-SYS-01" page={22}>§5.6</Cite>.
+
+![NL-SYS-01 Figure 4: change management process implemented in the certification system](/img/edi-stelsel/2026-11-06/nl-sys-01/image_000003_ae9b1c020cbbcc34350fe8757964237f3c08b3dfabfb21b9be9b290f81d4326d.png)
+
+*NL-SYS-01, Figure 4: Change management process implemented in the certification system* <Cite doc="NL-SYS-01" page={21}>§5.6</Cite>
+
+For the top-level certificate, the holder notifies the CAB without undue delay of changes that may affect conformity. Examples are changes to its legal identity, the Wallet Solution version or architecture, the PID Provider relationship, the admission status or a mandatory subordinate certificate. The CAB assesses the impact. It decides whether the certificate can continue unchanged, needs a scope amendment or additional evaluation, must be suspended, or requires recertification <Cite doc="NL-TL" page={25}>§8.10</Cite>.
+
+In the cybersecurity scheme, the product developer notifies the CB of all planned changes before they are implemented. The CB decides per change, using a delta assessment with three outcomes <Cite doc="NL-CS-P2" page={20}>§7.4</Cite>:
+
+- **covered:** the change is recorded and examined in the next surveillance;
+- **partially covered:** a special evaluation of the affected requirements;
+- **not covered:** a full evaluation.
+
+## Obligations of the certificate holder {#obligations}
+
+After certification, the certificate holder shall <Cite doc="NL-SYS-01" page={20}>§5.5</Cite>:
+
+- comply with the European and national legislation on the EUDI Wallet solution, including Implementing Regulation (EU) 2024/2981;
+- maintain communication channels with the CAB-CBs, CAB-ITSEFs where applicable, and the Scheme or System Owner, to fulfil its notification obligations;
+- make essential information on the secure use, certification and updates of the EUDI Wallet solution available to end users, in accessible and understandable language;
+- run a continual process to identify, analyse and assess vulnerabilities that can affect the EUDI Wallet solution;
+- maintain vulnerability handling procedures, and cooperate with the CAB-CB and the Scheme Owner when a vulnerability is identified;
+- publish or reference publicly known vulnerabilities that can affect the EUDI Wallet solution. The information shall identify the vulnerability, the affected versions and the available mitigating or updating measures, without details that allow exploitation <Cite doc="NL-SYS-01" page={21}>§5.5</Cite>;
+- use the mark of conformity according to the rules of <DocLink id="NL-SYS-03" />.
+
+The cybersecurity scheme sets time limits for vulnerability notifications. Critical vulnerabilities and active exploits are notified within 24 hours of discovery, and high-severity vulnerabilities within 72 hours <Cite doc="NL-CS-P2" page={21}>§8.1</Cite>. The CB suspends the certificate without undue delay once it has confirmed that a breach affects conformity <Cite doc="NL-CS-P2" page={21}>§8.5</Cite>.
+
+## Nonconformities {#nonconformities}
+
+Any non-fulfilment of a specified requirement by the object of certification is a nonconformity <Cite doc="NL-SYS-01" page={22}>§5.7</Cite>. Each scheme has its own specific provisions for nonconformities <Cite doc="NL-SYS-01" page={22}>§5.7</Cite>. When the CAB-CB finds that a certificate holder does not comply with its obligations under European or national regulations or the contract, the CAB-CB <Cite doc="NL-SYS-01" page={22}>§5.7</Cite>:
+
+1. formally notifies the certificate holder of the non-compliance, describing the obligation concerned, the available evidence and the possible impact on trust or on the certification;
+2. asks the certificate holder for clarification;
+3. if the clarification is not sufficient, sets a maximum period of no more than thirty (30) calendar days. Within that period the certificate holder proposes corrective measures and commits to carrying them out within a reasonable time.
+
+If the deadline is missed, the proposals are unsatisfactory or there is no response, the CAB-CB starts the suspension procedure <Cite doc="NL-SYS-01" page={22}>§5.7</Cite>.
+
+## Suspension, withdrawal and expiry {#suspension}
+
+A certificate may be suspended or withdrawn when nonconformities are found in the certified object or part of it <Cite doc="NL-SYS-01" page={22}>§5.8</Cite>. NL-SYS-01 sets these general rules <Cite doc="NL-SYS-01" page={23}>§5.8</Cite>:
+
+- **Withdrawal or termination at the holder's request is final:** the certificate is not reinstated. Withdrawal does not automatically invalidate certificates for individual components, provided those remain compliant.
+- **A suspended certificate can be reinstated** after a formal certification process. That process must show that the causes have been resolved and that continued conformity is ensured.
+- **Expiry:** the CAB informs the certificate holder, the System Owner and the top-level scheme owner of the expiry date, and acts towards re-certification without undue delay. The expiry of one Wallet Provider's top-level certificate has no impact on the validity of other certificates in the system.
+
+For the top-level certificate <Cite doc="NL-TL" page={25}>§8.11</Cite>:
+
+- The CAB **suspends** the top-level certificate when a condition essential to continued conformity is temporarily not met or cannot be confirmed. This includes a suspended mandatory subordinate certificate, one that expires without accepted replacement or becomes insufficient in scope, or an admission condition that is no longer fulfilled pending resolution.
+- The CAB **withdraws** the certificate when the grounds cannot be remedied or a mandatory subordinate certificate is withdrawn without an acceptable replacement. The same applies when the holder no longer satisfies an indispensable admission condition, or when conformity can no longer be demonstrated.
+- The CAB notifies the Scheme Owner of suspension, termination, withdrawal and expiry. The holder stops claims and use of the mark of conformity to the extent the decision requires.
+
+In the Wallet Provider scheme, a suspension lasts at most 45 days. Any extension is subject to a decision of the Scheme Owner. NL-P-W adds that it "may not exceed one 90 days" (as printed). The suspension does not affect the validity period of the certificate <Cite doc="NL-P-W" page={21}>§8.10</Cite>. The CAB suspends an NL-P-W certificate in these cases <Cite doc="NL-P-W" page={21}>§8.10</Cite>:
+
+- the Wallet Provider does not implement corrective actions in time;
+- its NL-FS or NL-CS certificate is suspended or revoked;
+- a significant incident or security breach is notified that can affect conformity;
+- it does not cooperate with surveillance.
+
+## Recertification {#recertification}
+
+Recertification of the top-level certificate is completed before expiry if continuity is required. The CAB may rely on current subordinate certificates and surveillance evidence, but makes a new review and certification decision for the complete top-level object. Evidence from the previous cycle is reused only where its continuing relevance is demonstrated <Cite doc="NL-TL" page={26}>§8.12</Cite>.
+
+For the Wallet Provider, the applicant notifies the CAB of the need for recertification no later than six months before the certificate expires <Cite doc="NL-P-W" page={21}>§8.9</Cite>. Recertification is also required after a major change to the electronic identification scheme, for example a new wallet solution version that the existing certificate does not cover <Cite doc="NL-P-W" page={21}>§8.9</Cite>.
+
+In the functional scheme, recertification is performed against the documents and test case specifications current at that time. Unchanged components can rely on previous evidence under conditions <Cite doc="NL-FS" page={19}>§8.3</Cite>. In the cybersecurity scheme, the developer may request recertification before expiry. The new certificate is valid for at most five years from issue <Cite doc="NL-CS-P2" page={23}>§10</Cite>.
+
+## Complaints and appeals {#complaints}
+
+Any certification decision, including suspension or withdrawal, may be appealed by a relevant stakeholder and by a user of an EUDI Wallet. An appeal must be substantiated by reference to the requirements alleged not to be fulfilled <Cite doc="NL-SYS-01" page={23}>§5.9</Cite>. The CAB-CB handles appeals according to its publicly available procedures, and the Scheme Owner may not alter CAB decisions <Cite doc="NL-SYS-01" page={23}>§5.9</Cite>. Any EUDI Wallet stakeholder may submit a complaint to the Scheme Owner about any aspect of the certification system <Cite doc="NL-SYS-01" page={23}>§5.9</Cite>. Complaints and appeals that a CAB-CB has not resolved go to the Scheme Owner <Cite doc="NL-SYS-01" page={14}>§4.1</Cite>.
+
+## Records {#records}
+
+The retention period of records created during certification is to be defined according to the relevant legal requirements. These will include a provision that records of NL-TL, NL-P-P/W and NL-FS/CS certification are also given in custody to the Certification System Owner, in addition to local backups <Cite doc="NL-SYS-01" page={24}>§5.10</Cite>. A note in NL-SYS-01 recommends a retention period of at least five years after the certificate has expired <Cite doc="NL-SYS-01" page={24}>§5.10</Cite>. For the top-level certificate, the CAB retains the dependency register, verification records, impact assessments, evaluation reports, review records and decisions. Together they form a complete audit trail <Cite doc="NL-TL" page={27}>§9.5</Cite>.

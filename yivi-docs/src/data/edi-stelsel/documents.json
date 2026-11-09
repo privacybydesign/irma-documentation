@@ -1,0 +1,1861 @@
+{
+  "release": "2026-11-06",
+  "releaseLabel": "6 November 2026",
+  "documents": [
+    {
+      "id": "NL-SYS-01",
+      "label": "NL-SYS-01",
+      "slug": "nl-sys-01",
+      "family": "sys",
+      "familyTitle": "NL EUDI Certification System Framework (NL-SYS)",
+      "title": "NL EUDI Wallet Certification System",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-SYS-01",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "31/10/206",
+          "note": "as printed on the cover"
+        },
+        {
+          "key": "Document type",
+          "value": "Framework document",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "none",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets and the electronic identification scheme under which they are provided",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "System/Scheme Owner, CABs, EUDI Wallet providers, PID Provider",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL Certification System Documents",
+          "note": null
+        }
+      ],
+      "pages": 41,
+      "pdfSize": "3.4 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-SYS-01_EUDI_Wallet_System_RC1.1_EUDIW-NL-CS_-_for_publication.pdf",
+      "text": "/edi-stelsel/text/nl-sys-01",
+      "requirements": []
+    },
+    {
+      "id": "NL-SYS-02",
+      "label": "NL-SYS-02",
+      "slug": "nl-sys-02",
+      "family": "sys",
+      "familyTitle": "NL EUDI Certification System Framework (NL-SYS)",
+      "title": "Vocabulary",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-SYS-02",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "20/10/206",
+          "note": "as printed on the cover"
+        },
+        {
+          "key": "Document type",
+          "value": "Vocabulary",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "none",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets and the electronic identification scheme under which they are provided",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "System/Scheme Owner, CABs, EUDI Wallet providers, PID Provider",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL Certification System Documents",
+          "note": null
+        }
+      ],
+      "pages": 29,
+      "pdfSize": "2.4 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-SYS-02_Vocabulary_RC1.0_EUDIW-NL-CS_-_for_publication.pdf",
+      "text": "/edi-stelsel/text/nl-sys-02",
+      "requirements": []
+    },
+    {
+      "id": "NL-SYS-03",
+      "label": "NL-SYS-03",
+      "slug": "nl-sys-03",
+      "family": "sys",
+      "familyTitle": "NL EUDI Certification System Framework (NL-SYS)",
+      "title": "Organization and Support for the NL EUDI Certification System Owner",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-SYS-03",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "31/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Framework document",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "none",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets and the electronic identification scheme under which they are provided",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "System/Scheme Owner, CABs, EUDI Wallet providers, PID Provider",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL-TL, NL-FS-*, NL-CS-*, NL-PW-* and NL-PP-*",
+          "note": null
+        }
+      ],
+      "pages": 19,
+      "pdfSize": "2.6 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-SYS-03_Org_Tech_Proc_System_Owner_RC1.1_EUDIW-NL-CS_-_for_pub.pdf",
+      "text": "/edi-stelsel/text/nl-sys-03",
+      "requirements": []
+    },
+    {
+      "id": "NL-SYS-04",
+      "label": "NL-SYS-04",
+      "slug": "nl-sys-04",
+      "family": "sys",
+      "familyTitle": "NL EUDI Certification System Framework (NL-SYS)",
+      "title": "Developing and maintaining the risk register for EUDI Wallet implementation and certification",
+      "published": false,
+      "cover": [],
+      "pages": null,
+      "pdfSize": null,
+      "pdf": null,
+      "text": null,
+      "requirements": []
+    },
+    {
+      "id": "NL-SYS-05",
+      "label": "NL-SYS-05",
+      "slug": "nl-sys-05",
+      "family": "sys",
+      "familyTitle": "NL EUDI Certification System Framework (NL-SYS)",
+      "title": "Accreditation requirements for CABs",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-SYS-05",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "31/10/206",
+          "note": "as printed on the cover"
+        },
+        {
+          "key": "Document type",
+          "value": "Framework document",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "none",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets and the electronic identification scheme under which they are provided",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "System/Scheme Owner, CABs, EUDI Wallet providers, PID Provider",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL-TL, NL-FS-*, NL-CS-*, NL-PW-* and NL-PP-*",
+          "note": null
+        }
+      ],
+      "pages": 30,
+      "pdfSize": "2.6 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-SYS-05-Accreditation_CAB_RC1.1_EUDIW-NL-CS_-_for_publication.pdf",
+      "text": "/edi-stelsel/text/nl-sys-05",
+      "requirements": []
+    },
+    {
+      "id": "NL-TL",
+      "label": "NL-TL",
+      "slug": "nl-tl",
+      "family": "tl",
+      "familyTitle": "NL Top-Level Certification Scheme (NL-TL)",
+      "title": "National Top-Level EUDIW Certification Scheme",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-TL",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "31/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Certification Scheme Scheme Specification (EN ISO/IEC 17067)",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01, NL-SYS-02, NL-SYS-03, NL-SYS-04, NL-SYS-05",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallet Providers (and the Wallet Solutions provided)",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL-P-W & NL-P-P",
+          "note": null
+        }
+      ],
+      "pages": 35,
+      "pdfSize": "2.5 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-TL_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publication.pdf",
+      "text": "/edi-stelsel/text/nl-tl",
+      "requirements": []
+    },
+    {
+      "id": "NL-FS",
+      "label": "NL-FS",
+      "slug": "nl-fs",
+      "family": "fs",
+      "familyTitle": "NL Functional Certification Scheme (NL-FS)",
+      "title": "EUDI Wallet Functional Certification Scheme",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-FS",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "2026-11-06",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Framework document",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "none",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets and the electronic identification scheme under which they are provided",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "System/Scheme Owner, CABs, EUDI Wallet providers, PID Provider",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL Certification System Documents",
+          "note": null
+        }
+      ],
+      "pages": 31,
+      "pdfSize": "804 kB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-FS_EUDI_Wallet_Functional_Certification_Scheme_RC1.0_20261106.pdf",
+      "text": "/edi-stelsel/text/nl-fs",
+      "requirements": []
+    },
+    {
+      "id": "NL-FS-W",
+      "label": "NL-FS-W",
+      "slug": "nl-fs-w",
+      "family": "fs",
+      "familyTitle": "NL Functional Certification Scheme (NL-FS)",
+      "title": "Wallet Solution Conformance (Presentation Requirements)",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-FS-W",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "2026-11-06",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Framework document",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "none",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets and the electronic identification scheme under which they are provided",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "System/Scheme Owner, CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL Certification System Documents",
+          "note": null
+        }
+      ],
+      "pages": 18,
+      "pdfSize": "342 kB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-FS-W_EUDI_Wallet_Functional_Certification_-_Wallet_Solution_Conformance_RC1.0_20261106.pdf",
+      "text": "/edi-stelsel/text/nl-fs-w",
+      "requirements": [
+        {
+          "catalogue": "NL-FS-W",
+          "url": "/edi-stelsel/requirements/nl-fs-w",
+          "count": 37
+        }
+      ]
+    },
+    {
+      "id": "NL-FS-P",
+      "label": "NL-FS-P",
+      "slug": "nl-fs-p",
+      "family": "fs",
+      "familyTitle": "NL Functional Certification Scheme (NL-FS)",
+      "title": "PID Issuance Service Conformance (Issuance Requirements)",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-FS-P",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "2026-11-06",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Framework document",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "none",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets and the electronic identification scheme under which they are provided",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "System/Scheme Owner, CABs, PID providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL Certification System Documents",
+          "note": null
+        }
+      ],
+      "pages": 14,
+      "pdfSize": "275 kB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-FS-P_EUDI_Wallet_Functional_Certification_-_PID_Issuance_Service_Conformance_RC1.0_20261106.pdf",
+      "text": "/edi-stelsel/text/nl-fs-p",
+      "requirements": [
+        {
+          "catalogue": "NL-FS-P",
+          "url": "/edi-stelsel/requirements/nl-fs-p",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": "NL-CS-P1",
+      "label": "NL-CS Part 1",
+      "slug": "nl-cs-part-1",
+      "family": "cs",
+      "familyTitle": "NL Cybersecurity Certification Scheme (NL-CS)",
+      "title": "NL-CS Scheme Specification",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-CS (part1)",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "25/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "FITCEM Certification Scheme Scheme Specification",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01, NL-SYS-02, NL-SYS-03, NL-SYS-04, NL-SYS-05 NL-TL",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallet Solutions",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, Evaluation Laboratories; CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 28,
+      "pdfSize": "2.1 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-part1-RC1.0_EUDIW_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-cs-part-1",
+      "requirements": []
+    },
+    {
+      "id": "NL-CS-P2",
+      "label": "NL-CS Part 2",
+      "slug": "nl-cs-part-2",
+      "family": "cs",
+      "familyTitle": "NL Cybersecurity Certification Scheme (NL-CS)",
+      "title": "NL-CS Scheme Procedures",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-CS (part2)",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "25/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "FITCEM Certification Scheme Scheme Procedures",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01, NL-SYS-02, NL-SYS-03, NL-SYS-04, NL-SYS-05 NL-TL",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallet Solutions",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, Evaluation Laboratories; CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 28,
+      "pdfSize": "2.2 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-part2-RC1.0_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-cs-part-2",
+      "requirements": []
+    },
+    {
+      "id": "NL-CS-P3",
+      "label": "NL-CS Part 3",
+      "slug": "nl-cs-part-3",
+      "family": "cs",
+      "familyTitle": "NL Cybersecurity Certification Scheme (NL-CS)",
+      "title": "NL-CS Evaluation Instruction for Evaluation Laboratories",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-CS (part3)",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "25/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "FITCEM Certification Scheme Scheme Specification",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01, NL-SYS-02, NL-SYS-03, NL-SYS-04, NL-SYS-05 NL-TL",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallet Solutions",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, Evaluation Laboratories; CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 17,
+      "pdfSize": "2.1 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-part3-RC1.0_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-cs-part-3",
+      "requirements": [
+        {
+          "catalogue": "NL-CS-P3",
+          "url": "/edi-stelsel/requirements/nl-cs-part-3",
+          "count": 15
+        }
+      ]
+    },
+    {
+      "id": "NL-CS-P4",
+      "label": "NL-CS Part 4",
+      "slug": "nl-cs-part-4",
+      "family": "cs",
+      "familyTitle": "NL Cybersecurity Certification Scheme (NL-CS)",
+      "title": "NL-CS Audit Instruction for Operational Processes",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-CS (part4)",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "25/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "FITCEM Certification Scheme Audit Instruction for Operational Processes",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01, NL-SYS-02, NL-SYS-03, NL-SYS-04, NL-SYS-05 NL-TL",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallet Solutions",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, Evaluation Laboratories; CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 19,
+      "pdfSize": "2.4 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-part4-RC1.0_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-cs-part-4",
+      "requirements": [
+        {
+          "catalogue": "NL-CS-P4",
+          "url": "/edi-stelsel/requirements/nl-cs-part-4",
+          "count": 24
+        }
+      ]
+    },
+    {
+      "id": "NL-CS-WI",
+      "label": "NL-CS-WI",
+      "slug": "nl-cs-wi",
+      "family": "cs",
+      "familyTitle": "NL Cybersecurity Certification Scheme (NL-CS)",
+      "title": "EN 17640 FITCEM Protection Profile for EUDI Wallet Instance in a remote HSM architecture",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-WI",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "27/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Certification Scheme EN 17640 FITCEM PROTECTION PROFILE for EUDI Wallet Instance in a remote HSM architecture",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-CS (parts1/2/3/4)",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, Evaluation Laboratories; CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 69,
+      "pdfSize": "2.9 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-WI-RC1.1_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-cs-wi",
+      "requirements": [
+        {
+          "catalogue": "NL-CS-WI",
+          "url": "/edi-stelsel/requirements/nl-cs-wi",
+          "count": 41
+        }
+      ]
+    },
+    {
+      "id": "NL-CS-WI-COND",
+      "label": "NL-CS-WI conditions",
+      "slug": "nl-cs-wi-conditions",
+      "family": "cs",
+      "familyTitle": "NL Cybersecurity Certification Scheme (NL-CS)",
+      "title": "Conditions on the Underlying Mobile System for Wallet Instances in a remote HSM architecture",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-WI",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "20/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Certification Scheme Conditions on the Underlying Mobile System for Wallet Instances in a remote HSM architecture",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-CS (parts1/2/3/4)",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, Evaluation Laboratories; CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 14,
+      "pdfSize": "2.1 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-WI-conditions-RC1.1_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-cs-wi-conditions",
+      "requirements": [
+        {
+          "catalogue": "NL-CS-WI-COND",
+          "url": "/edi-stelsel/requirements/nl-cs-wi-conditions",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "id": "NL-CS-WSCA",
+      "label": "NL-CS-WSCA",
+      "slug": "nl-cs-wsca",
+      "family": "cs",
+      "familyTitle": "NL Cybersecurity Certification Scheme (NL-CS)",
+      "title": "Protection Profile for WSCA in a remote HSM architecture",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-WSCA",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "29/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Protection Profile for WSCA in a remote HSM architecture",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-CS (parts1/2/3/4)",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, Evaluation Laboratories; CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 72,
+      "pdfSize": "3.2 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-WSCA-RC1.1_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-cs-wsca",
+      "requirements": [
+        {
+          "catalogue": "NL-CS-WSCA",
+          "url": "/edi-stelsel/requirements/nl-cs-wsca",
+          "count": 59
+        }
+      ]
+    },
+    {
+      "id": "NL-CS-WSCA-COND",
+      "label": "NL-CS-WSCA conditions",
+      "slug": "nl-cs-wsca-conditions",
+      "family": "cs",
+      "familyTitle": "NL Cybersecurity Certification Scheme (NL-CS)",
+      "title": "Conditions for the Underlying Platform Supporting AVA_VAN.5 Evaluation",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-WSCA-condtions",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "29/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Conditions in support of a WSCA for the Underlying Platform Supporting AVA_VAN.5 Evaluation",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-CS (parts1/2/3/4)",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallets",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, Evaluation Laboratories; CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 31,
+      "pdfSize": "2.4 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-CS-WSCA-conditions-RC1.1_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-cs-wsca-conditions",
+      "requirements": [
+        {
+          "catalogue": "NL-CS-WSCA-COND",
+          "url": "/edi-stelsel/requirements/nl-cs-wsca-conditions",
+          "count": 110
+        }
+      ]
+    },
+    {
+      "id": "NL-P-W",
+      "label": "NL-P-W",
+      "slug": "nl-p-w",
+      "family": "p",
+      "familyTitle": "NL Wallet and PID Provider Certification Scheme (NL-P)",
+      "title": "Wallet Provider Certification Scheme",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-P-W",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "31/10/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Certification Scheme Scheme Specification (EN ISO/IEC 17067)",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01, NL-SYS-02, NL-SYS-03, NL-SYS-04, NL-SYS-05",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity Wallet Providers (and the Wallet Solutions provided)",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, CABs, EUDI Wallet providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL-P-01, NL-P-02, NL-P-03, NL-P-W04",
+          "note": null
+        }
+      ],
+      "pages": 38,
+      "pdfSize": "549 kB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-P-W_Wallet_Provider_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-p-w",
+      "requirements": []
+    },
+    {
+      "id": "NL-P-P",
+      "label": "NL-P-P",
+      "slug": "nl-p-p",
+      "family": "p",
+      "familyTitle": "NL Wallet and PID Provider Certification Scheme (NL-P)",
+      "title": "PID Provider Certification Scheme",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-P-P",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.1",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "27/10/206",
+          "note": "as printed on the cover"
+        },
+        {
+          "key": "Document type",
+          "value": "Certification Scheme Scheme Specification (EN ISO/IEC 17067)",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01, NL-SYS-02, NL-SYS-03, NL-SYS-04, NL-SYS-05",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "European Digital Identity PID Providers (and the Wallet Solutions provided)",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, CABs, EUDI PID Providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        },
+        {
+          "key": "Subsidiary Documents",
+          "value": "NL-P-01, NL-P-02, NL-P-03, as well as NL-P-P04 and NL-P-P04b",
+          "note": null
+        }
+      ],
+      "pages": 39,
+      "pdfSize": "2.6 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-P-P_PID_Provider_Certification_Scheme_RC1.1-EUDIW-NL-CS_-_for_publ.pdf",
+      "text": "/edi-stelsel/text/nl-p-p",
+      "requirements": []
+    },
+    {
+      "id": "NL-P-01",
+      "label": "NL-P-01",
+      "slug": "nl-p-01",
+      "family": "p",
+      "familyTitle": "NL Wallet and PID Provider Certification Scheme (NL-P)",
+      "title": "Wallet and PID Provider Requirements",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-P-01",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate Draft",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "01/11/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Common requirements specification for Wallet Providers and PID Providers",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01 NL-P-P/W",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "Wallet Providers and PID Providers under the NL EUDI Wallet Certification System",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Wallet Providers, PID Providers, CABs and Scheme Owners",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "Supervisory bodies, accreditation bodies and EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 28,
+      "pdfSize": "2.5 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-P-01_Wallet_and_PID_Provider_Requirements_-_RC1.0_-_for_pub.pdf",
+      "text": "/edi-stelsel/text/nl-p-01",
+      "requirements": [
+        {
+          "catalogue": "NL-P-01",
+          "url": "/edi-stelsel/requirements/nl-p-01",
+          "count": 102
+        }
+      ]
+    },
+    {
+      "id": "NL-P-02",
+      "label": "NL-P-02",
+      "slug": "nl-p-02",
+      "family": "p",
+      "familyTitle": "NL Wallet and PID Provider Certification Scheme (NL-P)",
+      "title": "Essential Entity Requirements",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-P-02",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Working Document",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "31/10/206",
+          "note": "as printed on the cover"
+        },
+        {
+          "key": "Document type",
+          "value": "Resilience Requirements in support of N-P-P/W",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01 NL-P-P/W",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "NL PID Providers NL EUDI Wallet Providers",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Scheme Owners, CABs, EUDI PID Providers EUDI Wallet Providers",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 176,
+      "pdfSize": "3.4 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-P-02_Essential_Entity_Requirements_-_RC1.0_-_for_pub.pdf",
+      "text": "/edi-stelsel/text/nl-p-02",
+      "requirements": [
+        {
+          "catalogue": "NL-P-02",
+          "url": "/edi-stelsel/requirements/nl-p-02",
+          "count": 218
+        }
+      ]
+    },
+    {
+      "id": "NL-P-03",
+      "label": "NL-P-03",
+      "slug": "nl-p-03",
+      "family": "p",
+      "familyTitle": "NL Wallet and PID Provider Certification Scheme (NL-P)",
+      "title": "Secure Software Development & Vulnerability Management Practices for Wallet and PID Providers",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-P-03",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate Draft",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "01/11/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Secure Software Development and Vulnerability Management Practices",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01 NL-P-P/W",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "Wallet Providers and PID Providers under the NL EUDI Wallet Certification System",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Wallet Providers, PID Providers, CABs and Scheme Owners",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "Supervisory bodies, accreditation bodies and EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 75,
+      "pdfSize": "2.8 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-P-03_-_SecSoftDev__VulnMngt_-_RC1.0_-_for_pub.pdf",
+      "text": "/edi-stelsel/text/nl-p-03",
+      "requirements": [
+        {
+          "catalogue": "NL-P-03",
+          "url": "/edi-stelsel/requirements/nl-p-03",
+          "count": 122
+        }
+      ]
+    },
+    {
+      "id": "NL-P-04W",
+      "label": "NL-P-04W",
+      "slug": "nl-p-04w",
+      "family": "p",
+      "familyTitle": "NL Wallet and PID Provider Certification Scheme (NL-P)",
+      "title": "EUDI Wallet Lifecycle Specification",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-P-04W",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "01/11/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Requirements (Wallet Onboarding & Lifecycle Management)",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01 NL-P-W",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "Wallet Providers under the NL EUDI Wallet Certification System",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "Wallet Providers, CABs and Scheme Owners",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "PID Provider, Supervisory bodies, accreditation bodies and EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 124,
+      "pdfSize": "3.5 MB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-P-04W_Wallet_Onboarding__Lifecycle_Mngt_-_reqs_-_RC1.0_-_for_pub.pdf",
+      "text": "/edi-stelsel/text/nl-p-04w",
+      "requirements": [
+        {
+          "catalogue": "NL-P-04W",
+          "url": "/edi-stelsel/requirements/nl-p-04w",
+          "count": 201
+        }
+      ]
+    },
+    {
+      "id": "NL-P-04P-1",
+      "label": "NL-P-04P Part 1",
+      "slug": "nl-p-04p-part-1",
+      "family": "p",
+      "familyTitle": "NL Wallet and PID Provider Certification Scheme (NL-P)",
+      "title": "PID Issuance & Lifecycle Management Requirements, Part 1",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-P-04P (part1)",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate Draft",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "01/11/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Requirements (PID Issuance & Lifecycle Management)",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01 NL-P-P",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "PID Providers under the NL EUDI Wallet Certification System",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "PID Providers, CABs and Scheme Owners",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "Wallet Providers, Supervisory bodies, accreditation bodies and EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 57,
+      "pdfSize": "897 kB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part1_-_RC1.0_-_for_pub.pdf",
+      "text": "/edi-stelsel/text/nl-p-04p-part-1",
+      "requirements": [
+        {
+          "catalogue": "NL-P-04P-1",
+          "url": "/edi-stelsel/requirements/nl-p-04p-part-1",
+          "count": 126
+        }
+      ]
+    },
+    {
+      "id": "NL-P-04P-2",
+      "label": "NL-P-04P Part 2",
+      "slug": "nl-p-04p-part-2",
+      "family": "p",
+      "familyTitle": "NL Wallet and PID Provider Certification Scheme (NL-P)",
+      "title": "PID Issuance & Lifecycle Management Requirements, Part 2",
+      "published": true,
+      "cover": [
+        {
+          "key": "Document reference",
+          "value": "NL-P-04P (part2)",
+          "note": null
+        },
+        {
+          "key": "Version",
+          "value": "RC1.0",
+          "note": null
+        },
+        {
+          "key": "Status",
+          "value": "Release Candidate Draft",
+          "note": null
+        },
+        {
+          "key": "Date",
+          "value": "01/11/2026",
+          "note": null
+        },
+        {
+          "key": "Document type",
+          "value": "Requirements (PID Issuance & Lifecycle Management)",
+          "note": null
+        },
+        {
+          "key": "Parent framework",
+          "value": "NL-SYS-01 NL-P-P",
+          "note": null
+        },
+        {
+          "key": "Scheme Owner",
+          "value": "Kingdom of the Netherlands Minister of Economic Affairs",
+          "note": null
+        },
+        {
+          "key": "Certification target",
+          "value": "PID Providers under the NL EUDI Wallet Certification System",
+          "note": null
+        },
+        {
+          "key": "Primary audience",
+          "value": "PID Providers, CABs and Scheme Owners",
+          "note": null
+        },
+        {
+          "key": "Secondary audience",
+          "value": "Wallet Providers, Supervisory bodies, accreditation bodies and EUDI Wallet ecosystem stakeholders",
+          "note": null
+        },
+        {
+          "key": "Assurance level",
+          "value": "High/High",
+          "note": null
+        }
+      ],
+      "pages": 33,
+      "pdfSize": "557 kB",
+      "pdf": "/files/edi-stelsel/2026-11-06/NL-P-04P_PID_Issuance__LifecycleMngt_-reqs-part2_-_RC1.0_for_pub.pdf",
+      "text": "/edi-stelsel/text/nl-p-04p-part-2",
+      "requirements": [
+        {
+          "catalogue": "NL-P-04P-2",
+          "url": "/edi-stelsel/requirements/nl-p-04p-part-2",
+          "count": 52
+        }
+      ]
+    }
+  ],
+  "terms": 119,
+  "acronyms": 32
+}
