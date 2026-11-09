@@ -124,14 +124,14 @@ const config: Config = {
           position: "left",
           label: "Documentation",
         },
+        { to: "/blog", label: "Blog", position: "left" },
         {
           type: "docSidebar",
           sidebarId: "ediStelselSidebar",
           docsPluginId: "edi-stelsel",
-          position: "left",
+          position: "right",
           label: "Dutch EUDI Certification",
         },
-        { to: "/blog", label: "Blog", position: "left" },
         {
           href: "https://portal.yivi.app/attribute-index",
           label: "Attribute Index",
