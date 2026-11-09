@@ -129,7 +129,7 @@ const config: Config = {
           sidebarId: "ediStelselSidebar",
           docsPluginId: "edi-stelsel",
           position: "left",
-          label: "edi-stelsel-certification",
+          label: "Dutch EUDI Certification",
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
