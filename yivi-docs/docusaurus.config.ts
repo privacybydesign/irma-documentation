@@ -167,7 +167,7 @@ const config: Config = {
               to: "/trusted-verifier",
             },
             {
-              label: "edi-stelsel-certification",
+              label: "Dutch EUDI Certification",
               to: "/edi-stelsel-certification",
             },
           ],
