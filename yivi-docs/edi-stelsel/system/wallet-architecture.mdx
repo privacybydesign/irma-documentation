@@ -1,0 +1,63 @@
+---
+title: "Supported wallet architecture"
+sidebar_label: "Wallet architecture"
+description: "Version 1 of the Dutch certification system only accepts wallets with a remote HSM: the Wallet Instance on the phone, the WSCA and WSCD at the Wallet Provider."
+---
+
+import Cite from "@site/src/components/EdiStelsel/Cite";
+import DocLink from "@site/src/components/EdiStelsel/DocLink";
+
+Implementing Regulation (EU) 2024/2981 requires national certification schemes to describe the specific architecture of the wallet solutions they cover. NL-SYS-01 does this in its Annex B <Cite doc="NL-SYS-01" page={29}>§7.1.1</Cite>.
+
+## Only remote HSM wallets {#remote-hsm}
+
+Under Certification System v1, only HSM-based architectures are accepted <Cite doc="NL-SYS-01" page={39}>Annex B</Cite>:
+
+- The **Wallet Instance** runs on a mobile platform that meets established conditions. It interacts with a Wallet Provider backend, where the HSM-based **WSCA/WSCD** run.
+- The Wallet Instance complies with the Wallet Instance FITCEM protection profile. The annex also names compliance with the WSCA Common Criteria protection profile. Both profiles are defined under the NL-CS series. The annex sentence is garbled as printed: "the Wallet Instance complies with the Wallet Instance FITCEM PP and the complies with WSCA CC PP as defined under NL-CS-series are accepted".
+
+The cybersecurity scheme lists the architecture variants and which are admitted <Cite doc="NL-CS-P1" page={8}>§2.3</Cite>:
+
+| Architecture variant | Status |
+|---|---|
+| Remote WSCA-WSCD (remote HSM) | Admitted |
+| Embedded secure element | None admitted; a protection profile is required before certification |
+| eSIM based | None admitted; a protection profile is required before certification |
+| No dedicated secure element | Not admitted at assurance level high |
+
+## What runs where {#components}
+
+<DocLink id="NL-CS-WI" /> describes the remote HSM architecture as follows. The Wallet Instance operates on the user device and interacts with the WSCA, which runs on Wallet Provider backend infrastructure. The WSCA in turn uses a certified remote HSM as the WSCD <Cite doc="NL-CS-WI" page={4}>Background</Cite>.
+
+- **Wallet Instance:** a mobile application installed on the User Device <Cite doc="NL-CS-WI" page={8}>§1.2.2</Cite>. It is designed exclusively for a remote HSM configuration: the security-critical cryptographic assets and operations are managed by a remotely deployed WSCD, accessed through the WSCA <Cite doc="NL-CS-WI" page={7}>§1.2</Cite>.
+- **WSCA:** deployed on a hardened backend server. It provides the security-critical cryptographic functionality, interfaces with the WSCD, and ensures that operations on critical assets are performed only after the required authorisation and User authentication <Cite doc="NL-CS-WI" page={8}>§1.2.2</Cite>.
+- **WSCD:** a hardware security device that the WSCA uses to protect critical cryptographic assets <Cite doc="NL-CS-WI" page={8}>§1.2.2</Cite>.
+- **Keystore on the User Device:** a hardware-backed secure element for cryptographic assets that do not need WSCD protection. The possession factor of the authentication protocol is managed there <Cite doc="NL-CS-WI" page={8}>§1.2.2</Cite>.
+
+![NL-CS-WI Figure 1: Wallet Unit as part of the Wallet Ecosystem](/img/edi-stelsel/2026-11-06/nl-cs-wi/image_000000_9ccb3826718d121ca478815afcddac6e5e0733d8988b064a2b04797a57f41fc0.png)
+
+*NL-CS-WI, Figure 1: Wallet Unit as part of the Wallet Ecosystem* <Cite doc="NL-CS-WI" page={8}>§1.2.1</Cite>
+
+The WSCA protection profile (<DocLink id="NL-CS-WSCA" />) treats the WSCA in the Wallet Provider's backend (WSCA-BE) as the target of evaluation. It acts as an authenticated remote signing service. The WSCA-BE verifies the user's identity and authorisation, validates the wallet instance key binding, and instructs the WSCD-HSM to generate signing keys and to sign data submitted by the Wallet Instance <Cite doc="NL-CS-WSCA" page={7}>§1.2</Cite>. The attested private keys never leave the security context of the WSCD-HSM <Cite doc="NL-CS-WSCA" page={7}>§1.2</Cite>. The conditions for the platform underneath the WSCA are in <DocLink id="NL-CS-WSCA-COND" />. The conditions for the mobile platform underneath the Wallet Instance are in <DocLink id="NL-CS-WI-COND" />.
+
+## How the parts are evaluated {#evaluation}
+
+NL-SYS-01 Figure 5 shows the target of evaluation concept for NL-CS <Cite doc="NL-SYS-01" page={35}>§7.2</Cite>:
+
+- the Wallet Instance under FITCEM, assurance level "high", in a national scheme;
+- the WSCA and the WSCD under Common Criteria EAL4/AVA_VAN.5, in EUCC;
+- the composite TOE under FITCEM AMD1, assurance level "high", in a national scheme.
+
+![NL-SYS-01 Figure 5: TOE concept for NL-CS](/img/edi-stelsel/2026-11-06/nl-sys-01/image_000004_12c8d44297ff859758fed6f8e4465ba52337d6fc4f3502d18d4a0ccf715a7b4b.png)
+
+*NL-SYS-01, Figure 5: TOE concept for NL-CS* <Cite doc="NL-SYS-01" page={35}>§7.2</Cite>
+
+NL-CS Part 1 describes the target of evaluation under the current draft protection profile differently. There, the Wallet Instance is a standalone TOE, and the WSCA backend and the WSCD are part of the operational environment. They are subject to the environmental requirement that key protection and cryptographic operations are performed inside a certified WSCD/WSCA <Cite doc="NL-CS-P1" page={8}>§2.1</Cite>.
+
+## The modules of a wallet {#modules}
+
+Annex B of NL-SYS-01 decomposes the wallet into 34 modules. Each one is linked to the functional decomposition: for example the Wallet Onboarding Module, PID acquisition, the Wallet Pseudonym Manager, Backup & Restore, Offline and Online Presentation, and Resilience <Cite doc="NL-SYS-01" page={39}>Annex B</Cite> <Cite doc="NL-SYS-01" page={40}>Annex B</Cite> <Cite doc="NL-SYS-01" page={41}>Annex B</Cite>. The full table is in the [full text of NL-SYS-01](/edi-stelsel-certification/text/nl-sys-01#s-b).
+
+![NL-SYS-01 Figure 6: modular decomposition](/img/edi-stelsel/2026-11-06/nl-sys-01/image_000005_da33b1261f08ab63785edc9ec2f12886c1e2a9e5576028f8c144b13e74ab1219.png)
+
+*NL-SYS-01, Figure 6: Modular decomposition* <Cite doc="NL-SYS-01" page={39}>Annex B</Cite>

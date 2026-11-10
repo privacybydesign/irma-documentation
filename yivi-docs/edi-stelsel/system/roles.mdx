@@ -1,0 +1,116 @@
+---
+title: "Parties and their roles"
+sidebar_label: "Parties and roles"
+description: "Who does what in the Dutch EUDI Wallet certification system: System Owner, Scheme Owners, accreditation body, CABs, applicants, the EDICG and the Supervisory Authority."
+---
+
+import Cite from "@site/src/components/EdiStelsel/Cite";
+import DocLink from "@site/src/components/EdiStelsel/DocLink";
+
+<DocLink id="NL-SYS-01" /> section 3.1 names the stakeholders of the certification system and their responsibilities <Cite doc="NL-SYS-01" page={9}>§3.1</Cite>. <DocLink id="NL-TL" /> gives an overview of the roles for the top-level scheme in its Table 1 <Cite doc="NL-TL" page={11}>§6.2.1</Cite>. The terms are defined in the [glossary](/edi-stelsel-certification/glossary).
+
+## Overview
+
+| Role | Who | Main responsibility |
+|---|---|---|
+| [System Owner](#system-owner) | Minister of Economic Affairs, in close concertation with the Minister of the Interior | The rules of the whole certification system |
+| [Top-Level Scheme Owner](#top-level-scheme-owner) | Minister of Economic Affairs, in close concertation with the Minister of the Interior | The top-level scheme NL-TL |
+| [Subordinate Scheme Owners](#subordinate-scheme-owners) | Per scheme; under conditions a CAB can propose its own scheme | The subordinate schemes |
+| [National Accreditation Body (NAB)](#national-accreditation-body) | – | Accrediting CABs |
+| [CAB-CB](#cab-cb) | Accredited certification bodies | Conformity assessment and certification |
+| [CAB-ITSEF](#cab-itsef) | Accredited testing laboratories | Evaluation and testing |
+| [Applicant / Certificate Holder](#applicant) | Typically the Wallet Provider, the PID Provider, or their subcontractors and suppliers | Applying and staying conformant |
+| [EDICG](#edicg) | European Digital Identity Cooperation Group | EU-level coordination |
+| [Supervisory Authority](#supervisory-authority) | – | Supervision according to EU and national law |
+
+## System Owner {#system-owner}
+
+The top-level governance body of the certification system. The owner is the Minister of Economic Affairs, in close concertation with the Minister of the Interior. The System Owner <Cite doc="NL-SYS-01" page={9}>§3.1.1</Cite>:
+
+- defines the overall rules of the certification system;
+- defines the overall evaluation methods and requirements;
+- maintains and updates the system documentation and makes it available to all relevant stakeholders;
+- ensures the overall system complies with ISO/IEC 17067 and legal requirements;
+- notifies the certification system to the EDICG for opinions and recommendations, as the regulation requires;
+- cooperates with other EU Member States that operate an EUDI Wallet certification system, to ensure a level playing field towards a future EU certification system.
+
+How the System Owner is organised and works is set out in <DocLink id="NL-SYS-03" />.
+
+## Top-Level Scheme Owner {#top-level-scheme-owner}
+
+Governs the top-level certification scheme (<DocLink id="NL-TL" />). The owner is the Minister of Economic Affairs, in close concertation with the Minister of the Interior <Cite doc="NL-SYS-01" page={9}>§3.1.2</Cite>. Its responsibilities are <Cite doc="NL-SYS-01" page={9}>§3.1.2</Cite>:
+
+- defining detailed scheme requirements;
+- maintaining the scheme documentation and making it available to all relevant stakeholders;
+- ensuring compliance with the rules, methods and requirements of the NL Certification System;
+- supervising certification activities;
+- ensuring that certified services comply with national and EU legal frameworks;
+- post-certification monitoring, particularly after incidents or vulnerabilities.
+
+The roles of System Owner and Top-Level Scheme Owner can be combined <Cite doc="NL-SYS-01" page={9}>§3.1.2</Cite>.
+
+In NL-TL, the Scheme Owner owns and supervises the scheme, authorises CABs, maintains the certificate register and monitors the scheme. The market surveillance role, oversight of certified services in the market, will also be performed by the NL-TL Scheme Owner <Cite doc="NL-TL" page={11}>§6.2.1</Cite>. The Top-Level Scheme Owner publishes a list of certified EUDI Wallet solutions, with the information specified in Annex V of Implementing Regulation (EU) 2024/2981 <Cite doc="NL-SYS-01" page={14}>§4.1</Cite>.
+
+## Subordinate Scheme Owners {#subordinate-scheme-owners}
+
+Govern the subordinate certification schemes for specific products or services. For some subordinate schemes, a CAB may propose its own scheme. This is possible if legal requirements allow it and the scheme fully complies with the NL Certification System, the top-level scheme and the requirements set for subordinate schemes. Where EUCC is available and mandated, the legal ownership of the EUCC scheme applies <Cite doc="NL-SYS-01" page={10}>§3.1.3</Cite>. Subordinate Scheme Owners <Cite doc="NL-SYS-01" page={10}>§3.1.3</Cite>:
+
+- define practical scheme details and operations;
+- maintain scheme documentation and make it available to all relevant stakeholders;
+- ensure compliance with the NL Certification System and all overarching schemes;
+- supervise certification activities;
+- carry out post-certification monitoring, particularly after incidents or vulnerabilities.
+
+### What every Scheme Owner must do
+
+According to section 4.1 of NL-SYS-01, the Top-Level Scheme Owner and subordinate Scheme Owners take full responsibility for the objectives, content and integrity of their scheme. Among other things, they maintain the scheme and operate the risk register defined in Implementing Regulation (EU) 2024/2981. They also approve the scope of subcontracting by the certification body <Cite doc="NL-SYS-01" page={13}>§4.1</Cite>. Scheme Owners may subcontract a defined part of their tasks, but remain responsible for it <Cite doc="NL-SYS-01" page={13}>§4.1</Cite>. They monitor whether certification bodies comply with their obligations <Cite doc="NL-SYS-01" page={13}>§4.1</Cite>. Complaints and appeals that a CAB-CB has not resolved go to the Scheme Owner <Cite doc="NL-SYS-01" page={14}>§4.1</Cite>.
+
+## National Accreditation Body (NAB) {#national-accreditation-body}
+
+Ensures the trust and competence of the conformity assessment bodies. The NAB <Cite doc="NL-SYS-01" page={10}>§3.1.4</Cite>:
+
+- accredits CAB-CBs according to ISO/IEC 17065, or other standards if the scheme requires them;
+- accredits CAB-ITSEFs according to ISO/IEC 17025, in the respective certification schemes;
+- verifies competence, impartiality and consistent application of the certification rules;
+- acts under the EU accreditation framework (Regulation (EC) No 765/2008).
+
+The accreditation requirements for CABs are in <DocLink id="NL-SYS-05" />.
+
+## Conformity Assessment Body: certification body (CAB-CB) {#cab-cb}
+
+Performs or subcontracts conformity assessment activities. It conducts or subcontracts evaluations, audits and tests. It produces or validates test reports, evaluation reports and certification documentation, and supports decision-making on conformity findings <Cite doc="NL-SYS-01" page={10}>§3.1.5</Cite>.
+
+For the top-level scheme, the CAB plans, performs and documents the evaluation. It issues the certification decision and the certificate of conformity, and manages surveillance and recertification <Cite doc="NL-TL" page={11}>§6.2.1</Cite>. Only a certification body that is accredited and also authorised under Dutch law is eligible as CAB under NL-TL <Cite doc="NL-TL" page={11}>§6.1</Cite>.
+
+## Conformity Assessment Body: testing laboratory (CAB-ITSEF) {#cab-itsef}
+
+Performs evaluation or testing. It conducts evaluations or tests, produces test reports, evaluation reports and evaluation documentation, and supports the CAB-CB's decision-making on conformity findings <Cite doc="NL-SYS-01" page={11}>§3.1.6</Cite>.
+
+## Applicant / Certificate Holder {#applicant}
+
+An entity that seeks certification or holds a certificate. This is typically the EUDI Wallet Provider, the PID Provider, or their subcontractors and suppliers <Cite doc="NL-SYS-01" page={11}>§3.1.7</Cite>. The applicant <Cite doc="NL-SYS-01" page={11}>§3.1.7</Cite>:
+
+- submits the application for certification;
+- provides all required technical, procedural and security documentation;
+- continuously maintains conformity throughout operation, including post-certification obligations.
+
+Each applicant or certificate holder pays the costs of the certification process and of maintaining its own certificate <Cite doc="NL-SYS-01" page={11}>§3.1.7</Cite>. What a certificate holder must do after certification is listed under [post-certification obligations](/edi-stelsel-certification/system/certificate-lifecycle#obligations).
+
+## European Digital Identity Cooperation Group (EDICG) {#edicg}
+
+Coordinates and harmonises the European Digital Identity Framework at EU level. It <Cite doc="NL-SYS-01" page={11}>§3.1.8</Cite>:
+
+- supports consistent implementation of the EUDI Wallet framework across Member States;
+- facilitates cooperation between national authorities, including on supervision, incident handling and cross-border interoperability;
+- provides guidance for uniform application of certification-related requirements;
+- assists the European Commission in monitoring and improving the European Digital Identity ecosystem.
+
+## Supervisory Authority (SA) {#supervisory-authority}
+
+Performs the supervisory and oversight function according to EU and national law. Its responsibilities are supervision of the trust framework (see <DocLink id="NL-SYS-03" />) and cross-border cooperation and notification processes <Cite doc="NL-SYS-01" page={12}>§3.1.9</Cite>. The SA may not be merged with the System Owner or Scheme Owner role. NL-SYS-01 adds that different organisational units of the Ministry of Digital Affairs have been assigned to these roles <Cite doc="NL-SYS-01" page={11}>§3.1.9</Cite>.
+
+:::note[Inconsistency in the draft]
+
+NL-SYS-01 assigns the owner roles to the Minister of Economic Affairs <Cite doc="NL-SYS-01" page={9}>§3.1.1</Cite>. Its note on the Supervisory Authority refers to the Ministry of Digital Affairs <Cite doc="NL-SYS-01" page={11}>§3.1.9</Cite>.
+
+:::

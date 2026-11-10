@@ -49,6 +49,20 @@ const config: Config = {
 
   plugins: [
       [
+          "@docusaurus/plugin-content-docs",
+          {
+            // Separate section on the Dutch EDI-stelsel and its EUDI Wallet certification system.
+            // Generated pages (requirements, full text, glossary, legal basis, downloads) come from
+            // tools/docs_site.py in the EUDI-Wallet-Certification-System repository.
+            id: "edi-stelsel",
+            path: "edi-stelsel",
+            routeBasePath: "edi-stelsel-certification",
+            sidebarPath: "./sidebarsEdiStelsel.ts",
+            editUrl:
+              "https://github.com/privacybydesign/irma-documentation/tree/master/yivi-docs/",
+          },
+      ],
+      [
           "@cmfcmf/docusaurus-search-local",
           {
             // Whether to also index the titles of the parent categories in the sidebar of a doc page
@@ -112,6 +126,13 @@ const config: Config = {
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
+          type: "docSidebar",
+          sidebarId: "ediStelselSidebar",
+          docsPluginId: "edi-stelsel",
+          position: "right",
+          label: "Dutch EUDI Certification",
+        },
+        {
           href: "https://portal.yivi.app/attribute-index",
           label: "Attribute Index",
           position: "right",
@@ -144,6 +165,10 @@ const config: Config = {
             {
               label: "Trusted Verifier",
               to: "/trusted-verifier",
+            },
+            {
+              label: "Dutch EUDI Certification",
+              to: "/edi-stelsel-certification",
             },
           ],
         },

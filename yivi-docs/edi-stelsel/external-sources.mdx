@@ -1,0 +1,136 @@
+---
+title: "External sources"
+sidebar_label: "External sources"
+description: "The standards, frameworks and requirement sets from outside the Dutch scheme that the certification documents rely on, with links to their official sources."
+---
+
+import Cite from "@site/src/components/EdiStelsel/Cite";
+import DocLink from "@site/src/components/EdiStelsel/DocLink";
+
+The Dutch scheme documents build on standards, frameworks and requirement sets published by others. This page lists them, shows where the documents use them, and links to the official sources. Most ISO, CEN and ETSI standards are paid. For those, the link goes to the publisher's catalogue page.
+
+The editions are the ones cited in the documents. Where the publisher has since replaced an edition, this is noted, as shown on the publisher's page on 9 November 2026. For the EU regulations, see [legal basis](/edi-stelsel-certification/legal-basis).
+
+## Cybersecurity of the Wallet Solution (NL-CS) {#cybersecurity}
+
+### OWASP Mobile Application Security (MAS) {#owasp-mas}
+
+The required test set of the cybersecurity certification is built on OWASP MAS. The documents name OWASP MASVS v2.1.0, MASWE v1.0, MASTG, the MAS testing profiles (baseline L2 + R + P) and the OWASP MAS EUDI Wallet profile <Cite doc="NL-CS-P1" page={14}>§4.4</Cite>.
+
+- [OWASP MAS EUDI Wallet profile](/edi-stelsel-certification/requirements/owasp-mas-eudiw): all its requirements on this site, with the official sources.
+- [OWASP MASVS](https://mas.owasp.org/MASVS/) and the [MASVS v2.1.0 release](https://github.com/OWASP/masvs/releases/tag/v2.1.0)
+- [OWASP MASWE](https://mas.owasp.org/MASWE/)
+- [OWASP MASTG](https://mas.owasp.org/MASTG/)
+- [MAS testing profiles](https://mas.owasp.org/Profiles/) (L1, L2, R, P)
+
+### FITCEM: EN 17640:2022 {#fitcem}
+
+The fixed-time evaluation methodology of the cybersecurity scheme for the Wallet Instance <Cite doc="NL-CS-P1" page={5}>§1.2</Cite>.
+
+- [EN 17640:2022 at CEN](https://standards.cencenelec.eu/ords/f?p=CEN:110:::::FSP_PROJECT,FSP_ORG_ID:70971,2307986&cs=127AD6F8FF9229285FC765697D1980719): withdrawn by CEN. The current edition is [EN 17640:2022+A1:2026](https://standards.cencenelec.eu/ords/f?p=CEN:110:::::FSP_PROJECT,FSP_ORG_ID:83821,2307986&cs=13D44A9A8E2790851BB0A0A0BD8210A5E).
+
+### Common Criteria: ISO/IEC 15408 and ISO/IEC 18045 {#common-criteria}
+
+The Wallet Instance evaluation is augmented with Common Criteria methodology (ISO/IEC 15408) <Cite doc="NL-CS-P1" page={5}>§1.1</Cite>. The WSCA protection profile <DocLink id="NL-CS-WSCA" /> is a Common Criteria protection profile for evaluation under the EUCC scheme.
+
+- [Common Criteria portal](https://www.commoncriteriaportal.org/cc/index.cfm): CC:2022 Release 1 and CEM:2022, free.
+- ISO/IEC 15408-1:2022 to 15408-5:2022 ([part 1](https://www.iso.org/standard/72891.html), [part 2](https://www.iso.org/standard/72892.html), [part 3](https://www.iso.org/standard/72906.html), [part 4](https://www.iso.org/standard/72913.html), [part 5](https://www.iso.org/standard/72917.html)) and [ISO/IEC 18045:2022](https://www.iso.org/standard/72889.html): withdrawn by ISO and replaced by 2026 editions.
+
+### SESIP: EN 17927:2023 {#sesip}
+
+An accepted alternative evaluation methodology, and the source of the assurance component semantics used by the cybersecurity scheme <Cite doc="NL-CS-P1" page={5}>§1.2</Cite>.
+
+- [EN 17927:2023 at CEN](https://standards.cencenelec.eu/ords/f?p=CEN:110:::::FSP_PROJECT,FSP_ORG_ID:74909,2307986&cs=1F38C69B1C93084C4191897B41BC64DF6)
+
+### ECCG Agreed Cryptographic Mechanisms {#eccg-acm}
+
+The Wallet Instance and the WSCA must use cryptographic mechanisms in accordance with the ECCG Agreed Cryptographic Mechanisms <Cite doc="NL-CS-WI" page={45}>RSR_KEY_MNG, RSR_CRPTO</Cite> <Cite doc="NL-CS-WSCA" page={25}>OSP.CRYPTO_STANDARDS</Cite>. A mechanism that is not yet included is subject to a security assessment and a documented justification.
+
+- [EUCC Guidelines on Cryptography (ENISA)](https://certification.enisa.europa.eu/publications/eucc-guidelines-cryptography_en): ECCG Agreed Cryptographic Mechanisms, version 2. ENISA lists a version 3 draft for public review.
+
+### CEN EN 419 221-5 {#en-419-221-5}
+
+The WSCD-HSM in the WSCA's environment must be an HSM following CEN EN 419 221-5, or another protection profile with at least equivalent functionality and assurance <Cite doc="NL-CS-WSCA" page={11}>§1.2.5.1</Cite>.
+
+- [EN 419221-5:2018 at CEN](https://standards.cencenelec.eu/ords/f?p=CEN:110:::::FSP_PROJECT,FSP_ORG_ID:59592,6205&cs=1C29C9A7269AC460FFBAA4EA1D7F274C5): Protection Profiles for TSP Cryptographic Modules, Part 5.
+
+### Vulnerability handling: ISO/IEC 30111 and the Cyber Resilience Act {#vulnerability-handling}
+
+The product developer maintains a vulnerability management policy that takes ISO/IEC 30111 into account. Under Implementing Regulation (EU) 2024/2981, that policy must meet Annex I of the Cyber Resilience Act <Cite doc="NL-CS-P2" page={21}>§8.2</Cite>.
+
+- [ISO/IEC 30111:2019](https://www.iso.org/standard/69725.html)
+- [Cyber Resilience Act, Annex I (EUR-Lex)](https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng#anx_I)
+
+## Wallet Provider and PID Provider (NL-P) {#providers}
+
+### CyberFundamentals (CyFun) {#cyberfundamentals}
+
+<DocLink id="NL-P-02" /> sets the cybersecurity requirements for Wallet Providers and PID Providers. For this, the providers are treated as NIS2 essential entities <Cite doc="NL-P-02" page={6}>§1.1</Cite>. Its control set covers at least the NIS2 Article 21 domains <Cite doc="NL-P-02" page={10}>§3.1</Cite>. It is organised along the six functions of the CyberFundamentals Framework of the Centre for Cybersecurity Belgium (CCB): Govern, Identify, Protect, Detect, Respond and Recover <Cite doc="NL-P-02" page={11}>§3.2</Cite>. Among its references is the CyberFundamentals Framework at the Essential assurance level <Cite doc="NL-P-02" page={8}>§2.2</Cite>.
+
+NL-P-02 states that it is an adaptation:
+
+- It uses the CyberFundamentals control structure and selected content, and acknowledges the CCB as the source.
+- Its NL-specific adaptations are not official CCB interpretations or an official CCB certification scheme.
+- Services under it cannot be used for a presumption of conformity with the NIS2 Directive and its Belgian transposition <Cite doc="NL-P-02" page={11}>§3.3</Cite>.
+
+Certification under the Dutch scheme also does not by itself constitute a regulatory determination of compliance with NIS2 <Cite doc="NL-P-02" page={6}>§1.1</Cite>.
+
+- [www.cyfun.eu](https://www.cyfun.eu): named by NL-P-02 as the only authentic source of the CyFun Framework and its Conformity Assessment Scheme <Cite doc="NL-P-02" page={11}>§3.3</Cite>. The site may block automated access.
+- [CyberFundamentals Framework (CCB)](https://atwork.safeonweb.be/tools-resources/cyberfundamentals-framework): the CCB's page. It shows CyFun 2025 and states that CyFun 2023 and 2025 coexist until 18 April 2027.
+- [The NIS2 law (CCB)](https://atwork.safeonweb.be/nis2) and the [FAQ on NIS2 and CyberFundamentals](https://atwork.safeonweb.be/frequently-asked-questions-faq-nis2-and-cyberfundamentals): how CyFun is used for NIS2 in Belgium.
+
+### Other provider references {#provider-other}
+
+- **ETSI EN 319 401 V3.2.1:** a complementary baseline for common organisational, security and operational provider controls, where applicable <Cite doc="NL-P-02" page={8}>§2.2</Cite>.
+- **ISO/IEC 27005:** guidance on managing information security risks <Cite doc="NL-P-02" page={8}>§2.2</Cite>.
+- **ISO/IEC 27001:** certificates issued by an accredited certification body (in accordance with ISO/IEC 17021-1) can be accepted as assurance evidence, subject to the evaluation criteria of NL-P-W <Cite doc="NL-P-W" page={15}>§7.6</Cite>. See [ISO/IEC 27001:2022](https://www.iso.org/standard/27001) and [ISO/IEC 17021-1:2015](https://www.iso.org/standard/61651.html).
+- **CRA standards (EN 40000 series):** the requirements of <DocLink id="NL-P-03" /> give their source, for example "Input clause (40000-1-2 6.2)" <Cite doc="NL-P-03" page={10}>5.2-CR-01</Cite>. See [EN 40000-1-2](https://standards.cencenelec.eu/ords/f?p=CEN:110:::::FSP_PROJECT,FSP_ORG_ID:81335,2307986&cs=1D72BA048927BF4E6076BA309587EA01A), [prEN 40000-1-3](https://standards.cencenelec.eu/ords/f?p=CEN:110:::::FSP_PROJECT,FSP_ORG_ID:81343,2307986&cs=184A0BBC40ECC02CD463C25EFAD9F5A7E) and [prEN 40000-10](https://standards.cencenelec.eu/ords/f?p=CEN:110:::::FSP_PROJECT,FSP_ORG_ID:82625,6205&cs=1FADB8A74A48DE988A4AE213C4C0346C3) at CEN, and the [CEN-CENELEC news on the CRA standardisation request](https://www.cencenelec.eu/news-events/news/2025/newsletter/ots-62-cra/).
+- **NIST SSDF:** NL-P-03 refers to practices of the Secure Software Development Framework, for example "NIST SSDF RV.1.3" in the guidance of a requirement <Cite doc="NL-P-03" page={18}>5.6-CR-05</Cite>. See [NIST SP 800-218](https://csrc.nist.gov/pubs/sp/800/218/final).
+- **ISO/IEC 30111:** also referenced in NL-P-03, see [vulnerability handling](#vulnerability-handling).
+- **ETSI TS 119 472-3:** listed as a reference in <DocLink id="NL-P-04W" /> <Cite doc="NL-P-04W" page={8}>references</Cite> and <DocLink id="NL-P-04P-1">NL-P-04P</DocLink> <Cite doc="NL-P-04P-1" page={7}>references</Cite>. See [ETSI TS 119 472](#etsi-ts-119-472).
+
+## Functional conformance (NL-FS) {#functional}
+
+### ETSI TS 119 472 {#etsi-ts-119-472}
+
+Several ICS items of <DocLink id="NL-FS-W" /> give these ETSI specifications as their legal reference. Examples are PID and attestation issuance (part 3) and remote presentation (part 2) <Cite doc="NL-FS-W" page={11}>§6.3</Cite> <Cite doc="NL-FS-W" page={12}>§6.3</Cite>.
+
+- [ETSI TS 119 472-1](https://www.etsi.org/deliver/etsi_ts/119400_119499/11947201/01.02.01_60/ts_11947201v010201p.pdf): General requirements (V1.2.1)
+- [ETSI TS 119 472-2](https://www.etsi.org/deliver/etsi_ts/119400_119499/11947202/01.03.01_60/ts_11947202v010301p.pdf): Profiles for EAA/PID presentations to relying party (V1.3.1)
+- [ETSI TS 119 472-3](https://www.etsi.org/deliver/etsi_ts/119400_119499/11947203/01.01.01_60/ts_11947203v010101p.pdf): Profiles for issuance of EAA or PID (V1.1.1)
+
+These links are the latest versions published by ETSI. The documents do not state which version applies.
+
+### ISO/IEC 18013-5 and 18013-7, OpenID4VCI and OpenID4VP {#protocols}
+
+ICS items of NL-FS-W cover presentation using ISO/IEC 18013-7 and OpenID4VP, and issuance using OpenID4VCI <Cite doc="NL-FS-W" page={11}>§6.3</Cite> <Cite doc="NL-FS-W" page={12}>§6.3</Cite>. Proximity presentations use ISO/IEC 18013-5. For those, the wallet provider completes the ICS in ISO/IEC 18013-6 <Cite doc="NL-FS" page={15}>§6.3</Cite>.
+
+- [ISO/IEC 18013-5:2021](https://www.iso.org/standard/69084.html)
+- [ISO/IEC TS 18013-7:2025](https://www.iso.org/standard/91154.html), the latest edition
+- [OpenID for Verifiable Credential Issuance 1.0](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
+- [OpenID for Verifiable Presentations 1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)
+
+### Functional Conformance Assessment Framework (FCAF) {#fcaf}
+
+The certification body may use the European Commission's FCAF as an existing test standard for its test cases, but this is not mandatory <Cite doc="NL-FS" page={13}>§6.1</Cite> <Cite doc="NL-FS" page={22}>§9.2</Cite>.
+
+- [Functional Conformance Assessment Framework](https://conformance.eudi.dev/latest/) and its [source repository](https://github.com/eu-digital-identity-wallet/eudi-doc-functional-conformance-assessment)
+
+## Accreditation and certification bodies {#accreditation}
+
+The accreditation standards for the certification bodies and laboratories are set out per scheme in Table 1 of NL-SYS-01 <Cite doc="NL-SYS-01" page={16}>§4.3</Cite>:
+
+- **CAB-CB:** ISO/IEC 17065 in all schemes. In NL-CS it is augmented by the EUCC program where applicable, and in NL-P-P/W by ETSI EN 319 403-1 V2.3.1.
+- **CAB-ITSEF:** ISO/IEC 17025 in NL-FS and NL-CS.
+
+The schemes are built on ISO/IEC 17067 <Cite doc="NL-SYS-01" page={5}>§1</Cite>. The accreditation requirements themselves are in <DocLink id="NL-SYS-05" />.
+
+- [ISO/IEC 17065:2012](https://www.iso.org/standard/46568.html)
+- [ISO/IEC 17025:2017](https://www.iso.org/standard/66912.html)
+- [ETSI EN 319 403-1 V2.3.1](https://www.etsi.org/deliver/etsi_en/319400_319499/31940301/02.03.01_60/en_31940301v020301p.pdf) (free PDF)
+- [ISO/IEC 17067:2013](https://www.iso.org/standard/55087.html): withdrawn by ISO and replaced by [ISO/IEC 17067:2026](https://www.iso.org/standard/17067).
+
+## Architecture and vocabulary {#architecture}
+
+- **EUDI Wallet Architecture and Reference Framework (ARF):** the architecture reference used by the cybersecurity scheme <Cite doc="NL-CS-P1" page={5}>§1.2</Cite>. See the [ARF](https://eudi.dev/latest/) and its [source repository](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework).
+- **CEN/TS 18098:** the source of many definitions in the [glossary](/edi-stelsel-certification/glossary) of NL-SYS-02 <Cite doc="NL-SYS-02" page={9}>glossary</Cite>. See [CEN/TS 18098:2026 at CEN](https://standards.cencenelec.eu/ords/f?p=CEN:110:::::FSP_PROJECT,FSP_ORG_ID:77237,6205&cs=108DDF7D9D49309AAA4ED569EBC8C4849).
