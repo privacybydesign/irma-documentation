@@ -1,4 +1,5 @@
-# Delivery: builds, scans and pushes ghcr.io/privacybydesign/irma-documentation.
+# Delivery: builds, scans and pushes ghcr.io/privacybydesign/irma-documentation (the static site)
+# and ghcr.io/privacybydesign/irma-documentation-mcp (the MCP server, Dockerfile.mcp).
 # Push to master -> :edge, release vX.Y.Z -> :X.Y.Z and :latest, manual run ->
 # :<branch>. PR builds are scanned in Status checks; published images are
 # re-scanned weekly by image-rescan.yml.
@@ -26,4 +27,17 @@ jobs:
     with:
       # The old Delivery tagged :latest on every stable release (metadata-action's
       # latest=auto with type=semver); irma-documentation-ops runs :latest in prod.
+      tag-latest: true
+
+  docker-mcp:
+    uses: privacybydesign/github-workflows/.github/workflows/docker-publish.yml@v1
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+      id-token: write
+      attestations: write
+    with:
+      image-name: ghcr.io/privacybydesign/irma-documentation-mcp
+      dockerfile: Dockerfile.mcp
       tag-latest: true

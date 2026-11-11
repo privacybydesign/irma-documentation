@@ -30,6 +30,16 @@ jobs:
       scripts: typecheck build # tsc, docusaurus build (fails on broken links)
       ignore-scripts: true
 
+  mcp-server:
+    uses: privacybydesign/github-workflows/.github/workflows/node-checks.yml@v1
+    permissions:
+      contents: read
+    with:
+      working-directory: mcp-server
+      node-version: "25" # same as Dockerfile.mcp; runs the TypeScript sources directly
+      scripts: typecheck test # tsc, node --test against the docs sources in yivi-docs/
+      ignore-scripts: true
+
   # Builds and scans the image without pushing it; Delivery pushes from master.
   docker:
     if: github.event_name == 'pull_request' || github.event_name == 'merge_group'
@@ -41,6 +51,20 @@ jobs:
       id-token: write
       attestations: write
     with:
+      push-image: false
+
+  docker-mcp:
+    if: github.event_name == 'pull_request' || github.event_name == 'merge_group'
+    uses: privacybydesign/github-workflows/.github/workflows/docker-publish.yml@v1
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+      id-token: write
+      attestations: write
+    with:
+      image-name: ghcr.io/privacybydesign/irma-documentation-mcp
+      dockerfile: Dockerfile.mcp
       push-image: false
 
   dependency-review:
@@ -58,7 +82,7 @@ jobs:
   passed:
     name: Status checks passed
     if: always()
-    needs: [docs, docker, dependency-review, workflow-lint]
+    needs: [docs, mcp-server, docker, docker-mcp, dependency-review, workflow-lint]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions: {}

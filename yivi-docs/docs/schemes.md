@@ -72,6 +72,7 @@ These identifiers are used to refer to these entities within [IRMA session reque
     "@context": "https://irma.app/ld/request/disclosure/v2",
     "disclose": [[[ "scheme-id.issuer-id.credentialtype-id.boolean-attr" ]]]
     }
+    ```
   </TabItem>
   <TabItem value="go" label="Session request (Go)">
     ```golang
