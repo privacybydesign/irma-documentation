@@ -24,7 +24,9 @@ RUN apk add --no-cache libcap-utils \
 # Runtime: plain Alpine with only the Node binary, so npm and yarn from the node image are not in it.
 # Same Alpine release as node:25-alpine. Fonts are for rendering SVG diagrams to PNG (get_image).
 FROM alpine:3.23
-RUN apk add --no-cache libstdc++ libgcc font-inter font-dejavu \
+# apk upgrade: take fixes released after the base image was built (the image scan fails on those).
+RUN apk upgrade --no-cache \
+ && apk add --no-cache libstdc++ libgcc font-inter font-dejavu \
  && addgroup -g 1000 node \
  && adduser -u 1000 -G node -s /bin/sh -D node
 COPY --from=node /usr/local/bin/node /usr/local/bin/node
