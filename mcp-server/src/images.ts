@@ -77,9 +77,13 @@ const ENTITIES: Record<string, string> = { amp: "&", lt: "<", gt: ">", quot: '"'
 export function svgText(svg: string): string {
   const lines: string[] = [];
   for (const m of svg.matchAll(/<text\b[^>]*>([\s\S]*?)<\/text>/g)) {
-    const line = m[1]
-      .replace(/<\/tspan>\s*<tspan\b[^>]*>/g, " ")
-      .replace(/<[^>]+>/g, "")
+    // Strip tags until none are left, so removing one cannot leave another behind.
+    let tagless = m[1].replace(/<\/tspan>\s*<tspan\b[^>]*>/g, " ");
+    for (let prev = ""; prev !== tagless; ) {
+      prev = tagless;
+      tagless = tagless.replace(/<[^>]+>/g, "");
+    }
+    const line = tagless
       .replace(/&(#x?[0-9a-f]+|\w+);/gi, (e, code: string) =>
         code.startsWith("#")
           ? String.fromCodePoint(parseInt(code.slice(code[1] === "x" ? 2 : 1), code[1] === "x" ? 16 : 10))

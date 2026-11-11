@@ -70,8 +70,18 @@ if (process.argv.includes("--stdio")) {
 } else {
   const port = Number(process.env.PORT ?? 8080);
   const site = siteDir ? createSiteHandler(siteDir) : undefined;
-  const http = createHttpServer(async (req, res) => {
-    const path = new URL(req.url ?? "/", "http://localhost").pathname.replace(/\/$/, "") || "/";
+  // Safety net: one bad request must never take the process (and so the whole site) down.
+  const http = createHttpServer((req, res) => {
+    handle(req, res).catch((err) => {
+      log(`Request ${req.method} ${req.url} failed: ${err instanceof Error ? err.stack : String(err)}`);
+      if (!res.headersSent) res.writeHead(500, { "content-type": "text/plain" });
+      res.end();
+    });
+  });
+
+  async function handle(req: IncomingMessage, res: ServerResponse) {
+    // Not new URL(): a request target such as "//" is not a valid relative URL and would throw.
+    const path = (req.url ?? "/").split("?", 1)[0].replace(/\/$/, "") || "/";
     const readOnly = req.method === "GET" || req.method === "HEAD";
 
     // Readiness: 503 while the docs are loading, so a new instance only gets traffic once /mcp works
@@ -90,7 +100,15 @@ if (process.argv.includes("--stdio")) {
         return void res.writeHead(503, { "retry-after": "10", "content-type": "text/plain" }).end("Starting, try again shortly\n");
       }
       if (path === mcpPath) return handleMcp(docs, req, res);
-      if (path.startsWith(`${imagesPath}/`) && readOnly) return serveImage(docs, decodeURIComponent(path), req, res);
+      if (path.startsWith(`${imagesPath}/`) && readOnly) {
+        let key: string;
+        try {
+          key = decodeURIComponent(path);
+        } catch {
+          return void res.writeHead(400, { "content-type": "text/plain" }).end("Bad request\n");
+        }
+        return serveImage(docs, key, req, res);
+      }
       return void res.writeHead(404, { "content-type": "text/plain" }).end("Not found\n");
     }
     if (site && readOnly) return site(req, res);
@@ -99,7 +117,7 @@ if (process.argv.includes("--stdio")) {
     res.writeHead(404, { "content-type": "text/plain" }).end(
       `MCP server for ${siteUrl}. Connect an MCP client to ${mcpPath} (Streamable HTTP).\n`,
     );
-  });
+  }
   http.listen(port, () => {
     log(`Listening on http://0.0.0.0:${port}: MCP at ${mcpPath}${siteDir ? `, site from ${siteDir}` : ""}`);
     loadDocs().then(
