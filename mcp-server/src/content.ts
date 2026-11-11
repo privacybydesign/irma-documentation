@@ -372,8 +372,13 @@ export function toMarkdown(ctx: Ctx, body: string, file: string): string {
     let s = prose.replace(/``[^`\n][^\n]*?``|`[^`\n]+`/g, (m) => `\u0000${code.push(m) - 1}\u0000`);
     s = s
       .replace(/^import\s+(?:[\w*{}\s,]+?\s+from\s+)?["'][^"'\n]+["'];?[ \t]*$/gm, "")
-      .replace(/\{\/\*[\s\S]*?\*\/\}/g, "")
-      .replace(/<!--[\s\S]*?-->/g, "");
+      .replace(/\{\/\*[\s\S]*?\*\/\}/g, "");
+
+    let prev: string;
+    do {
+      prev = s;
+      s = s.replace(/<!--[\s\S]*?-->/g, "");
+    } while (s !== prev);
 
     // <Cite doc="NL-TL" page={23}>§8.6</Cite>  ->  ([NL-TL §8.6, p. 23](pdf#page=23))
     s = s.replace(
