@@ -1,4 +1,5 @@
-# Delivery: builds, scans and pushes ghcr.io/privacybydesign/irma-documentation.
+# Delivery: builds, scans and pushes ghcr.io/privacybydesign/irma-documentation (the docs site and
+# its MCP server for AI agents, served by one container).
 # Push to master -> :edge, release vX.Y.Z -> :X.Y.Z and :latest, manual run ->
 # :<branch>. PR builds are scanned in Status checks; published images are
 # re-scanned weekly by image-rescan.yml.

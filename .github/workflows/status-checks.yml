@@ -26,8 +26,18 @@ jobs:
       contents: read
     with:
       working-directory: yivi-docs
-      node-version: "22" # same as the Dockerfile build stage
+      node-version: "26" # same as the Dockerfile build stage
       scripts: typecheck build # tsc, docusaurus build (fails on broken links)
+      ignore-scripts: true
+
+  mcp-server:
+    uses: privacybydesign/github-workflows/.github/workflows/node-checks.yml@v1
+    permissions:
+      contents: read
+    with:
+      working-directory: mcp-server
+      node-version: "26" # same as the Dockerfile; runs the TypeScript sources directly
+      scripts: typecheck test # tsc, node --test against the docs sources in yivi-docs/
       ignore-scripts: true
 
   # Builds and scans the image without pushing it; Delivery pushes from master.
@@ -58,7 +68,7 @@ jobs:
   passed:
     name: Status checks passed
     if: always()
-    needs: [docs, docker, dependency-review, workflow-lint]
+    needs: [docs, mcp-server, docker, dependency-review, workflow-lint]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions: {}

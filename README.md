@@ -23,6 +23,9 @@ https://github.com/privacybydesign/irma-documentation/pkgs/container/irma-docume
 ### Note on delivery.yml pipeline behavior
 When the `delivery.yml` pipeline is run from the master branch, it will use the latest tag. If the pipeline is not run from the master branch, it will use the staging tag.
 
+## MCP server for AI agents
+The site also offers an [MCP](https://modelcontextprotocol.io) server at `https://docs.yivi.app/mcp`, so AI agents can search and read the documentation, the Dutch EUDI certification section and the blog. Its code is in `mcp-server/`, and in the Docker image the same Node server serves both the site and `/mcp`. See [mcp-server/README.md](mcp-server/README.md).
+
 ## EDI-stelsel section
 The `EDI-stelsel` section (`yivi-docs/edi-stelsel`, served under `/edi-stelsel-certification`) explains the Dutch certification system for EUDI Wallets. It is a separate docs instance with its own sidebar (`yivi-docs/sidebarsEdiStelsel.ts`) and React components in `yivi-docs/src/components/EdiStelsel`.
 

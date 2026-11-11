@@ -26,3 +26,12 @@ updates:
       npm-development: { dependency-type: development, update-types: [minor, patch] }
       npm-security: { applies-to: security-updates, patterns: ["*"] }
     cooldown: { default-days: 7 }
+
+  - package-ecosystem: npm
+    directory: /mcp-server
+    schedule: { interval: weekly, day: monday }
+    groups:
+      npm-production: { dependency-type: production, update-types: [minor, patch] }
+      npm-development: { dependency-type: development, update-types: [minor, patch] }
+      npm-security: { applies-to: security-updates, patterns: ["*"] }
+    cooldown: { default-days: 7 }

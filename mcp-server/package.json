@@ -1,0 +1,32 @@
+{
+  "name": "yivi-docs-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MCP server that lets AI agents search and read the Yivi documentation, the Dutch EUDI Wallet certification pages and the Yivi blog.",
+  "type": "module",
+  "bin": {
+    "yivi-docs-mcp": "src/main.ts"
+  },
+  "scripts": {
+    "start": "node src/main.ts",
+    "stdio": "node src/main.ts --stdio",
+    "test": "node --test",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@resvg/resvg-js": "2.6.2",
+    "github-slugger": "2.0.0",
+    "minisearch": "7.2.0",
+    "sirv": "3.0.2",
+    "yaml": "2.9.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "~5.9.0"
+  },
+  "engines": {
+    "node": ">=23.6"
+  }
+}
