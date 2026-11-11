@@ -119,6 +119,8 @@ export interface LoadOptions {
    * next to a blog post, which Docusaurus hashes or inlines). Default "/mcp/images".
    */
   imagesPath?: string;
+  /** Folder that "/img/..." image paths resolve in: yivi-docs/static, or the built site. */
+  staticDir?: string;
 }
 
 const FENCE = /^\s*(```|~~~)/;
@@ -126,8 +128,16 @@ const FENCE = /^\s*(```|~~~)/;
 const isClosingFence = (line: string, fence: string) => new RegExp(`^\\s*${fence}+\\s*$`).test(line);
 const HEADING = /^(#{1,6})\s+(.*?)\s*(?:\{#([\w.-]+)\})?\s*$/;
 
-export function loadCorpus({ docsRoot, siteUrl, imagesPath = "/mcp/images" }: LoadOptions): Corpus {
+/** Lets other work (such as serving the site) run between steps of loading. */
+const yieldToEventLoop = () => new Promise<void>((resolve) => setImmediate(resolve));
+
+/**
+ * Loads all pages. Asynchronous only so that it yields to the event loop after every file: the
+ * server keeps answering requests while the docs load on a small CPU share.
+ */
+export async function loadCorpus({ docsRoot, siteUrl, imagesPath = "/mcp/images", staticDir }: LoadOptions): Promise<Corpus> {
   docsRoot = resolve(docsRoot);
+  staticDir = resolve(staticDir ?? join(docsRoot, "static"));
   const scheme = JSON.parse(
     readFileSync(join(docsRoot, "src/data/edi-stelsel/documents.json"), "utf8"),
   ) as SchemeData;
@@ -135,33 +145,39 @@ export function loadCorpus({ docsRoot, siteUrl, imagesPath = "/mcp/images" }: Lo
   // First pass: every source file and the URL path it is published at, so that relative
   // Markdown links (e.g. "[schemes](schemes.md)") can be turned into absolute URLs.
   const sources: Source[] = [];
-  const collect = (dir: string, section: Section, pathOf: (file: string) => (fm: Frontmatter) => string) => {
+  const collect = async (dir: string, section: Section, pathOf: (file: string) => (fm: Frontmatter) => string) => {
     for (const file of walk(join(docsRoot, dir))) {
+      await yieldToEventLoop();
       const { fm, body } = splitFrontmatter(readFileSync(file, "utf8"));
       if (fm.draft === true || fm.unlisted === true) continue;
       sources.push({ file, section, fm, body, path: pathOf(file)(fm) });
     }
   };
-  collect("docs", "yivi", (file) => docPath(join(docsRoot, "docs"), file, ""));
-  collect("edi-stelsel", "eudi-certification", (file) =>
+  await collect("docs", "yivi", (file) => docPath(join(docsRoot, "docs"), file, ""));
+  await collect("edi-stelsel", "eudi-certification", (file) =>
     docPath(join(docsRoot, "edi-stelsel"), file, "/edi-stelsel-certification"),
   );
-  collect("blog", "blog", (file) => (fm) => blogPath(join(docsRoot, "blog"), file, fm));
+  await collect("blog", "blog", (file) => (fm) => blogPath(join(docsRoot, "blog"), file, fm));
 
   const ctx: Ctx = {
     siteUrl,
     scheme,
     docsRoot,
+    staticDir,
     imagesPath: normalizePath(imagesPath),
     fileToPath: new Map(sources.map((s) => [s.file, s.path])),
     images: new Map(),
   };
   const pages = new Map<string, Page>();
-  for (const src of sources) pages.set(src.path, buildPage(ctx, src));
+  for (const src of sources) {
+    await yieldToEventLoop();
+    pages.set(src.path, buildPage(ctx, src));
+  }
 
   const chunks: Chunk[] = [];
   const requirements: Requirement[] = [];
   for (const page of pages.values()) {
+    await yieldToEventLoop();
     chunks.push(...chunkPage(page));
     if (page.path.startsWith("/edi-stelsel-certification/requirements/")) {
       requirements.push(...extractRequirements(page));
@@ -174,6 +190,7 @@ interface Ctx {
   siteUrl: string;
   scheme: SchemeData;
   docsRoot: string;
+  staticDir: string;
   imagesPath: string;
   /** Absolute source file path -> published URL path. */
   fileToPath: Map<string, string>;
@@ -202,7 +219,7 @@ function registerImage(ctx: Ctx, src: string, alt: string, sourceFile: string): 
   let file: string;
   let key: string;
   if (clean.startsWith("/")) {
-    file = join(ctx.docsRoot, "static", clean);
+    file = join(ctx.staticDir, clean);
     key = normalizePath(clean);
   } else {
     file = resolve(dirname(sourceFile), clean);

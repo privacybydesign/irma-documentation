@@ -18,6 +18,7 @@
     "@resvg/resvg-js": "2.6.2",
     "github-slugger": "2.0.0",
     "minisearch": "7.2.0",
+    "sirv": "3.0.2",
     "yaml": "2.9.1",
     "zod": "4.6.7"
   },

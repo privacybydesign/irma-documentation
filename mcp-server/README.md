@@ -38,26 +38,23 @@ on the site (Docusaurus hashes or inlines them), so this server serves them itse
 
 ## Connect an agent
 
-Remote (once deployed), Streamable HTTP:
+The server is part of the docs site: `https://docs.yivi.app/mcp` (Streamable HTTP, no login).
 
-```bash
-claude mcp add --transport http yivi-docs https://docs.yivi.app/mcp
-```
+- **Claude Desktop / claude.ai:** Settings → Connectors → Add custom connector, URL `https://docs.yivi.app/mcp`.
+- **Other MCP clients** (IDEs, CLIs): add a remote/HTTP server with that URL.
+- **Locally** (Node.js 23.6 or later, which runs the TypeScript sources directly): `npm ci` here,
+  then configure the client to start `node /path/to/mcp-server/src/main.ts --stdio`, for example:
 
-Locally, from this repository (Node.js 23.6 or later, which runs the TypeScript sources directly):
-
-```bash
-cd mcp-server && npm ci
-claude mcp add yivi-docs -- node "$PWD/src/main.ts" --stdio
-```
-
-Other clients: use the URL `https://docs.yivi.app/mcp`, or the command `node src/main.ts --stdio`.
+  ```json
+  { "mcpServers": { "yivi-docs": { "command": "node", "args": ["/path/to/mcp-server/src/main.ts", "--stdio"] } } }
+  ```
 
 ## Run and test
 
 ```bash
 npm ci
-npm start           # Streamable HTTP on http://localhost:8080/mcp, health check on /healthz
+npm start           # MCP over HTTP on http://localhost:8080/mcp
+SITE_DIR=../yivi-docs/build npm start   # the same, plus the built site on every other path
 npm run stdio       # stdio transport
 npm test            # tests against the docs sources in ../yivi-docs
 npm run typecheck
@@ -68,19 +65,30 @@ Environment variables:
 
 | Variable | Default | |
 | --- | --- | --- |
-| `PORT` | `8080` | HTTP port. |
+| `PORT` | `8080` | HTTP port (`80` in the Docker image). |
+| `SITE_DIR` | | Built Docusaurus site to serve on all paths outside `MCP_PATH` (`/public` in the Docker image). Its `img/` is also where `/img/...` images are read from. |
 | `MCP_PATH` | `/mcp` | Path of the MCP endpoint. |
 | `DOCS_ROOT` | `../yivi-docs` | Folder with `docs/`, `edi-stelsel/`, `blog/` and `src/data/`. |
 | `IMAGES_PATH` | `$MCP_PATH/images` | Path where images next to blog posts are served. |
 | `FONT_DIRS` | | Extra font directories (colon-separated) for rendering SVGs. |
 | `SITE_URL` | `https://docs.yivi.app` | Origin used for the URLs in results (e.g. `https://docs.staging.yivi.app`). |
 
-The HTTP server is stateless (no sessions; JSON responses), so it can run as several replicas
-behind a load balancer. The content is loaded into memory at start-up (about 1 s).
+The MCP endpoint is stateless (no sessions; JSON responses), so the server can run as several
+replicas behind a load balancer.
 
 ## Deployment
 
-`Dockerfile.mcp` in the repository root builds `ghcr.io/privacybydesign/irma-documentation-mcp`.
-The Delivery workflow publishes it with the same tags as the site image (`:edge` from master,
-`:X.Y.Z` and `:latest` on a release). To serve it at `https://docs.yivi.app/mcp`, route `/mcp` and
-everything under it (`/mcp/images/...`) on the docs host to this container (port 8080).
+The repository's `Dockerfile` builds one image, `ghcr.io/privacybydesign/irma-documentation`, in
+which this server serves both the site and `/mcp` on port 80 (as an unprivileged user). The site is
+served with pre-compressed brotli/gzip files (`scripts/precompress.ts`, run at build time), immutable
+caching for the hashed files under `/assets/` and the site's own 404 page.
+
+Start-up is ordered so the site never waits for MCP: the server listens first, then loads and
+indexes the docs in small steps (about 2 s of CPU in total), yielding to page requests in between.
+Until then `/mcp` answers 503. If loading fails, the site keeps working and only `/mcp` is unavailable.
+
+- **Liveness:** `/` (answers from the start).
+- **Readiness:** `/healthz` answers 503 while the docs load and 200 afterwards, so an instance only
+  gets traffic once loading no longer competes with page requests for CPU.
+- **Resources:** about 120–170 MiB of memory; with 0.2 CPU the site answers after about 3 s and
+  `/mcp` is ready after about 30 s. Much less CPU (e.g. 0.04) makes start-up take minutes.

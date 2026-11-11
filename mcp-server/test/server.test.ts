@@ -11,8 +11,8 @@ import { svgText } from "../src/images.ts";
 
 const docsRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../../yivi-docs");
 const SITE = "https://docs.yivi.app";
-const corpus = loadCorpus({ docsRoot, siteUrl: SITE });
-const index = new SearchIndex(corpus);
+const corpus = await loadCorpus({ docsRoot, siteUrl: SITE });
+const index = await SearchIndex.create(corpus);
 
 async function connect() {
   const [clientSide, serverSide] = InMemoryTransport.createLinkedPair();

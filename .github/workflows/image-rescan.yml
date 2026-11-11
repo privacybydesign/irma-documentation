@@ -19,14 +19,3 @@ jobs:
       # :edge runs on docs.staging.yivi.app; :latest (prod) is the latest release.
       tags: edge latest-release
       severity-cutoff: high
-
-  rescan-mcp:
-    uses: privacybydesign/github-workflows/.github/workflows/image-rescan.yml@v1
-    permissions:
-      contents: read
-      packages: read
-      security-events: write
-    with:
-      image-name: ghcr.io/privacybydesign/irma-documentation-mcp
-      tags: edge latest-release
-      severity-cutoff: high

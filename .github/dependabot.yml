@@ -11,7 +11,7 @@ updates:
       actions-security: { applies-to: security-updates, patterns: ["*"] }
     cooldown: { default-days: 7 }
 
-  - package-ecosystem: docker # Dockerfile, Dockerfile.dev and Dockerfile.mcp
+  - package-ecosystem: docker # Dockerfile and Dockerfile.dev
     directory: /
     schedule: { interval: weekly, day: monday }
     groups:

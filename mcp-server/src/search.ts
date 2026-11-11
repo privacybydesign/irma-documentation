@@ -21,7 +21,14 @@ export class SearchIndex {
   private readonly index: MiniSearch<Chunk>;
   private readonly byId: Map<string, Chunk>;
 
-  constructor(corpus: Corpus) {
+  /** Builds the index in small batches, yielding to the event loop in between. */
+  static async create(corpus: Corpus): Promise<SearchIndex> {
+    const search = new SearchIndex(corpus);
+    await search.index.addAllAsync(corpus.chunks, { chunkSize: 50 });
+    return search;
+  }
+
+  private constructor(corpus: Corpus) {
     this.byId = new Map(corpus.chunks.map((c) => [c.id, c]));
     this.index = new MiniSearch<Chunk>({
       fields: ["title", "heading", "text", "ids"],
@@ -34,7 +41,6 @@ export class SearchIndex {
         tokenize: queryTokenize,
       },
     });
-    this.index.addAll(corpus.chunks);
   }
 
   search(query: string, opts: { section?: Section; limit: number }): Hit[] {
