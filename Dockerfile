@@ -1,7 +1,7 @@
 # docs.yivi.app: the static Docusaurus site and the MCP server for AI agents (mcp-server/), served
 # by one Node process on port 80. The site is on every path; the MCP endpoint is at /mcp.
 
-FROM node:25-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app/website
 COPY ./yivi-docs /app/website
 RUN npm install
@@ -10,20 +10,20 @@ RUN npm run build
 COPY mcp-server/scripts/precompress.ts /tmp/precompress.ts
 RUN node /tmp/precompress.ts build
 
-FROM node:25-alpine AS server-deps
+FROM node:26-alpine AS server-deps
 WORKDIR /app/mcp-server
 COPY mcp-server/package.json mcp-server/package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts
 
 # The Node binary, allowed to listen on port 80 (which the deployment in irma-documentation-ops
 # expects) without running as root. COPY keeps the file capability.
-FROM node:25-alpine AS node
+FROM node:26-alpine AS node
 RUN apk add --no-cache libcap-utils \
  && setcap cap_net_bind_service=+ep /usr/local/bin/node
 
 # Runtime: plain Alpine with only the Node binary, so npm and yarn from the node image are not in it.
-# Same Alpine release as node:25-alpine. Fonts are for rendering SVG diagrams to PNG (get_image).
-FROM alpine:3.23
+# Same Alpine release as node:26-alpine. Fonts are for rendering SVG diagrams to PNG (get_image).
+FROM alpine:3.24
 # apk upgrade: take fixes released after the base image was built (the image scan fails on those).
 RUN apk upgrade --no-cache \
  && apk add --no-cache libstdc++ libgcc font-inter font-dejavu \
