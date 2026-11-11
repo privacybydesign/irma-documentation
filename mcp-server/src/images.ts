@@ -85,6 +85,7 @@ export function svgText(svg: string): string {
           ? String.fromCodePoint(parseInt(code.slice(code[1] === "x" ? 2 : 1), code[1] === "x" ? 16 : 10))
           : (ENTITIES[code] ?? e),
       )
+      .replace(/[<>]/g, "")
       .replace(/\s+/g, " ")
       .trim();
     if (line) lines.push(line);
