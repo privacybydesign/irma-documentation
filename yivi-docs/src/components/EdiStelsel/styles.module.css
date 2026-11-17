@@ -196,3 +196,56 @@
   font-size: 0.9rem;
   margin-top: 0.25rem;
 }
+
+.source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-left: 4px solid #154273;
+  border-radius: var(--ifm-global-radius);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0 2rem;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.source > div,
+.source > p {
+  flex: 1 1 18rem;
+  margin: 0;
+}
+
+.source p:last-child {
+  margin-bottom: 0;
+}
+
+.sourceTitle {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* The logo is dark blue, so it sits on white in both the light and the dark theme. */
+.sourceLogo {
+  flex: 0 0 auto;
+  display: block;
+  background: #fff;
+  border-radius: var(--ifm-global-radius);
+  line-height: 0;
+}
+
+.sourceLogo img {
+  display: block;
+  width: 13rem;
+  height: auto;
+}
+
+.sourceCompact {
+  margin: 3rem 0 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+}
+
+.sourceCompact .sourceLogo img {
+  width: 8rem;
+}

@@ -41,3 +41,12 @@ export function getDocument(id: string): SchemeDocument {
 }
 
 export const documentUrl = (doc: SchemeDocument) => `/edi-stelsel-certification/documents/${doc.slug}`;
+
+/** The official publication of the scheme documents, by Programma EDI-stelsel NL. */
+export const source = {
+  publisher: "Programma EDI-stelsel NL",
+  title: "Dutch Certification Schemes for EUDI Wallets",
+  site: "edi.pleio.nl",
+  url: "https://edi.pleio.nl/page/view/5a7f97e2-5f44-4eca-bf6c-1f1a79b479bc/dutch-certification-schemes-for-eudi-wallets",
+  logo: "/img/edi-stelsel/programma-edi-stelsel-nl.png",
+};
