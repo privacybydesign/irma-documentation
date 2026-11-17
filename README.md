@@ -29,7 +29,7 @@ The site also offers an [MCP](https://modelcontextprotocol.io) server at `https:
 ## EDI-stelsel section
 The `EDI-stelsel` section (`yivi-docs/edi-stelsel`, served under `/edi-stelsel-certification`) explains the Dutch certification system for EUDI Wallets. It is a separate docs instance with its own sidebar (`yivi-docs/sidebarsEdiStelsel.ts`) and React components in `yivi-docs/src/components/EdiStelsel`.
 
-- **Hand-written pages:** `index.mdx`, `system/*.mdx` and `documents/*.mdx`. Every statement cites the section and PDF page of the scheme document it comes from (`<Cite doc="NL-TL" page={23}>§8.6</Cite>`).
+- **Hand-written pages:** `index.mdx`, `system/*.mdx` and `documents/*.mdx`. The source of the documents (Programma EDI-stelsel NL, edi.pleio.nl) is defined in `src/components/EdiStelsel/data.ts`; `SourceNotice` shows it on the introduction page and, through `src/theme/DocItem/Footer`, under every page of the section. Every statement cites the section and PDF page of the scheme document it comes from (`<Cite doc="NL-TL" page={23}>§8.6</Cite>`).
 - **Generated pages, do not edit by hand:**
   - `requirements/*.md` (not `requirements/index.mdx`);
   - `text/*.md` (not `text/index.mdx`);
