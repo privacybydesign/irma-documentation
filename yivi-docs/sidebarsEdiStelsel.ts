@@ -3,6 +3,8 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 // Sidebar of the EDI-stelsel section (docs instance "edi-stelsel", folder ./edi-stelsel).
 // Pages under requirements/ and text/, and glossary, legal-basis and downloads, are generated
 // by tools/docs_site.py in the EUDI-Wallet-Certification-System repository.
+// Pages under conformance/ are written by hand, except owasp-mas-eudiw-tests, which
+// tools/mastg_test_results.py generates from src/data/edi-stelsel/mastg-results.json.
 
 const documentFamilies: { label: string; slugs: string[] }[] = [
   {
@@ -100,6 +102,13 @@ const sidebars: SidebarsConfig = {
           items: ["requirements/owasp-mas-eudiw"],
         },
       ],
+    },
+    {
+      type: "category",
+      label: "Yivi conformance",
+      collapsed: true,
+      link: { type: "doc", id: "conformance/index" },
+      items: ["conformance/owasp-mas-eudiw", "conformance/owasp-mas-eudiw-tests"],
     },
     {
       type: "category",
