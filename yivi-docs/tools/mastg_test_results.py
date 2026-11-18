@@ -34,6 +34,8 @@ LABEL = {
 }
 ORDER = ["pass", "not_applicable", "fail", "triage", "not_automated"]
 RESOLVED = {"pass", "not_applicable"}
+# The longest piece of matched text shown for a finding.
+MAX_FINDING_TEXT = 140
 
 
 def code(text: str) -> str:
@@ -78,7 +80,7 @@ def check_lines(test: dict) -> list[str]:
         for key, name in (("issues", "Defect"), ("open", "To triage")):
             for item in check[key]:
                 place = item["path"] + (f":{item['line']}" if item["line"] else "")
-                lines.append(f"  - {name}: {code(item['text'][:140])} in {code(place)}")
+                lines.append(f"  - {name}: {code(item['text'][:MAX_FINDING_TEXT])} in {code(place)}")
             more = check.get(key + "_count", len(check[key])) - len(check[key])
             if more > 0:
                 lines.append(f"  - and {more} more of this kind")
@@ -146,11 +148,13 @@ Which OWASP tests belong to a requirement follows from OWASP's data: the profile
 | Status | OWASP tests, Android | OWASP tests, iOS | OWASP tests, other | Yivi tests |
 |---|---|---|---|---|
 """)
+
     for status in ORDER:
         row = Counter(test["platform"] if test["platform"] in ("android", "ios") else "other"
                       for test in owasp if test["status"] == status)
         mine = sum(1 for test in own if test["status"] == status)
         w(f"| {LABEL[status]} | {row['android']} | {row['ios']} | {row['other']} | {mine} |\n")
+
     w("""
 | Status | Meaning |
 |---|---|
@@ -169,6 +173,7 @@ The number links to the requirement in the catalogue. The counts are OWASP tests
 | # | Requirement | OWASP tests | Pass | N/A | Fail | To triage | Not automated | Yivi tests |
 |---|---|---|---|---|---|---|---|---|
 """)
+
     for requirement in data["requirements"]:
         counts = Counter(tests[test_id]["status"] for test_id in requirement["tests"])
         figures = " | ".join(str(counts[status] or "") for status in ORDER)
