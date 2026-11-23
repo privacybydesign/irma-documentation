@@ -104,7 +104,7 @@ const config: Config = {
           blogSidebarCount: "ALL",
         },
         theme: {
-          customCss: ["./src/css/custom.css", "/katex/katex.min.css"],
+          customCss: ["./src/css/custom.css", "./static/katex/katex.min.css"],
         },
       } satisfies Preset.Options,
     ],

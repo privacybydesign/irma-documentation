@@ -25,7 +25,9 @@ Since OpenID4VP support is in such a new state this cannot be done automatically
 The certificate contains a json value that has some metadata in it, like the origanisation information and authorized attributes.
 It is tied to the hostname where the verifier server runs (so the URL the app has to contact for an OpenID4VP session).
 
-Below you'll find a script for creating a certificate signing request. Once you've created a CSR, you can send it to us so we can create a certificate for you. Keep in mind that the json inside the certificate needs to contain all attributes you're planning to use. This is a current limitation. Wild card support is planned for a future release.
+Below you'll find a script for creating a certificate signing request. Once you've created a CSR, you can send it to us so we can create a certificate for you. Keep in mind that the json inside the certificate needs to cover all credentials and attributes you're planning to request. A request for anything outside it is rejected by the Yivi app as a whole.
+
+Instead of listing everything, you can use `*` as a wildcard: for one part of a dot-separated credential identifier (for example `pbdf.sidn-pbdf.*`), or as the only entry in `attributes` to allow every attribute of a credential. A credential identifier that is a URL or URN, such as `urn:eudi:pid:1`, has to match exactly. An authorized identifier never matches a requested identifier that has more parts, so a three-part entry does not cover a five-part mdoc doctype such as `eu.europa.ec.av.1`.
 
 <details>
   <summary>
@@ -184,22 +186,27 @@ which means we identify and verify verifiers by a x.509 certificate.
 Additionally we put some metadata about the verifier inside of this certificate,
 including their origanization information, a logo and permissions for what credentials and attributes they're allowed to ask.
 Signed authorization requests that don't come with a valid certificate are denied by the Yivi app. The one exception is an unsigned request using the `redirect_uri:` client identifier prefix (supported since Yivi app 8.3.0): the app accepts it, but shows the verifier as unverified, without a logo, named by the address the response is sent to.
-Certificates can be revoked using a certificate refocation list, after which the Yivi app will refuse to share any data with the verifier.
+Certificates can be revoked using a certificate revocation list, after which the Yivi app will refuse to share any data with the verifier.
 
-For the authorization request url we currently support the `openid4vp://` and `eudi-openid4vp://` schemes.
-Any url using this scheme can open the Yivi app and is assumed to be an OpenID4VP session.
-We support both the response type `direct_post` as well as `direct_post.jwt` for an extra layer of encryption.
+For development the app also accepts signed requests from verifiers identified by a DID (`decentralized_identifier` prefix), which are shown as unverified as well. See the [integration guide](openid4vp-verifier-integration.md#testing-without-a-certificate).
+
+For the authorization request url we currently support the `openid4vp://` and `eudi-openid4vp://` schemes, as well as [universal links](openid4vp-verifier-integration.md#universal-links-optional).
+Any url using these schemes can open the Yivi app and is assumed to be an OpenID4VP session.
+We support both the response mode `direct_post` as well as `direct_post.jwt` for an extra layer of encryption. The latter requires an encryption key in the `jwks` of your `client_metadata`.
+
+The full list of what the app supports is in the [integration guide](openid4vp-verifier-integration.md#what-the-yivi-app-supports).
 
 ### DCQL queries
-For the time being all SD-JWT instances in the Yivi app will be tied to our scheme.
-Therefore you have to use the identifiers as defined in the scheme to request attributes.
+SD-JWT VCs that are issued through a Yivi scheme are requested by the identifiers defined in that scheme.
 
 :::note
-The `vct_values` array should contain exactly one value, corresponding to the requested credential ID as defined in a Yivi scheme.
+For a credential from a Yivi scheme, `vct_values` holds the credential ID as defined in the scheme, and each claim `path` holds one attribute name.
 
-The `format` field should always be `dc+sd-jwt` when requesting SD-JWT VCs.
+The `format` field should be `dc+sd-jwt` when requesting SD-JWT VCs.
 
 Don't forget that objects in both `credentials` as well as `claims` should have unique IDs.
+
+Each option in `credential_sets` may contain only one credential query ID.
 :::
 
 Below are a couple of DCQL examples, as well as their condiscon counterparts.
